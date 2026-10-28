@@ -440,6 +440,50 @@ const productCatalog = [
     { name: 'Millacoco Kitchen & Skincare Duo Pack', price: 590, image: 'images/combo_duo.jpg', tag: 'Combo Offer', desc: '1L Classic + Virgin Oil' }
 ];
 
+// Special Combo Packs Data
+const comboPacks = [
+    {
+        id: 'combo-1',
+        name: 'Millacoco Combo Duo Pack',
+        badge: 'KITCHEN & WELLNESS DUO',
+        subtitle: '1L Classic Cooking Oil + Virgin Hair Oil',
+        title: 'Healthy Kitchen.<br><span class="font-handwriting font-normal text-ambergold-300 text-4xl sm:text-5xl">Happy Family.</span>',
+        desc: '1 Ltr Classic Cooking Oil + Virgin Scalp & Skincare Oil with complimentary express delivery across India.',
+        price: 590,
+        oldPrice: 610,
+        image: 'images/combo_duo.jpg',
+        btnLabel: 'ORDER DUO PACK'
+    },
+    {
+        id: 'combo-2',
+        name: 'Millacoco 2L Twin Pack',
+        badge: 'HOUSEHOLD TWIN VALUE',
+        subtitle: '1L Classic Bottle x 2 Double Savings',
+        title: 'Twin Savings.<br><span class="font-handwriting font-normal text-ambergold-300 text-4xl sm:text-5xl">Everyday Pure.</span>',
+        desc: 'Two 1 Ltr Classic Cold Pressed Glass Bottles packed together with zero shipping charge and extra freshness seal.',
+        price: 570,
+        oldPrice: 580,
+        image: 'images/twin_pack.jpg',
+        btnLabel: 'ORDER TWIN PACK'
+    },
+    {
+        id: 'combo-3',
+        name: 'Millacoco 5L Master Culinary Pack',
+        badge: 'BULK VALUE MASTER',
+        subtitle: '5L Heavy Can + Free 500ml Kitchen Glass Jar',
+        title: 'Master Kitchen.<br><span class="font-handwriting font-normal text-ambergold-300 text-4xl sm:text-5xl">Direct Mill Value.</span>',
+        desc: '5 Ltr Heavy Duty Household Can with free refill dispenser. Ideal for joint families and authentic festive Malabar cooking.',
+        price: 1390,
+        oldPrice: 1450,
+        image: 'images/can_5ltr.jpg',
+        btnLabel: 'ORDER 5L PACK'
+    }
+];
+
+let currentComboIndex = 0;
+let comboCarouselTimer = null;
+const COMBO_AUTOPLAY_INTERVAL = 5000;
+
 // Header Search Bar Live Logic
 function searchHeaderProducts() {
     const input = document.getElementById('header-search-input');
@@ -1003,17 +1047,15 @@ function setScrubSlide(targetIndex, updateScroll = false) {
         }
     });
 
-    // 2. Transition Images (Cross-fade & Scale)
+    // 2. Transition Images (Cross-fade & Scale via .active class)
     for (let i = 0; i < scrubSlides.length; i++) {
         const img = document.getElementById(`scrub-img-${i}`);
         if (!img) continue;
 
         if (i === targetIndex) {
-            img.classList.remove('opacity-0', 'scale-90', 'translate-y-8', 'pointer-events-none');
-            img.classList.add('opacity-100', 'scale-100', 'translate-y-0', 'pointer-events-auto');
+            img.classList.add('active');
         } else {
-            img.classList.remove('opacity-100', 'scale-100', 'translate-y-0', 'pointer-events-auto');
-            img.classList.add('opacity-0', 'scale-90', 'translate-y-8', 'pointer-events-none');
+            img.classList.remove('active');
         }
     }
 
@@ -1083,8 +1125,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Scroll Scrub Listener
-(function initFlagshipScrollScrub() {
+// Scroll Scrub Listener (Runs on DOMContentLoaded)
+document.addEventListener('DOMContentLoaded', function initFlagshipScrollScrub() {
     const section = document.getElementById('flagship-bottle');
     if (!section) return;
 
@@ -1092,20 +1134,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function evaluateScrollScrub() {
         const rect = section.getBoundingClientRect();
-        const stickyTop = 75; // sticky offset
+        const stickyTop = 80; // sticky offset
         const totalDist = section.offsetHeight - window.innerHeight;
 
-        if (totalDist <= 0) return;
-
-        // Scrolled distance within sticky track
-        const scrolledInside = stickyTop - rect.top;
-        const progress = Math.max(0, Math.min(1, scrolledInside / totalDist));
+        let progress = 0;
+        if (totalDist > 0) {
+            // Scrolled distance within sticky track
+            const scrolledInside = stickyTop - rect.top;
+            progress = Math.max(0, Math.min(1, scrolledInside / totalDist));
+        } else {
+            // Fallback: viewport intersection
+            const viewProgress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+            progress = Math.max(0, Math.min(1, viewProgress));
+        }
 
         // 3 steps: 0 (Heritage Bottle), 1 (Spout Pouch), 2 (Classic Bottle)
         let targetIndex = 0;
-        if (progress >= 0.62) {
+        if (progress >= 0.60) {
             targetIndex = 2;
-        } else if (progress >= 0.28) {
+        } else if (progress >= 0.25) {
             targetIndex = 1;
         } else {
             targetIndex = 0;
@@ -1126,57 +1173,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: true });
 
-    // Initial evaluation and window resize handler
+    document.addEventListener('scroll', evaluateScrollScrub, { passive: true });
     window.addEventListener('resize', evaluateScrollScrub);
-    setTimeout(evaluateScrollScrub, 150);
-})();
+    setTimeout(evaluateScrollScrub, 100);
+});
 
 // ==========================================
 // SPECIAL COMBO PACK CAROUSEL LOGIC
 // ==========================================
-const comboPacks = [
-    {
-        id: 'combo-1',
-        name: 'Millacoco Combo Duo Pack',
-        badge: 'KITCHEN & WELLNESS DUO',
-        subtitle: '1L Classic Cooking Oil + Virgin Hair Oil',
-        title: 'Healthy Kitchen.<br><span class="font-handwriting font-normal text-ambergold-300 text-4xl sm:text-5xl">Happy Family.</span>',
-        desc: '1 Ltr Classic Cooking Oil + Virgin Scalp & Skincare Oil with complimentary express delivery across India.',
-        price: 590,
-        oldPrice: 610,
-        image: 'images/combo_duo.jpg',
-        btnLabel: 'ORDER DUO PACK'
-    },
-    {
-        id: 'combo-2',
-        name: 'Millacoco 2L Twin Pack',
-        badge: 'HOUSEHOLD TWIN VALUE',
-        subtitle: '1L Classic Bottle x 2 Double Savings',
-        title: 'Twin Savings.<br><span class="font-handwriting font-normal text-ambergold-300 text-4xl sm:text-5xl">Everyday Pure.</span>',
-        desc: 'Two 1 Ltr Classic Cold Pressed Glass Bottles packed together with zero shipping charge and extra freshness seal.',
-        price: 570,
-        oldPrice: 580,
-        image: 'images/twin_pack.jpg',
-        btnLabel: 'ORDER TWIN PACK'
-    },
-    {
-        id: 'combo-3',
-        name: 'Millacoco 5L Master Culinary Pack',
-        badge: 'BULK VALUE MASTER',
-        subtitle: '5L Heavy Can + Free 500ml Kitchen Glass Jar',
-        title: 'Master Kitchen.<br><span class="font-handwriting font-normal text-ambergold-300 text-4xl sm:text-5xl">Direct Mill Value.</span>',
-        desc: '5 Ltr Heavy Duty Household Can with free refill dispenser. Ideal for joint families and authentic festive Malabar cooking.',
-        price: 1390,
-        oldPrice: 1450,
-        image: 'images/can_5ltr.jpg',
-        btnLabel: 'ORDER 5L PACK'
-    }
-];
-
-let currentComboIndex = 0;
-let comboCarouselTimer = null;
-const COMBO_AUTOPLAY_INTERVAL = 5000;
-
 function renderComboCarousel() {
     const slidesContainer = document.getElementById('combo-carousel-slides');
     const dotsContainer = document.getElementById('combo-carousel-dots');
@@ -1184,7 +1188,7 @@ function renderComboCarousel() {
 
     // Render slides
     slidesContainer.innerHTML = comboPacks.map((item, idx) => {
-        const isFav = isProductFavorited(item.name);
+        const isFav = favorites.some(f => f.title === item.name);
         return `
             <div class="w-full shrink-0 px-1">
                 <div class="bg-white/10 backdrop-blur-md p-5 rounded-3xl border border-white/20 text-center w-full shadow-2xl relative select-none">
@@ -1276,7 +1280,7 @@ function updateComboDisplay(index) {
     });
 
     // Sync favorite heart icons on slide
-    updateFavoriteButtonsUI();
+    updateFavoritesUI();
 }
 
 function nextComboSlide() {
