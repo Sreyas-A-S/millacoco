@@ -956,26 +956,23 @@ if (document.readyState === 'loading') {
         currentY += (mouseY - currentY) * 0.08;
 
         const rect = section.getBoundingClientRect();
-        const viewportCenter = window.innerHeight / 2;
-        const sectionCenter = rect.top + rect.height / 2;
-        const scrollFactor = (viewportCenter - sectionCenter) * 0.08;
 
-        // Animate each leaf according to its photographic optical depth
+        // Animate outer floating leaves based purely on mouse cursor
         leaves.forEach((leaf) => {
             const depth = parseFloat(leaf.getAttribute('data-depth')) || 0.1;
             const baseRot = parseFloat(leaf.getAttribute('data-rot')) || 0;
 
-            const transX = currentX * depth * 90;
-            const transY = (currentY * depth * 80) + (scrollFactor * depth * 40);
-            const extraRot = currentX * depth * 15;
+            const transX = currentX * depth * 80;
+            const transY = currentY * depth * 70;
+            const extraRot = currentX * depth * 12;
 
             leaf.style.transform = `translate3d(${transX.toFixed(2)}px, ${transY.toFixed(2)}px, 0) rotate(${(baseRot + extraRot).toFixed(1)}deg)`;
         });
 
         // Subtle 3D bottle perspective tilt
         if (bottleCard) {
-            const tiltX = -currentY * 6;
-            const tiltY = currentX * 7;
+            const tiltX = -currentY * 5;
+            const tiltY = currentX * 6;
             bottleCard.style.transform = `perspective(1000px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
         }
 
@@ -1142,25 +1139,24 @@ document.addEventListener('DOMContentLoaded', function initFlagshipScrollScrub()
 
     function evaluateScrollScrub() {
         const rect = section.getBoundingClientRect();
-        const stickyTop = 80; // sticky offset
+        // Distance from top of viewport to section top
+        const stickyTop = 72; 
         const totalDist = section.offsetHeight - window.innerHeight;
 
-        let progress = 0;
-        if (totalDist > 0) {
-            // Scrolled distance within sticky track
-            const scrolledInside = stickyTop - rect.top;
-            progress = Math.max(0, Math.min(1, scrolledInside / totalDist));
-        } else {
-            // Fallback: viewport intersection
-            const viewProgress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-            progress = Math.max(0, Math.min(1, viewProgress));
-        }
+        if (totalDist <= 0) return;
 
-        // 3 steps: 0 (Heritage Bottle), 1 (Spout Pouch), 2 (Classic Bottle)
+        // How much of the track has scrolled past the sticky anchor
+        const scrolledInside = stickyTop - rect.top;
+        const progress = Math.max(0, Math.min(1, scrolledInside / totalDist));
+
+        // 3 steps with comfortable scroll dwell windows:
+        // 0% - 33%: Heritage Bottle (Slide 0)
+        // 33% - 66%: Kitchen Spout Pouch (Slide 1)
+        // 66% - 100%: Classic Pure Bottle (Slide 2)
         let targetIndex = 0;
-        if (progress >= 0.60) {
+        if (progress >= 0.65) {
             targetIndex = 2;
-        } else if (progress >= 0.25) {
+        } else if (progress >= 0.32) {
             targetIndex = 1;
         } else {
             targetIndex = 0;
