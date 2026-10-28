@@ -134,6 +134,14 @@ function closeCartDrawer() {
 // Favorites State & Logic
 let favorites = [];
 
+function isProductFavorited(title) {
+    return favorites.some(item => item.title === title);
+}
+
+function updateFavoriteButtonsUI() {
+    updateFavoritesUI();
+}
+
 function toggleFavorite(event, title, price, image = '') {
     if (event) {
         event.stopPropagation();
