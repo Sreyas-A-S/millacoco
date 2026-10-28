@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360" fill="none">
+  <defs>
+    <linearGradient id="leafGrad1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4B7A38"/>
+      <stop offset="50%" stop-color="#2F5B23"/>
+      <stop offset="100%" stop-color="#1B3813"/>
+    </linearGradient>
+  </defs>
+  <path d="M20,340 Q140,140 340,40" stroke="#25471B" stroke-width="5" stroke-linecap="round"/>
+  <path d="M38.9,309.8 Q48.3,301.5 63.6,293.0" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M38.9,309.8 Q33.7,291.9 28.0,269.7" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M48.8,295.2 Q63.7,288.1 88.1,279.9" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M48.8,295.2 Q40.6,272.3 32.0,241.5" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M58.8,280.8 Q74.0,274.2 99.0,266.5" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M58.8,280.8 Q50.8,257.5 42.5,226.0" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M69.1,266.8 Q89.3,261.7 122.7,254.8" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M69.1,266.8 Q58.7,238.7 48.3,199.0" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M79.6,253.0 Q105.2,249.8 147.4,244.0" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M79.6,253.0 Q67.0,219.9 54.6,171.4" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M90.4,239.6 Q121.3,238.5 172.7,234.3" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M90.4,239.6 Q75.6,201.1 61.6,143.5" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M101.4,226.4 Q127.7,224.6 171.7,220.9" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M101.4,226.4 Q89.2,191.7 78.1,140.9" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M112.7,213.5 Q143.4,213.9 195.1,212.0" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M112.7,213.5 Q98.9,174.1 87.0,115.5" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M124.1,200.9 Q159.1,203.6 218.2,203.9" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M124.1,200.9 Q109.1,156.9 96.8,90.6" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M135.9,188.7 Q174.8,193.7 240.7,196.5" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M135.9,188.7 Q119.9,140.2 107.5,66.5" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M147.8,176.7 Q178.6,179.3 231.0,181.1" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M147.8,176.7 Q135.8,135.7 127.0,75.1" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M160.0,165.0 Q193.6,169.7 251.1,173.8" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M160.0,165.0 Q147.5,120.5 139.2,54.4" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M172.4,153.6 Q208.2,160.3 269.9,166.7" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M172.4,153.6 Q159.8,106.2 152.2,35.3" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M185.1,142.5 Q222.5,150.9 287.2,159.6" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M185.1,142.5 Q172.6,92.7 166.1,18.2" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M198.0,131.7 Q225.8,136.2 274.1,141.8" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M198.0,131.7 Q189.3,91.6 185.5,33.5" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M211.1,121.2 Q239.6,126.8 289.3,134.1" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M211.1,121.2 Q202.8,79.8 200.1,19.9" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M224.5,111.0 Q252.8,117.4 302.7,125.9" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M224.5,111.0 Q216.8,69.2 215.3,8.7" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M238.1,101.1 Q265.5,107.8 314.1,117.1" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M238.1,101.1 Q231.3,59.7 230.9,0.2" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M252.0,91.5 Q270.7,93.5 303.9,98.2" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M252.0,91.5 Q247.7,59.7 248.3,16.1" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M266.0,82.2 Q283.3,83.8 314.2,88.4" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M266.0,82.2 Q262.5,51.6 263.8,10.3" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M280.4,73.1 Q295.5,73.8 322.7,77.6" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M280.4,73.1 Q277.7,44.8 279.4,7.3" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M294.9,64.4 Q307.2,63.5 329.3,65.7" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M294.9,64.4 Q293.0,39.3 295.0,7.0" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M309.7,56.0 Q316.0,50.9 327.6,48.5" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M309.7,56.0 Q308.9,38.0 310.2,17.2" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M324.7,47.8 Q328.2,40.6 334.5,35.9" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M324.7,47.8 Q324.4,33.4 325.3,18.4" stroke="url(#leafGrad1)" stroke-width="4.5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,253 @@
+html {
+    scroll-behavior: smooth;
+}
+
+/* Millacoco - Royal Maroon & Warm Amber Gold Palette (#611B10, #D4A853, #FAF5EC) */
+:root {
+    --color-maroon: #611B10;
+    --color-maroon-dark: #3a0e07;
+    --color-gold: #D4A853;
+    --color-gold-light: #F4E8D0;
+    --color-cream: #FAF5EC;
+    --color-palm: #2E6F40;
+}
+
+body {
+    background-color: #FAF5EC;
+    color: #3a0e07;
+}
+
+.glass-pill {
+    background: rgba(250, 245, 236, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(212, 168, 83, 0.4);
+}
+
+.hero-gradient {
+    background: radial-gradient(circle at 70% 30%, rgba(212, 168, 83, 0.38) 0%, rgba(250, 245, 236, 0.96) 55%, #FAF5EC 100%);
+}
+
+.hero-bg-section {
+    background-image: url('images/hero_bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+}
+
+.hero-overlay {
+    background: linear-gradient(90deg, 
+        rgba(250, 245, 236, 0.96) 0%, 
+        rgba(250, 245, 236, 0.92) 36%, 
+        rgba(250, 245, 236, 0.60) 58%, 
+        rgba(250, 245, 236, 0.12) 78%, 
+        transparent 100%);
+}
+
+@media (max-width: 1023px) {
+    .hero-bg-section {
+        background-position: 68% center;
+    }
+    .hero-overlay {
+        background: linear-gradient(180deg, 
+            rgba(250, 245, 236, 0.95) 0%, 
+            rgba(250, 245, 236, 0.88) 55%, 
+            rgba(250, 245, 236, 0.35) 100%);
+    }
+}
+
+.golden-glow {
+    box-shadow: 0 0 70px 20px rgba(255, 255, 255, 0.95), 0 0 110px 40px rgba(212, 168, 83, 0.3);
+}
+
+/* High-Legibility Price Typography (Clean, Sharp Sans-Serif Tabular Numbers) */
+.price-tag,
+.price-value,
+.currency-price {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    letter-spacing: -0.01em;
+}
+
+/* Product Card Image Zoom Transition */
+.product-card-img {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover .product-card-img {
+    transform: scale(1.06);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #FAF5EC;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #D4A853;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #611B10;
+}
+
+/* Animations for Cart, Favorites and Interactions */
+@keyframes heartPop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.35); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+.heart-pop {
+    animation: heartPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes cartBadgeBounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.5) rotate(-12deg); }
+    60% { transform: scale(0.9) rotate(6deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+.cart-badge-bounce {
+    animation: cartBadgeBounce 0.45s ease-out;
+}
+
+@keyframes btnPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+.btn-press {
+    animation: btnPulse 0.3s ease-out;
+}
+
+/* Flying flying dot to cart */
+.flying-particle {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    border-radius: 9999px;
+    background-color: #D4A853;
+    box-shadow: 0 4px 12px rgba(97, 27, 16, 0.3);
+    transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.65s ease-in, width 0.65s ease, height 0.65s ease;
+}
+
+/* Footer Floral Vine & Leaves Pattern - Fades in from bottom in suitable grey */
+.footer-embroidery,
+.footer-botanical {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 320px;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url('images/botanical-pattern.svg');
+    background-repeat: repeat-x;
+    background-position: bottom center;
+    background-size: 400px 320px;
+    opacity: 0.42;
+    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.5) 50%, transparent 100%);
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.5) 50%, transparent 100%);
+}
+
+/* Preloader Transition */
+#preloader.preloader-hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 0.4s ease-out, visibility 0.4s;
+}
+
+/* Single-row Testimonial Carousel Scrollbar Hide & Grab styling */
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* ==========================================================================
+   FLAGSHIP BOTTLE SHOWCASE & PARALLAX FLOATING BOKEH LEAVES
+   ========================================================================== */
+.parallax-leaves-stage {
+    perspective: 1000px;
+}
+
+.parallax-leaf {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    transform-origin: center center;
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.4, 1);
+    will-change: transform;
+}
+
+/* Layered Bokeh Blur Tiers for true optical depth-of-field */
+.bokeh-leaf-fg {
+    filter: blur(13px) drop-shadow(0 20px 30px rgba(46, 111, 64, 0.22));
+    z-index: 30;
+    animation: leafSwayGentle 9s ease-in-out infinite alternate;
+}
+
+.bokeh-leaf-mg {
+    filter: blur(6px) drop-shadow(0 12px 18px rgba(46, 111, 64, 0.18));
+    z-index: 15;
+    animation: leafSwayReverse 11s ease-in-out infinite alternate;
+}
+
+.bokeh-leaf-bg {
+    filter: blur(3.5px);
+    z-index: 5;
+    animation: leafSwayGentle 14s ease-in-out infinite alternate;
+}
+
+.bokeh-leaf-far {
+    filter: blur(18px);
+    z-index: 2;
+    animation: leafSwayReverse 16s ease-in-out infinite alternate;
+}
+
+@keyframes leafSwayGentle {
+    0% {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+    50% {
+        margin-top: -14px;
+        margin-left: 8px;
+    }
+    100% {
+        margin-top: 10px;
+        margin-left: -6px;
+    }
+}
+
+@keyframes leafSwayReverse {
+    0% {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+    50% {
+        margin-top: 12px;
+        margin-left: -10px;
+    }
+    100% {
+        margin-top: -8px;
+        margin-left: 6px;
+    }
+}
+
+.bottle-display-wrapper {
+    perspective: 1200px;
+}
+

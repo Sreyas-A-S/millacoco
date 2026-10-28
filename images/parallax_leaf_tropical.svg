@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="340" viewBox="0 0 340 340" fill="none">
+  <defs>
+    <linearGradient id="frondGrad" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#1f4414"/>
+      <stop offset="50%" stop-color="#376b25"/>
+      <stop offset="100%" stop-color="#5a913e"/>
+    </linearGradient>
+  </defs>
+  <path d="M30,310 Q160,180 310,20" stroke="#224515" stroke-width="5" stroke-linecap="round"/>
+  <!-- Leaflets -->
+  <path d="M50,285 Q75,260 110,250 C95,270 70,290 50,285 Z" fill="url(#frondGrad)"/>
+  <path d="M75,255 Q105,225 155,215 C135,240 100,265 75,255 Z" fill="url(#frondGrad)"/>
+  <path d="M105,220 Q145,185 200,175 C175,205 135,235 105,220 Z" fill="url(#frondGrad)"/>
+  <path d="M140,180 Q185,145 250,135 C220,170 175,200 140,180 Z" fill="url(#frondGrad)"/>
+  <path d="M180,140 Q230,100 295,90 C265,125 215,155 180,140 Z" fill="url(#frondGrad)"/>
+  <path d="M225,95 Q270,60 325,50 C295,80 255,105 225,95 Z" fill="url(#frondGrad)"/>
+  <!-- Opposite leaflets -->
+  <path d="M75,255 Q60,225 50,195 C70,215 85,240 75,255 Z" fill="url(#frondGrad)"/>
+  <path d="M105,220 Q85,180 75,145 C100,175 115,205 105,220 Z" fill="url(#frondGrad)"/>
+  <path d="M140,180 Q115,135 105,95 C135,130 150,165 140,180 Z" fill="url(#frondGrad)"/>
+  <path d="M180,140 Q150,90 140,45 C170,85 190,120 180,140 Z" fill="url(#frondGrad)"/>
+</svg>
