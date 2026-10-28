@@ -373,166 +373,228 @@
             </div>
         </section>
 
-        <!-- FLAGSHIP BOTTLE SHOWCASE (DRIBBLE-STYLE HERO CARD WITH CUTOUT PNG & PARALLAX LEAVES) -->
-        <section id="flagship-bottle" class="relative my-16 sm:my-24 scroll-reveal">
+        <!-- FLAGSHIP BOTTLE SHOWCASE WITH SCROLL SCRUB SEQUENCE -->
+        <section id="flagship-bottle" class="relative my-8 sm:my-14 h-[260vh]">
             
-            <!-- Parallax Floating Blurred Bokeh Leaves (Outer floating leaves in foreground & background) -->
-            <div class="parallax-leaves-stage absolute -inset-6 sm:-inset-12 overflow-visible pointer-events-none z-30">
-                <!-- Leaf 1: Far top-left foreground (heavily blurred, out of focus) -->
-                <img src="images/parallax_leaf_tropical.svg" alt="" 
-                     class="parallax-leaf bokeh-leaf-fg absolute -top-12 -left-10 w-48 sm:w-64 md:w-80 opacity-80 transform -rotate-12" 
-                     data-depth="0.16" data-rot="-12">
-
-                <!-- Leaf 2: Top right corner (medium bokeh blur) -->
-                <img src="images/parallax_leaf_1.svg" alt="" 
-                     class="parallax-leaf bokeh-leaf-mg absolute -top-8 -right-8 w-44 sm:w-56 md:w-72 opacity-75 transform rotate-45 scale-x-[-1]" 
-                     data-depth="-0.12" data-rot="45">
-
-                <!-- Leaf 3: Mid-left drifting leaf (soft blur) -->
-                <img src="images/parallax_leaf_broad.svg" alt="" 
-                     class="parallax-leaf bokeh-leaf-bg absolute top-1/2 -left-12 w-36 sm:w-48 opacity-65 transform rotate-20" 
-                     data-depth="0.08" data-rot="20">
-
-                <!-- Leaf 4: Foreground bottom-right (deep blur) -->
-                <img src="images/parallax_leaf_broad.svg" alt="" 
-                     class="parallax-leaf bokeh-leaf-fg absolute -bottom-16 -right-10 w-52 sm:w-72 md:w-88 opacity-85 transform -rotate-45" 
-                     data-depth="-0.20" data-rot="-45">
-
-                <!-- Leaf 5: Bottom center-left (soft bokeh) -->
-                <img src="images/parallax_leaf_2.svg" alt="" 
-                     class="parallax-leaf bokeh-leaf-mg absolute -bottom-10 left-1/4 w-36 sm:w-52 opacity-65 transform rotate-75" 
-                     data-depth="0.10" data-rot="75">
-            </div>
-
-            <!-- The Master Card Container (Like the Dribbble Showcase Mockup) -->
-            <div class="relative bg-[#FAF5EC] rounded-[2.5rem] sm:rounded-[3.5rem] border border-stone-200/80 shadow-2xl overflow-hidden min-h-[500px] lg:min-h-[560px] flex items-center">
+            <!-- Sticky Showcase Stage -->
+            <div class="sticky-showcase-stage sticky top-12 sm:top-20 z-20">
                 
-                <!-- Organic Curved Split Background (Right side rich green wave) -->
-                <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
-                    <svg class="absolute right-0 top-0 h-full w-[60%] sm:w-[52%] lg:w-[48%] object-cover text-[#255729]" viewBox="0 0 500 600" preserveAspectRatio="none" fill="currentColor">
-                        <!-- Smooth natural S-curve dividing cream left and deep green right -->
-                        <path d="M140,0 C60,180 240,360 80,600 L500,600 L500,0 Z" fill="url(#greenGradient)" />
-                        <defs>
-                            <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#316e37" />
-                                <stop offset="50%" stop-color="#235429" />
-                                <stop offset="100%" stop-color="#16391a" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                    <!-- Subtle warm glow on green side -->
-                    <div class="absolute right-10 top-1/4 w-80 h-80 rounded-full bg-[#D4A853]/15 blur-3xl pointer-events-none"></div>
+                <!-- Parallax Floating Blurred Bokeh Leaves (Outer floating leaves in foreground & background) -->
+                <div class="parallax-leaves-stage absolute -inset-6 sm:-inset-12 overflow-visible pointer-events-none z-30">
+                    <!-- Leaf 1: Far top-left foreground (heavily blurred, out of focus) -->
+                    <img src="images/parallax_leaf_tropical.svg" alt="" 
+                         class="parallax-leaf bokeh-leaf-fg absolute -top-12 -left-10 w-48 sm:w-64 md:w-80 opacity-80 transform -rotate-12" 
+                         data-depth="0.16" data-rot="-12">
+
+                    <!-- Leaf 2: Top right corner (medium bokeh blur) -->
+                    <img src="images/parallax_leaf_1.svg" alt="" 
+                         class="parallax-leaf bokeh-leaf-mg absolute -top-8 -right-8 w-44 sm:w-56 md:w-72 opacity-75 transform rotate-45 scale-x-[-1]" 
+                         data-depth="-0.12" data-rot="45">
+
+                    <!-- Leaf 3: Mid-left drifting leaf (soft blur) -->
+                    <img src="images/parallax_leaf_broad.svg" alt="" 
+                         class="parallax-leaf bokeh-leaf-bg absolute top-1/2 -left-12 w-36 sm:w-48 opacity-65 transform rotate-20" 
+                         data-depth="0.08" data-rot="20">
+
+                    <!-- Leaf 4: Foreground bottom-right (deep blur) -->
+                    <img src="images/parallax_leaf_broad.svg" alt="" 
+                         class="parallax-leaf bokeh-leaf-fg absolute -bottom-16 -right-10 w-52 sm:w-72 md:w-88 opacity-85 transform -rotate-45" 
+                         data-depth="-0.20" data-rot="-45">
+
+                    <!-- Leaf 5: Bottom center-left (soft bokeh) -->
+                    <img src="images/parallax_leaf_2.svg" alt="" 
+                         class="parallax-leaf bokeh-leaf-mg absolute -bottom-10 left-1/4 w-36 sm:w-52 opacity-65 transform rotate-75" 
+                         data-depth="0.10" data-rot="75">
                 </div>
 
-                <!-- Main Grid Layout -->
-                <div class="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center px-8 sm:px-14 lg:px-16 py-12 sm:py-16">
+                <!-- The Master Card Container (Dribbble Showcase Mockup) -->
+                <div class="relative bg-[#FAF5EC] rounded-[2.5rem] sm:rounded-[3.5rem] border border-stone-200/80 shadow-2xl overflow-hidden min-h-[500px] lg:min-h-[560px] flex items-center">
                     
-                    <!-- Left Side: Clean Minimal Typography & CTA -->
-                    <div class="lg:col-span-6 space-y-4 sm:space-y-5 text-left max-w-lg">
-                        
-                        <!-- Small script handwriting accent -->
-                        <div class="flex items-center gap-2">
-                            <span class="font-handwriting text-sage-700 text-xl sm:text-2xl font-semibold tracking-wide">
-                                Cold Pressed Heritage
-                            </span>
-                        </div>
-
-                        <!-- Big Bold Clean Headline -->
-                        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#16391a] font-normal tracking-tight leading-[1.08]">
-                            Cold Pressed<br>
-                            <span class="font-bold text-[#611B10]">Coconut Oil</span>
-                        </h2>
-
-                        <!-- Subtitle -->
-                        <p class="text-base sm:text-lg font-medium text-sage-900 leading-snug">
-                            Maximum purity in every drop
-                        </p>
-
-                        <!-- Short clean description -->
-                        <p class="text-xs sm:text-sm text-sage-700/90 leading-relaxed max-w-md">
-                            Single-press cold expeller milled from sun-dried Kuttiyadi copra at Kozhikode. Pure aroma, zero chemicals, and natural coastal goodness.
-                        </p>
-
-                        <!-- Two Pill Buttons (Primary filled pill + Secondary outline pill) -->
-                        <div class="flex flex-wrap items-center gap-3.5 pt-3">
-                            <!-- Primary Pill Button -->
-                            <button onclick="addToCart('Millacoco 1 Ltr Glass Bottle Signature', 340, 'images/flagship_bottle_cutout.png', event)" class="bg-[#2E6F40] hover:bg-[#235732] text-white font-sans font-semibold text-xs sm:text-sm px-7 py-3.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2">
-                                <span>Order Now</span>
-                                <span class="opacity-50">•</span>
-                                <span class="price-tag font-bold tracking-tight">₹340.00</span>
-                            </button>
-
-                            <!-- Secondary Outline Pill Button -->
-                            <a href="#bestsellers" class="border border-sage-400/80 hover:border-sage-800 text-sage-800 hover:text-sage-900 font-sans font-medium text-xs sm:text-sm px-6 py-3.5 rounded-full transition-all duration-300 hover:bg-white/60 active:scale-95">
-                                Special Packs
-                            </a>
-                        </div>
+                    <!-- Organic Curved Split Background (Right side rich green wave) -->
+                    <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+                        <svg class="absolute right-0 top-0 h-full w-[60%] sm:w-[52%] lg:w-[48%] object-cover text-[#255729]" viewBox="0 0 500 600" preserveAspectRatio="none" fill="currentColor">
+                            <path d="M140,0 C60,180 240,360 80,600 L500,600 L500,0 Z" fill="url(#greenGradient)" />
+                            <defs>
+                                <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#316e37" />
+                                    <stop offset="50%" stop-color="#235429" />
+                                    <stop offset="100%" stop-color="#16391a" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <!-- Subtle warm glow on green side -->
+                        <div class="absolute right-10 top-1/4 w-80 h-80 rounded-full bg-[#D4A853]/15 blur-3xl pointer-events-none"></div>
                     </div>
 
-                    <!-- Right Side: Big Cutout PNG with White Contour Rings -->
-                    <div class="lg:col-span-6 relative flex items-center justify-center pt-4 lg:pt-0">
+                    <!-- Main Grid Layout -->
+                    <div class="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center px-6 sm:px-14 lg:px-16 py-10 sm:py-14">
                         
-                        <!-- White Concentric Contour Rings (Signature detail behind cutout) -->
-                        <div class="absolute w-72 sm:w-96 lg:w-[28rem] h-72 sm:h-96 lg:h-[28rem] rounded-full border border-white/20 pointer-events-none"></div>
-                        <div class="absolute w-84 sm:w-[26rem] lg:w-[32rem] h-84 sm:h-[26rem] lg:h-[32rem] rounded-full border border-white/10 pointer-events-none"></div>
-                        
-                        <!-- Bottle Display Wrapper (Interactive Cutout PNG) -->
-                        <div class="bottle-display-wrapper relative z-10 cursor-pointer transform hover:scale-[1.03] transition duration-500">
-                            <!-- Cutout PNG directly on canvas without rectangular borders -->
-                            <img src="images/flagship_bottle_cutout.png" 
-                                 alt="Millacoco Cold Pressed Coconut Oil Bottle Cutout with Fresh Coconut" 
-                                 class="w-full max-w-xs sm:max-w-sm lg:max-w-md h-auto max-h-[440px] sm:max-h-[500px] object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.30)] select-none pointer-events-auto">
+                        <!-- Left Side: Clean Minimal Typography & Scrub Controls -->
+                        <div class="lg:col-span-6 space-y-3.5 sm:space-y-4 text-left max-w-lg">
+                            
+                            <!-- Interactive Scrub Tabs (Reflects scroll scrub or direct click) -->
+                            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1">
+                                <button type="button" onclick="scrubToSlide(0)" class="scrub-tab active px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold tracking-wider uppercase transition-all duration-300" data-slide="0">
+                                    01 Bottle
+                                </button>
+                                <button type="button" onclick="scrubToSlide(1)" class="scrub-tab px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold tracking-wider uppercase transition-all duration-300" data-slide="1">
+                                    02 Pouch
+                                </button>
+                                <button type="button" onclick="scrubToSlide(2)" class="scrub-tab px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold tracking-wider uppercase transition-all duration-300" data-slide="2">
+                                    03 Classic
+                                </button>
+                                <span class="text-[10px] text-sage-600 font-medium ml-1.5 hidden md:inline-flex items-center gap-1">
+                                    <i class="fa-solid fa-arrows-up-down text-[9px] text-[#2E6F40] animate-bounce"></i> Scroll to scrub
+                                </span>
+                            </div>
+
+                            <!-- Small script handwriting accent -->
+                            <div>
+                                <span id="scrub-script" class="font-handwriting text-sage-700 text-xl sm:text-2xl font-semibold tracking-wide transition-opacity duration-300">
+                                    The Signature Flagship
+                                </span>
+                            </div>
+
+                            <!-- Big Bold Clean Headline -->
+                            <h2 id="scrub-title" class="text-3xl sm:text-5xl lg:text-6xl font-serif text-[#16391a] font-normal tracking-tight leading-[1.08] transition-opacity duration-300 min-h-[2.4em] flex items-center">
+                                <span>Cold Pressed<br><span class="font-bold text-[#611B10]">Coconut Oil</span></span>
+                            </h2>
+
+                            <!-- Subtitle -->
+                            <p id="scrub-subtitle" class="text-base sm:text-lg font-medium text-sage-900 leading-snug transition-opacity duration-300">
+                                Maximum purity in every drop
+                            </p>
+
+                            <!-- Short clean description -->
+                            <p id="scrub-desc" class="text-xs sm:text-sm text-sage-700/90 leading-relaxed max-w-md transition-opacity duration-300 min-h-[3.6em]">
+                                Single-press cold expeller milled from sun-dried Kuttiyadi copra at Kozhikode. Pure aroma, zero chemicals, and natural coastal goodness.
+                            </p>
+
+                            <!-- Two Pill Buttons -->
+                            <div class="flex flex-wrap items-center gap-3.5 pt-2">
+                                <!-- Primary Pill Button -->
+                                <button id="scrub-order-btn" onclick="orderCurrentScrubProduct(event)" class="bg-[#2E6F40] hover:bg-[#235732] text-white font-sans font-semibold text-xs sm:text-sm px-7 py-3.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2">
+                                    <span>Order Now</span>
+                                    <span class="opacity-50">•</span>
+                                    <span id="scrub-price" class="price-tag font-bold tracking-tight">₹340.00</span>
+                                </button>
+
+                                <!-- Secondary Outline Pill Button -->
+                                <a href="#bestsellers" class="border border-sage-400/80 hover:border-sage-800 text-sage-800 hover:text-sage-900 font-sans font-medium text-xs sm:text-sm px-6 py-3.5 rounded-full transition-all duration-300 hover:bg-white/60 active:scale-95">
+                                    Special Packs
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Right Side: Cutout PNG Layered Stage with White Contour Rings -->
+                        <div class="lg:col-span-6 relative flex items-center justify-center pt-4 lg:pt-0">
+                            
+                            <!-- White Concentric Contour Rings -->
+                            <div class="absolute w-72 sm:w-96 lg:w-[28rem] h-72 sm:h-96 lg:h-[28rem] rounded-full border border-white/20 pointer-events-none"></div>
+                            <div class="absolute w-84 sm:w-[26rem] lg:w-[32rem] h-84 sm:h-[26rem] lg:h-[32rem] rounded-full border border-white/10 pointer-events-none"></div>
+                            
+                            <!-- Bottle Display Wrapper (Interactive Cutout PNGs for Scroll Scrub) -->
+                            <div class="bottle-display-wrapper relative z-10 cursor-pointer w-full max-w-xs sm:max-w-sm lg:max-w-md h-[340px] sm:h-[440px] lg:h-[480px] flex items-center justify-center">
+                                
+                                <!-- Slide 0: Heritage Bottle Cutout with Cracked Coconut -->
+                                <img id="scrub-img-0" src="images/flagship_bottle_cutout.png" 
+                                     alt="Millacoco Cold Pressed Coconut Oil Bottle Cutout with Fresh Coconut" 
+                                     class="scrub-product-img active absolute inset-0 m-auto w-full h-full object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.30)] select-none">
+
+                                <!-- Slide 1: Kitchen Spout Pouch Cutout (Product 1) -->
+                                <img id="scrub-img-1" src="images/product_pouch_cutout.png" 
+                                     alt="Millacoco 1 Ltr Easy Pour Kitchen Spout Pouch Cutout" 
+                                     class="scrub-product-img absolute inset-0 m-auto w-full h-full object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.30)] select-none">
+
+                                <!-- Slide 2: Classic Pure Bottle Cutout (Product 2) -->
+                                <img id="scrub-img-2" src="images/product_bottle_cutout.png" 
+                                     alt="Millacoco 1 Ltr Classic Pure Coconut Oil Bottle Cutout" 
+                                     class="scrub-product-img absolute inset-0 m-auto w-full h-full object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.30)] select-none">
+                            </div>
+
                         </div>
 
                     </div>
 
-                </div>
+                    <!-- Bottom-Left Peeking Leaves Accent -->
+                    <div class="absolute -bottom-8 -left-8 w-28 sm:w-36 opacity-70 pointer-events-none z-10 transform -rotate-12">
+                        <img src="images/parallax_leaf_tropical.svg" alt="" class="w-full h-full">
+                    </div>
 
-                <!-- Bottom-Left Peeking Leaves Accent -->
-                <div class="absolute -bottom-8 -left-8 w-28 sm:w-36 opacity-70 pointer-events-none z-10 transform -rotate-12">
-                    <img src="images/parallax_leaf_tropical.svg" alt="" class="w-full h-full">
                 </div>
 
             </div>
         </section>
 
-        <!-- FEATURED COMBO BANNER WITH REAL COMBO IMAGE -->
+        <!-- FEATURED COMBO BANNER WITH INTERACTIVE CAROUSEL -->
         <section id="bestsellers" class="mb-16 scroll-reveal">
             <div class="bg-gradient-to-r from-sage-800 via-sage-900 to-sage-800 rounded-[2.5rem] p-8 sm:p-12 text-white relative overflow-hidden shadow-xl border border-white/10">
+                <!-- Ambient glow -->
+                <div class="absolute -top-24 -right-24 w-72 h-72 bg-ambergold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
                     
+                    <!-- Left: Dynamic details synced with current slide -->
                     <div class="lg:col-span-7 space-y-4">
-                        <span class="bg-ambergold-400 text-sage-900 text-[10px] font-extrabold tracking-widest uppercase px-3 py-1 rounded-full">SPECIAL COMBO PACK</span>
-                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif leading-tight">
+                        <div class="flex items-center space-x-3">
+                            <span class="bg-ambergold-400 text-sage-900 text-[10px] font-extrabold tracking-widest uppercase px-3 py-1 rounded-full shadow-sm">SPECIAL COMBO PACK</span>
+                            <span id="combo-carousel-counter" class="text-xs font-mono text-sage-300 bg-white/10 px-2.5 py-0.5 rounded-full border border-white/15">01 / 03</span>
+                        </div>
+
+                        <h2 id="combo-title" class="text-3xl sm:text-4xl lg:text-5xl font-serif leading-tight min-h-[5rem] transition-opacity duration-300">
                             Healthy Kitchen.<br>
                             <span class="font-handwriting font-normal text-ambergold-300 text-4xl sm:text-5xl">Happy Family.</span>
                         </h2>
-                        <p class="text-xs sm:text-sm text-sage-200 max-w-sm leading-relaxed">
-                            1 Ltr Classic Cooking Oil + Virgin Skincare Oil with complimentary express delivery.
+
+                        <p id="combo-desc" class="text-xs sm:text-sm text-sage-200 max-w-md leading-relaxed min-h-[2.5rem] transition-opacity duration-300">
+                            1 Ltr Classic Cooking Oil + Virgin Scalp &amp; Skincare Oil with complimentary express delivery.
                         </p>
-                        <div class="flex items-center space-x-4 pt-2">
-                            <button onclick="addToCart('Millacoco Combo Duo Pack', 590, 'images/combo_duo.jpg', event)" class="relative group overflow-hidden bg-ambergold-400 hover:bg-ambergold-300 text-sage-900 font-bold px-7 py-3.5 rounded-full text-xs transition shadow-lg flex items-center space-x-2 active:scale-95">
+
+                        <div class="flex flex-wrap items-center gap-4 pt-2">
+                            <button id="combo-order-btn" onclick="orderCurrentCombo(event)" class="relative group overflow-hidden bg-ambergold-400 hover:bg-ambergold-300 text-sage-900 font-bold px-7 py-3.5 rounded-full text-xs transition shadow-lg flex items-center space-x-2 active:scale-95">
                                 <span class="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 animate-shimmer pointer-events-none"></span>
-                                <span class="relative z-10 inline-flex items-center gap-1.5 font-sans tracking-wide"><span>ORDER DUO PACK</span><span>•</span><span class="price-tag font-extrabold text-xs tracking-normal">₹590.00</span></span>
+                                <span class="relative z-10 inline-flex items-center gap-1.5 font-sans tracking-wide">
+                                    <span id="combo-btn-label">ORDER DUO PACK</span>
+                                    <span>•</span>
+                                    <span id="combo-btn-price" class="price-tag font-extrabold text-xs tracking-normal">₹590.00</span>
+                                </span>
                                 <i class="fa-solid fa-arrow-right text-xs relative z-10 group-hover:translate-x-1 transition-transform duration-200"></i>
                             </button>
+
+                            <!-- Carousel Navigation Controls -->
+                            <div class="flex items-center space-x-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15">
+                                <button onclick="prevComboSlide()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/25 active:scale-90 text-white flex items-center justify-center transition" title="Previous Combo" aria-label="Previous Combo">
+                                    <i class="fa-solid fa-chevron-left text-xs"></i>
+                                </button>
+                                <div id="combo-carousel-dots" class="flex items-center space-x-1.5 px-1">
+                                    <!-- Dots injected dynamically by script.js -->
+                                </div>
+                                <button onclick="nextComboSlide()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/25 active:scale-90 text-white flex items-center justify-center transition" title="Next Combo" aria-label="Next Combo">
+                                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
+                    <!-- Right: Product Card Carousel -->
                     <div class="lg:col-span-5 flex justify-center">
-                        <div class="bg-white/10 backdrop-blur-md p-5 rounded-3xl border border-white/20 text-center w-full max-w-xs shadow-2xl relative">
-                            <button onclick="toggleFavorite(event, 'Millacoco Combo Duo Pack', 590, 'images/combo_duo.jpg')" class="fav-btn-toggle absolute top-3.5 right-3.5 z-10 w-7 h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco Combo Duo Pack">
-                                <i class="fa-regular fa-heart text-xs"></i>
+                        <div id="combo-carousel-wrapper" class="relative w-full max-w-xs group" onmouseenter="pauseComboCarousel()" onmouseleave="resumeComboCarousel()">
+                            
+                            <!-- Slide viewport -->
+                            <div class="relative overflow-hidden rounded-3xl">
+                                <div id="combo-carousel-slides" class="flex transition-transform duration-500 ease-out">
+                                    <!-- Combo slides injected dynamically by script.js -->
+                                </div>
+                            </div>
+
+                            <!-- Carousel overlay arrows for touch/desktop quick click -->
+                            <button onclick="prevComboSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-sage-950/70 hover:bg-sage-950 text-white flex items-center justify-center shadow-md backdrop-blur-sm transition-transform hover:scale-105 active:scale-95" aria-label="Previous">
+                                <i class="fa-solid fa-chevron-left text-xs"></i>
                             </button>
-                            <div class="aspect-square w-full rounded-2xl overflow-hidden mb-3 border border-white/20">
-                                <img src="images/combo_duo.jpg" alt="Millacoco Combo Duo Pack" class="w-full h-full object-cover">
-                            </div>
-                            <h4 class="font-serif font-bold text-base text-white">Millacoco Combo Pack</h4>
-                            <p class="text-xs text-sage-200 mt-0.5">1L Classic Cooking Oil + Virgin Hair Oil</p>
-                            <div class="mt-3 pt-3 border-t border-white/10 flex items-center justify-between text-xs">
-                                <span class="price-tag line-through text-sage-400">₹610.00</span>
-                                <span class="price-tag text-ambergold-300 font-bold text-base">₹590.00</span>
-                            </div>
+                            <button onclick="nextComboSlide()" class="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-sage-950/70 hover:bg-sage-950 text-white flex items-center justify-center shadow-md backdrop-blur-sm transition-transform hover:scale-105 active:scale-95" aria-label="Next">
+                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </button>
                         </div>
                     </div>
 

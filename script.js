@@ -658,6 +658,9 @@ function initApp() {
 
     // Single-row Auto-sliding Testimonials Carousel
     initTestimonialsCarousel();
+
+    // Special Combo Pack Interactive Carousel
+    initComboCarousel();
 }
 
 // Hardware-Accelerated Smooth Infinite Auto-Slide Testimonials
@@ -943,4 +946,386 @@ if (document.readyState === 'loading') {
     // Trigger initial frame
     requestAnimationFrame(updateParallax);
 })();
+
+// ==========================================
+// FLAGSHIP PRODUCT SCROLL SCRUB CONTROLLER
+// ==========================================
+const scrubSlides = [
+    {
+        name: 'Cold Pressed Coconut Oil Heritage Bottle (1L)',
+        script: 'The Signature Flagship',
+        title: 'Cold Pressed<br><span class="font-bold text-[#611B10]">Coconut Oil</span>',
+        subtitle: 'Maximum purity in every drop',
+        desc: 'Single-press cold expeller milled from sun-dried Kuttiyadi copra at Kozhikode. Pure aroma, zero chemicals, and natural coastal goodness.',
+        priceDisplay: '₹340.00',
+        rawPrice: 340,
+        image: 'images/flagship_bottle_cutout.png'
+    },
+    {
+        name: 'Easy-Pour Kitchen Spout Pouch (1L)',
+        script: 'Kitchen Smart Pouch',
+        title: 'Easy-Pour Spout<br><span class="font-bold text-[#611B10]">Refill Pouch</span>',
+        subtitle: '100% Pure Kozhikode Milling',
+        desc: 'Durable leak-proof spout pouch crafted for daily culinary use. Retains authentic wood-pressed freshness, zero spillage, and eco-smart packaging.',
+        priceDisplay: '₹280.00',
+        rawPrice: 280,
+        image: 'images/product_pouch_cutout.png'
+    },
+    {
+        name: 'Classic Pure Coconut Oil Bottle (1L)',
+        script: 'Pure Malabar Classic',
+        title: 'Classic Pure<br><span class="font-bold text-[#611B10]">Coconut Oil</span>',
+        subtitle: 'Traditional wood expeller cold pressed',
+        desc: 'Everyday traditional cold-pressed oil in an ergonomic family bottle with stay-fresh seal. Unrefined, unbleached, and naturally packed with lauric acid.',
+        priceDisplay: '₹290.00',
+        rawPrice: 290,
+        image: 'images/product_bottle_cutout.png'
+    }
+];
+
+let currentScrubIndex = 0;
+let isScrubTransitioning = false;
+
+function setScrubSlide(targetIndex, updateScroll = false) {
+    if (targetIndex < 0 || targetIndex >= scrubSlides.length) return;
+    if (targetIndex === currentScrubIndex && !updateScroll) return;
+
+    currentScrubIndex = targetIndex;
+    const data = scrubSlides[targetIndex];
+
+    // 1. Update Tab Pills
+    const tabs = document.querySelectorAll('.scrub-tab');
+    tabs.forEach((tab, idx) => {
+        if (idx === targetIndex) {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
+        }
+    });
+
+    // 2. Transition Images (Cross-fade & Scale)
+    for (let i = 0; i < scrubSlides.length; i++) {
+        const img = document.getElementById(`scrub-img-${i}`);
+        if (!img) continue;
+
+        if (i === targetIndex) {
+            img.classList.remove('opacity-0', 'scale-90', 'translate-y-8', 'pointer-events-none');
+            img.classList.add('opacity-100', 'scale-100', 'translate-y-0', 'pointer-events-auto');
+        } else {
+            img.classList.remove('opacity-100', 'scale-100', 'translate-y-0', 'pointer-events-auto');
+            img.classList.add('opacity-0', 'scale-90', 'translate-y-8', 'pointer-events-none');
+        }
+    }
+
+    // 3. Subtle Text Cross-fade
+    const scriptEl = document.getElementById('scrub-script');
+    const titleEl = document.getElementById('scrub-title');
+    const subtitleEl = document.getElementById('scrub-subtitle');
+    const descEl = document.getElementById('scrub-desc');
+    const priceEl = document.getElementById('scrub-price');
+
+    const textEls = [scriptEl, titleEl, subtitleEl, descEl, priceEl].filter(Boolean);
+    
+    textEls.forEach(el => {
+        el.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(4px)';
+    });
+
+    setTimeout(() => {
+        if (scriptEl) scriptEl.innerHTML = data.script;
+        if (titleEl) titleEl.innerHTML = `<span>${data.title}</span>`;
+        if (subtitleEl) subtitleEl.innerHTML = data.subtitle;
+        if (descEl) descEl.innerHTML = data.desc;
+        if (priceEl) priceEl.innerText = data.priceDisplay;
+
+        textEls.forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        });
+    }, 180);
+}
+
+// Click Handler for Scrub Tabs
+window.scrubToSlide = function(targetIndex) {
+    setScrubSlide(targetIndex);
+    const section = document.getElementById('flagship-bottle');
+    if (section) {
+        const rect = section.getBoundingClientRect();
+        const currentScrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+        const sectionTop = currentScrollY + rect.top;
+        const totalDist = section.offsetHeight - window.innerHeight;
+
+        if (totalDist > 0) {
+            const ratios = [0.05, 0.45, 0.85];
+            const targetY = sectionTop - 60 + (totalDist * ratios[targetIndex]);
+            window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+        }
+    }
+};
+
+// Order Button Handler for Flagship Showcase
+window.orderCurrentScrubProduct = function(event) {
+    const product = scrubSlides[currentScrubIndex];
+    if (product) {
+        addToCart(product.name, product.rawPrice, product.image, event);
+    }
+};
+
+// Interactive click on bottle display to advance slide
+document.addEventListener('DOMContentLoaded', () => {
+    const displayWrapper = document.querySelector('.bottle-display-wrapper');
+    if (displayWrapper) {
+        displayWrapper.addEventListener('click', () => {
+            const nextIndex = (currentScrubIndex + 1) % scrubSlides.length;
+            window.scrubToSlide(nextIndex);
+        });
+    }
+});
+
+// Scroll Scrub Listener
+(function initFlagshipScrollScrub() {
+    const section = document.getElementById('flagship-bottle');
+    if (!section) return;
+
+    let scrubTicking = false;
+
+    function evaluateScrollScrub() {
+        const rect = section.getBoundingClientRect();
+        const stickyTop = 75; // sticky offset
+        const totalDist = section.offsetHeight - window.innerHeight;
+
+        if (totalDist <= 0) return;
+
+        // Scrolled distance within sticky track
+        const scrolledInside = stickyTop - rect.top;
+        const progress = Math.max(0, Math.min(1, scrolledInside / totalDist));
+
+        // 3 steps: 0 (Heritage Bottle), 1 (Spout Pouch), 2 (Classic Bottle)
+        let targetIndex = 0;
+        if (progress >= 0.62) {
+            targetIndex = 2;
+        } else if (progress >= 0.28) {
+            targetIndex = 1;
+        } else {
+            targetIndex = 0;
+        }
+
+        if (targetIndex !== currentScrubIndex) {
+            setScrubSlide(targetIndex);
+        }
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!scrubTicking) {
+            window.requestAnimationFrame(() => {
+                evaluateScrollScrub();
+                scrubTicking = false;
+            });
+            scrubTicking = true;
+        }
+    }, { passive: true });
+
+    // Initial evaluation and window resize handler
+    window.addEventListener('resize', evaluateScrollScrub);
+    setTimeout(evaluateScrollScrub, 150);
+})();
+
+// ==========================================
+// SPECIAL COMBO PACK CAROUSEL LOGIC
+// ==========================================
+const comboPacks = [
+    {
+        id: 'combo-1',
+        name: 'Millacoco Combo Duo Pack',
+        badge: 'KITCHEN & WELLNESS DUO',
+        subtitle: '1L Classic Cooking Oil + Virgin Hair Oil',
+        title: 'Healthy Kitchen.<br><span class="font-handwriting font-normal text-ambergold-300 text-4xl sm:text-5xl">Happy Family.</span>',
+        desc: '1 Ltr Classic Cooking Oil + Virgin Scalp & Skincare Oil with complimentary express delivery across India.',
+        price: 590,
+        oldPrice: 610,
+        image: 'images/combo_duo.jpg',
+        btnLabel: 'ORDER DUO PACK'
+    },
+    {
+        id: 'combo-2',
+        name: 'Millacoco 2L Twin Pack',
+        badge: 'HOUSEHOLD TWIN VALUE',
+        subtitle: '1L Classic Bottle x 2 Double Savings',
+        title: 'Twin Savings.<br><span class="font-handwriting font-normal text-ambergold-300 text-4xl sm:text-5xl">Everyday Pure.</span>',
+        desc: 'Two 1 Ltr Classic Cold Pressed Glass Bottles packed together with zero shipping charge and extra freshness seal.',
+        price: 570,
+        oldPrice: 580,
+        image: 'images/twin_pack.jpg',
+        btnLabel: 'ORDER TWIN PACK'
+    },
+    {
+        id: 'combo-3',
+        name: 'Millacoco 5L Master Culinary Pack',
+        badge: 'BULK VALUE MASTER',
+        subtitle: '5L Heavy Can + Free 500ml Kitchen Glass Jar',
+        title: 'Master Kitchen.<br><span class="font-handwriting font-normal text-ambergold-300 text-4xl sm:text-5xl">Direct Mill Value.</span>',
+        desc: '5 Ltr Heavy Duty Household Can with free refill dispenser. Ideal for joint families and authentic festive Malabar cooking.',
+        price: 1390,
+        oldPrice: 1450,
+        image: 'images/can_5ltr.jpg',
+        btnLabel: 'ORDER 5L PACK'
+    }
+];
+
+let currentComboIndex = 0;
+let comboCarouselTimer = null;
+const COMBO_AUTOPLAY_INTERVAL = 5000;
+
+function renderComboCarousel() {
+    const slidesContainer = document.getElementById('combo-carousel-slides');
+    const dotsContainer = document.getElementById('combo-carousel-dots');
+    if (!slidesContainer) return;
+
+    // Render slides
+    slidesContainer.innerHTML = comboPacks.map((item, idx) => {
+        const isFav = isProductFavorited(item.name);
+        return `
+            <div class="w-full shrink-0 px-1">
+                <div class="bg-white/10 backdrop-blur-md p-5 rounded-3xl border border-white/20 text-center w-full shadow-2xl relative select-none">
+                    <button onclick="toggleFavorite(event, '${item.name.replace(/'/g, "\\'")}', ${item.price}, '${item.image}')" 
+                            class="fav-btn-toggle absolute top-3.5 right-3.5 z-10 w-7 h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" 
+                            title="Add to Favorites" 
+                            data-title="${item.name}">
+                        <i class="${isFav ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'} text-xs"></i>
+                    </button>
+                    <div class="aspect-square w-full rounded-2xl overflow-hidden mb-3 border border-white/20 bg-sage-900/40">
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <span class="inline-block text-[9px] uppercase tracking-widest font-extrabold text-ambergold-300 bg-white/10 px-2 py-0.5 rounded-full mb-1 border border-white/10">
+                        ${item.badge}
+                    </span>
+                    <h4 class="font-serif font-bold text-base text-white truncate">${item.name}</h4>
+                    <p class="text-xs text-sage-200 mt-0.5 line-clamp-1">${item.subtitle}</p>
+                    <div class="mt-3 pt-3 border-t border-white/10 flex items-center justify-between text-xs">
+                        <span class="price-tag line-through text-sage-400">₹${item.oldPrice}.00</span>
+                        <span class="price-tag text-ambergold-300 font-bold text-base">₹${item.price}.00</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    // Render navigation dots
+    if (dotsContainer) {
+        dotsContainer.innerHTML = comboPacks.map((_, idx) => `
+            <button onclick="goToComboSlide(${idx})" 
+                    class="combo-dot h-2 rounded-full transition-all duration-300 ${idx === currentComboIndex ? 'w-6 bg-ambergold-400' : 'w-2 bg-white/30 hover:bg-white/60'}" 
+                    aria-label="Slide ${idx + 1}">
+            </button>
+        `).join('');
+    }
+
+    updateComboDisplay(currentComboIndex);
+}
+
+function updateComboDisplay(index) {
+    currentComboIndex = (index + comboPacks.length) % comboPacks.length;
+    const item = comboPacks[currentComboIndex];
+
+    // Slide transform
+    const slidesContainer = document.getElementById('combo-carousel-slides');
+    if (slidesContainer) {
+        slidesContainer.style.transform = `translateX(-${currentComboIndex * 100}%)`;
+    }
+
+    // Left copy updates with gentle fade
+    const titleEl = document.getElementById('combo-title');
+    const descEl = document.getElementById('combo-desc');
+    const labelEl = document.getElementById('combo-btn-label');
+    const priceEl = document.getElementById('combo-btn-price');
+    const counterEl = document.getElementById('combo-carousel-counter');
+
+    if (titleEl) {
+        titleEl.style.opacity = '0';
+        setTimeout(() => {
+            titleEl.innerHTML = item.title;
+            titleEl.style.opacity = '1';
+        }, 150);
+    }
+
+    if (descEl) {
+        descEl.style.opacity = '0';
+        setTimeout(() => {
+            descEl.innerHTML = item.desc;
+            descEl.style.opacity = '1';
+        }, 150);
+    }
+
+    if (labelEl) labelEl.textContent = item.btnLabel;
+    if (priceEl) priceEl.textContent = `₹${item.price}.00`;
+    if (counterEl) {
+        const curPad = String(currentComboIndex + 1).padStart(2, '0');
+        const totPad = String(comboPacks.length).padStart(2, '0');
+        counterEl.textContent = `${curPad} / ${totPad}`;
+    }
+
+    // Update dot styles
+    const dots = document.querySelectorAll('.combo-dot');
+    dots.forEach((dot, idx) => {
+        if (idx === currentComboIndex) {
+            dot.className = 'combo-dot h-2 rounded-full transition-all duration-300 w-6 bg-ambergold-400';
+        } else {
+            dot.className = 'combo-dot h-2 rounded-full transition-all duration-300 w-2 bg-white/30 hover:bg-white/60';
+        }
+    });
+
+    // Sync favorite heart icons on slide
+    updateFavoriteButtonsUI();
+}
+
+function nextComboSlide() {
+    updateComboDisplay(currentComboIndex + 1);
+    restartComboAutoplay();
+}
+
+function prevComboSlide() {
+    updateComboDisplay(currentComboIndex - 1);
+    restartComboAutoplay();
+}
+
+function goToComboSlide(idx) {
+    updateComboDisplay(idx);
+    restartComboAutoplay();
+}
+
+function orderCurrentCombo(event) {
+    const item = comboPacks[currentComboIndex];
+    if (item) {
+        addToCart(item.name, item.price, item.image, event);
+    }
+}
+
+function pauseComboCarousel() {
+    if (comboCarouselTimer) {
+        clearInterval(comboCarouselTimer);
+        comboCarouselTimer = null;
+    }
+}
+
+function resumeComboCarousel() {
+    pauseComboCarousel();
+    comboCarouselTimer = setInterval(() => {
+        updateComboDisplay(currentComboIndex + 1);
+    }, COMBO_AUTOPLAY_INTERVAL);
+}
+
+function restartComboAutoplay() {
+    resumeComboCarousel();
+}
+
+function initComboCarousel() {
+    const section = document.getElementById('bestsellers');
+    if (!section) return;
+
+    renderComboCarousel();
+    resumeComboCarousel();
+}
+
+
 
