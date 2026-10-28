@@ -432,8 +432,8 @@ function filterProducts(category) {
 
 // Master Products Data for Search
 const productCatalog = [
-    { name: 'Millacoco 500 ml Glass Bottle', price: 150, image: 'images/bottle_500ml.jpg', tag: 'Daily Use', desc: '500 ml Glass Bottle' },
-    { name: 'Millacoco 1 Ltr Classic Bottle', price: 290, image: 'images/bottle_1ltr.jpg', tag: 'Bestseller', desc: '1 Ltr Classic Cold Pressed' },
+    { name: 'Millacoco 1 Ltr Kitchen Pouch', price: 280, image: 'images/product_pouch.png', tag: 'Spout Pouch', desc: '1 Ltr Easy Pour Kitchen Pouch' },
+    { name: 'Millacoco 1 Ltr Classic Bottle', price: 290, image: 'images/product_bottle.png', tag: 'Bestseller', desc: '1 Ltr Pure Cold Pressed Bottle' },
     { name: 'Millacoco 2 Ltr Twin Pack (1L x 2)', price: 570, image: 'images/twin_pack.jpg', tag: 'Twin Value', desc: 'Twin Pack 2 Litres' },
     { name: 'Millacoco 5 Ltr Household Can', price: 1390, image: 'images/can_5ltr.jpg', tag: 'Bulk Supply', desc: '5 Ltr Heavy Can' },
     { name: 'Millacoco Virgin Hair & Face Oil', price: 320, image: 'images/virgin_oil.jpg', tag: 'Skincare', desc: 'Virgin Hair & Scalp Oil' },

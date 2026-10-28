@@ -44,15 +44,28 @@ body {
         transparent 100%);
 }
 
-@media (max-width: 1023px) {
+@media (min-width: 768px) and (max-width: 1023px) {
     .hero-bg-section {
-        background-position: 68% center;
+        background-position: 70% center;
     }
     .hero-overlay {
         background: linear-gradient(180deg, 
             rgba(250, 245, 236, 0.95) 0%, 
-            rgba(250, 245, 236, 0.88) 55%, 
-            rgba(250, 245, 236, 0.35) 100%);
+            rgba(250, 245, 236, 0.85) 50%, 
+            rgba(250, 245, 236, 0.25) 100%);
+    }
+}
+
+@media (max-width: 767px) {
+    .hero-bg-section {
+        background-position: 76% 40%;
+    }
+    .hero-overlay {
+        background: linear-gradient(180deg, 
+            rgba(250, 245, 236, 0.94) 0%, 
+            rgba(250, 245, 236, 0.80) 36%, 
+            rgba(250, 245, 236, 0.12) 58%, 
+            rgba(30, 10, 5, 0.40) 100%);
     }
 }
 
