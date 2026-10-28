@@ -1,13 +1,13 @@
 html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100vw;
 }
 
 body {
     background-color: #FAF5EC;
     color: #3a0e07;
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100vw;
     position: relative;
 }
