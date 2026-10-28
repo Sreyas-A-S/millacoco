@@ -79,8 +79,8 @@
                     <a href="#bestsellers" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
                         Packs & Savings
                     </a>
-                    <a href="#heritage" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
-                        Why Millacoco
+                    <a href="#reviews" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
+                        Reviews
                     </a>
                     <a href="#footer" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
                         Contact
@@ -139,23 +139,23 @@
                     <a href="#hero" class="py-2 rounded-xl bg-sage-800 text-white">Home</a>
                     <a href="#categories" class="py-2 hover:bg-white/60 rounded-xl">Shop Sizes</a>
                     <a href="#bestsellers" class="py-2 hover:bg-white/60 rounded-xl">Packs & Offers</a>
-                    <a href="#heritage" class="py-2 hover:bg-white/60 rounded-xl">Why Millacoco</a>
+                    <a href="#reviews" class="py-2 hover:bg-white/60 rounded-xl">Reviews</a>
                     <a href="#footer" class="py-2 hover:bg-white/60 rounded-xl">Contact Us</a>
                 </div>
             </div>
         </header>
 
         <!-- HERO SECTION -->
-        <section id="hero" class="relative hero-bg-section rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-8 lg:p-10 xl:p-12 mb-10 sm:mb-14 border border-white/80 overflow-hidden shadow-lg lg:min-h-[calc(100vh-6.25rem)] lg:flex lg:flex-col lg:justify-center">
+        <section id="hero" class="relative hero-bg-section rounded-[2rem] sm:rounded-[2.5rem] p-5 sm:p-8 lg:p-10 xl:p-12 mb-8 sm:mb-14 border border-white/80 overflow-hidden shadow-lg min-h-[500px] sm:min-h-[560px] lg:min-h-[calc(100vh-6.25rem)] flex flex-col justify-between lg:justify-center">
             
             <!-- Readability Gradient Overlay -->
             <div class="hero-overlay absolute inset-0 pointer-events-none z-0"></div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center relative z-10 w-full">
                 
                 <!-- Left Content -->
-                <div class="lg:col-span-6 space-y-3.5 sm:space-y-4 xl:space-y-5">
-                    <div class="inline-flex items-center space-x-2.5 text-[11px] sm:text-xs tracking-widest text-[#611B10] font-bold uppercase">
+                <div class="lg:col-span-6 space-y-3 sm:space-y-4 xl:space-y-5">
+                    <div class="inline-flex items-center space-x-2 text-[10px] sm:text-xs tracking-widest text-[#611B10] font-bold uppercase">
                         <span>HANDPICKED KUTTIYADI COPRA</span>
                         <span class="w-8 sm:w-12 h-[1px] bg-[#D4A853]"></span>
                     </div>
@@ -163,23 +163,24 @@
                     <h1 id="hero-title" class="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl font-serif text-[#611B10] leading-[1.12] font-normal">
                         Pure Kerala.<br>
                         Rich Aroma.<br>
-                        <span class="font-handwriting font-semibold text-4xl sm:text-5xl lg:text-5xl xl:text-6xl text-[#611B10] block mt-0.5 sm:mt-1">
+                        <span class="font-handwriting font-semibold text-3xl xs:text-4xl sm:text-5xl lg:text-5xl xl:text-6xl text-[#611B10] block mt-0.5 sm:mt-1">
                             Nourish Naturally.
                         </span>
                     </h1>
 
-                    <p class="text-xs sm:text-sm text-sage-900/85 max-w-sm leading-relaxed font-medium">
-                        Pure Kerala coconut oil from handpicked Kuttiyadi copra. Natural culinary taste, glowing skin, and deep hair nourishment.
+                    <p class="text-xs sm:text-sm text-sage-900/85 max-w-xs sm:max-w-sm leading-relaxed font-medium">
+                        Pure Kerala coconut oil from handpicked Kuttiyadi copra. Natural culinary taste & deep hair nourishment.
                     </p>
 
-                    <div class="flex flex-wrap items-center gap-3 pt-1">
+                    <div class="flex flex-wrap items-center gap-3 pt-0.5 sm:pt-1">
                         <a href="#categories" class="relative group overflow-hidden inline-flex items-center space-x-2.5 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-serif font-semibold text-xs sm:text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:scale-95 border border-[#D4A853]/40">
                             <span class="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 animate-shimmer pointer-events-none"></span>
                             <span class="relative z-10">SHOP PRODUCTS</span>
                             <i class="fa-solid fa-arrow-right text-xs relative z-10 group-hover:translate-x-1 transition-transform duration-200"></i>
                         </a>
 
-                        <button id="video-modal-btn" class="inline-flex items-center space-x-2.5 text-[#611B10] font-medium text-xs sm:text-sm px-3 py-2 hover:text-[#782315] transition group active:scale-95">
+                        <!-- Hidden on small mobile to keep mobile hero uncluttered and clean -->
+                        <button id="video-modal-btn" class="hidden sm:inline-flex items-center space-x-2.5 text-[#611B10] font-medium text-xs sm:text-sm px-3 py-2 hover:text-[#782315] transition group active:scale-95">
                             <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/95 flex items-center justify-center shadow-md group-hover:scale-110 transition duration-300 text-[#D4A853] border border-[#D4A853]/30">
                                 <i class="fa-solid fa-play text-[10px] ml-0.5 group-hover:scale-125 transition-transform duration-200"></i>
                             </span>
@@ -190,8 +191,8 @@
                         </button>
                     </div>
 
-                    <!-- 4 Quality Badges -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-4 sm:pt-5 border-t border-[#611B10]/15 mt-3 sm:mt-4">
+                    <!-- 4 Quality Badges (Hidden on mobile to expose background bottle, visible on sm and up) -->
+                    <div class="hidden sm:grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-4 sm:pt-5 border-t border-[#611B10]/15 mt-3 sm:mt-4">
                         <div class="flex items-center space-x-2">
                             <div class="w-8 h-8 rounded-full bg-white/95 flex items-center justify-center text-[#611B10] text-xs shadow-sm shrink-0 border border-[#D4A853]/30">
                                 <i class="fa-solid fa-leaf"></i>
@@ -223,27 +224,29 @@
                 </div>
 
                 <!-- Right Hero Area (Highlights background bottle & Kerala scenery with subtle accents) -->
-                <div class="lg:col-span-6 relative flex flex-col justify-between items-end min-h-[260px] sm:min-h-[340px] lg:min-h-[440px] p-2 pointer-events-none">
+                <div class="lg:col-span-6 relative flex flex-col justify-end lg:justify-between items-center lg:items-end min-h-[140px] sm:min-h-[220px] lg:min-h-[440px] p-2 pointer-events-none mt-2 lg:mt-0">
                     
-                    <!-- Floating Heritage Origin Seal Top-Right -->
-                    <div class="pointer-events-auto bg-white/90 backdrop-blur-md px-4 py-2 rounded-full border border-[#D4A853]/50 shadow-md flex items-center gap-2 transform hover:scale-105 transition duration-300">
+                    <!-- Floating Heritage Origin Seal Top-Right (Desktop Only) -->
+                    <div class="hidden lg:flex pointer-events-auto bg-white/90 backdrop-blur-md px-4 py-2 rounded-full border border-[#D4A853]/50 shadow-md items-center gap-2 transform hover:scale-105 transition duration-300">
                         <i class="fa-solid fa-certificate text-[#D4A853] text-sm"></i>
                         <span class="text-xs font-serif font-bold text-[#611B10]">Authentic Malabar Origin</span>
                     </div>
 
-                    <!-- Floating Quick-Cart Action Chip Bottom-Right -->
-                    <div class="pointer-events-auto bg-[#611B10]/95 backdrop-blur-md text-white p-3 sm:p-3.5 rounded-2xl border border-[#D4A853]/50 shadow-2xl flex items-center gap-3 transform hover:-translate-y-1 transition duration-300">
-                        <div class="w-9 h-9 rounded-xl bg-[#D4A853]/20 border border-[#D4A853]/40 flex items-center justify-center text-[#D4A853] text-sm shrink-0">
-                            <i class="fa-solid fa-droplet"></i>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-1.5">
-                                <span class="text-xs font-bold text-white tracking-wide">Pure 1L Bottle</span>
-                                <span class="text-[10px] bg-[#D4A853] text-[#611B10] font-extrabold px-1.5 py-0.5 rounded">₹290</span>
+                    <!-- Floating Quick-Cart Action Chip Bottom-Right (Compact on mobile, docked cleanly) -->
+                    <div class="pointer-events-auto bg-[#611B10]/95 backdrop-blur-md text-white px-3.5 py-2.5 sm:p-3.5 rounded-2xl border border-[#D4A853]/50 shadow-2xl flex items-center justify-between sm:justify-start gap-3 w-full sm:w-auto max-w-xs mx-auto sm:mr-0 transform hover:-translate-y-1 transition duration-300">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#D4A853]/20 border border-[#D4A853]/40 flex items-center justify-center text-[#D4A853] text-xs sm:text-sm shrink-0">
+                                <i class="fa-solid fa-droplet"></i>
                             </div>
-                            <p class="text-[10px] text-white/80">Cold Expeller Milled • Kuttiyadi</p>
+                            <div>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="text-xs font-bold text-white tracking-wide">Pure 1L Bottle</span>
+                                    <span class="price-tag text-[10px] bg-[#D4A853] text-[#611B10] font-extrabold px-1.5 py-0.5 rounded">₹290</span>
+                                </div>
+                                <p class="text-[10px] text-white/80 hidden xs:block">Cold Expeller Milled • Kuttiyadi</p>
+                            </div>
                         </div>
-                        <button onclick="addToCart('Millacoco Pure Coconut Oil (1 Ltr)', 290, 'images/product_bottle.png', event)" class="bg-[#D4A853] hover:bg-[#c29643] text-[#611B10] px-3.5 py-1.5 rounded-full text-xs font-bold transition shadow-sm active:scale-95 shrink-0 flex items-center gap-1">
+                        <button onclick="addToCart('Millacoco Pure Coconut Oil (1 Ltr)', 290, 'images/product_bottle.png', event)" class="bg-[#D4A853] hover:bg-[#c29643] text-[#611B10] px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-bold transition shadow-sm active:scale-95 shrink-0 flex items-center gap-1">
                             <i class="fa-solid fa-cart-plus text-[11px]"></i>
                             <span>Add</span>
                         </button>
@@ -460,8 +463,8 @@
                             </button>
 
                             <!-- Secondary Outline Pill Button -->
-                            <a href="#heritage" class="border border-sage-400/80 hover:border-sage-800 text-sage-800 hover:text-sage-900 font-sans font-medium text-xs sm:text-sm px-6 py-3.5 rounded-full transition-all duration-300 hover:bg-white/60 active:scale-95">
-                                Explore Craft
+                            <a href="#bestsellers" class="border border-sage-400/80 hover:border-sage-800 text-sage-800 hover:text-sage-900 font-sans font-medium text-xs sm:text-sm px-6 py-3.5 rounded-full transition-all duration-300 hover:bg-white/60 active:scale-95">
+                                Special Packs
                             </a>
                         </div>
                     </div>
@@ -488,61 +491,6 @@
                 <!-- Bottom-Left Peeking Leaves Accent -->
                 <div class="absolute -bottom-8 -left-8 w-28 sm:w-36 opacity-70 pointer-events-none z-10 transform -rotate-12">
                     <img src="images/parallax_leaf_tropical.svg" alt="" class="w-full h-full">
-                </div>
-
-            </div>
-        </section>
-
-        <!-- KERALA HERITAGE & QUALITY SECTION WITH REAL COPRA IMAGE -->
-        <section id="heritage" class="relative bg-white rounded-[2.5rem] p-6 sm:p-10 lg:p-14 mb-16 border border-sage-200/60 shadow-lg overflow-hidden scroll-reveal">
-            
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-                
-                <!-- Left Visual Showcase with Authentic Photo -->
-                <div class="lg:col-span-6 relative flex items-center justify-center order-2 lg:order-1">
-                    <div class="relative w-full max-w-lg rounded-3xl overflow-hidden shadow-xl border-4 border-white">
-                        <img src="images/copra_heritage.jpg" alt="Traditional Kerala Kuttiyadi Copra at Millacoco Oil Mill" class="w-full h-72 sm:h-84 object-cover transform hover:scale-105 transition duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-5">
-                            <div class="text-white">
-                                <span class="bg-ambergold-400 text-sage-900 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Kuttiyadi Copra</span>
-                                <p class="text-xs sm:text-sm font-medium mt-1">Sun-dried coconut halves ready for cold expeller milling at Kozhikode</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Details Text -->
-                <div class="lg:col-span-6 space-y-4 order-1 lg:order-2 text-center lg:text-left">
-                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-sage-900 leading-tight">
-                        Pure Kerala Goodness.<br>
-                        <span class="font-handwriting font-semibold text-4xl sm:text-5xl text-sage-700 block mt-1">
-                            Puthalampurath Mill Tradition.
-                        </span>
-                    </h2>
-
-                    <p class="text-xs sm:text-sm text-sage-800/80 max-w-md mx-auto lg:mx-0 leading-relaxed">
-                        Cold expeller milled at Puthalampurath Oil Mill in Melur, Kozhikode. Sun-dried Kuttiyadi copra filtered for authentic Malabar recipes and everyday family wellness.
-                    </p>
-
-                    <div class="grid grid-cols-2 gap-3 pt-2 max-w-md mx-auto lg:mx-0 text-left">
-                        <div class="bg-sage-50/70 p-4 rounded-2xl border border-sage-200/50 shadow-xs">
-                            <i class="fa-solid fa-tree text-sage-700 text-base mb-1"></i>
-                            <h5 class="text-xs font-bold text-sage-900">Kuttiyadi Copra</h5>
-                            <p class="text-[11px] text-sage-600 mt-0.5">High fat content and sweet tropical fragrance.</p>
-                        </div>
-                        <div class="bg-sage-50/70 p-4 rounded-2xl border border-sage-200/50 shadow-xs">
-                            <i class="fa-solid fa-droplet text-ambergold-500 text-base mb-1"></i>
-                            <h5 class="text-xs font-bold text-sage-900">Sulphur Free</h5>
-                            <p class="text-[11px] text-sage-600 mt-0.5">Naturally sun-dried with zero chemical bleaching.</p>
-                        </div>
-                    </div>
-
-                    <div class="pt-2 flex items-center justify-center lg:justify-start space-x-4">
-                        <a href="#categories" class="inline-flex items-center space-x-3 bg-sage-800 hover:bg-sage-900 text-white px-7 py-3.5 rounded-full font-medium text-sm transition shadow-md hover:shadow-lg">
-                            <span>EXPLORE ALL PACKS</span>
-                            <i class="fa-solid fa-arrow-right text-xs"></i>
-                        </a>
-                    </div>
                 </div>
 
             </div>
@@ -762,8 +710,8 @@
                         <ul class="space-y-2 text-sage-300">
                             <li><a href="#hero" class="hover:text-white transition">Home</a></li>
                             <li><a href="#categories" class="hover:text-white transition">Shop Products</a></li>
-                            <li><a href="#heritage" class="hover:text-white transition">Quality Standard</a></li>
                             <li><a href="#bestsellers" class="hover:text-white transition">Combo Deals</a></li>
+                            <li><a href="#reviews" class="hover:text-white transition">Customer Reviews</a></li>
                         </ul>
                     </div>
                     <div class="space-y-3">
