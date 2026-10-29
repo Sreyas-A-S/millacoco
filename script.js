@@ -438,6 +438,41 @@ function filterProducts(category) {
     });
 }
 
+// Mobile Toggle "View All" vs "Horizontal Scroll"
+let isViewAllMobile = false;
+function toggleViewAllProducts() {
+    const grid = document.getElementById('product-grid');
+    const btnText = document.getElementById('view-all-text');
+    if (!grid) return;
+
+    isViewAllMobile = !isViewAllMobile;
+
+    if (isViewAllMobile) {
+        // Switch to multi-column vertical grid on mobile
+        grid.classList.remove('flex', 'overflow-x-auto', 'snap-x', 'snap-mandatory', '-mx-4', 'px-4');
+        grid.classList.add('grid', 'grid-cols-2', 'mx-0', 'px-0');
+        
+        // Remove fixed width shrink-0 on mobile cards
+        grid.querySelectorAll('.product-card').forEach(c => {
+            c.classList.remove('shrink-0', 'w-[185px]', 'xs:w-[205px]');
+            c.classList.add('w-full');
+        });
+
+        if (btnText) btnText.textContent = 'Slide View';
+    } else {
+        // Return to side-scrolling carousel
+        grid.classList.remove('grid', 'grid-cols-2', 'mx-0', 'px-0');
+        grid.classList.add('flex', 'overflow-x-auto', 'snap-x', 'snap-mandatory', '-mx-4', 'px-4');
+        
+        grid.querySelectorAll('.product-card').forEach(c => {
+            c.classList.remove('w-full');
+            c.classList.add('shrink-0', 'w-[185px]', 'xs:w-[205px]');
+        });
+
+        if (btnText) btnText.textContent = 'View All';
+    }
+}
+
 // Master Products Data for Search
 const productCatalog = [
     { name: 'Millacoco 1 Ltr Kitchen Pouch', price: 280, image: 'images/product_pouch.png', tag: 'Spout Pouch', desc: '1 Ltr Easy Pour Kitchen Pouch' },
@@ -715,20 +750,78 @@ function initApp() {
     initComboCarousel();
 }
 
-// Hardware-Accelerated Smooth Infinite Auto-Slide Testimonials
+// Modern Testimonials Slider Logic
+let currentTestimonialIndex = 0;
+function getVisibleTestimonialsCount() {
+    if (window.innerWidth >= 1024) return 3; // Desktop
+    if (window.innerWidth >= 640) return 2;  // Tablet
+    return 1;                                // Mobile
+}
+
+function updateTestimonialsSlider() {
+    const slider = document.getElementById('testimonials-slider');
+    if (!slider) return;
+
+    const cards = slider.children;
+    const total = cards.length;
+    const visibleCount = getVisibleTestimonialsCount();
+    const maxIndex = Math.max(0, total - visibleCount);
+
+    if (currentTestimonialIndex > maxIndex) {
+        currentTestimonialIndex = 0;
+    } else if (currentTestimonialIndex < 0) {
+        currentTestimonialIndex = maxIndex;
+    }
+
+    const percentagePerCard = 100 / visibleCount;
+    slider.style.transform = `translateX(-${currentTestimonialIndex * percentagePerCard}%)`;
+}
+
+function nextTestimonialSlide() {
+    const slider = document.getElementById('testimonials-slider');
+    if (!slider) return;
+    const total = slider.children.length;
+    const visibleCount = getVisibleTestimonialsCount();
+    const maxIndex = Math.max(0, total - visibleCount);
+
+    currentTestimonialIndex = currentTestimonialIndex >= maxIndex ? 0 : currentTestimonialIndex + 1;
+    updateTestimonialsSlider();
+}
+
+function prevTestimonialSlide() {
+    const slider = document.getElementById('testimonials-slider');
+    if (!slider) return;
+    const total = slider.children.length;
+    const visibleCount = getVisibleTestimonialsCount();
+    const maxIndex = Math.max(0, total - visibleCount);
+
+    currentTestimonialIndex = currentTestimonialIndex <= 0 ? maxIndex : currentTestimonialIndex - 1;
+    updateTestimonialsSlider();
+}
+
 function initTestimonialsCarousel() {
-    const track = document.getElementById('testimonials-track');
-    if (!track) return;
+    const slider = document.getElementById('testimonials-slider');
+    if (!slider) return;
 
-    // Duplicate all items once for seamless continuous infinite scroll
-    const originalItems = Array.from(track.children);
-    originalItems.forEach(item => {
-        const clone = item.cloneNode(true);
-        track.appendChild(clone);
-    });
+    window.addEventListener('resize', updateTestimonialsSlider);
+    updateTestimonialsSlider();
 
-    // Apply Tailwind marquee animation class
-    track.classList.add('animate-marquee', 'hover:[animation-play-state:paused]');
+    // Touch swipe support for testimonials on mobile
+    let startX = 0;
+    slider.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    slider.addEventListener('touchend', (e) => {
+        const diffX = e.changedTouches[0].clientX - startX;
+        if (Math.abs(diffX) > 40) {
+            if (diffX < 0) {
+                nextTestimonialSlide();
+            } else {
+                prevTestimonialSlide();
+            }
+        }
+    }, { passive: true });
 }
 
 // Scroll Reveal with Tailwind transitions
@@ -1183,37 +1276,46 @@ document.addEventListener('DOMContentLoaded', function initFlagshipScrollScrub()
 });
 
 // ==========================================
-// SPECIAL COMBO PACK CAROUSEL LOGIC
+// VISION PRO 3D COVER FLOW COMBO CAROUSEL LOGIC
 // ==========================================
 function renderComboCarousel() {
-    const slidesContainer = document.getElementById('combo-carousel-slides');
+    const cardsContainer = document.getElementById('combo-coverflow-cards');
     const dotsContainer = document.getElementById('combo-carousel-dots');
-    if (!slidesContainer) return;
+    if (!cardsContainer) return;
 
-    // Render slides
-    slidesContainer.innerHTML = comboPacks.map((item, idx) => {
+    // Render 3D Cover Flow Glass Cards
+    cardsContainer.innerHTML = comboPacks.map((item, idx) => {
         const isFav = favorites.some(f => f.title === item.name);
         return `
-            <div class="w-full shrink-0 px-1">
-                <div class="bg-white/10 backdrop-blur-md p-5 rounded-3xl border border-white/20 text-center w-full shadow-2xl relative select-none">
-                    <button onclick="toggleFavorite(event, '${item.name.replace(/'/g, "\\'")}', ${item.price}, '${item.image}')" 
-                            class="fav-btn-toggle absolute top-3.5 right-3.5 z-10 w-7 h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" 
-                            title="Add to Favorites" 
-                            data-title="${item.name}">
-                        <i class="${isFav ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'} text-xs"></i>
-                    </button>
-                    <div class="aspect-square w-full rounded-2xl overflow-hidden mb-3 border border-white/20 bg-sage-900/40">
-                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                    </div>
-                    <span class="inline-block text-[9px] uppercase tracking-widest font-extrabold text-ambergold-300 bg-white/10 px-2 py-0.5 rounded-full mb-1 border border-white/10">
-                        ${item.badge}
-                    </span>
-                    <h4 class="font-serif font-bold text-base text-white truncate">${item.name}</h4>
-                    <p class="text-xs text-sage-200 mt-0.5 line-clamp-1">${item.subtitle}</p>
-                    <div class="mt-3 pt-3 border-t border-white/10 flex items-center justify-between text-xs">
-                        <span class="price-tag line-through text-sage-400">₹${item.oldPrice}.00</span>
-                        <span class="price-tag text-ambergold-300 font-bold text-base">₹${item.price}.00</span>
-                    </div>
+            <div id="coverflow-card-${idx}" 
+                 onclick="goToComboSlide(${idx})" 
+                 class="coverflow-card p-4 sm:p-5 text-center select-none shadow-2xl transition-all"
+                 data-index="${idx}">
+                
+                <!-- Heart Favorite Pill -->
+                <button onclick="toggleFavorite(event, '${item.name.replace(/'/g, "\\'")}', ${item.price}, '${item.image}')" 
+                        class="fav-btn-toggle absolute top-3.5 right-3.5 z-20 w-8 h-8 rounded-full bg-white/95 text-stone-600 hover:text-rose-500 shadow-md flex items-center justify-center transition-transform hover:scale-110 active:scale-90" 
+                        title="Add to Favorites" 
+                        data-title="${item.name}">
+                    <i class="${isFav ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'} text-xs"></i>
+                </button>
+
+                <!-- Product Photo Frame -->
+                <div class="aspect-square w-full rounded-2xl overflow-hidden mb-3.5 border border-white/20 bg-stone-900/60 shadow-inner">
+                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover pointer-events-none transition-transform duration-700 hover:scale-105">
+                </div>
+
+                <!-- Product Details -->
+                <span class="inline-block text-[9px] uppercase tracking-wider font-extrabold text-[#D4A853] bg-white/10 px-2.5 py-0.5 rounded-full mb-1.5 border border-white/15">
+                    ${item.badge}
+                </span>
+                <h4 class="font-serif font-bold text-sm sm:text-base text-white truncate drop-shadow-sm">${item.name}</h4>
+                <p class="text-[11px] sm:text-xs text-stone-300 mt-0.5 line-clamp-1">${item.subtitle}</p>
+
+                <!-- Pricing Row -->
+                <div class="mt-3 pt-2.5 border-t border-white/15 flex items-center justify-between text-xs">
+                    <span class="price-tag line-through text-stone-400 text-xs">₹${item.oldPrice}.00</span>
+                    <span class="price-tag text-[#D4A853] font-extrabold text-sm sm:text-base tracking-tight">₹${item.price}.00</span>
                 </div>
             </div>
         `;
@@ -1223,7 +1325,7 @@ function renderComboCarousel() {
     if (dotsContainer) {
         dotsContainer.innerHTML = comboPacks.map((_, idx) => `
             <button onclick="goToComboSlide(${idx})" 
-                    class="combo-dot h-2 rounded-full transition-all duration-300 ${idx === currentComboIndex ? 'w-6 bg-ambergold-400' : 'w-2 bg-white/30 hover:bg-white/60'}" 
+                    class="combo-dot h-2 rounded-full transition-all duration-300 ${idx === currentComboIndex ? 'w-6 bg-[#D4A853]' : 'w-2 bg-white/30 hover:bg-white/60'}" 
                     aria-label="Slide ${idx + 1}">
             </button>
         `).join('');
@@ -1235,12 +1337,31 @@ function renderComboCarousel() {
 function updateComboDisplay(index) {
     currentComboIndex = (index + comboPacks.length) % comboPacks.length;
     const item = comboPacks[currentComboIndex];
+    const total = comboPacks.length;
 
-    // Slide transform
-    const slidesContainer = document.getElementById('combo-carousel-slides');
-    if (slidesContainer) {
-        slidesContainer.style.transform = `translateX(-${currentComboIndex * 100}%)`;
-    }
+    // Apply Vision Pro 3D coverflow states: center, prev, next
+    comboPacks.forEach((_, idx) => {
+        const cardEl = document.getElementById(`coverflow-card-${idx}`);
+        if (!cardEl) return;
+
+        cardEl.classList.remove('is-active', 'is-prev', 'is-next');
+
+        // Distance from current in a loop
+        let diff = (idx - currentComboIndex) % total;
+        if (diff < -Math.floor(total / 2)) diff += total;
+        if (diff > Math.floor(total / 2)) diff -= total;
+
+        if (diff === 0) {
+            cardEl.classList.add('is-active');
+        } else if (diff === -1 || (total === 2 && diff < 0)) {
+            cardEl.classList.add('is-prev');
+        } else if (diff === 1 || (total === 2 && diff > 0)) {
+            cardEl.classList.add('is-next');
+        } else {
+            // Further items hide smoothly behind
+            cardEl.classList.add(diff < 0 ? 'is-prev' : 'is-next');
+        }
+    });
 
     // Left copy updates with gentle fade
     const titleEl = document.getElementById('combo-title');
@@ -1277,7 +1398,7 @@ function updateComboDisplay(index) {
     const dots = document.querySelectorAll('.combo-dot');
     dots.forEach((dot, idx) => {
         if (idx === currentComboIndex) {
-            dot.className = 'combo-dot h-2 rounded-full transition-all duration-300 w-6 bg-ambergold-400';
+            dot.className = 'combo-dot h-2 rounded-full transition-all duration-300 w-6 bg-[#D4A853]';
         } else {
             dot.className = 'combo-dot h-2 rounded-full transition-all duration-300 w-2 bg-white/30 hover:bg-white/60';
         }
@@ -1333,6 +1454,33 @@ function initComboCarousel() {
 
     renderComboCarousel();
     resumeComboCarousel();
+
+    // Touch Swipe Support for silky smooth mobile & tablet gestures
+    const stage = document.getElementById('combo-coverflow-stage');
+    if (stage) {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const SWIPE_THRESHOLD = 40;
+
+        stage.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            pauseComboCarousel();
+        }, { passive: true });
+
+        stage.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchEndX - touchStartX;
+            if (Math.abs(diff) > SWIPE_THRESHOLD) {
+                if (diff < 0) {
+                    nextComboSlide();
+                } else {
+                    prevComboSlide();
+                }
+            } else {
+                resumeComboCarousel();
+            }
+        }, { passive: true });
+    }
 }
 
 

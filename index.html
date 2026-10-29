@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Millacoco - Pure Kerala Coconut Oil & Wellness</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+    <link rel="alternate icon" type="image/png" href="images/favicon.png">
+    <link rel="shortcut icon" href="favicon.ico">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="script.js" defer></script>
@@ -21,9 +25,9 @@
     <!-- SIMPLE MINIMAL PRELOADER -->
     <div id="preloader" class="fixed inset-0 z-[99999] bg-[#FAF5EC] flex flex-col items-center justify-center transition-all duration-500 ease-out select-none">
         <div class="flex flex-col items-center text-center space-y-4">
-            <!-- Subtle Brand Icon -->
-            <div class="w-12 h-12 rounded-2xl bg-sage-800 text-ambergold-400 flex items-center justify-center font-serif font-bold text-xl shadow-sm border border-ambergold-400/30">
-                M
+            <!-- Subtle Brand Icon Logo -->
+            <div class="w-16 h-16 rounded-2xl bg-[#1C3822] shadow-lg border border-[#D4A853]/40 flex items-center justify-center p-2 transition-transform duration-300 hover:scale-105">
+                <img src="images/logo_gold.png" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
             </div>
 
             <!-- Clean Brand Name -->
@@ -52,8 +56,8 @@
                 
                 <!-- Left-Aligned Brand Logo -->
                 <a href="#hero" class="flex items-center space-x-3 group shrink-0">
-                    <div class="w-10 h-10 rounded-2xl bg-sage-800 text-ambergold-400 flex items-center justify-center font-serif font-bold text-lg shadow-sm group-hover:scale-105 transition-transform duration-300">
-                        M
+                    <div class="w-10 h-10 rounded-2xl bg-[#1C3822] shadow-sm border border-[#D4A853]/40 flex items-center justify-center p-1 group-hover:scale-105 transition-transform duration-300">
+                        <img src="images/logo_gold.png" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
                     </div>
                     <div class="text-left">
                         <h1 class="font-serif text-2xl sm:text-3xl font-extrabold tracking-[0.22em] text-sage-900 uppercase leading-none">
@@ -66,24 +70,15 @@
                 </a>
 
                 <!-- Floating Center Navigation Pill (Desktop) -->
-                <nav class="hidden lg:flex items-center space-x-1 glass-pill px-5 py-2 rounded-full shadow-sm border border-white/80">
-                    <a href="#hero" class="p-2 rounded-full text-sage-700 hover:text-sage-900 transition" title="Home">
-                        <i class="fa-solid fa-house text-xs"></i>
-                    </a>
-                    <a href="#hero" class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-sage-800 text-white shadow-sm transition hover:bg-sage-900">
+                <nav class="hidden lg:flex items-center space-x-1 glass-pill px-4 py-1.5 rounded-full shadow-sm border border-white/80">
+                    <a href="#hero" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-[#611B10] text-[#D4A853] shadow-sm transition hover:bg-[#782315]">
                         Home
                     </a>
-                    <a href="#categories" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
-                        Shop Sizes
+                    <a href="#categories" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
+                        Products
                     </a>
-                    <a href="#bestsellers" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
-                        Packs & Savings
-                    </a>
-                    <a href="#reviews" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
-                        Reviews
-                    </a>
-                    <a href="#footer" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
-                        Contact
+                    <a href="#footer" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
+                        About Us
                     </a>
                 </nav>
 
@@ -136,11 +131,9 @@
             <!-- Mobile Navigation Drawer -->
             <div id="mobile-menu" class="hidden lg:hidden mt-3 glass-pill p-4 rounded-2xl border border-white/80 shadow-lg">
                 <div class="flex flex-col space-y-2 text-center font-medium text-sm text-sage-900">
-                    <a href="#hero" class="py-2 rounded-xl bg-sage-800 text-white">Home</a>
-                    <a href="#categories" class="py-2 hover:bg-white/60 rounded-xl">Shop Sizes</a>
-                    <a href="#bestsellers" class="py-2 hover:bg-white/60 rounded-xl">Packs & Offers</a>
-                    <a href="#reviews" class="py-2 hover:bg-white/60 rounded-xl">Reviews</a>
-                    <a href="#footer" class="py-2 hover:bg-white/60 rounded-xl">Contact Us</a>
+                    <a href="#hero" class="py-2 rounded-xl bg-[#611B10] text-[#D4A853] font-semibold">Home</a>
+                    <a href="#categories" class="py-2 hover:bg-white/60 rounded-xl">Products</a>
+                    <a href="#footer" class="py-2 hover:bg-white/60 rounded-xl">About Us</a>
                 </div>
             </div>
         </header>
@@ -259,112 +252,126 @@
 
         <!-- SHOP BY CATEGORY / PRODUCT SIZES SECTION -->
         <section id="categories" class="mb-16 scroll-reveal">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
                 <div>
                     <h2 class="text-2xl sm:text-3xl font-serif text-sage-900 font-semibold">Shop By Millacoco Sizes</h2>
                     <p class="text-xs sm:text-sm text-sage-700/80 mt-1">Sourced from Kuttiyadi copra and bottled fresh in Kozhikode</p>
                 </div>
-                <div class="flex items-center space-x-2">
+                <div class="flex flex-wrap items-center gap-2 sm:gap-2.5">
                     <span class="text-xs font-semibold text-sage-700">Filter:</span>
                     <button onclick="filterProducts('all')" class="px-3 py-1 bg-sage-800 text-white text-xs rounded-full font-medium filter-btn" data-filter="all">All</button>
                     <button onclick="filterProducts('daily')" class="px-3 py-1 bg-white text-sage-800 text-xs rounded-full font-medium hover:bg-sage-100 transition filter-btn" data-filter="daily">Daily Use</button>
                     <button onclick="filterProducts('bulk')" class="px-3 py-1 bg-white text-sage-800 text-xs rounded-full font-medium hover:bg-sage-100 transition filter-btn" data-filter="bulk">Bulk Cans</button>
+                    <button id="view-all-btn" onclick="toggleViewAllProducts()" class="inline-flex sm:hidden items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#611B10] bg-[#D4A853]/25 border border-[#D4A853]/40 hover:bg-[#D4A853]/40 transition active:scale-95 ml-auto">
+                        <span id="view-all-text">View All</span>
+                        <i id="view-all-icon" class="fa-solid fa-grid-2 text-[10px]"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- Categories Card Grid with Real Product Images -->
-            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
+            <!-- Categories Horizontal Scroll (Mobile) / Grid (Desktop) -->
+            <div id="product-grid" class="flex sm:grid sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-6 overflow-x-auto sm:overflow-x-visible pb-2 sm:pb-0 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 no-scrollbar snap-x snap-mandatory">
                 
                 <!-- Item 1: 1 Ltr Kitchen Pouch -->
-                <div class="product-card group bg-cardbg rounded-3xl p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-category="daily">
-                    <div class="relative overflow-hidden rounded-2xl mb-3.5 aspect-square bg-white flex items-center justify-center p-2">
-                        <span class="absolute top-2.5 left-2.5 z-10 bg-[#611B10] text-[#D4A853] text-[9px] font-bold px-2.5 py-0.5 rounded-full shadow-xs">SPOUT POUCH</span>
-                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.png')" class="fav-btn-toggle absolute top-2.5 right-2.5 z-10 w-7 h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 1 Ltr Kitchen Pouch">
-                            <i class="fa-regular fa-heart text-xs"></i>
+                <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="daily">
+                    <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-white flex items-center justify-center p-2">
+                        <span class="absolute top-2 left-2 z-10 bg-[#611B10] text-[#D4A853] text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">SPOUT POUCH</span>
+                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.png')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 1 Ltr Kitchen Pouch">
+                            <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
                         </button>
                         <img src="images/product_pouch.png" alt="Millacoco Pure Coconut Oil 1 Ltr Kitchen Pouch" class="product-card-img w-full h-full object-contain">
                     </div>
-                    <div class="px-1 pb-1">
-                        <h3 class="font-serif font-semibold text-sm sm:text-base text-sage-900 leading-snug">1 Ltr Kitchen Pouch</h3>
-                        <p class="text-xs text-sage-600 my-1">Easy-pour spout pack for daily cooking.</p>
-                        <p class="price-tag text-sm font-bold text-sage-900 mb-2.5">₹280.00</p>
-                        <button onclick="addToCart('Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.png', event)" class="w-full bg-sage-800 hover:bg-sage-900 text-white text-xs py-2.5 rounded-full font-medium transition shadow-sm active:scale-95">
+                    <div class="px-0.5 pb-0.5 flex flex-col justify-between flex-1">
+                        <div>
+                            <h3 class="font-serif font-semibold text-xs sm:text-base text-sage-900 leading-snug">1 Ltr Kitchen Pouch</h3>
+                            <p class="text-[10px] sm:text-xs text-sage-600 my-0.5 sm:my-1 line-clamp-1">Easy-pour spout pack for cooking.</p>
+                            <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹280.00</p>
+                        </div>
+                        <button onclick="addToCart('Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.png', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95">
                             + Add to Cart
                         </button>
                     </div>
                 </div>
 
                 <!-- Item 2: 1 Litre Classic Bottle -->
-                <div class="product-card group bg-cardbg rounded-3xl p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-category="daily">
-                    <div class="relative overflow-hidden rounded-2xl mb-3.5 aspect-square bg-white flex items-center justify-center p-2">
-                        <span class="absolute top-2.5 left-2.5 z-10 bg-ambergold-400 text-sage-900 text-[9px] font-bold px-2.5 py-0.5 rounded-full shadow-xs">POPULAR</span>
-                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.png')" class="fav-btn-toggle absolute top-2.5 right-2.5 z-10 w-7 h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 1 Ltr Classic Bottle">
-                            <i class="fa-regular fa-heart text-xs"></i>
+                <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="daily">
+                    <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-white flex items-center justify-center p-2">
+                        <span class="absolute top-2 left-2 z-10 bg-[#D4A853] text-[#611B10] text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">POPULAR</span>
+                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.png')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 1 Ltr Classic Bottle">
+                            <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
                         </button>
                         <img src="images/product_bottle.png" alt="Millacoco 1 Ltr Pure Coconut Oil Bottle" class="product-card-img w-full h-full object-contain">
                     </div>
-                    <div class="px-1 pb-1">
-                        <h3 class="font-serif font-semibold text-sm sm:text-base text-sage-900 leading-snug">1 Ltr Classic Bottle</h3>
-                        <p class="text-xs text-sage-600 my-1">Daily kitchen staple & hair massage.</p>
-                        <p class="price-tag text-sm font-bold text-sage-900 mb-2.5">₹290.00</p>
-                        <button onclick="addToCart('Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.png', event)" class="w-full bg-sage-800 hover:bg-sage-900 text-white text-xs py-2.5 rounded-full font-medium transition shadow-sm active:scale-95">
+                    <div class="px-0.5 pb-0.5 flex flex-col justify-between flex-1">
+                        <div>
+                            <h3 class="font-serif font-semibold text-xs sm:text-base text-sage-900 leading-snug">1 Ltr Classic Bottle</h3>
+                            <p class="text-[10px] sm:text-xs text-sage-600 my-0.5 sm:my-1 line-clamp-1">Daily kitchen staple & massage.</p>
+                            <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹290.00</p>
+                        </div>
+                        <button onclick="addToCart('Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.png', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95">
                             + Add to Cart
                         </button>
                     </div>
                 </div>
 
                 <!-- Item 3: 2 Ltr Twin Pack -->
-                <div class="product-card group bg-cardbg rounded-3xl p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-category="bulk">
-                    <div class="relative overflow-hidden rounded-2xl mb-3.5 aspect-square bg-stone-50">
-                        <span class="absolute top-2.5 left-2.5 z-10 bg-sage-800 text-white text-[9px] font-bold px-2.5 py-0.5 rounded-full shadow-xs">TWIN VALUE</span>
-                        <button onclick="toggleFavorite(event, 'Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 z-10 w-7 h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 2 Ltr Twin Pack (1L x 2)">
-                            <i class="fa-regular fa-heart text-xs"></i>
+                <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="bulk">
+                    <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-stone-50">
+                        <span class="absolute top-2 left-2 z-10 bg-sage-800 text-white text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">TWIN VALUE</span>
+                        <button onclick="toggleFavorite(event, 'Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.jpg')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 2 Ltr Twin Pack (1L x 2)">
+                            <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
                         </button>
                         <img src="images/twin_pack.jpg" alt="Millacoco 2 Ltr Twin Pack" class="product-card-img w-full h-full object-cover rounded-2xl">
                     </div>
-                    <div class="px-1 pb-1">
-                        <h3 class="font-serif font-semibold text-sm sm:text-base text-sage-900 leading-snug">2 Ltr Twin Pack (1L x 2)</h3>
-                        <p class="text-xs text-sage-600 my-1">Save shipping on household supply.</p>
-                        <p class="price-tag text-sm font-bold text-sage-900 mb-2.5">₹570.00</p>
-                        <button onclick="addToCart('Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.jpg', event)" class="w-full bg-sage-800 hover:bg-sage-900 text-white text-xs py-2.5 rounded-full font-medium transition shadow-sm active:scale-95">
+                    <div class="px-0.5 pb-0.5 flex flex-col justify-between flex-1">
+                        <div>
+                            <h3 class="font-serif font-semibold text-xs sm:text-base text-sage-900 leading-snug">2 Ltr Twin Pack (1L x 2)</h3>
+                            <p class="text-[10px] sm:text-xs text-sage-600 my-0.5 sm:my-1 line-clamp-1">Save shipping on supply.</p>
+                            <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹570.00</p>
+                        </div>
+                        <button onclick="addToCart('Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95">
                             + Add to Cart
                         </button>
                     </div>
                 </div>
 
                 <!-- Item 4: 5 Ltr Can -->
-                <div class="product-card group bg-cardbg rounded-3xl p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-category="bulk">
-                    <div class="relative overflow-hidden rounded-2xl mb-3.5 aspect-square bg-stone-50">
-                        <span class="absolute top-2.5 left-2.5 z-10 bg-emerald-700 text-white text-[9px] font-bold px-2.5 py-0.5 rounded-full shadow-xs">FAMILY CAN</span>
-                        <button onclick="toggleFavorite(event, 'Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 z-10 w-7 h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 5 Ltr Household Can">
-                            <i class="fa-regular fa-heart text-xs"></i>
+                <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="bulk">
+                    <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-stone-50">
+                        <span class="absolute top-2 left-2 z-10 bg-emerald-700 text-white text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">FAMILY CAN</span>
+                        <button onclick="toggleFavorite(event, 'Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.jpg')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 5 Ltr Household Can">
+                            <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
                         </button>
                         <img src="images/can_5ltr.jpg" alt="Millacoco 5 Ltr Household Can" class="product-card-img w-full h-full object-cover rounded-2xl">
                     </div>
-                    <div class="px-1 pb-1">
-                        <h3 class="font-serif font-semibold text-sm sm:text-base text-sage-900 leading-snug">5 Ltr Household Can</h3>
-                        <p class="text-xs text-sage-600 my-1">Heavy-duty leakproof container.</p>
-                        <p class="price-tag text-sm font-bold text-sage-900 mb-2.5">₹1,390.00</p>
-                        <button onclick="addToCart('Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.jpg', event)" class="w-full bg-sage-800 hover:bg-sage-900 text-white text-xs py-2.5 rounded-full font-medium transition shadow-sm active:scale-95">
+                    <div class="px-0.5 pb-0.5 flex flex-col justify-between flex-1">
+                        <div>
+                            <h3 class="font-serif font-semibold text-xs sm:text-base text-sage-900 leading-snug">5 Ltr Household Can</h3>
+                            <p class="text-[10px] sm:text-xs text-sage-600 my-0.5 sm:my-1 line-clamp-1">Heavy-duty leakproof can.</p>
+                            <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹1,390.00</p>
+                        </div>
+                        <button onclick="addToCart('Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95">
                             + Add to Cart
                         </button>
                     </div>
                 </div>
 
                 <!-- Item 5: Virgin Coconut Skincare -->
-                <div class="product-card group bg-cardbg rounded-3xl p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-category="daily">
-                    <div class="relative overflow-hidden rounded-2xl mb-3.5 aspect-square bg-stone-50">
-                        <span class="absolute top-2.5 left-2.5 z-10 bg-ambergold-500 text-white text-[9px] font-bold px-2.5 py-0.5 rounded-full shadow-xs">SKIN & HAIR</span>
-                        <button onclick="toggleFavorite(event, 'Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 z-10 w-7 h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco Virgin Hair & Face Oil">
-                            <i class="fa-regular fa-heart text-xs"></i>
+                <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="daily">
+                    <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-stone-50">
+                        <span class="absolute top-2 left-2 z-10 bg-ambergold-500 text-white text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">SKIN & HAIR</span>
+                        <button onclick="toggleFavorite(event, 'Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.jpg')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco Virgin Hair & Face Oil">
+                            <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
                         </button>
                         <img src="images/virgin_oil.jpg" alt="Millacoco Virgin Hair & Face Oil" class="product-card-img w-full h-full object-cover rounded-2xl">
                     </div>
-                    <div class="px-1 pb-1">
-                        <h3 class="font-serif font-semibold text-sm sm:text-base text-sage-900 leading-snug">Virgin Hair & Face Oil</h3>
-                        <p class="text-xs text-sage-600 my-1">Deep scalp conditioning & natural glow.</p>
-                        <p class="price-tag text-sm font-bold text-sage-900 mb-2.5">₹320.00</p>
-                        <button onclick="addToCart('Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.jpg', event)" class="w-full bg-sage-800 hover:bg-sage-900 text-white text-xs py-2.5 rounded-full font-medium transition shadow-sm active:scale-95">
+                    <div class="px-0.5 pb-0.5 flex flex-col justify-between flex-1">
+                        <div>
+                            <h3 class="font-serif font-semibold text-xs sm:text-base text-sage-900 leading-snug">Virgin Hair & Face Oil</h3>
+                            <p class="text-[10px] sm:text-xs text-sage-600 my-0.5 sm:my-1 line-clamp-1">Deep scalp conditioning.</p>
+                            <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹320.00</p>
+                        </div>
+                        <button onclick="addToCart('Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95">
                             + Add to Cart
                         </button>
                     </div>
@@ -408,11 +415,11 @@
                 </div>
 
                 <!-- The Master Card Container (Dribbble Showcase Mockup) -->
-                <div class="relative bg-[#FAF5EC] rounded-[2.5rem] sm:rounded-[3.5rem] border border-stone-200/80 shadow-2xl overflow-hidden min-h-[500px] lg:min-h-[560px] flex items-center">
+                <div class="relative bg-[#FAF5EC] rounded-[2rem] sm:rounded-[3.5rem] border border-stone-200/80 shadow-2xl overflow-hidden flex items-center min-h-[480px] lg:min-h-[560px]">
                     
                     <!-- Organic Curved Split Background (Right side rich green wave) -->
                     <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
-                        <svg class="absolute right-0 top-0 h-full w-[60%] sm:w-[52%] lg:w-[48%] object-cover text-[#255729]" viewBox="0 0 500 600" preserveAspectRatio="none" fill="currentColor">
+                        <svg class="absolute right-0 top-0 h-full w-[45%] sm:w-[52%] lg:w-[48%] object-cover text-[#255729]" viewBox="0 0 500 600" preserveAspectRatio="none" fill="currentColor">
                             <path d="M140,0 C60,180 240,360 80,600 L500,600 L500,0 Z" fill="url(#greenGradient)" />
                             <defs>
                                 <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -426,14 +433,14 @@
                         <div class="absolute right-10 top-1/4 w-80 h-80 rounded-full bg-[#D4A853]/15 blur-3xl pointer-events-none"></div>
                     </div>
 
-                    <!-- Main Grid Layout -->
-                    <div class="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center px-6 sm:px-14 lg:px-16 py-10 sm:py-14">
+                    <!-- Main Grid Layout: Side-by-side on all screens so bottle & text fit in one screen height -->
+                    <div class="relative z-10 w-full grid grid-cols-12 gap-4 sm:gap-8 items-center px-6 sm:px-14 lg:px-16 py-6 sm:py-10">
                         
                         <!-- Left Side: Clean Minimal Typography & Scrub Controls -->
-                        <div class="lg:col-span-6 space-y-3.5 sm:space-y-4 text-left max-w-lg">
+                        <div class="col-span-12 md:col-span-6 space-y-3 sm:space-y-4 text-left max-w-lg">
                             
                             <!-- Interactive Scrub Tabs (Reflects scroll scrub or direct click) -->
-                            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1">
+                            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-0.5">
                                 <button type="button" onclick="scrubToSlide(0)" class="scrub-tab active px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold tracking-wider uppercase transition-all duration-300" data-slide="0">
                                     01 Bottle
                                 </button>
@@ -444,57 +451,57 @@
                                     03 Classic
                                 </button>
                                 <span class="text-[10px] text-sage-600 font-medium ml-1.5 hidden md:inline-flex items-center gap-1">
-                                    <i class="fa-solid fa-arrows-up-down text-[9px] text-[#2E6F40] animate-bounce"></i> Scroll to scrub
+                                    <i class="fa-solid fa-arrows-up-down text-[8px] text-[#2E6F40] animate-bounce"></i> Scroll
                                 </span>
                             </div>
 
                             <!-- Small script handwriting accent -->
                             <div>
-                                <span id="scrub-script" class="font-handwriting text-sage-700 text-xl sm:text-2xl font-semibold tracking-wide transition-opacity duration-300">
+                                <span id="scrub-script" class="font-handwriting text-sage-700 text-lg sm:text-2xl font-semibold tracking-wide transition-opacity duration-300">
                                     The Signature Flagship
                                 </span>
                             </div>
 
                             <!-- Big Bold Clean Headline -->
-                            <h2 id="scrub-title" class="text-3xl sm:text-5xl lg:text-6xl font-serif text-[#16391a] font-normal tracking-tight leading-[1.08] transition-opacity duration-300 min-h-[2.4em] flex items-center">
+                            <h2 id="scrub-title" class="text-2xl sm:text-4xl lg:text-5xl font-serif text-[#16391a] font-normal tracking-tight leading-[1.1] transition-opacity duration-300">
                                 <span>Cold Pressed<br><span class="font-bold text-[#611B10]">Coconut Oil</span></span>
                             </h2>
 
                             <!-- Subtitle -->
-                            <p id="scrub-subtitle" class="text-base sm:text-lg font-medium text-sage-900 leading-snug transition-opacity duration-300">
+                            <p id="scrub-subtitle" class="text-sm sm:text-base font-semibold text-sage-900 leading-snug transition-opacity duration-300">
                                 Maximum purity in every drop
                             </p>
 
                             <!-- Short clean description -->
-                            <p id="scrub-desc" class="text-xs sm:text-sm text-sage-700/90 leading-relaxed max-w-md transition-opacity duration-300 min-h-[3.6em]">
+                            <p id="scrub-desc" class="text-xs sm:text-sm text-sage-700/90 leading-relaxed max-w-md transition-opacity duration-300">
                                 Single-press cold expeller milled from sun-dried Kuttiyadi copra at Kozhikode. Pure aroma, zero chemicals, and natural coastal goodness.
                             </p>
 
                             <!-- Two Pill Buttons -->
-                            <div class="flex flex-wrap items-center gap-3.5 pt-2">
+                            <div class="flex flex-wrap items-center gap-2.5 sm:gap-3.5 pt-1 sm:pt-2">
                                 <!-- Primary Pill Button -->
-                                <button id="scrub-order-btn" onclick="orderCurrentScrubProduct(event)" class="bg-[#2E6F40] hover:bg-[#235732] text-white font-sans font-semibold text-xs sm:text-sm px-7 py-3.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2">
+                                <button id="scrub-order-btn" onclick="orderCurrentScrubProduct(event)" class="bg-[#2E6F40] hover:bg-[#235732] text-white font-sans font-semibold text-xs sm:text-sm px-6 sm:px-7 py-3 sm:py-3.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2">
                                     <span>Order Now</span>
                                     <span class="opacity-50">•</span>
                                     <span id="scrub-price" class="price-tag font-bold tracking-tight">₹340.00</span>
                                 </button>
 
                                 <!-- Secondary Outline Pill Button -->
-                                <a href="#bestsellers" class="border border-sage-400/80 hover:border-sage-800 text-sage-800 hover:text-sage-900 font-sans font-medium text-xs sm:text-sm px-6 py-3.5 rounded-full transition-all duration-300 hover:bg-white/60 active:scale-95">
+                                <a href="#bestsellers" class="border border-sage-400/80 hover:border-sage-800 text-sage-800 hover:text-sage-900 font-sans font-medium text-xs sm:text-sm px-5 sm:px-6 py-3 sm:py-3.5 rounded-full transition-all duration-300 hover:bg-white/60 active:scale-95">
                                     Special Packs
                                 </a>
                             </div>
                         </div>
 
                         <!-- Right Side: Cutout PNG Layered Stage with White Contour Rings -->
-                        <div class="lg:col-span-6 relative flex items-center justify-center pt-4 lg:pt-0">
+                        <div class="col-span-12 md:col-span-6 relative flex items-center justify-center pt-4 md:pt-0">
                             
                             <!-- White Concentric Contour Rings -->
-                            <div class="absolute w-72 sm:w-96 lg:w-[28rem] h-72 sm:h-96 lg:h-[28rem] rounded-full border border-white/20 pointer-events-none"></div>
-                            <div class="absolute w-84 sm:w-[26rem] lg:w-[32rem] h-84 sm:h-[26rem] lg:h-[32rem] rounded-full border border-white/10 pointer-events-none"></div>
+                            <div class="absolute w-64 sm:w-80 lg:w-[28rem] h-64 sm:h-80 lg:h-[28rem] rounded-full border border-white/20 pointer-events-none"></div>
+                            <div class="absolute w-80 sm:w-96 lg:w-[32rem] h-80 sm:h-96 lg:h-[32rem] rounded-full border border-white/10 pointer-events-none"></div>
                             
                             <!-- Bottle Display Wrapper (Interactive Cutout PNGs for Scroll Scrub) -->
-                            <div class="bottle-display-wrapper relative z-10 cursor-pointer w-full max-w-xs sm:max-w-sm lg:max-w-md h-[340px] sm:h-[440px] lg:h-[480px] flex items-center justify-center">
+                            <div class="bottle-display-wrapper relative z-10 cursor-pointer w-full max-w-[240px] sm:max-w-sm lg:max-w-md h-[320px] sm:h-[420px] lg:h-[480px] flex items-center justify-center p-2 sm:p-4">
                                 
                                 <!-- Slide 0: Heritage Bottle Cutout with Cracked Coconut -->
                                 <img id="scrub-img-0" src="images/flagship_bottle_cutout.png" 
@@ -526,33 +533,34 @@
             </div>
         </section>
 
-        <!-- FEATURED COMBO BANNER WITH INTERACTIVE CAROUSEL -->
+        <!-- FEATURED COMBO BANNER WITH 3D VISION PRO COVER FLOW CAROUSEL -->
         <section id="bestsellers" class="mb-16 scroll-reveal">
-            <div class="bg-gradient-to-r from-sage-800 via-sage-900 to-sage-800 rounded-[2.5rem] p-8 sm:p-12 text-white relative overflow-hidden shadow-xl border border-white/10">
+            <div class="bg-[#3D140C] rounded-[2.5rem] p-6 sm:p-10 lg:p-12 text-white relative overflow-hidden shadow-2xl border border-white/10">
                 <!-- Ambient glow -->
-                <div class="absolute -top-24 -right-24 w-72 h-72 bg-ambergold-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -top-24 -right-24 w-80 h-80 bg-[#D4A853]/15 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-[#611B10]/40 rounded-full blur-3xl pointer-events-none"></div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
                     
-                    <!-- Left: Dynamic details synced with current slide -->
-                    <div class="lg:col-span-7 space-y-4">
-                        <div class="flex items-center space-x-3">
-                            <span class="bg-ambergold-400 text-sage-900 text-[10px] font-extrabold tracking-widest uppercase px-3 py-1 rounded-full shadow-sm">SPECIAL COMBO PACK</span>
-                            <span id="combo-carousel-counter" class="text-xs font-mono text-sage-300 bg-white/10 px-2.5 py-0.5 rounded-full border border-white/15">01 / 03</span>
+                    <!-- Left: Dynamic details synced with active combo -->
+                    <div class="lg:col-span-5 space-y-3.5 sm:space-y-4">
+                        <div class="flex items-center space-x-2.5">
+                            <span class="bg-[#D4A853] text-[#3D140C] text-[10px] font-extrabold tracking-widest uppercase px-3 py-1 rounded-full shadow-sm">SPECIAL COMBO PACK</span>
+                            <span id="combo-carousel-counter" class="text-xs font-mono text-[#D4A853] bg-white/10 px-2.5 py-0.5 rounded-full border border-white/15">01 / 03</span>
                         </div>
 
-                        <h2 id="combo-title" class="text-3xl sm:text-4xl lg:text-5xl font-serif leading-tight min-h-[5rem] transition-opacity duration-300">
+                        <h2 id="combo-title" class="text-3xl sm:text-4xl lg:text-5xl font-serif leading-tight min-h-[4.5rem] transition-opacity duration-300 text-white">
                             Healthy Kitchen.<br>
-                            <span class="font-handwriting font-normal text-ambergold-300 text-4xl sm:text-5xl">Happy Family.</span>
+                            <span class="font-handwriting font-normal text-[#D4A853] text-4xl sm:text-5xl">Happy Family.</span>
                         </h2>
 
-                        <p id="combo-desc" class="text-xs sm:text-sm text-sage-200 max-w-md leading-relaxed min-h-[2.5rem] transition-opacity duration-300">
-                            1 Ltr Classic Cooking Oil + Virgin Scalp &amp; Skincare Oil with complimentary express delivery.
+                        <p id="combo-desc" class="text-xs sm:text-sm text-stone-200/90 max-w-md leading-relaxed min-h-[2.5rem] transition-opacity duration-300">
+                            1 Ltr Classic Cooking Oil + Virgin Scalp &amp; Skincare Oil with complimentary express delivery across India.
                         </p>
 
-                        <div class="flex flex-wrap items-center gap-4 pt-2">
-                            <button id="combo-order-btn" onclick="orderCurrentCombo(event)" class="relative group overflow-hidden bg-ambergold-400 hover:bg-ambergold-300 text-sage-900 font-bold px-7 py-3.5 rounded-full text-xs transition shadow-lg flex items-center space-x-2 active:scale-95">
+                        <div class="flex flex-wrap items-center gap-3.5 pt-2">
+                            <!-- Golden Action Pill -->
+                            <button id="combo-order-btn" onclick="orderCurrentCombo(event)" class="relative group overflow-hidden bg-[#D4A853] hover:bg-[#e0b764] text-[#3D140C] font-bold px-6 sm:px-7 py-3 sm:py-3.5 rounded-full text-xs transition-all duration-300 shadow-lg flex items-center space-x-2 active:scale-95">
                                 <span class="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 animate-shimmer pointer-events-none"></span>
                                 <span class="relative z-10 inline-flex items-center gap-1.5 font-sans tracking-wide">
                                     <span id="combo-btn-label">ORDER DUO PACK</span>
@@ -562,7 +570,7 @@
                                 <i class="fa-solid fa-arrow-right text-xs relative z-10 group-hover:translate-x-1 transition-transform duration-200"></i>
                             </button>
 
-                            <!-- Carousel Navigation Controls -->
+                            <!-- Glass Pill Controls -->
                             <div class="flex items-center space-x-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15">
                                 <button onclick="prevComboSlide()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/25 active:scale-90 text-white flex items-center justify-center transition" title="Previous Combo" aria-label="Previous Combo">
                                     <i class="fa-solid fa-chevron-left text-xs"></i>
@@ -577,22 +585,17 @@
                         </div>
                     </div>
 
-                    <!-- Right: Product Card Carousel -->
-                    <div class="lg:col-span-5 flex justify-center">
-                        <div id="combo-carousel-wrapper" class="relative w-full max-w-xs group" onmouseenter="pauseComboCarousel()" onmouseleave="resumeComboCarousel()">
-                            
-                            <!-- Slide viewport -->
-                            <div class="relative overflow-hidden rounded-3xl">
-                                <div id="combo-carousel-slides" class="flex transition-transform duration-500 ease-out">
-                                    <!-- Combo slides injected dynamically by script.js -->
-                                </div>
-                            </div>
+                    <!-- Right: Vision Pro 3D Cover Flow Stage -->
+                    <div class="lg:col-span-7 flex justify-center items-center overflow-visible py-4">
+                        <div id="combo-coverflow-stage" class="relative w-full max-w-lg h-[390px] sm:h-[430px] flex items-center justify-center select-none" onmouseenter="pauseComboCarousel()" onmouseleave="resumeComboCarousel()">
+                            <!-- Cover Flow Glass Cards injected by script.js -->
+                            <div id="combo-coverflow-cards" class="relative w-full h-full flex items-center justify-center"></div>
 
-                            <!-- Carousel overlay arrows for touch/desktop quick click -->
-                            <button onclick="prevComboSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-sage-950/70 hover:bg-sage-950 text-white flex items-center justify-center shadow-md backdrop-blur-sm transition-transform hover:scale-105 active:scale-95" aria-label="Previous">
+                            <!-- Floating Left/Right Stage Navigation Arrows -->
+                            <button onclick="prevComboSlide()" class="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 z-40 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white flex items-center justify-center shadow-xl backdrop-blur-md transition-all hover:scale-110 active:scale-90" aria-label="Previous">
                                 <i class="fa-solid fa-chevron-left text-xs"></i>
                             </button>
-                            <button onclick="nextComboSlide()" class="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-sage-950/70 hover:bg-sage-950 text-white flex items-center justify-center shadow-md backdrop-blur-sm transition-transform hover:scale-105 active:scale-95" aria-label="Next">
+                            <button onclick="nextComboSlide()" class="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 z-40 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white flex items-center justify-center shadow-xl backdrop-blur-md transition-all hover:scale-110 active:scale-90" aria-label="Next">
                                 <i class="fa-solid fa-chevron-right text-xs"></i>
                             </button>
                         </div>
@@ -604,139 +607,130 @@
 
     </div>
 
-    <!-- TRUST & VERIFIED TESTIMONIALS SECTION (EDGE-TO-EDGE, NO CARDS, INFINITE SLIDE) -->
-    <section id="reviews" class="w-full bg-white py-12 sm:py-16 my-8 border-y border-sage-200/70 overflow-hidden select-none">
-        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 mb-6">
-            <h3 class="font-serif text-2xl sm:text-3xl font-extrabold text-sage-900 leading-tight">
-                Customer Reviews
-            </h3>
+    <!-- MODERN TESTIMONIALS SECTION (CLEAN CARDS, PASTEL WAVE BG, SMOOTH NAVIGATION) -->
+    <section id="reviews" class="relative w-full py-16 sm:py-24 my-8 overflow-hidden select-none bg-gradient-to-br from-[#E9F3FC] via-[#F4F9FE] to-[#FDF4EA]">
+        
+        <!-- Ambient Wavy Line Graphics in Background -->
+        <div class="absolute inset-0 pointer-events-none opacity-45 overflow-hidden">
+            <svg class="w-full h-full object-cover" viewBox="0 0 1200 600" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M-100,120 C200,20 400,260 700,140 C1000,20 1150,220 1350,150" stroke="#7BA8D1" stroke-width="2" stroke-linecap="round"/>
+                <path d="M-100,150 C200,50 400,290 700,170 C1000,50 1150,250 1350,180" stroke="#7BA8D1" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M-100,180 C200,80 400,320 700,200 C1000,80 1150,280 1350,210" stroke="#7BA8D1" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M-100,210 C200,110 400,350 700,230 C1000,110 1150,310 1350,240" stroke="#7BA8D1" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M-100,240 C200,140 400,380 700,260 C1000,140 1150,340 1350,270" stroke="#7BA8D1" stroke-width="1" stroke-linecap="round"/>
+                <path d="M-100,270 C200,170 400,410 700,290 C1000,170 1150,370 1350,300" stroke="#7BA8D1" stroke-width="0.8" stroke-linecap="round"/>
+            </svg>
         </div>
 
-        <!-- Infinite Ticker Track -->
-        <div class="relative w-full overflow-hidden">
-            <div id="testimonials-track" class="flex gap-10 sm:gap-14 w-max py-2 will-change-transform">
-                
-                <!-- Item 1 -->
-                <div class="testimonial-item shrink-0 w-[300px] sm:w-[360px] md:w-[400px]">
-                    <div class="flex items-center space-x-3.5 mb-2.5">
-                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80" alt="Ananya Menoki" class="w-12 h-12 rounded-full object-cover border-2 border-ambergold-400 shadow-xs shrink-0">
-                        <div>
-                            <h5 class="font-serif font-bold text-sm text-sage-900 leading-tight">Ananya Menoki</h5>
-                            <span class="text-[11px] text-sage-600 block">Kozhikode, Kerala</span>
-                        </div>
-                    </div>
-                    <p class="text-xs sm:text-sm text-sage-800 leading-relaxed italic mb-2.5">
-                        "The aroma when tempering mustard seeds and curry leaves is unmatched. Millacoco has that deep, nutty fragrance with zero burnt or sulphur odor. Absolute kitchen perfection."
-                    </p>
-                    <div class="flex items-center space-x-2 text-ambergold-500 text-xs">
-                        <div class="flex space-x-0.5">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <span class="text-[10px] text-sage-500 font-semibold">• 1L Classic Bottle</span>
-                    </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="testimonial-item shrink-0 w-[300px] sm:w-[360px] md:w-[400px]">
-                    <div class="flex items-center space-x-3.5 mb-2.5">
-                        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=150&q=80" alt="Dr. Rajesh Nambiar" class="w-12 h-12 rounded-full object-cover border-2 border-emerald-600 shadow-xs shrink-0">
-                        <div>
-                            <h5 class="font-serif font-bold text-sm text-sage-900 leading-tight">Dr. Rajesh Nambiar</h5>
-                            <span class="text-[11px] text-sage-600 block">Indiranagar, Bengaluru</span>
-                        </div>
-                    </div>
-                    <p class="text-xs sm:text-sm text-sage-800 leading-relaxed italic mb-2.5">
-                        "I recommend unbleached, sulphur-free coconut oil to all new parents for newborn massage and cradle cap care. Millacoco’s virgin oil absorbs cleanly without feeling greasy or heavy."
-                    </p>
-                    <div class="flex items-center space-x-2 text-ambergold-500 text-xs">
-                        <div class="flex space-x-0.5">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <span class="text-[10px] text-sage-500 font-semibold">• Virgin Skincare Oil</span>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="testimonial-item shrink-0 w-[300px] sm:w-[360px] md:w-[400px]">
-                    <div class="flex items-center space-x-3.5 mb-2.5">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="Sujata Pillai" class="w-12 h-12 rounded-full object-cover border-2 border-ambergold-400 shadow-xs shrink-0">
-                        <div>
-                            <h5 class="font-serif font-bold text-sm text-sage-900 leading-tight">Sujata Pillai</h5>
-                            <span class="text-[11px] text-sage-600 block">Marine Drive, Kochi</span>
-                        </div>
-                    </div>
-                    <p class="text-xs sm:text-sm text-sage-800 leading-relaxed italic mb-2.5">
-                        "We switched our entire household cooking to the 5L Can. Even after repetitive deep frying for traditional banana chips, the oil stays clear, light, and digestible. Super fast delivery!"
-                    </p>
-                    <div class="flex items-center space-x-2 text-ambergold-500 text-xs">
-                        <div class="flex space-x-0.5">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <span class="text-[10px] text-sage-500 font-semibold">• 5L Household Can</span>
-                    </div>
-                </div>
-
-                <!-- Item 4 -->
-                <div class="testimonial-item shrink-0 w-[300px] sm:w-[360px] md:w-[400px]">
-                    <div class="flex items-center space-x-3.5 mb-2.5">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Chef Gautam Nair" class="w-12 h-12 rounded-full object-cover border-2 border-sage-700 shadow-xs shrink-0">
-                        <div>
-                            <h5 class="font-serif font-bold text-sm text-sage-900 leading-tight">Chef Gautam Nair</h5>
-                            <span class="text-[11px] text-sage-600 block">Bandra West, Mumbai</span>
-                        </div>
-                    </div>
-                    <p class="text-xs sm:text-sm text-sage-800 leading-relaxed italic mb-2.5">
-                        "In our coastal restaurant, authentic Kerala fish curries depend 100% on pure unrefined oil. Millacoco delivers that signature Malabar sweetness and golden body that commercial brands lose."
-                    </p>
-                    <div class="flex items-center space-x-2 text-ambergold-500 text-xs">
-                        <div class="flex space-x-0.5">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <span class="text-[10px] text-sage-500 font-semibold">• 2L Twin Pack</span>
-                    </div>
-                </div>
-
-                <!-- Item 5 -->
-                <div class="testimonial-item shrink-0 w-[300px] sm:w-[360px] md:w-[400px]">
-                    <div class="flex items-center space-x-3.5 mb-2.5">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Meera Krishnan" class="w-12 h-12 rounded-full object-cover border-2 border-rose-500 shadow-xs shrink-0">
-                        <div>
-                            <h5 class="font-serif font-bold text-sm text-sage-900 leading-tight">Meera Krishnan</h5>
-                            <span class="text-[11px] text-sage-600 block">Alwarpet, Chennai</span>
-                        </div>
-                    </div>
-                    <p class="text-xs sm:text-sm text-sage-800 leading-relaxed italic mb-2.5">
-                        "My grandmother used to insist on cold-pressing dried copra at local mills. Millacoco brings back that exact scalp-cooling nourishment. Hair breakage reduced visibly within 3 weeks."
-                    </p>
-                    <div class="flex items-center space-x-2 text-ambergold-500 text-xs">
-                        <div class="flex space-x-0.5">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <span class="text-[10px] text-sage-500 font-semibold">• Virgin Hair Oil</span>
-                    </div>
-                </div>
-
-                <!-- Item 6 -->
-                <div class="testimonial-item shrink-0 w-[300px] sm:w-[360px] md:w-[400px]">
-                    <div class="flex items-center space-x-3.5 mb-2.5">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" alt="Harikrishnan V." class="w-12 h-12 rounded-full object-cover border-2 border-ambergold-500 shadow-xs shrink-0">
-                        <div>
-                            <h5 class="font-serif font-bold text-sm text-sage-900 leading-tight">Harikrishnan V.</h5>
-                            <span class="text-[11px] text-sage-600 block">Melur, Kozhikode</span>
-                        </div>
-                    </div>
-                    <p class="text-xs sm:text-sm text-sage-800 leading-relaxed italic mb-2.5">
-                        "Puthalampurath Oil Mill has been our family’s go-to for generations. Bringing Melur’s heritage copra to modern packaging while keeping original wooden expeller quality intact makes us proud."
-                    </p>
-                    <div class="flex items-center space-x-2 text-ambergold-500 text-xs">
-                        <div class="flex space-x-0.5">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <span class="text-[10px] text-sage-500 font-semibold">• Classic 1L & Duo</span>
-                    </div>
-                </div>
-
+        <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <!-- Section Header (Centered Clean Typography) -->
+            <div class="text-center max-w-xl mx-auto mb-10 sm:mb-14">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-sans font-bold text-[#142B47] tracking-tight">
+                    Testimonials
+                </h2>
+                <p class="text-xs sm:text-sm text-[#4E6682] mt-2 font-medium">
+                    Read what our customers have to say about our product.
+                </p>
             </div>
+
+            <!-- Testimonial Cards Carousel Viewport -->
+            <div class="relative overflow-hidden">
+                <div id="testimonials-slider" class="flex transition-transform duration-500 ease-out">
+                    
+                    <!-- Slide Card 1 -->
+                    <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3">
+                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_12px_35px_rgba(35,75,115,0.08)] border border-white flex flex-col justify-between h-full min-h-[220px]">
+                            <div class="flex items-center space-x-4 mb-5">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80" alt="Ananya Menoki" class="w-14 h-14 rounded-full object-cover shrink-0">
+                                <div class="text-left">
+                                    <h4 class="font-sans font-bold text-base text-[#142B47] leading-tight">Ananya Menoki</h4>
+                                    <span class="text-xs text-[#6B829D] font-medium block mt-0.5">Kozhikode, Kerala</span>
+                                </div>
+                            </div>
+                            <p class="text-xs sm:text-sm text-[#3E5570] leading-relaxed font-normal">
+                                “This oil has exceeded all my expectations. The authentic coastal aroma is unmatched. I highly recommend it!”
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Slide Card 2 -->
+                    <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3">
+                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_12px_35px_rgba(35,75,115,0.08)] border border-white flex flex-col justify-between h-full min-h-[220px]">
+                            <div class="flex items-center space-x-4 mb-5">
+                                <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=150&q=80" alt="Dr. Rajesh Nambiar" class="w-14 h-14 rounded-full object-cover shrink-0">
+                                <div class="text-left">
+                                    <h4 class="font-sans font-bold text-base text-[#142B47] leading-tight">Dr. Rajesh Nambiar</h4>
+                                    <span class="text-xs text-[#6B829D] font-medium block mt-0.5">Indiranagar, Bengaluru</span>
+                                </div>
+                            </div>
+                            <p class="text-xs sm:text-sm text-[#3E5570] leading-relaxed font-normal">
+                                “A game-changer! It's 100% sulphur-free and made our daily family cooking so much cleaner and healthier.”
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Slide Card 3 -->
+                    <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3">
+                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_12px_35px_rgba(35,75,115,0.08)] border border-white flex flex-col justify-between h-full min-h-[220px]">
+                            <div class="flex items-center space-x-4 mb-5">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="Sujata Pillai" class="w-14 h-14 rounded-full object-cover shrink-0">
+                                <div class="text-left">
+                                    <h4 class="font-sans font-bold text-base text-[#142B47] leading-tight">Sujata Pillai</h4>
+                                    <span class="text-xs text-[#6B829D] font-medium block mt-0.5">Marine Drive, Kochi</span>
+                                </div>
+                            </div>
+                            <p class="text-xs sm:text-sm text-[#3E5570] leading-relaxed font-normal">
+                                “Fantastic quality and customer service. We order the 5L Can regularly and couldn't be happier!”
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Slide Card 4 -->
+                    <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3">
+                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_12px_35px_rgba(35,75,115,0.08)] border border-white flex flex-col justify-between h-full min-h-[220px]">
+                            <div class="flex items-center space-x-4 mb-5">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Chef Gautam Nair" class="w-14 h-14 rounded-full object-cover shrink-0">
+                                <div class="text-left">
+                                    <h4 class="font-sans font-bold text-base text-[#142B47] leading-tight">Chef Gautam Nair</h4>
+                                    <span class="text-xs text-[#6B829D] font-medium block mt-0.5">Bandra West, Mumbai</span>
+                                </div>
+                            </div>
+                            <p class="text-xs sm:text-sm text-[#3E5570] leading-relaxed font-normal">
+                                “In our restaurant, authentic Kerala curries depend on pure unrefined oil. Millacoco delivers signature Malabar body.”
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Slide Card 5 -->
+                    <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3">
+                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_12px_35px_rgba(35,75,115,0.08)] border border-white flex flex-col justify-between h-full min-h-[220px]">
+                            <div class="flex items-center space-x-4 mb-5">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Meera Krishnan" class="w-12 h-12 rounded-full object-cover shrink-0">
+                                <div class="text-left">
+                                    <h4 class="font-sans font-bold text-base text-[#142B47] leading-tight">Meera Krishnan</h4>
+                                    <span class="text-xs text-[#6B829D] font-medium block mt-0.5">Alwarpet, Chennai</span>
+                                </div>
+                            </div>
+                            <p class="text-xs sm:text-sm text-[#3E5570] leading-relaxed font-normal">
+                                “Brings back the exact scalp-cooling nourishment my grandmother loved. Visible hair health improvement in weeks.”
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Bottom Floating Round Navigation Buttons (Matching Mockup) -->
+            <div class="flex items-center justify-center space-x-3 mt-8 sm:mt-10">
+                <button onclick="prevTestimonialSlide()" class="w-10 h-10 rounded-full bg-white/90 hover:bg-white text-[#142B47] shadow-md hover:shadow-lg border border-white flex items-center justify-center transition-all duration-200 active:scale-95" aria-label="Previous Testimonials">
+                    <i class="fa-solid fa-arrow-left text-xs"></i>
+                </button>
+                <button onclick="nextTestimonialSlide()" class="w-10 h-10 rounded-full bg-white/90 hover:bg-white text-[#142B47] shadow-md hover:shadow-lg border border-white flex items-center justify-center transition-all duration-200 active:scale-95" aria-label="Next Testimonials">
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+            </div>
+
         </div>
     </section>
 
@@ -751,8 +745,8 @@
                 <!-- Official Address & Mill Info (Left-aligned) -->
                 <div class="lg:col-span-5 space-y-4">
                     <div class="flex items-center space-x-3">
-                        <div class="w-9 h-9 rounded-xl bg-sage-800 text-ambergold-400 flex items-center justify-center font-serif font-bold text-base border border-white/10">
-                            M
+                        <div class="w-9 h-9 rounded-xl bg-[#1C3822] border border-[#D4A853]/40 flex items-center justify-center p-1 shadow-sm">
+                            <img src="images/logo_gold.png" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
                         </div>
                         <h3 class="font-serif text-3xl tracking-[0.2em] font-extrabold text-white uppercase">MILLACOCO</h3>
                     </div>
