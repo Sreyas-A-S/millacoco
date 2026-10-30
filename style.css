@@ -24,23 +24,40 @@ body {
 }
 
 .hero-bg-section {
-    background-image: url('images/hero_bg.png');
+    background-color: #FAF5EC;
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
 }
 
+/* Hero Background Slideshow with Smooth Faded Animation & Subtle Zoom */
+.hero-bg-slide {
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transform: scale(1);
+    transition: opacity 1.3s cubic-bezier(0.4, 0, 0.2, 1), transform 7s ease-out;
+    will-change: opacity, transform;
+}
+
+.hero-bg-slide.active {
+    opacity: 1;
+    transform: scale(1.04);
+}
+
 .hero-overlay {
     background: linear-gradient(90deg, 
-        rgba(250, 245, 236, 0.96) 0%, 
-        rgba(250, 245, 236, 0.92) 36%, 
-        rgba(250, 245, 236, 0.60) 58%, 
-        rgba(250, 245, 236, 0.12) 78%, 
+        rgba(250, 245, 236, 0.98) 0%, 
+        rgba(250, 245, 236, 0.94) 38%, 
+        rgba(250, 245, 236, 0.65) 58%, 
+        rgba(250, 245, 236, 0.15) 78%, 
         transparent 100%);
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
-    .hero-bg-section {
+    .hero-bg-section,
+    .hero-bg-slide {
         background-position: 70% center;
     }
     .hero-overlay {
@@ -52,7 +69,8 @@ body {
 }
 
 @media (max-width: 767px) {
-    .hero-bg-section {
+    .hero-bg-section,
+    .hero-bg-slide {
         background-position: 76% 40%;
     }
     .hero-overlay {
@@ -184,9 +202,56 @@ body {
     scrollbar-width: none;
 }
 
+/* Header Hide / Collapse Behavior on Scroll */
+#main-header {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease-out;
+}
+
+#main-header.header-hidden,
+body.header-collapsed #main-header {
+    transform: translateY(-135%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
 /* ==========================================================================
    FLAGSHIP BOTTLE SHOWCASE & PARALLAX FLOATING BOKEH LEAVES
    ========================================================================== */
+.sticky-showcase-stage {
+    top: 5.25rem;
+    will-change: top;
+    transition: top 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 640px) {
+    .sticky-showcase-stage {
+        top: 6.25rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .sticky-showcase-stage {
+        top: 7rem;
+    }
+}
+
+/* When header collapses as you scroll to bottom: move up to top / center */
+body.header-collapsed .sticky-showcase-stage {
+    top: 1.25rem;
+}
+
+@media (min-width: 640px) {
+    body.header-collapsed .sticky-showcase-stage {
+        top: 1.75rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    body.header-collapsed .sticky-showcase-stage {
+        top: max(1.75rem, calc(50vh - 280px));
+    }
+}
+
 .parallax-leaves-stage {
     perspective: 1000px;
 }

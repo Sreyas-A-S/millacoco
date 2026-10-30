@@ -133,6 +133,16 @@ function closeCartDrawer() {
 
 // Favorites State & Logic
 let favorites = [];
+try {
+    const savedFavs = localStorage.getItem('millacoco_favorites');
+    if (savedFavs) favorites = JSON.parse(savedFavs);
+} catch (e) {}
+
+function saveFavorites() {
+    try {
+        localStorage.setItem('millacoco_favorites', JSON.stringify(favorites));
+    } catch (e) {}
+}
 
 function isProductFavorited(title) {
     return favorites.some(item => item.title === title);
@@ -160,6 +170,8 @@ function toggleFavorite(event, title, price, image = '') {
         isFav = true;
         showToast(`Saved ${title} to favorites!`);
     }
+
+    saveFavorites();
 
     // Trigger pop animation on target button
     if (event && event.currentTarget) {
@@ -273,6 +285,7 @@ function addAllFavoritesToCart() {
     });
 
     updateCartUI();
+    saveCart();
     closeFavoritesModal();
     showToast(`Added all ${favorites.length} favorite items to cart!`);
     openCartDrawer();
@@ -280,6 +293,16 @@ function addAllFavoritesToCart() {
 
 // Shopping Cart Logic
 let cart = [];
+try {
+    const savedCart = localStorage.getItem('millacoco_cart');
+    if (savedCart) cart = JSON.parse(savedCart);
+} catch (e) {}
+
+function saveCart() {
+    try {
+        localStorage.setItem('millacoco_cart', JSON.stringify(cart));
+    } catch (e) {}
+}
 
 function addToCart(title, price, image = '', event = null) {
     const existing = cart.find(item => item.title === title);
@@ -288,6 +311,8 @@ function addToCart(title, price, image = '', event = null) {
     } else {
         cart.push({ title, price, qty: 1, image });
     }
+
+    saveCart();
 
     // Interactive button animation
     if (event && event.currentTarget) {
@@ -390,6 +415,7 @@ function changeQty(index, delta) {
     if (cart[index].qty <= 0) {
         cart.splice(index, 1);
     }
+    saveCart();
     updateCartUI();
 }
 
@@ -410,6 +436,7 @@ function checkout() {
     }, 1000);
 
     cart = [];
+    saveCart();
     updateCartUI();
     closeCartDrawer();
 }
@@ -473,15 +500,77 @@ function toggleViewAllProducts() {
     }
 }
 
-// Master Products Data for Search
+// Master Products Data for Showcase & External Marketplace Redirect
 const productCatalog = [
-    { name: 'Millacoco 1 Ltr Kitchen Pouch', price: 280, image: 'images/product_pouch.png', tag: 'Spout Pouch', desc: '1 Ltr Easy Pour Kitchen Pouch' },
-    { name: 'Millacoco 1 Ltr Classic Bottle', price: 290, image: 'images/product_bottle.png', tag: 'Bestseller', desc: '1 Ltr Pure Cold Pressed Bottle' },
-    { name: 'Millacoco 2 Ltr Twin Pack (1L x 2)', price: 570, image: 'images/twin_pack.jpg', tag: 'Twin Value', desc: 'Twin Pack 2 Litres' },
-    { name: 'Millacoco 5 Ltr Household Can', price: 1390, image: 'images/can_5ltr.jpg', tag: 'Bulk Supply', desc: '5 Ltr Heavy Can' },
-    { name: 'Millacoco Virgin Hair & Face Oil', price: 320, image: 'images/virgin_oil.jpg', tag: 'Skincare', desc: 'Virgin Hair & Scalp Oil' },
-    { name: 'Millacoco Kitchen & Skincare Duo Pack', price: 590, image: 'images/combo_duo.jpg', tag: 'Combo Offer', desc: '1L Classic + Virgin Oil' }
+    { 
+        id: 1,
+        name: 'Millacoco 1 Ltr Kitchen Pouch', 
+        price: 280, 
+        image: 'images/product_pouch.png', 
+        tag: 'Spout Pouch', 
+        desc: '1 Ltr Easy Pour Kitchen Pouch',
+        externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX1',
+        platform: 'Amazon'
+    },
+    { 
+        id: 2,
+        name: 'Millacoco 1 Ltr Classic Bottle', 
+        price: 290, 
+        image: 'images/product_bottle.png', 
+        tag: 'Bestseller', 
+        desc: '1 Ltr Pure Cold Pressed Bottle',
+        externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX2',
+        platform: 'Amazon'
+    },
+    { 
+        id: 3,
+        name: 'Millacoco 2 Ltr Twin Pack (1L x 2)', 
+        price: 570, 
+        image: 'images/twin_pack.jpg', 
+        tag: 'Twin Value', 
+        desc: 'Twin Pack 2 Litres',
+        externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX3',
+        platform: 'Amazon'
+    },
+    { 
+        id: 4,
+        name: 'Millacoco 5 Ltr Household Can', 
+        price: 1390, 
+        image: 'images/can_5ltr.jpg', 
+        tag: 'Bulk Supply', 
+        desc: '5 Ltr Heavy Can',
+        externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX4',
+        platform: 'Amazon'
+    },
+    { 
+        id: 5,
+        name: 'Millacoco Virgin Hair & Face Oil', 
+        price: 320, 
+        image: 'images/virgin_oil.jpg', 
+        tag: 'Skincare', 
+        desc: 'Virgin Hair & Scalp Oil',
+        externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX5',
+        platform: 'Amazon'
+    },
+    { 
+        id: 6,
+        name: 'Millacoco Kitchen & Skincare Duo Pack', 
+        price: 590, 
+        image: 'images/combo_duo.jpg', 
+        tag: 'Combo Offer', 
+        desc: '1L Classic + Virgin Oil',
+        externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX6',
+        platform: 'Amazon'
+    }
 ];
+
+// Global helper to redirect to external e-commerce platform
+function redirectToPlatform(url) {
+    if (!url) {
+        url = 'https://wa.me/918089757815?text=Hello%20Millacoco,%20I%20would%20like%20to%20order%20pure%20coconut%20oil';
+    }
+    window.open(url, '_blank', 'noopener,noreferrer');
+}
 
 // Special Combo Packs Data
 const comboPacks = [
@@ -560,8 +649,8 @@ function searchHeaderProducts() {
     let html = '<div class="text-[10px] uppercase font-bold text-sage-500 tracking-wider px-1 pb-1">Products Found</div>';
     filtered.forEach(item => {
         html += `
-            <div class="flex items-center justify-between p-2 hover:bg-sage-50/90 rounded-xl transition duration-200 cursor-pointer group">
-                <div class="flex items-center space-x-3" onclick="addToCart('${item.name}', ${item.price}, '${item.image}'); clearHeaderSearch();">
+            <div class="flex items-center justify-between p-2 hover:bg-sage-50/90 rounded-xl transition duration-200 cursor-pointer group" onclick="redirectToPlatform('${item.externalUrl}'); clearHeaderSearch();">
+                <div class="flex items-center space-x-3">
                     <img src="${item.image}" alt="${item.name}" class="w-10 h-10 object-cover rounded-lg border border-sage-200 shadow-xs">
                     <div>
                         <h5 class="text-xs font-semibold text-sage-900 group-hover:text-sage-700 leading-snug">${item.name}</h5>
@@ -571,8 +660,9 @@ function searchHeaderProducts() {
                         </div>
                     </div>
                 </div>
-                <button onclick="addToCart('${item.name}', ${item.price}, '${item.image}'); clearHeaderSearch();" class="text-[10px] bg-sage-800 hover:bg-sage-900 text-white px-2.5 py-1 rounded-full font-medium shadow-xs transition">
-                    + Add
+                <button type="button" class="text-[10px] bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white px-2.5 py-1 rounded-full font-semibold shadow-xs transition flex items-center gap-1">
+                    <span>Buy</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
                 </button>
             </div>
         `;
@@ -617,7 +707,7 @@ function searchProducts() {
     let html = '';
     filtered.forEach(item => {
         html += `
-            <div class="flex items-center justify-between p-2.5 hover:bg-sage-50 rounded-xl cursor-pointer transition" onclick="addToCart('${item.name}', ${item.price}, '${item.image}'); document.getElementById('search-modal').classList.add('hidden');">
+            <div class="flex items-center justify-between p-2.5 hover:bg-sage-50 rounded-xl cursor-pointer transition" onclick="redirectToPlatform('${item.externalUrl}'); document.getElementById('search-modal').classList.add('hidden');">
                 <div class="flex items-center space-x-3">
                     <img src="${item.image}" alt="${item.name}" class="w-10 h-10 object-cover rounded-lg border border-sage-200">
                     <div>
@@ -625,7 +715,10 @@ function searchProducts() {
                         <span class="text-[10px] text-sage-600 font-medium">₹${item.price}.00 • ${item.tag}</span>
                     </div>
                 </div>
-                <span class="text-xs font-bold text-sage-800 bg-sage-100 hover:bg-sage-200 px-3 py-1 rounded-full">+ Add</span>
+                <span class="text-xs font-bold text-[#D4A853] bg-[#611B10] hover:bg-[#782315] px-3 py-1 rounded-full flex items-center gap-1">
+                    <span>Buy</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                </span>
             </div>
         `;
     });
@@ -731,8 +824,15 @@ function initApp() {
         });
     }
 
+    // Initialize Cart and Favorites UI from storage
+    updateCartUI();
+    updateFavoritesUI();
+
     // Apply Letter-by-Letter Blur-In Animation to Hero Text
     initHeroTextBlurAnimation();
+
+    // Hero Background Slideshow with Fade Animation
+    initHeroSlideshow();
 
     // Scroll-reveal animations for sections and cards
     initScrollReveal();
@@ -752,6 +852,9 @@ function initApp() {
 
 // Modern Testimonials Slider Logic
 let currentTestimonialIndex = 0;
+let testimonialAutoTimer = null;
+const TESTIMONIAL_AUTOPLAY_INTERVAL = 4200;
+
 function getVisibleTestimonialsCount() {
     if (window.innerWidth >= 1024) return 3; // Desktop
     if (window.innerWidth >= 640) return 2;  // Tablet
@@ -777,7 +880,21 @@ function updateTestimonialsSlider() {
     slider.style.transform = `translateX(-${currentTestimonialIndex * percentagePerCard}%)`;
 }
 
-function nextTestimonialSlide() {
+function startTestimonialsAutoSlide() {
+    if (testimonialAutoTimer) clearInterval(testimonialAutoTimer);
+    testimonialAutoTimer = setInterval(() => {
+        nextTestimonialSlide(false);
+    }, TESTIMONIAL_AUTOPLAY_INTERVAL);
+}
+
+function pauseTestimonialsAutoSlide() {
+    if (testimonialAutoTimer) {
+        clearInterval(testimonialAutoTimer);
+        testimonialAutoTimer = null;
+    }
+}
+
+function nextTestimonialSlide(userTriggered = true) {
     const slider = document.getElementById('testimonials-slider');
     if (!slider) return;
     const total = slider.children.length;
@@ -786,9 +903,13 @@ function nextTestimonialSlide() {
 
     currentTestimonialIndex = currentTestimonialIndex >= maxIndex ? 0 : currentTestimonialIndex + 1;
     updateTestimonialsSlider();
+
+    if (userTriggered) {
+        startTestimonialsAutoSlide(); // Reset interval after manual click
+    }
 }
 
-function prevTestimonialSlide() {
+function prevTestimonialSlide(userTriggered = true) {
     const slider = document.getElementById('testimonials-slider');
     if (!slider) return;
     const total = slider.children.length;
@@ -797,18 +918,31 @@ function prevTestimonialSlide() {
 
     currentTestimonialIndex = currentTestimonialIndex <= 0 ? maxIndex : currentTestimonialIndex - 1;
     updateTestimonialsSlider();
+
+    if (userTriggered) {
+        startTestimonialsAutoSlide(); // Reset interval after manual click
+    }
 }
 
 function initTestimonialsCarousel() {
     const slider = document.getElementById('testimonials-slider');
+    const reviewsSection = document.getElementById('reviews');
     if (!slider) return;
 
     window.addEventListener('resize', updateTestimonialsSlider);
     updateTestimonialsSlider();
+    startTestimonialsAutoSlide();
+
+    // Pause auto-sliding on hover
+    if (reviewsSection) {
+        reviewsSection.addEventListener('mouseenter', pauseTestimonialsAutoSlide);
+        reviewsSection.addEventListener('mouseleave', startTestimonialsAutoSlide);
+    }
 
     // Touch swipe support for testimonials on mobile
     let startX = 0;
     slider.addEventListener('touchstart', (e) => {
+        pauseTestimonialsAutoSlide();
         startX = e.touches[0].clientX;
     }, { passive: true });
 
@@ -816,10 +950,12 @@ function initTestimonialsCarousel() {
         const diffX = e.changedTouches[0].clientX - startX;
         if (Math.abs(diffX) > 40) {
             if (diffX < 0) {
-                nextTestimonialSlide();
+                nextTestimonialSlide(true);
             } else {
-                prevTestimonialSlide();
+                prevTestimonialSlide(true);
             }
+        } else {
+            startTestimonialsAutoSlide();
         }
     }, { passive: true });
 }
@@ -852,11 +988,11 @@ function initStickyHeaderScroll() {
     const headerInner = document.getElementById('header-inner');
     if (!mainHeader || !headerInner) return;
 
-    let lastScrollY = window.scrollY;
-    const scrollThreshold = 10; // minimum movement to trigger change
+    let lastScrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
+    const scrollThreshold = 8;
 
-    window.addEventListener('scroll', () => {
-        const currentScrollY = window.scrollY;
+    function onScrollUpdate() {
+        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
 
         // Apply glassmorphism styling past 40px
         if (currentScrollY > 40) {
@@ -866,17 +1002,28 @@ function initStickyHeaderScroll() {
         }
 
         // Hide when scrolling down, show when scrolling up
-        if (Math.abs(currentScrollY - lastScrollY) > scrollThreshold) {
-            if (currentScrollY > lastScrollY && currentScrollY > 120) {
-                // Scrolling down -> hide header
-                mainHeader.classList.add('-translate-y-24', 'opacity-0', 'pointer-events-none');
-            } else {
-                // Scrolling up -> reveal header
-                mainHeader.classList.remove('-translate-y-24', 'opacity-0', 'pointer-events-none');
+        const scrollDelta = currentScrollY - lastScrollY;
+        if (Math.abs(scrollDelta) >= scrollThreshold) {
+            if (scrollDelta > 0 && currentScrollY > 60) {
+                // Scrolling down -> hide header and slide section to top/center
+                mainHeader.classList.add('header-hidden');
+                document.body.classList.add('header-collapsed');
+            } else if (scrollDelta < -12) {
+                // Scrolling up -> reveal header and adjust section down
+                mainHeader.classList.remove('header-hidden');
+                document.body.classList.remove('header-collapsed');
             }
             lastScrollY = currentScrollY;
         }
-    }, { passive: true });
+
+        if (currentScrollY <= 40) {
+            mainHeader.classList.remove('header-hidden');
+            document.body.classList.remove('header-collapsed');
+        }
+    }
+
+    window.addEventListener('scroll', onScrollUpdate, { passive: true });
+    onScrollUpdate();
 }
 
 // Subtle 3D tilt on card hover
@@ -953,6 +1100,66 @@ function initHeroTextBlurAnimation() {
 
     heroTitle.innerHTML = '';
     heroTitle.appendChild(fragment);
+}
+
+// Hero Background Slideshow with Fade Animation & Subtle Zoom
+let currentHeroSlideIndex = 0;
+let heroSlideTimer = null;
+const HERO_SLIDE_INTERVAL = 4500; // 4.5 seconds
+
+function setHeroSlide(index) {
+    const slides = document.querySelectorAll('.hero-bg-slide');
+    const dots = document.querySelectorAll('.hero-slide-dot');
+    if (!slides.length) return;
+
+    currentHeroSlideIndex = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+        if (i === currentHeroSlideIndex) {
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
+
+    dots.forEach((dot, i) => {
+        if (i === currentHeroSlideIndex) {
+            dot.classList.add('active');
+            dot.classList.remove('w-2', 'bg-[#611B10]/30');
+            dot.classList.add('w-7', 'bg-[#611B10]');
+        } else {
+            dot.classList.remove('active');
+            dot.classList.remove('w-7', 'bg-[#611B10]');
+            dot.classList.add('w-2', 'bg-[#611B10]/30');
+        }
+    });
+}
+
+function nextHeroSlide() {
+    setHeroSlide(currentHeroSlideIndex + 1);
+}
+
+function startHeroSlideshow() {
+    if (heroSlideTimer) clearInterval(heroSlideTimer);
+    heroSlideTimer = setInterval(nextHeroSlide, HERO_SLIDE_INTERVAL);
+}
+
+function initHeroSlideshow() {
+    const slides = document.querySelectorAll('.hero-bg-slide');
+    if (!slides.length) return;
+
+    setHeroSlide(0);
+    startHeroSlideshow();
+
+    const heroSection = document.getElementById('hero');
+    if (heroSection) {
+        heroSection.addEventListener('mouseenter', () => {
+            if (heroSlideTimer) clearInterval(heroSlideTimer);
+        });
+        heroSection.addEventListener('mouseleave', () => {
+            startHeroSlideshow();
+        });
+    }
 }
 
 if (document.readyState === 'loading') {
@@ -1206,9 +1413,12 @@ window.scrubToSlide = function(targetIndex) {
 
 // Order Button Handler for Flagship Showcase
 window.orderCurrentScrubProduct = function(event) {
+    if (event) event.preventDefault();
     const product = scrubSlides[currentScrubIndex];
     if (product) {
-        addToCart(product.name, product.rawPrice, product.image, event);
+        const target = productCatalog.find(p => p.name.includes(product.name) || product.name.includes(p.name));
+        const url = target ? target.externalUrl : 'https://www.amazon.in';
+        redirectToPlatform(url);
     }
 };
 
@@ -1232,8 +1442,9 @@ document.addEventListener('DOMContentLoaded', function initFlagshipScrollScrub()
 
     function evaluateScrollScrub() {
         const rect = section.getBoundingClientRect();
-        // Distance from top of viewport to section top
-        const stickyTop = 72; 
+        const stage = section.querySelector('.sticky-showcase-stage');
+        const stageHeight = stage ? stage.offsetHeight : 540;
+        const stickyTop = Math.max(30, (window.innerHeight - stageHeight) / 2);
         const totalDist = section.offsetHeight - window.innerHeight;
 
         if (totalDist <= 0) return;
@@ -1424,9 +1635,10 @@ function goToComboSlide(idx) {
 }
 
 function orderCurrentCombo(event) {
+    if (event) event.preventDefault();
     const item = comboPacks[currentComboIndex];
     if (item) {
-        addToCart(item.name, item.price, item.image, event);
+        redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX6');
     }
 }
 
@@ -1480,6 +1692,81 @@ function initComboCarousel() {
                 resumeComboCarousel();
             }
         }, { passive: true });
+    }
+}
+
+// Dedicated Products Page (products.html) Filtering, Search & Sorting Logic
+function filterCatalog(category, clickedBtn) {
+    const cards = document.querySelectorAll('.catalog-card');
+    const buttons = document.querySelectorAll('.catalog-filter-btn');
+
+    if (clickedBtn) {
+        buttons.forEach(btn => {
+            btn.classList.remove('bg-[#611B10]', 'text-[#D4A853]', 'shadow-sm');
+            btn.classList.add('bg-white', 'text-sage-800');
+        });
+        clickedBtn.classList.remove('bg-white', 'text-sage-800');
+        clickedBtn.classList.add('bg-[#611B10]', 'text-[#D4A853]', 'shadow-sm');
+    }
+
+    let visibleCount = 0;
+    cards.forEach(card => {
+        const itemCat = card.getAttribute('data-category');
+        if (category === 'all' || itemCat === category) {
+            card.style.display = 'flex';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    const emptyMsg = document.getElementById('catalog-empty-msg');
+    if (emptyMsg) {
+        emptyMsg.classList.toggle('hidden', visibleCount > 0);
+    }
+}
+
+function sortCatalog(criteria) {
+    const grid = document.getElementById('catalog-grid');
+    if (!grid) return;
+    const cards = Array.from(grid.querySelectorAll('.catalog-card'));
+
+    cards.sort((a, b) => {
+        const priceA = parseFloat(a.getAttribute('data-price')) || 0;
+        const priceB = parseFloat(b.getAttribute('data-price')) || 0;
+        const ratingA = parseFloat(a.getAttribute('data-rating')) || 0;
+        const ratingB = parseFloat(b.getAttribute('data-rating')) || 0;
+
+        if (criteria === 'price-low') return priceA - priceB;
+        if (criteria === 'price-high') return priceB - priceA;
+        if (criteria === 'rating') return ratingB - ratingA;
+        return 0;
+    });
+
+    cards.forEach(card => grid.appendChild(card));
+}
+
+function searchCatalogProducts(query) {
+    const q = query.toLowerCase().trim();
+    const cards = document.querySelectorAll('.catalog-card');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+        const title = (card.getAttribute('data-title') || '').toLowerCase();
+        const desc = (card.getAttribute('data-desc') || '').toLowerCase();
+        const tag = (card.getAttribute('data-tag') || '').toLowerCase();
+
+        if (!q || title.includes(q) || desc.includes(q) || tag.includes(q)) {
+            card.style.display = 'flex';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    const emptyMsg = document.getElementById('catalog-empty-msg');
+    if (emptyMsg) {
+        emptyMsg.classList.toggle('hidden', visibleCount > 0);
     }
 }
 

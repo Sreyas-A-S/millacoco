@@ -10,9 +10,53 @@
     <link rel="shortcut icon" href="favicon.ico">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="script.js" defer></script>
+    <script src="script.js?v=3.5" defer></script>
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=3.5">
+    <style>
+        /* Immediate Header Collapse & Stage Motion (Guaranteed Zero-Cache Lag) */
+        #main-header {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease-out !important;
+        }
+        #main-header.header-hidden,
+        body.header-collapsed #main-header {
+            transform: translateY(-135%) !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        /* Showcase Stage Positioning & Motion */
+        .sticky-showcase-stage {
+            top: 5.25rem !important;
+            will-change: top !important;
+            transition: top 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        @media (min-width: 640px) {
+            .sticky-showcase-stage {
+                top: 6.25rem !important;
+            }
+        }
+        @media (min-width: 1024px) {
+            .sticky-showcase-stage {
+                top: 7rem !important;
+            }
+        }
+
+        /* When header collapses as you scroll to bottom: move up to top / center */
+        body.header-collapsed .sticky-showcase-stage {
+            top: 1.25rem !important;
+        }
+        @media (min-width: 640px) {
+            body.header-collapsed .sticky-showcase-stage {
+                top: 1.75rem !important;
+            }
+        }
+        @media (min-width: 1024px) {
+            body.header-collapsed .sticky-showcase-stage {
+                top: max(1.75rem, calc(50vh - 280px)) !important;
+            }
+        }
+    </style>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,14 +115,17 @@
 
                 <!-- Floating Center Navigation Pill (Desktop) -->
                 <nav class="hidden lg:flex items-center space-x-1 glass-pill px-4 py-1.5 rounded-full shadow-sm border border-white/80">
-                    <a href="#hero" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-[#611B10] text-[#D4A853] shadow-sm transition hover:bg-[#782315]">
+                    <a href="index.html" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-[#611B10] text-[#D4A853] shadow-sm transition hover:bg-[#782315]">
                         Home
                     </a>
-                    <a href="#categories" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
+                    <a href="products.html" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
                         Products
                     </a>
-                    <a href="#footer" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
+                    <a href="about.html" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
                         About Us
+                    </a>
+                    <a href="contact.html" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
+                        Contact
                     </a>
                 </nav>
 
@@ -103,22 +150,16 @@
                         <i class="fa-solid fa-magnifying-glass text-sm"></i>
                     </button>
 
-                    <!-- WhatsApp Order Button -->
-                    <a href="https://wa.me/918089757815" target="_blank" class="p-2 sm:px-3.5 sm:py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white transition shadow-sm flex items-center space-x-1.5" title="WhatsApp Direct Order">
+                    <!-- WhatsApp Direct Contact Button -->
+                    <a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20ordering%20pure%20Kerala%20coconut%20oil.%20Could%20you%20please%20share%20details?" target="_blank" rel="noopener noreferrer" class="p-2 sm:px-3.5 sm:py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white transition shadow-sm flex items-center space-x-1.5" title="Chat on WhatsApp">
                         <i class="fa-brands fa-whatsapp text-base"></i>
-                        <span class="text-[11px] font-bold hidden md:inline-block">Order</span>
+                        <span class="text-[11px] font-bold hidden md:inline-block">WhatsApp</span>
                     </a>
 
                     <!-- Favorites Button -->
                     <button id="fav-btn" class="relative p-2.5 rounded-full bg-white/80 hover:bg-white text-sage-800 transition shadow-sm flex items-center" title="Favorites" onclick="openFavoritesModal()">
                         <i class="fa-solid fa-heart text-base text-rose-500"></i>
                         <span id="fav-counter" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow">0</span>
-                    </button>
-
-                    <!-- Shopping Cart Button -->
-                    <button id="cart-btn" class="relative p-2.5 rounded-full bg-white/80 hover:bg-white text-sage-800 transition shadow-sm flex items-center" title="Cart">
-                        <i class="fa-solid fa-bag-shopping text-base"></i>
-                        <span id="cart-counter" class="absolute -top-1 -right-1 bg-ambergold-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow">0</span>
                     </button>
 
                     <!-- Mobile Menu Toggle Button -->
@@ -131,9 +172,10 @@
             <!-- Mobile Navigation Drawer -->
             <div id="mobile-menu" class="hidden lg:hidden mt-3 glass-pill p-4 rounded-2xl border border-white/80 shadow-lg">
                 <div class="flex flex-col space-y-2 text-center font-medium text-sm text-sage-900">
-                    <a href="#hero" class="py-2 rounded-xl bg-[#611B10] text-[#D4A853] font-semibold">Home</a>
-                    <a href="#categories" class="py-2 hover:bg-white/60 rounded-xl">Products</a>
-                    <a href="#footer" class="py-2 hover:bg-white/60 rounded-xl">About Us</a>
+                    <a href="index.html" class="py-2 rounded-xl bg-[#611B10] text-[#D4A853] font-semibold">Home</a>
+                    <a href="products.html" class="py-2 hover:bg-white/60 rounded-xl">Products</a>
+                    <a href="about.html" class="py-2 hover:bg-white/60 rounded-xl">About Us</a>
+                    <a href="contact.html" class="py-2 hover:bg-white/60 rounded-xl">Contact</a>
                 </div>
             </div>
         </header>
@@ -141,8 +183,15 @@
         <!-- HERO SECTION -->
         <section id="hero" class="relative hero-bg-section rounded-[2rem] sm:rounded-[2.5rem] p-5 sm:p-8 lg:p-10 xl:p-12 mb-8 sm:mb-14 border border-white/80 overflow-hidden shadow-lg min-h-[500px] sm:min-h-[560px] lg:min-h-[calc(100vh-6.25rem)] flex flex-col justify-between lg:justify-center">
             
+            <!-- Hero Background Slideshow with Fade Animation -->
+            <div id="hero-bg-slideshow" class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                <div class="hero-bg-slide active absolute inset-0 bg-cover bg-no-repeat" style="background-image: url('images/hero_bg.png');"></div>
+                <div class="hero-bg-slide absolute inset-0 bg-cover bg-no-repeat opacity-0" style="background-image: url('images/hero_slide_coconuts.jpg');"></div>
+                <div class="hero-bg-slide absolute inset-0 bg-cover bg-no-repeat opacity-0" style="background-image: url('images/hero_slide_harvest.jpg');"></div>
+            </div>
+
             <!-- Readability Gradient Overlay -->
-            <div class="hero-overlay absolute inset-0 pointer-events-none z-0"></div>
+            <div class="hero-overlay absolute inset-0 pointer-events-none z-[1]"></div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center relative z-10 w-full">
                 
@@ -171,17 +220,6 @@
                             <span class="relative z-10">SHOP PRODUCTS</span>
                             <i class="fa-solid fa-arrow-right text-xs relative z-10 group-hover:translate-x-1 transition-transform duration-200"></i>
                         </a>
-
-                        <!-- Hidden on small mobile to keep mobile hero uncluttered and clean -->
-                        <button id="video-modal-btn" class="hidden sm:inline-flex items-center space-x-2.5 text-[#611B10] font-medium text-xs sm:text-sm px-3 py-2 hover:text-[#782315] transition group active:scale-95">
-                            <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/95 flex items-center justify-center shadow-md group-hover:scale-110 transition duration-300 text-[#D4A853] border border-[#D4A853]/30">
-                                <i class="fa-solid fa-play text-[10px] ml-0.5 group-hover:scale-125 transition-transform duration-200"></i>
-                            </span>
-                            <div class="text-left">
-                                <span class="block text-[11px] sm:text-xs font-bold leading-tight">Milling Process</span>
-                                <span class="block text-[10px] text-sage-700 font-normal">Watch our Mill Video</span>
-                            </div>
-                        </button>
                     </div>
 
                     <!-- 4 Quality Badges (Hidden on mobile to expose background bottle, visible on sm and up) -->
@@ -225,28 +263,35 @@
                         <span class="text-xs font-serif font-bold text-[#611B10]">Authentic Malabar Origin</span>
                     </div>
 
-                    <!-- Floating Quick-Cart Action Chip Bottom-Right (Compact on mobile, docked cleanly) -->
+                    <!-- Floating Social Proof & Rating Badge Bottom-Right -->
                     <div class="pointer-events-auto bg-[#611B10]/95 backdrop-blur-md text-white px-3.5 py-2.5 sm:p-3.5 rounded-2xl border border-[#D4A853]/50 shadow-2xl flex items-center justify-between sm:justify-start gap-3 w-full sm:w-auto max-w-xs mx-auto sm:mr-0 transform hover:-translate-y-1 transition duration-300">
                         <div class="flex items-center gap-2.5">
                             <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#D4A853]/20 border border-[#D4A853]/40 flex items-center justify-center text-[#D4A853] text-xs sm:text-sm shrink-0">
-                                <i class="fa-solid fa-droplet"></i>
+                                <i class="fa-solid fa-star"></i>
                             </div>
                             <div>
                                 <div class="flex items-center gap-1.5">
-                                    <span class="text-xs font-bold text-white tracking-wide">Pure 1L Bottle</span>
-                                    <span class="price-tag text-[10px] bg-[#D4A853] text-[#611B10] font-extrabold px-1.5 py-0.5 rounded">₹290</span>
+                                    <span class="text-xs font-bold text-white tracking-wide">4.9 / 5.0 Rating</span>
+                                    <span class="text-[10px] bg-[#D4A853] text-[#611B10] font-extrabold px-1.5 py-0.5 rounded">12k+ Homes</span>
                                 </div>
-                                <p class="text-[10px] text-white/80 hidden xs:block">Cold Expeller Milled • Kuttiyadi</p>
+                                <p class="text-[10px] text-white/80 hidden xs:block">Verified Kerala Household Staple</p>
                             </div>
                         </div>
-                        <button onclick="addToCart('Millacoco Pure Coconut Oil (1 Ltr)', 290, 'images/product_bottle.png', event)" class="bg-[#D4A853] hover:bg-[#c29643] text-[#611B10] px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-bold transition shadow-sm active:scale-95 shrink-0 flex items-center gap-1">
-                            <i class="fa-solid fa-cart-plus text-[11px]"></i>
-                            <span>Add</span>
-                        </button>
+                        <a href="#reviews" class="bg-[#D4A853] hover:bg-[#c29643] text-[#611B10] px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-bold transition shadow-sm active:scale-95 shrink-0 flex items-center gap-1.5">
+                            <span>Reviews</span>
+                            <i class="fa-solid fa-arrow-down text-[10px]"></i>
+                        </a>
                     </div>
 
                 </div>
 
+            </div>
+
+            <!-- Hero Slideshow Dot Indicators -->
+            <div class="relative z-10 flex items-center justify-center sm:justify-start gap-2 pt-3 sm:pt-4">
+                <button type="button" onclick="setHeroSlide(0)" class="hero-slide-dot w-7 h-1.5 rounded-full bg-[#611B10] transition-all duration-300" aria-label="Hero Background 1"></button>
+                <button type="button" onclick="setHeroSlide(1)" class="hero-slide-dot w-2 h-1.5 rounded-full bg-[#611B10]/30 hover:bg-[#611B10]/60 transition-all duration-300" aria-label="Hero Background 2"></button>
+                <button type="button" onclick="setHeroSlide(2)" class="hero-slide-dot w-2 h-1.5 rounded-full bg-[#611B10]/30 hover:bg-[#611B10]/60 transition-all duration-300" aria-label="Hero Background 3"></button>
             </div>
         </section>
 
@@ -262,10 +307,10 @@
                     <button onclick="filterProducts('all')" class="px-3 py-1 bg-sage-800 text-white text-xs rounded-full font-medium filter-btn" data-filter="all">All</button>
                     <button onclick="filterProducts('daily')" class="px-3 py-1 bg-white text-sage-800 text-xs rounded-full font-medium hover:bg-sage-100 transition filter-btn" data-filter="daily">Daily Use</button>
                     <button onclick="filterProducts('bulk')" class="px-3 py-1 bg-white text-sage-800 text-xs rounded-full font-medium hover:bg-sage-100 transition filter-btn" data-filter="bulk">Bulk Cans</button>
-                    <button id="view-all-btn" onclick="toggleViewAllProducts()" class="inline-flex sm:hidden items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#611B10] bg-[#D4A853]/25 border border-[#D4A853]/40 hover:bg-[#D4A853]/40 transition active:scale-95 ml-auto">
-                        <span id="view-all-text">View All</span>
-                        <i id="view-all-icon" class="fa-solid fa-grid-2 text-[10px]"></i>
-                    </button>
+                    <a href="products.html" class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#611B10] bg-[#D4A853]/25 hover:bg-[#D4A853]/40 border border-[#D4A853]/40 transition active:scale-95 ml-auto sm:ml-2">
+                        <span>View All Products</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
                 </div>
             </div>
 
@@ -287,8 +332,9 @@
                             <p class="text-[10px] sm:text-xs text-sage-600 my-0.5 sm:my-1 line-clamp-1">Easy-pour spout pack for cooking.</p>
                             <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹280.00</p>
                         </div>
-                        <button onclick="addToCart('Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.png', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95">
-                            + Add to Cart
+                        <button onclick="redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX1')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                            <span>Buy</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                         </button>
                     </div>
                 </div>
@@ -308,8 +354,9 @@
                             <p class="text-[10px] sm:text-xs text-sage-600 my-0.5 sm:my-1 line-clamp-1">Daily kitchen staple & massage.</p>
                             <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹290.00</p>
                         </div>
-                        <button onclick="addToCart('Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.png', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95">
-                            + Add to Cart
+                        <button onclick="redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX2')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                            <span>Buy</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                         </button>
                     </div>
                 </div>
@@ -329,8 +376,9 @@
                             <p class="text-[10px] sm:text-xs text-sage-600 my-0.5 sm:my-1 line-clamp-1">Save shipping on supply.</p>
                             <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹570.00</p>
                         </div>
-                        <button onclick="addToCart('Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95">
-                            + Add to Cart
+                        <button onclick="redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX3')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                            <span>Buy</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                         </button>
                     </div>
                 </div>
@@ -350,8 +398,9 @@
                             <p class="text-[10px] sm:text-xs text-sage-600 my-0.5 sm:my-1 line-clamp-1">Heavy-duty leakproof can.</p>
                             <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹1,390.00</p>
                         </div>
-                        <button onclick="addToCart('Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95">
-                            + Add to Cart
+                        <button onclick="redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX4')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                            <span>Buy</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                         </button>
                     </div>
                 </div>
@@ -371,12 +420,20 @@
                             <p class="text-[10px] sm:text-xs text-sage-600 my-0.5 sm:my-1 line-clamp-1">Deep scalp conditioning.</p>
                             <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹320.00</p>
                         </div>
-                        <button onclick="addToCart('Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95">
-                            + Add to Cart
+                        <button onclick="redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX5')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                            <span>Buy</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                         </button>
                     </div>
                 </div>
 
+            </div>
+            <!-- Bottom Centered "View All Products" Action Banner -->
+            <div class="mt-8 sm:mt-10 text-center">
+                <a href="products.html" class="inline-flex items-center space-x-2.5 px-7 py-3 rounded-full text-xs sm:text-sm font-bold text-[#611B10] bg-[#D4A853]/25 hover:bg-[#D4A853]/40 border border-[#D4A853]/50 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:scale-95">
+                    <span>Explore All Sizes & Value Packs</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </a>
             </div>
         </section>
 
@@ -384,7 +441,7 @@
         <section id="flagship-bottle" class="relative my-8 sm:my-14 h-[260vh]">
             
             <!-- Sticky Showcase Stage -->
-            <div class="sticky-showcase-stage sticky top-12 sm:top-20 z-20">
+            <div class="sticky-showcase-stage sticky z-20">
                 
                 <!-- Parallax Floating Blurred Bokeh Leaves (Outer floating leaves in foreground & background) -->
                 <div class="parallax-leaves-stage absolute -inset-6 sm:-inset-12 overflow-visible pointer-events-none z-30">
@@ -477,7 +534,7 @@
                                 Single-press cold expeller milled from sun-dried Kuttiyadi copra at Kozhikode. Pure aroma, zero chemicals, and natural coastal goodness.
                             </p>
 
-                            <!-- Two Pill Buttons -->
+                            <!-- Action Button -->
                             <div class="flex flex-wrap items-center gap-2.5 sm:gap-3.5 pt-1 sm:pt-2">
                                 <!-- Primary Pill Button -->
                                 <button id="scrub-order-btn" onclick="orderCurrentScrubProduct(event)" class="bg-[#2E6F40] hover:bg-[#235732] text-white font-sans font-semibold text-xs sm:text-sm px-6 sm:px-7 py-3 sm:py-3.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2">
@@ -485,11 +542,6 @@
                                     <span class="opacity-50">•</span>
                                     <span id="scrub-price" class="price-tag font-bold tracking-tight">₹340.00</span>
                                 </button>
-
-                                <!-- Secondary Outline Pill Button -->
-                                <a href="#bestsellers" class="border border-sage-400/80 hover:border-sage-800 text-sage-800 hover:text-sage-900 font-sans font-medium text-xs sm:text-sm px-5 sm:px-6 py-3 sm:py-3.5 rounded-full transition-all duration-300 hover:bg-white/60 active:scale-95">
-                                    Special Packs
-                                </a>
                             </div>
                         </div>
 
@@ -607,30 +659,39 @@
 
     </div>
 
-    <!-- MODERN TESTIMONIALS SECTION (CLEAN CARDS, PASTEL WAVE BG, SMOOTH NAVIGATION) -->
-    <section id="reviews" class="relative w-full py-16 sm:py-24 my-8 overflow-hidden select-none bg-gradient-to-br from-[#E9F3FC] via-[#F4F9FE] to-[#FDF4EA]">
+    <!-- MODERN TESTIMONIALS SECTION (WARM LUXURY LINEN & AMBER GOLD PALETTE) -->
+    <section id="reviews" class="relative w-full py-16 sm:py-24 my-8 overflow-hidden select-none bg-gradient-to-br from-[#FAF5EC] via-[#F6ECE0] to-[#EFE1CC] border-y border-[#D4A853]/20">
         
-        <!-- Ambient Wavy Line Graphics in Background -->
-        <div class="absolute inset-0 pointer-events-none opacity-45 overflow-hidden">
+        <!-- Warm Amber Glow Lights -->
+        <div class="absolute -top-24 right-1/4 w-96 h-96 bg-[#D4A853]/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-[#611B10]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Ambient Wavy Line Graphics in Warm Gold Contour Waves -->
+        <div class="absolute inset-0 pointer-events-none opacity-35 overflow-hidden">
             <svg class="w-full h-full object-cover" viewBox="0 0 1200 600" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M-100,120 C200,20 400,260 700,140 C1000,20 1150,220 1350,150" stroke="#7BA8D1" stroke-width="2" stroke-linecap="round"/>
-                <path d="M-100,150 C200,50 400,290 700,170 C1000,50 1150,250 1350,180" stroke="#7BA8D1" stroke-width="1.8" stroke-linecap="round"/>
-                <path d="M-100,180 C200,80 400,320 700,200 C1000,80 1150,280 1350,210" stroke="#7BA8D1" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M-100,210 C200,110 400,350 700,230 C1000,110 1150,310 1350,240" stroke="#7BA8D1" stroke-width="1.2" stroke-linecap="round"/>
-                <path d="M-100,240 C200,140 400,380 700,260 C1000,140 1150,340 1350,270" stroke="#7BA8D1" stroke-width="1" stroke-linecap="round"/>
-                <path d="M-100,270 C200,170 400,410 700,290 C1000,170 1150,370 1350,300" stroke="#7BA8D1" stroke-width="0.8" stroke-linecap="round"/>
+                <path d="M-100,120 C200,20 400,260 700,140 C1000,20 1150,220 1350,150" stroke="#D4A853" stroke-width="2" stroke-linecap="round"/>
+                <path d="M-100,150 C200,50 400,290 700,170 C1000,50 1150,250 1350,180" stroke="#D4A853" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M-100,180 C200,80 400,320 700,200 C1000,80 1150,280 1350,210" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M-100,210 C200,110 400,350 700,230 C1000,110 1150,310 1350,240" stroke="#D4A853" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M-100,240 C200,140 400,380 700,260 C1000,140 1150,340 1350,270" stroke="#D4A853" stroke-width="1" stroke-linecap="round"/>
+                <path d="M-100,270 C200,170 400,410 700,290 C1000,170 1150,370 1350,300" stroke="#D4A853" stroke-width="0.8" stroke-linecap="round"/>
             </svg>
         </div>
 
         <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             
-            <!-- Section Header (Centered Clean Typography) -->
+            <!-- Section Header (Centered Clean Luxury Typography) -->
             <div class="text-center max-w-xl mx-auto mb-10 sm:mb-14">
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-sans font-bold text-[#142B47] tracking-tight">
-                    Testimonials
+                <div class="inline-flex items-center space-x-2 text-[10px] sm:text-xs tracking-widest text-[#611B10] font-bold uppercase mb-2">
+                    <span class="w-6 h-[1px] bg-[#D4A853]"></span>
+                    <span>AUTHENTIC CUSTOMER STORIES</span>
+                    <span class="w-6 h-[1px] bg-[#D4A853]"></span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#611B10] tracking-tight">
+                    Loved In Every Kitchen
                 </h2>
-                <p class="text-xs sm:text-sm text-[#4E6682] mt-2 font-medium">
-                    Read what our customers have to say about our product.
+                <p class="text-xs sm:text-sm text-sage-800/85 mt-2 font-medium">
+                    Read what families, wellness lovers, and chefs say about Millacoco purity.
                 </p>
             </div>
 
@@ -640,94 +701,119 @@
                     
                     <!-- Slide Card 1 -->
                     <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3">
-                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_12px_35px_rgba(35,75,115,0.08)] border border-white flex flex-col justify-between h-full min-h-[220px]">
-                            <div class="flex items-center space-x-4 mb-5">
-                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80" alt="Ananya Menoki" class="w-14 h-14 rounded-full object-cover shrink-0">
-                                <div class="text-left">
-                                    <h4 class="font-sans font-bold text-base text-[#142B47] leading-tight">Ananya Menoki</h4>
-                                    <span class="text-xs text-[#6B829D] font-medium block mt-0.5">Kozhikode, Kerala</span>
+                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
+                            <div>
+                                <div class="flex items-center space-x-4 mb-4">
+                                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80" alt="Ananya Menoki" class="w-14 h-14 rounded-full object-cover shrink-0 border-2 border-[#D4A853]/40 shadow-sm">
+                                    <div class="text-left">
+                                        <h4 class="font-serif font-bold text-base text-[#611B10] leading-tight">Ananya Menoki</h4>
+                                        <span class="text-xs text-[#8F3221]/80 font-medium block mt-0.5">Kozhikode, Kerala</span>
+                                        <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mt-1">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                    </div>
                                 </div>
+                                <p class="text-xs sm:text-sm text-[#3A0E07]/90 leading-relaxed font-normal">
+                                    “This oil has exceeded all my expectations. The authentic coastal aroma is unmatched. I highly recommend it!”
+                                </p>
                             </div>
-                            <p class="text-xs sm:text-sm text-[#3E5570] leading-relaxed font-normal">
-                                “This oil has exceeded all my expectations. The authentic coastal aroma is unmatched. I highly recommend it!”
-                            </p>
                         </div>
                     </div>
 
                     <!-- Slide Card 2 -->
                     <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3">
-                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_12px_35px_rgba(35,75,115,0.08)] border border-white flex flex-col justify-between h-full min-h-[220px]">
-                            <div class="flex items-center space-x-4 mb-5">
-                                <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=150&q=80" alt="Dr. Rajesh Nambiar" class="w-14 h-14 rounded-full object-cover shrink-0">
-                                <div class="text-left">
-                                    <h4 class="font-sans font-bold text-base text-[#142B47] leading-tight">Dr. Rajesh Nambiar</h4>
-                                    <span class="text-xs text-[#6B829D] font-medium block mt-0.5">Indiranagar, Bengaluru</span>
+                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
+                            <div>
+                                <div class="flex items-center space-x-4 mb-4">
+                                    <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=150&q=80" alt="Dr. Rajesh Nambiar" class="w-14 h-14 rounded-full object-cover shrink-0 border-2 border-[#D4A853]/40 shadow-sm">
+                                    <div class="text-left">
+                                        <h4 class="font-serif font-bold text-base text-[#611B10] leading-tight">Dr. Rajesh Nambiar</h4>
+                                        <span class="text-xs text-[#8F3221]/80 font-medium block mt-0.5">Indiranagar, Bengaluru</span>
+                                        <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mt-1">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                    </div>
                                 </div>
+                                <p class="text-xs sm:text-sm text-[#3A0E07]/90 leading-relaxed font-normal">
+                                    “A game-changer! It's 100% sulphur-free and made our daily family cooking so much cleaner and healthier.”
+                                </p>
                             </div>
-                            <p class="text-xs sm:text-sm text-[#3E5570] leading-relaxed font-normal">
-                                “A game-changer! It's 100% sulphur-free and made our daily family cooking so much cleaner and healthier.”
-                            </p>
                         </div>
                     </div>
 
                     <!-- Slide Card 3 -->
                     <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3">
-                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_12px_35px_rgba(35,75,115,0.08)] border border-white flex flex-col justify-between h-full min-h-[220px]">
-                            <div class="flex items-center space-x-4 mb-5">
-                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="Sujata Pillai" class="w-14 h-14 rounded-full object-cover shrink-0">
-                                <div class="text-left">
-                                    <h4 class="font-sans font-bold text-base text-[#142B47] leading-tight">Sujata Pillai</h4>
-                                    <span class="text-xs text-[#6B829D] font-medium block mt-0.5">Marine Drive, Kochi</span>
+                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
+                            <div>
+                                <div class="flex items-center space-x-4 mb-4">
+                                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="Sujata Pillai" class="w-14 h-14 rounded-full object-cover shrink-0 border-2 border-[#D4A853]/40 shadow-sm">
+                                    <div class="text-left">
+                                        <h4 class="font-serif font-bold text-base text-[#611B10] leading-tight">Sujata Pillai</h4>
+                                        <span class="text-xs text-[#8F3221]/80 font-medium block mt-0.5">Marine Drive, Kochi</span>
+                                        <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mt-1">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                    </div>
                                 </div>
+                                <p class="text-xs sm:text-sm text-[#3A0E07]/90 leading-relaxed font-normal">
+                                    “Fantastic quality and customer service. We order the 5L Can regularly and couldn't be happier!”
+                                </p>
                             </div>
-                            <p class="text-xs sm:text-sm text-[#3E5570] leading-relaxed font-normal">
-                                “Fantastic quality and customer service. We order the 5L Can regularly and couldn't be happier!”
-                            </p>
                         </div>
                     </div>
 
                     <!-- Slide Card 4 -->
                     <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3">
-                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_12px_35px_rgba(35,75,115,0.08)] border border-white flex flex-col justify-between h-full min-h-[220px]">
-                            <div class="flex items-center space-x-4 mb-5">
-                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Chef Gautam Nair" class="w-14 h-14 rounded-full object-cover shrink-0">
-                                <div class="text-left">
-                                    <h4 class="font-sans font-bold text-base text-[#142B47] leading-tight">Chef Gautam Nair</h4>
-                                    <span class="text-xs text-[#6B829D] font-medium block mt-0.5">Bandra West, Mumbai</span>
+                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
+                            <div>
+                                <div class="flex items-center space-x-4 mb-4">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Chef Gautam Nair" class="w-14 h-14 rounded-full object-cover shrink-0 border-2 border-[#D4A853]/40 shadow-sm">
+                                    <div class="text-left">
+                                        <h4 class="font-serif font-bold text-base text-[#611B10] leading-tight">Chef Gautam Nair</h4>
+                                        <span class="text-xs text-[#8F3221]/80 font-medium block mt-0.5">Bandra West, Mumbai</span>
+                                        <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mt-1">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                    </div>
                                 </div>
+                                <p class="text-xs sm:text-sm text-[#3A0E07]/90 leading-relaxed font-normal">
+                                    “In our restaurant, authentic Kerala curries depend on pure unrefined oil. Millacoco delivers signature Malabar body.”
+                                </p>
                             </div>
-                            <p class="text-xs sm:text-sm text-[#3E5570] leading-relaxed font-normal">
-                                “In our restaurant, authentic Kerala curries depend on pure unrefined oil. Millacoco delivers signature Malabar body.”
-                            </p>
                         </div>
                     </div>
 
                     <!-- Slide Card 5 -->
                     <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3">
-                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_12px_35px_rgba(35,75,115,0.08)] border border-white flex flex-col justify-between h-full min-h-[220px]">
-                            <div class="flex items-center space-x-4 mb-5">
-                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Meera Krishnan" class="w-12 h-12 rounded-full object-cover shrink-0">
-                                <div class="text-left">
-                                    <h4 class="font-sans font-bold text-base text-[#142B47] leading-tight">Meera Krishnan</h4>
-                                    <span class="text-xs text-[#6B829D] font-medium block mt-0.5">Alwarpet, Chennai</span>
+                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
+                            <div>
+                                <div class="flex items-center space-x-4 mb-4">
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Meera Krishnan" class="w-14 h-14 rounded-full object-cover shrink-0 border-2 border-[#D4A853]/40 shadow-sm">
+                                    <div class="text-left">
+                                        <h4 class="font-serif font-bold text-base text-[#611B10] leading-tight">Meera Krishnan</h4>
+                                        <span class="text-xs text-[#8F3221]/80 font-medium block mt-0.5">Alwarpet, Chennai</span>
+                                        <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mt-1">
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        </div>
+                                    </div>
                                 </div>
+                                <p class="text-xs sm:text-sm text-[#3A0E07]/90 leading-relaxed font-normal">
+                                    “Brings back the exact scalp-cooling nourishment my grandmother loved. Visible hair health improvement in weeks.”
+                                </p>
                             </div>
-                            <p class="text-xs sm:text-sm text-[#3E5570] leading-relaxed font-normal">
-                                “Brings back the exact scalp-cooling nourishment my grandmother loved. Visible hair health improvement in weeks.”
-                            </p>
                         </div>
                     </div>
 
                 </div>
             </div>
 
-            <!-- Bottom Floating Round Navigation Buttons (Matching Mockup) -->
+            <!-- Bottom Floating Round Navigation Buttons (Styled to Match Brand) -->
             <div class="flex items-center justify-center space-x-3 mt-8 sm:mt-10">
-                <button onclick="prevTestimonialSlide()" class="w-10 h-10 rounded-full bg-white/90 hover:bg-white text-[#142B47] shadow-md hover:shadow-lg border border-white flex items-center justify-center transition-all duration-200 active:scale-95" aria-label="Previous Testimonials">
-                    <i class="fa-solid fa-arrow-left text-xs"></i>
+                <button onclick="prevTestimonialSlide()" class="w-11 h-11 rounded-full bg-white/95 hover:bg-[#611B10] text-[#611B10] hover:text-[#D4A853] shadow-md hover:shadow-xl border border-[#D4A853]/40 flex items-center justify-center transition-all duration-300 active:scale-95" aria-label="Previous Testimonials">
+                    <i class="fa-solid fa-arrow-left text-sm"></i>
                 </button>
-                <button onclick="nextTestimonialSlide()" class="w-10 h-10 rounded-full bg-white/90 hover:bg-white text-[#142B47] shadow-md hover:shadow-lg border border-white flex items-center justify-center transition-all duration-200 active:scale-95" aria-label="Next Testimonials">
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                <button onclick="nextTestimonialSlide()" class="w-11 h-11 rounded-full bg-white/95 hover:bg-[#611B10] text-[#611B10] hover:text-[#D4A853] shadow-md hover:shadow-xl border border-[#D4A853]/40 flex items-center justify-center transition-all duration-300 active:scale-95" aria-label="Next Testimonials">
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
                 </button>
             </div>
 
@@ -773,7 +859,7 @@
                     <div class="space-y-3">
                         <h4 class="font-bold text-white tracking-wider uppercase text-[11px]">Customer Care</h4>
                         <ul class="space-y-2 text-sage-300">
-                            <li><a href="https://wa.me/918089757815" target="_blank" class="hover:text-white transition">WhatsApp Order</a></li>
+                            <li><a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20ordering%20pure%20Kerala%20coconut%20oil.%20Could%20you%20please%20share%20details?" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">WhatsApp Order</a></li>
                             <li><a href="#" class="hover:text-white transition">Express Shipping</a></li>
                             <li><a href="#" class="hover:text-white transition">Terms & Conditions</a></li>
                         </ul>
@@ -831,36 +917,6 @@
         </div>
     </div>
 
-    <!-- CART DRAWER MODAL -->
-    <div id="cart-drawer" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 pointer-events-none">
-        <div id="cart-overlay" class="absolute inset-0 bg-black/45 backdrop-blur-sm"></div>
-        <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-stonebg shadow-2xl p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300" id="cart-content">
-            <div>
-                <div class="flex items-center justify-between pb-4 border-b border-sage-900/10">
-                    <h3 class="font-serif text-xl font-bold text-sage-900">Your Shopping Cart</h3>
-                    <button id="close-cart" class="text-sage-800 hover:text-sage-600 text-lg p-2" title="Close Cart">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-
-                <div id="cart-items" class="py-4 space-y-4 max-h-[60vh] overflow-y-auto">
-                    <p id="empty-cart-msg" class="text-center text-xs text-sage-700 py-12">Your cart is currently empty.</p>
-                </div>
-            </div>
-
-            <div class="border-t border-sage-900/10 pt-4 space-y-3">
-                <div class="flex items-center justify-between text-sm font-bold text-sage-900">
-                    <span>Subtotal:</span>
-                    <span id="cart-subtotal" class="price-tag">₹0.00</span>
-                </div>
-                <p class="text-[10px] text-sage-700">Orders placed send direct confirmation to Millacoco WhatsApp Line.</p>
-                <button onclick="checkout()" class="w-full bg-sage-800 hover:bg-sage-900 text-white font-medium py-3 rounded-full text-xs transition shadow">
-                    PROCEED TO WHATSAPP CHECKOUT
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- SEARCH MODAL (Mobile Fallback) -->
     <div id="search-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4">
         <div class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-4">
@@ -872,20 +928,6 @@
             <div id="search-results" class="space-y-2 max-h-56 overflow-y-auto text-xs text-sage-800">
                 <p class="text-sage-500 italic">Type above to search Millacoco products...</p>
             </div>
-        </div>
-    </div>
-
-    <!-- VIDEO PROCESS MODAL -->
-    <div id="video-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-md p-4">
-        <div class="relative w-full max-w-2xl bg-sage-900 rounded-3xl overflow-hidden shadow-2xl border border-white/20 p-8 text-center text-white">
-            <button id="close-video" class="absolute top-4 right-4 text-white text-xl w-8 h-8 rounded-full bg-black/50 flex items-center justify-center hover:bg-black" title="Close Video">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <i class="fa-solid fa-circle-play text-5xl text-ambergold-400 mb-4 animate-bounce"></i>
-            <h3 class="font-serif text-2xl">Millacoco Oil Milling Process</h3>
-            <p class="text-xs text-sage-200 mt-2 max-w-md mx-auto leading-relaxed">
-                Watch how we source handpicked Kuttiyadi copra and cold-press pure Kerala coconut oil at Puthalampurath Oil Mill in Kozhikode without chemicals or sulphur.
-            </p>
         </div>
     </div>
 

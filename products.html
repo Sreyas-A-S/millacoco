@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products - Millacoco Pure Kerala Coconut Oil</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+    <link rel="alternate icon" type="image/png" href="images/favicon.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="script.js?v=4.0" defer></script>
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=4.0">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-stonebg text-sage-900 font-sans antialiased selection:bg-ambergold-300 selection:text-sage-900">
+
+    <!-- SIMPLE MINIMAL PRELOADER -->
+    <div id="preloader" class="fixed inset-0 z-[99999] bg-[#FAF5EC] flex flex-col items-center justify-center transition-all duration-500 ease-out select-none">
+        <div class="flex flex-col items-center text-center space-y-4">
+            <!-- Brand Icon Logo -->
+            <div class="w-16 h-16 rounded-2xl bg-[#1C3822] shadow-lg border border-[#D4A853]/40 flex items-center justify-center p-2 transition-transform duration-300 hover:scale-105">
+                <img src="images/logo_gold.png" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
+            </div>
+
+            <!-- Brand Name -->
+            <div class="text-center">
+                <h2 class="font-serif text-lg font-bold tracking-[0.24em] text-sage-900 uppercase">
+                    MILLACOCO
+                </h2>
+                <span class="block text-[9px] tracking-[0.3em] text-sage-600 uppercase mt-0.5">
+                    Pure Kerala Coconut Oil
+                </span>
+            </div>
+
+            <!-- Minimal Thin Loading Bar -->
+            <div class="w-28 h-0.5 bg-sage-200 rounded-full overflow-hidden mt-1">
+                <div id="preloader-progress" class="h-full bg-sage-800 rounded-full transition-all duration-150 ease-out w-0"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-3 sm:py-4">
+
+        <!-- HEADER & NAVIGATION -->
+        <header id="main-header" class="sticky top-2 z-50 mb-3 sm:mb-4 transition-all duration-300">
+            <div id="header-inner" class="flex items-center justify-between gap-4 py-1.5 sm:py-2 px-3 sm:px-4 rounded-3xl transition-all duration-300">
+                
+                <!-- Left-Aligned Brand Logo -->
+                <a href="index.html" class="flex items-center space-x-3 group shrink-0">
+                    <div class="w-10 h-10 rounded-2xl bg-[#1C3822] shadow-sm border border-[#D4A853]/40 flex items-center justify-center p-1 group-hover:scale-105 transition-transform duration-300">
+                        <img src="images/logo_gold.png" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
+                    </div>
+                    <div class="text-left">
+                        <h1 class="font-serif text-2xl sm:text-3xl font-extrabold tracking-[0.22em] text-sage-900 uppercase leading-none">
+                            MILLACOCO
+                        </h1>
+                        <span class="block text-[9px] sm:text-[10px] tracking-[0.38em] text-sage-600 font-medium uppercase mt-1">
+                            Pure Kerala Coconut Oil
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Floating Center Navigation Pill (Desktop) -->
+                <nav class="hidden lg:flex items-center space-x-1 glass-pill px-4 py-1.5 rounded-full shadow-sm border border-white/80">
+                    <a href="index.html" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
+                        Home
+                    </a>
+                    <a href="products.html" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-[#611B10] text-[#D4A853] shadow-sm transition hover:bg-[#782315]">
+                        Products
+                    </a>
+                    <a href="index.html#about" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
+                        About Us
+                    </a>
+                </nav>
+
+                <!-- Header Actions & Search Bar -->
+                <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+                    
+                    <!-- Designed Search Bar with Live Dropdown -->
+                    <div class="relative hidden sm:block w-48 md:w-60 lg:w-64">
+                        <div class="flex items-center bg-white/90 border border-sage-200/90 rounded-full px-3.5 py-2 shadow-xs focus-within:ring-2 focus-within:ring-sage-700/20 focus-within:border-sage-600 focus-within:bg-white transition-all duration-200">
+                            <i class="fa-solid fa-magnifying-glass text-sage-400 text-xs mr-2 shrink-0"></i>
+                            <input type="text" id="header-search-input" onkeyup="searchHeaderProducts()" placeholder="Search sizes, 1L, virgin..." class="w-full bg-transparent text-xs text-sage-900 placeholder-sage-400 focus:outline-none">
+                            <button id="header-search-clear" onclick="clearHeaderSearch()" class="hidden text-sage-400 hover:text-sage-600 text-xs ml-1 shrink-0">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <!-- Live Search Results Dropdown -->
+                        <div id="header-search-dropdown" class="hidden absolute left-0 right-0 top-full mt-2 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/90 p-3 z-50 space-y-2 max-h-72 overflow-y-auto"></div>
+                    </div>
+
+                    <!-- Mobile Search Trigger Button -->
+                    <button id="search-btn" class="sm:hidden p-2.5 rounded-full bg-white/80 hover:bg-white text-sage-800 transition shadow-sm" title="Search">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </button>
+
+                    <!-- WhatsApp Order Button -->
+                    <a href="https://wa.me/918089757815" target="_blank" class="p-2 sm:px-3.5 sm:py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white transition shadow-sm flex items-center space-x-1.5" title="WhatsApp Direct Order">
+                        <i class="fa-brands fa-whatsapp text-base"></i>
+                        <span class="text-[11px] font-bold hidden md:inline-block">Order</span>
+                    </a>
+
+                    <!-- Favorites Button -->
+                    <button id="fav-btn" class="relative p-2.5 rounded-full bg-white/80 hover:bg-white text-sage-800 transition shadow-sm flex items-center" title="Favorites" onclick="openFavoritesModal()">
+                        <i class="fa-solid fa-heart text-base text-rose-500"></i>
+                        <span id="fav-counter" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow">0</span>
+                    </button>
+
+                    <!-- Shopping Cart Button -->
+                    <button id="cart-btn" class="relative p-2.5 rounded-full bg-white/80 hover:bg-white text-sage-800 transition shadow-sm flex items-center" title="Cart">
+                        <i class="fa-solid fa-bag-shopping text-base"></i>
+                        <span id="cart-counter" class="absolute -top-1 -right-1 bg-ambergold-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow">0</span>
+                    </button>
+
+                    <!-- Mobile Menu Toggle Button -->
+                    <button id="mobile-menu-btn" class="lg:hidden p-2.5 rounded-full bg-white/80 shadow-sm text-sage-800 focus:outline-none" title="Menu">
+                        <i class="fa-solid fa-bars text-base"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Drawer -->
+            <div id="mobile-menu" class="hidden lg:hidden mt-3 glass-pill p-4 rounded-2xl border border-white/80 shadow-lg">
+                <div class="flex flex-col space-y-2 text-center font-medium text-sm text-sage-900">
+                    <a href="index.html" class="py-2 hover:bg-white/60 rounded-xl">Home</a>
+                    <a href="products.html" class="py-2 rounded-xl bg-[#611B10] text-[#D4A853] font-semibold">Products</a>
+                    <a href="index.html#about" class="py-2 hover:bg-white/60 rounded-xl">About Us</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- DEDICATED PRODUCTS HERO BANNER -->
+        <section class="relative bg-gradient-to-br from-[#F5ECE0] via-[#FAF5EC] to-[#EFE1CC] rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-10 lg:p-12 mb-8 sm:mb-12 border border-white/90 shadow-md overflow-hidden">
+            <!-- Subtle ambient glow -->
+            <div class="absolute -top-16 -right-16 w-80 h-80 rounded-full bg-[#D4A853]/15 blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-16 -left-16 w-80 h-80 rounded-full bg-[#611B10]/10 blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 max-w-3xl">
+                <!-- Breadcrumbs -->
+                <nav class="flex items-center space-x-2 text-xs text-sage-600 font-medium mb-3">
+                    <a href="index.html" class="hover:text-[#611B10] transition">Home</a>
+                    <span>/</span>
+                    <span class="text-[#611B10] font-semibold">Products</span>
+                </nav>
+
+                <div class="inline-flex items-center space-x-2 text-[10px] sm:text-xs tracking-widest text-[#611B10] font-bold uppercase mb-2">
+                    <span>100% PURE KUTTIYADI COPRA</span>
+                    <span class="w-8 sm:w-12 h-[1px] bg-[#D4A853]"></span>
+                </div>
+
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#611B10] leading-tight font-normal">
+                    The Complete Collection.<br>
+                    <span class="font-handwriting font-semibold text-3xl sm:text-5xl text-[#611B10]">
+                        Fresh from Mill to Kitchen.
+                    </span>
+                </h1>
+
+                <p class="text-xs sm:text-sm text-sage-900/85 max-w-xl leading-relaxed font-medium mt-3">
+                    Discover every size of our authentic single-press cold expeller coconut oil. Crafted in Kozhikode from handpicked Kuttiyadi copra with zero chemical bleaching, zero sulphur, and natural coastal aroma.
+                </p>
+
+                <!-- 4 Quality Badges -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-5 border-t border-[#611B10]/15 mt-5">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-white/95 flex items-center justify-center text-[#611B10] text-xs shadow-sm shrink-0 border border-[#D4A853]/30">
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
+                        <span class="text-[10px] sm:text-[11px] font-semibold text-[#611B10] leading-tight">Own Copra<br>Sourced</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-white/95 flex items-center justify-center text-[#611B10] text-xs shadow-sm shrink-0 border border-[#D4A853]/30">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <span class="text-[10px] sm:text-[11px] font-semibold text-[#611B10] leading-tight">100% Sulphur<br>Free</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-white/95 flex items-center justify-center text-[#611B10] text-xs shadow-sm shrink-0 border border-[#D4A853]/30">
+                            <i class="fa-solid fa-ban"></i>
+                        </div>
+                        <span class="text-[10px] sm:text-[11px] font-semibold text-[#611B10] leading-tight">No Additives<br>or Fragrance</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-white/95 flex items-center justify-center text-[#611B10] text-xs shadow-sm shrink-0 border border-[#D4A853]/30">
+                            <i class="fa-solid fa-droplet"></i>
+                        </div>
+                        <span class="text-[10px] sm:text-[11px] font-semibold text-[#611B10] leading-tight">Single Cold<br>Expeller</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TOOLBAR: FILTER PILLS, SEARCH & SORT -->
+        <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-8 bg-white/80 backdrop-blur-md p-4 rounded-3xl border border-white/90 shadow-sm">
+            
+            <!-- Category Filter Pills -->
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                <button onclick="filterCatalog('all', this)" class="catalog-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-[#611B10] text-[#D4A853] shadow-sm transition">
+                    All Products (8)
+                </button>
+                <button onclick="filterCatalog('cooking', this)" class="catalog-filter-btn px-4 py-2 rounded-full text-xs font-medium bg-white text-sage-800 hover:bg-sage-100 transition shadow-xs">
+                    Culinary Cooking
+                </button>
+                <button onclick="filterCatalog('wellness', this)" class="catalog-filter-btn px-4 py-2 rounded-full text-xs font-medium bg-white text-sage-800 hover:bg-sage-100 transition shadow-xs">
+                    Hair & Skincare
+                </button>
+                <button onclick="filterCatalog('bundles', this)" class="catalog-filter-btn px-4 py-2 rounded-full text-xs font-medium bg-white text-sage-800 hover:bg-sage-100 transition shadow-xs">
+                    Value Packs & Cans
+                </button>
+            </div>
+
+            <!-- In-Page Search & Sort Dropdown -->
+            <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
+                <!-- Search input -->
+                <div class="relative flex-1 sm:w-56">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-sage-400 text-xs"></i>
+                    <input type="text" oninput="searchCatalogProducts(this.value)" placeholder="Search collection..." class="w-full bg-white/90 border border-sage-200/90 rounded-full pl-8 pr-3 py-1.5 text-xs text-sage-900 placeholder-sage-400 focus:outline-none focus:ring-2 focus:ring-sage-700/20">
+                </div>
+
+                <!-- Sort dropdown -->
+                <select onchange="sortCatalog(this.value)" class="bg-white border border-sage-200/90 rounded-full px-3.5 py-1.5 text-xs font-medium text-sage-800 focus:outline-none focus:ring-2 focus:ring-sage-700/20 cursor-pointer">
+                    <option value="featured">Sort: Featured</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="rating">Top Rated</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- PRODUCT CATALOG GRID -->
+        <div id="catalog-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 mb-16">
+
+            <!-- 1. 1L Kitchen Pouch -->
+            <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                 data-category="cooking" data-price="280" data-rating="4.9" data-title="Millacoco 1 Ltr Kitchen Pouch" data-desc="Easy-pour kitchen spout pack for daily cooking">
+                <div>
+                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                        <span class="absolute top-2.5 left-2.5 bg-[#611B10] text-[#D4A853] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
+                            SPOUT POUCH
+                        </span>
+                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.png')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 1 Ltr Kitchen Pouch" title="Save Favorite">
+                            <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
+                        </button>
+                        <img src="images/product_pouch.png" alt="Millacoco 1 Ltr Kitchen Pouch" class="product-card-img w-full h-full object-contain">
+                    </div>
+                    <div class="px-0.5">
+                        <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <span class="text-sage-500 text-[10px] ml-1">(4.9)</span>
+                        </div>
+                        <h3 class="font-serif font-bold text-xs sm:text-base text-sage-900 leading-snug">1 Ltr Kitchen Pouch</h3>
+                        <p class="text-[10px] sm:text-xs text-sage-600 my-1 line-clamp-2">Easy-pour spout pack for mess-free daily cooking.</p>
+                        <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹280.00</p>
+                    </div>
+                </div>
+                <button onclick="addToCart('Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.png', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-cart-plus text-xs"></i>
+                    <span>+ Add to Cart</span>
+                </button>
+            </div>
+
+            <!-- 2. 1L Classic Bottle -->
+            <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                 data-category="cooking" data-price="290" data-rating="5.0" data-title="Millacoco 1 Ltr Classic Bottle" data-desc="Daily kitchen staple and body massage bottle">
+                <div>
+                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                        <span class="absolute top-2.5 left-2.5 bg-ambergold-500 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
+                            BESTSELLER
+                        </span>
+                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.png')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 1 Ltr Classic Bottle" title="Save Favorite">
+                            <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
+                        </button>
+                        <img src="images/product_bottle.png" alt="Millacoco 1 Ltr Classic Bottle" class="product-card-img w-full h-full object-contain">
+                    </div>
+                    <div class="px-0.5">
+                        <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <span class="text-sage-500 text-[10px] ml-1">(5.0)</span>
+                        </div>
+                        <h3 class="font-serif font-bold text-xs sm:text-base text-sage-900 leading-snug">1 Ltr Classic Bottle</h3>
+                        <p class="text-[10px] sm:text-xs text-sage-600 my-1 line-clamp-2">Daily kitchen staple & traditional Ayurvedic massage oil.</p>
+                        <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹290.00</p>
+                    </div>
+                </div>
+                <button onclick="addToCart('Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.png', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-cart-plus text-xs"></i>
+                    <span>+ Add to Cart</span>
+                </button>
+            </div>
+
+            <!-- 3. 2L Twin Pack -->
+            <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                 data-category="bundles" data-price="570" data-rating="4.8" data-title="Millacoco 2 Ltr Twin Pack" data-desc="Twin pack savings with two 1L bottles">
+                <div>
+                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                        <span class="absolute top-2.5 left-2.5 bg-sage-800 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
+                            TWIN VALUE
+                        </span>
+                        <button onclick="toggleFavorite(event, 'Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 2 Ltr Twin Pack (1L x 2)" title="Save Favorite">
+                            <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
+                        </button>
+                        <img src="images/twin_pack.jpg" alt="Millacoco 2 Ltr Twin Pack" class="product-card-img w-full h-full object-cover rounded-2xl">
+                    </div>
+                    <div class="px-0.5">
+                        <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <span class="text-sage-500 text-[10px] ml-1">(4.8)</span>
+                        </div>
+                        <h3 class="font-serif font-bold text-xs sm:text-base text-sage-900 leading-snug">2 Ltr Twin Pack</h3>
+                        <p class="text-[10px] sm:text-xs text-sage-600 my-1 line-clamp-2">Two 1 Ltr Classic Bottles packed with extra savings.</p>
+                        <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹570.00</p>
+                    </div>
+                </div>
+                <button onclick="addToCart('Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-cart-plus text-xs"></i>
+                    <span>+ Add to Cart</span>
+                </button>
+            </div>
+
+            <!-- 4. 5L Heavy Can -->
+            <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                 data-category="bundles" data-price="1390" data-rating="4.9" data-title="Millacoco 5 Ltr Household Can" data-desc="Heavy-duty can for joint families and festive cooking">
+                <div>
+                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                        <span class="absolute top-2.5 left-2.5 bg-emerald-700 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
+                            BULK SUPPLY
+                        </span>
+                        <button onclick="toggleFavorite(event, 'Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 5 Ltr Household Can" title="Save Favorite">
+                            <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
+                        </button>
+                        <img src="images/can_5ltr.jpg" alt="Millacoco 5 Ltr Household Can" class="product-card-img w-full h-full object-cover rounded-2xl">
+                    </div>
+                    <div class="px-0.5">
+                        <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <span class="text-sage-500 text-[10px] ml-1">(4.9)</span>
+                        </div>
+                        <h3 class="font-serif font-bold text-xs sm:text-base text-sage-900 leading-snug">5 Ltr Household Can</h3>
+                        <p class="text-[10px] sm:text-xs text-sage-600 my-1 line-clamp-2">Direct mill supply in durable container for joint families.</p>
+                        <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹1,390.00</p>
+                    </div>
+                </div>
+                <button onclick="addToCart('Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-cart-plus text-xs"></i>
+                    <span>+ Add to Cart</span>
+                </button>
+            </div>
+
+            <!-- 5. Virgin Hair & Face Oil -->
+            <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                 data-category="wellness" data-price="320" data-rating="5.0" data-title="Millacoco Virgin Hair & Face Oil" data-desc="Deep scalp nourishment and anti-aging face glow">
+                <div>
+                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                        <span class="absolute top-2.5 left-2.5 bg-rose-600 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
+                            WELLNESS
+                        </span>
+                        <button onclick="toggleFavorite(event, 'Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco Virgin Hair & Face Oil" title="Save Favorite">
+                            <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
+                        </button>
+                        <img src="images/virgin_oil.jpg" alt="Millacoco Virgin Hair & Face Oil" class="product-card-img w-full h-full object-cover rounded-2xl">
+                    </div>
+                    <div class="px-0.5">
+                        <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <span class="text-sage-500 text-[10px] ml-1">(5.0)</span>
+                        </div>
+                        <h3 class="font-serif font-bold text-xs sm:text-base text-sage-900 leading-snug">Virgin Hair & Face Oil</h3>
+                        <p class="text-[10px] sm:text-xs text-sage-600 my-1 line-clamp-2">Deep scalp conditioning & youthful skin glow (250ml).</p>
+                        <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹320.00</p>
+                    </div>
+                </div>
+                <button onclick="addToCart('Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-cart-plus text-xs"></i>
+                    <span>+ Add to Cart</span>
+                </button>
+            </div>
+
+            <!-- 6. Kitchen & Wellness Duo Pack -->
+            <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                 data-category="bundles" data-price="590" data-rating="4.9" data-title="Millacoco Kitchen & Skincare Duo" data-desc="1L Classic Bottle + Virgin Hair Oil duo offer">
+                <div>
+                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                        <span class="absolute top-2.5 left-2.5 bg-[#D4A853] text-[#611B10] text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
+                            COMBO OFFER
+                        </span>
+                        <button onclick="toggleFavorite(event, 'Millacoco Kitchen & Skincare Duo Pack', 590, 'images/combo_duo.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco Kitchen & Skincare Duo Pack" title="Save Favorite">
+                            <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
+                        </button>
+                        <img src="images/combo_duo.jpg" alt="Millacoco Kitchen & Skincare Duo Pack" class="product-card-img w-full h-full object-cover rounded-2xl">
+                    </div>
+                    <div class="px-0.5">
+                        <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <span class="text-sage-500 text-[10px] ml-1">(4.9)</span>
+                        </div>
+                        <h3 class="font-serif font-bold text-xs sm:text-base text-sage-900 leading-snug">Kitchen & Wellness Duo</h3>
+                        <p class="text-[10px] sm:text-xs text-sage-600 my-1 line-clamp-2">1L Classic Cooking Oil + 250ml Virgin Scalp Oil combo.</p>
+                        <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹590.00</p>
+                    </div>
+                </div>
+                <button onclick="addToCart('Millacoco Kitchen & Skincare Duo Pack', 590, 'images/combo_duo.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-cart-plus text-xs"></i>
+                    <span>+ Add to Cart</span>
+                </button>
+            </div>
+
+            <!-- 7. 500ml Glass Jar -->
+            <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                 data-category="cooking" data-price="165" data-rating="4.8" data-title="Millacoco 500ml Kitchen Glass Jar" data-desc="Compact table and kitchen glass dispenser">
+                <div>
+                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                        <span class="absolute top-2.5 left-2.5 bg-sage-700 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
+                            COMPACT
+                        </span>
+                        <button onclick="toggleFavorite(event, 'Millacoco 500ml Kitchen Glass Jar', 165, 'images/bottle_500ml.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 500ml Kitchen Glass Jar" title="Save Favorite">
+                            <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
+                        </button>
+                        <img src="images/bottle_500ml.jpg" alt="Millacoco 500ml Kitchen Glass Jar" class="product-card-img w-full h-full object-cover rounded-2xl">
+                    </div>
+                    <div class="px-0.5">
+                        <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <span class="text-sage-500 text-[10px] ml-1">(4.8)</span>
+                        </div>
+                        <h3 class="font-serif font-bold text-xs sm:text-base text-sage-900 leading-snug">500ml Glass Jar</h3>
+                        <p class="text-[10px] sm:text-xs text-sage-600 my-1 line-clamp-2">Compact table bottle with precision pouring nozzle.</p>
+                        <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹165.00</p>
+                    </div>
+                </div>
+                <button onclick="addToCart('Millacoco 500ml Kitchen Glass Jar', 165, 'images/bottle_500ml.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-cart-plus text-xs"></i>
+                    <span>+ Add to Cart</span>
+                </button>
+            </div>
+
+            <!-- 8. 1L Heritage Flagship Bottle -->
+            <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                 data-category="cooking" data-price="340" data-rating="5.0" data-title="Millacoco Heritage Bottle (1L)" data-desc="Signature single-press wood expeller milled coconut oil">
+                <div>
+                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                        <span class="absolute top-2.5 left-2.5 bg-[#1C3822] text-[#D4A853] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs border border-[#D4A853]/40">
+                            SIGNATURE
+                        </span>
+                        <button onclick="toggleFavorite(event, 'Millacoco Heritage Bottle (1L)', 340, 'images/bottle_1ltr.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco Heritage Bottle (1L)" title="Save Favorite">
+                            <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
+                        </button>
+                        <img src="images/bottle_1ltr.jpg" alt="Millacoco Heritage Bottle (1L)" class="product-card-img w-full h-full object-cover rounded-2xl">
+                    </div>
+                    <div class="px-0.5">
+                        <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <span class="text-sage-500 text-[10px] ml-1">(5.0)</span>
+                        </div>
+                        <h3 class="font-serif font-bold text-xs sm:text-base text-sage-900 leading-snug">Heritage Flagship (1L)</h3>
+                        <p class="text-[10px] sm:text-xs text-sage-600 my-1 line-clamp-2">Authentic wood expeller milled oil in premium glass bottle.</p>
+                        <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹340.00</p>
+                    </div>
+                </div>
+                <button onclick="addToCart('Millacoco Heritage Bottle (1L)', 340, 'images/bottle_1ltr.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-cart-plus text-xs"></i>
+                    <span>+ Add to Cart</span>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Empty search results placeholder -->
+        <div id="catalog-empty-msg" class="hidden text-center py-16 bg-white/60 rounded-3xl border border-white my-8">
+            <div class="w-16 h-16 rounded-full bg-sage-100 flex items-center justify-center text-sage-500 mx-auto mb-3">
+                <i class="fa-solid fa-box-open text-2xl"></i>
+            </div>
+            <h4 class="font-serif font-bold text-base text-sage-900">No matching products found</h4>
+            <p class="text-xs text-sage-600 mt-1 max-w-sm mx-auto">Try clearing your search query or selecting a different category above.</p>
+            <button onclick="filterCatalog('all', document.querySelector('.catalog-filter-btn'))" class="mt-4 px-4 py-2 rounded-full text-xs font-semibold bg-[#611B10] text-[#D4A853]">
+                Show All Products
+            </button>
+        </div>
+
+        <!-- Direct WhatsApp Bulk Assistance Callout -->
+        <section class="bg-gradient-to-r from-[#1C3822] to-[#2E6F40] text-white rounded-3xl p-6 sm:p-10 mb-16 shadow-xl relative overflow-hidden">
+            <div class="absolute -right-12 -top-12 w-64 h-64 rounded-full bg-[#D4A853]/15 blur-2xl pointer-events-none"></div>
+            <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div>
+                    <span class="text-[10px] tracking-widest text-[#D4A853] font-bold uppercase block mb-1">
+                        INSTITUTIONAL & BULK SUPPLY
+                    </span>
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold leading-tight">
+                        Need Custom Quantity or 15L Commercial Tins?
+                    </h3>
+                    <p class="text-xs sm:text-sm text-white/80 mt-1.5 max-w-xl">
+                        We deliver fresh unrefined copra oil directly to restaurants, Ayurvedic clinics, and catering kitchens across India with wholesale tiered pricing.
+                    </p>
+                </div>
+                <a href="https://wa.me/918089757815?text=Hello%20Millacoco%2C%20I%20need%20wholesale%20or%20bulk%20supply%20information." target="_blank" class="bg-[#D4A853] hover:bg-white text-[#1C3822] px-6 py-3 rounded-full text-xs sm:text-sm font-bold transition shadow-md flex items-center space-x-2 shrink-0 active:scale-95">
+                    <i class="fa-brands fa-whatsapp text-base"></i>
+                    <span>Talk to Milling Desk</span>
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- CART SLIDE-OVER DRAWER -->
+    <div id="cart-drawer" class="fixed inset-0 z-[9999] invisible opacity-0 pointer-events-none transition-all duration-300">
+        <div id="cart-overlay" class="absolute inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-300"></div>
+        <div id="cart-content" class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-[#FAF5EC] shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 border-l border-[#D4A853]/30">
+            <!-- Cart Header -->
+            <div class="p-5 border-b border-sage-200/80 flex items-center justify-between bg-white/60">
+                <div class="flex items-center space-x-2.5">
+                    <i class="fa-solid fa-bag-shopping text-[#611B10]"></i>
+                    <h3 class="font-serif font-bold text-base text-[#611B10]">Your Shopping Bag</h3>
+                </div>
+                <button id="close-cart" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-sage-600 hover:text-sage-900 shadow-xs transition" title="Close">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items Container -->
+            <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
+
+            <!-- Cart Footer & Checkout -->
+            <div class="p-5 border-t border-sage-200/80 bg-white/80 space-y-3">
+                <div class="flex justify-between items-center text-xs text-sage-700">
+                    <span>Shipping Charges:</span>
+                    <span class="text-emerald-700 font-bold">FREE across India</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-serif font-bold text-sm text-sage-900">Total Subtotal:</span>
+                    <span id="cart-subtotal" class="price-tag font-bold text-lg text-[#611B10]">₹0.00</span>
+                </div>
+                <button onclick="checkout()" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-serif font-bold text-xs py-3.5 rounded-full transition shadow-md active:scale-95 flex items-center justify-center space-x-2">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span>PROCEED VIA WHATSAPP ORDER</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAVORITES MODAL DRAWER -->
+    <div id="favorites-modal" class="fixed inset-0 z-[9999] invisible opacity-0 pointer-events-none transition-all duration-300">
+        <div onclick="closeFavoritesModal()" class="absolute inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-300"></div>
+        <div id="favorites-content" class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-[#FAF5EC] shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 border-l border-[#D4A853]/30">
+            <!-- Header -->
+            <div class="p-5 border-b border-sage-200/80 flex items-center justify-between bg-white/60">
+                <div class="flex items-center space-x-2.5">
+                    <i class="fa-solid fa-heart text-rose-500"></i>
+                    <h3 class="font-serif font-bold text-base text-[#611B10]">Your Saved Favorites</h3>
+                </div>
+                <button onclick="closeFavoritesModal()" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-sage-600 hover:text-sage-900 shadow-xs transition" title="Close">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Items -->
+            <div id="fav-items" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
+
+            <!-- Action -->
+            <div class="p-5 border-t border-sage-200/80 bg-white/80">
+                <button onclick="addAllFavoritesToCart()" class="w-full bg-sage-800 hover:bg-sage-900 text-white font-serif font-bold text-xs py-3.5 rounded-full transition shadow-md active:scale-95 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-cart-plus text-xs"></i>
+                    <span>ADD ALL FAVORITES TO CART</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEARCH MODAL (FOR MOBILE) -->
+    <div id="search-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl p-5 w-full max-w-lg shadow-2xl space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-sage-100">
+                <h4 class="font-serif font-bold text-sm text-[#611B10]">Search Millacoco Products</h4>
+                <button id="close-search" class="text-sage-400 hover:text-sage-600">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-sage-400 text-xs"></i>
+                <input type="text" id="search-input" onkeyup="searchProducts()" placeholder="Search sizes, 1L pouch, virgin oil..." class="w-full bg-sage-50 border border-sage-200 rounded-full pl-9 pr-4 py-2 text-xs text-sage-900 focus:outline-none focus:ring-2 focus:ring-sage-700/20">
+            </div>
+            <div id="search-results" class="max-h-60 overflow-y-auto space-y-2 pt-2"></div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-6 right-6 z-[99999] transform translate-y-20 opacity-0 transition-all duration-300 bg-[#611B10] text-white px-5 py-3 rounded-2xl shadow-xl flex items-center space-x-3 pointer-events-none border border-[#D4A853]/40">
+        <i class="fa-solid fa-circle-check text-[#D4A853]"></i>
+        <span id="toast-msg" class="text-xs font-medium">Item updated</span>
+    </div>
+
+    <!-- FOOTER & OFFICIAL MILL DETAILS -->
+    <footer id="footer" class="bg-sage-900 text-sage-100 p-8 sm:p-12 lg:p-16 relative overflow-hidden m-0 rounded-none">
+        <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 relative z-10">
+            
+            <!-- Col 1: Brand -->
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-2xl bg-[#1C3822] shadow-sm border border-[#D4A853]/40 flex items-center justify-center p-1">
+                        <img src="images/logo_gold.png" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-xl font-bold tracking-[0.2em] text-[#D4A853] uppercase">
+                            MILLACOCO
+                        </h4>
+                        <span class="block text-[8px] tracking-[0.35em] text-sage-400 uppercase">
+                            Pure Kerala Coconut Oil
+                        </span>
+                    </div>
+                </div>
+                <p class="text-xs text-sage-300 leading-relaxed max-w-xs">
+                    Single-press wood expeller milled from sun-dried Kuttiyadi copra in Kozhikode, Kerala. 100% natural, unbleached, and sulphur-free.
+                </p>
+                <div class="flex items-center space-x-3 text-sage-300 text-sm">
+                    <a href="#" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#D4A853] hover:text-[#611B10] flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#D4A853] hover:text-[#611B10] flex items-center justify-center transition"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://wa.me/918089757815" target="_blank" class="w-8 h-8 rounded-full bg-white/10 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <!-- Col 2: Navigation -->
+            <div class="space-y-3">
+                <h5 class="font-serif text-sm font-bold text-[#D4A853] uppercase tracking-wider">Quick Navigation</h5>
+                <ul class="space-y-2 text-xs text-sage-300">
+                    <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+                    <li><a href="products.html" class="hover:text-white transition text-[#D4A853] font-semibold">All Products</a></li>
+                    <li><a href="index.html#bestsellers" class="hover:text-white transition">Special Combo Packs</a></li>
+                    <li><a href="index.html#reviews" class="hover:text-white transition">Customer Reviews</a></li>
+                    <li><a href="index.html#flagship-bottle" class="hover:text-white transition">The Flagship Bottle</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Customer Care -->
+            <div class="space-y-3">
+                <h5 class="font-serif text-sm font-bold text-[#D4A853] uppercase tracking-wider">Order & Support</h5>
+                <ul class="space-y-2 text-xs text-sage-300">
+                    <li><a href="https://wa.me/918089757815" target="_blank" class="hover:text-white transition flex items-center gap-1.5"><i class="fa-brands fa-whatsapp text-emerald-400"></i> WhatsApp Ordering</a></li>
+                    <li><span class="text-sage-400">Free Express Delivery across India</span></li>
+                    <li><span class="text-sage-400">Fresh Batch Milled Every Monday</span></li>
+                    <li><span class="text-sage-400">FSSAI Certified Milling Facility</span></li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Registered Office -->
+            <div class="space-y-3">
+                <h5 class="font-serif text-sm font-bold text-[#D4A853] uppercase tracking-wider">Mill Office</h5>
+                <p class="text-xs text-sage-300 leading-relaxed">
+                    Millacoco Agro Products<br>
+                    Kuttiyadi Road, Vatakara,<br>
+                    Kozhikode, Kerala - 673104
+                </p>
+                <div class="pt-2 text-xs text-sage-400">
+                    <p>Direct: +91 80897 57815</p>
+                    <p>Email: care@millacoco.com</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="max-w-[1440px] mx-auto mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-[11px] text-sage-400 relative z-10">
+            <p>© 2026 Millacoco Agro Products. All Rights Reserved.</p>
+            <p class="mt-2 sm:mt-0">Authentic Kuttiyadi Copra Coconut Oil • Kozhikode, Kerala</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
