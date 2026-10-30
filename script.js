@@ -500,69 +500,127 @@ function toggleViewAllProducts() {
     }
 }
 
-// Master Products Data for Showcase & External Marketplace Redirect
-const productCatalog = [
+// Dynamic Product Catalog (Syncs live from SQLite Database /mc-desk/api/products)
+let productCatalog = [
     { 
         id: 1,
         name: 'Millacoco 1 Ltr Kitchen Pouch', 
         price: 280, 
-        image: 'images/product_pouch.png', 
+        image: 'images/product_pouch.webp', 
         tag: 'Spout Pouch', 
         desc: '1 Ltr Easy Pour Kitchen Pouch',
         externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX1',
-        platform: 'Amazon'
+        platform: 'Amazon',
+        category: 'daily'
     },
     { 
         id: 2,
         name: 'Millacoco 1 Ltr Classic Bottle', 
         price: 290, 
-        image: 'images/product_bottle.png', 
+        image: 'images/product_bottle.webp', 
         tag: 'Bestseller', 
         desc: '1 Ltr Pure Cold Pressed Bottle',
         externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX2',
-        platform: 'Amazon'
+        platform: 'Amazon',
+        category: 'daily'
     },
     { 
         id: 3,
         name: 'Millacoco 2 Ltr Twin Pack (1L x 2)', 
         price: 570, 
-        image: 'images/twin_pack.jpg', 
+        image: 'images/twin_pack.webp', 
         tag: 'Twin Value', 
         desc: 'Twin Pack 2 Litres',
         externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX3',
-        platform: 'Amazon'
+        platform: 'Amazon',
+        category: 'bulk'
     },
     { 
         id: 4,
         name: 'Millacoco 5 Ltr Household Can', 
         price: 1390, 
-        image: 'images/can_5ltr.jpg', 
+        image: 'images/can_5ltr.webp', 
         tag: 'Bulk Supply', 
         desc: '5 Ltr Heavy Can',
         externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX4',
-        platform: 'Amazon'
+        platform: 'Amazon',
+        category: 'bulk'
     },
     { 
         id: 5,
         name: 'Millacoco Virgin Hair & Face Oil', 
         price: 320, 
-        image: 'images/virgin_oil.jpg', 
+        image: 'images/virgin_oil.webp', 
         tag: 'Skincare', 
         desc: 'Virgin Hair & Scalp Oil',
         externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX5',
-        platform: 'Amazon'
-    },
-    { 
-        id: 6,
-        name: 'Millacoco Kitchen & Skincare Duo Pack', 
-        price: 590, 
-        image: 'images/combo_duo.jpg', 
-        tag: 'Combo Offer', 
-        desc: '1L Classic + Virgin Oil',
-        externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX6',
-        platform: 'Amazon'
+        platform: 'Amazon',
+        category: 'daily'
     }
 ];
+
+// Asynchronously sync active products and redirect URLs from SQLite API
+async function syncProductsFromDatabase() {
+    try {
+        const res = await fetch('/mc-desk/api/products');
+        if (res.ok) {
+            const json = await res.json();
+            if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
+                productCatalog = json.data.map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    price: parseFloat(p.price),
+                    image: p.image,
+                    tag: p.tag || 'Bestseller',
+                    desc: p.description || p.name,
+                    externalUrl: p.external_url,
+                    platform: p.platform_name || 'Amazon',
+                    category: p.category || 'daily'
+                }));
+                renderDynamicProductGrid();
+            }
+        }
+    } catch (e) {
+        // Fallback gracefully to default catalog if offline or on static host
+        console.debug('Storefront running with local catalog fallback.');
+    }
+}
+
+// Dynamically render products into #product-grid so admin changes reflect immediately
+function renderDynamicProductGrid() {
+    const grid = document.getElementById('product-grid');
+    if (!grid) return;
+
+    let html = '';
+    productCatalog.forEach(item => {
+        html += `
+            <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="${item.category}">
+                <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square skeleton-box rounded-2xl flex items-center justify-center p-2">
+                    <span class="absolute top-2 left-2 z-10 bg-[#611B10] text-[#D4A853] text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs uppercase">${item.tag}</span>
+                    <button onclick="toggleFavorite(event, '${item.name}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="${item.name}">
+                        <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
+                    </button>
+                    <img src="${item.image}" alt="${item.name}" class="product-card-img img-skeleton-pending w-full h-full object-contain" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
+                </div>
+                <div class="px-0.5 pb-0.5 flex flex-col justify-between flex-1">
+                    <div>
+                        <h3 class="font-serif font-semibold text-xs sm:text-base text-sage-900 leading-snug">${item.name}</h3>
+                        <p class="text-[10px] sm:text-xs text-sage-600 my-0.5 sm:my-1 line-clamp-1">${item.desc}</p>
+                        <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹${item.price.toFixed(2)}</p>
+                    </div>
+                    <button onclick="redirectToPlatform('${item.externalUrl}')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                        <span>Buy on ${item.platform}</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+    grid.innerHTML = html;
+}
+
+// Automatically sync from SQLite when DOM loads
+document.addEventListener('DOMContentLoaded', syncProductsFromDatabase);
 
 // Global helper to redirect to external e-commerce platform
 function redirectToPlatform(url) {
@@ -583,7 +641,7 @@ const comboPacks = [
         desc: '1 Ltr Classic Cooking Oil + Virgin Scalp & Skincare Oil with complimentary express delivery across India.',
         price: 590,
         oldPrice: 610,
-        image: 'images/combo_duo.jpg',
+        image: 'images/combo_duo.webp',
         btnLabel: 'ORDER DUO PACK'
     },
     {
@@ -595,7 +653,7 @@ const comboPacks = [
         desc: 'Two 1 Ltr Classic Cold Pressed Glass Bottles packed together with zero shipping charge and extra freshness seal.',
         price: 570,
         oldPrice: 580,
-        image: 'images/twin_pack.jpg',
+        image: 'images/twin_pack.webp',
         btnLabel: 'ORDER TWIN PACK'
     },
     {
@@ -607,7 +665,7 @@ const comboPacks = [
         desc: '5 Ltr Heavy Duty Household Can with free refill dispenser. Ideal for joint families and authentic festive Malabar cooking.',
         price: 1390,
         oldPrice: 1450,
-        image: 'images/can_5ltr.jpg',
+        image: 'images/can_5ltr.webp',
         btnLabel: 'ORDER 5L PACK'
     }
 ];
@@ -742,7 +800,20 @@ function showToast(message) {
 // Newsletter Handler
 function handleSubscribe(e) {
     e.preventDefault();
-    showToast('Subscribed! You will receive Millacoco coconut harvest updates.');
+    const emailInput = e.target.querySelector('input[type="email"]');
+    const subscriberEmail = emailInput ? emailInput.value.trim() : '';
+
+    const adminEmail = 'millacocococonutoil@gmail.com';
+    const subject = encodeURIComponent('Newsletter Subscription Request - Millacoco Fresh Oil Updates');
+    const body = encodeURIComponent(
+        `Hello Millacoco Team,\n\n` +
+        `Please subscribe my email address to receive Millacoco copra harvest updates and direct mill discount codes.\n\n` +
+        `Subscriber Email: ${subscriberEmail}\n\n` +
+        `Thank you!`
+    );
+
+    showToast('Opening your email client to send subscription request...');
+    window.location.href = `mailto:${adminEmail}?subject=${subject}&body=${body}`;
     e.target.reset();
 }
 
@@ -1168,27 +1239,20 @@ if (document.readyState === 'loading') {
     initApp();
 }
 
-// Simple Preloader Logic
-(function initPreloader() {
-    let progress = 0;
+// Smart Hero-Driven Preloader Logic (Disappears as soon as Hero assets are ready)
+(function initHeroPreloader() {
+    let progress = 15;
     let isCompleted = false;
 
     function updateProgress(val) {
         const progressBar = document.getElementById('preloader-progress');
         if (progressBar) progressBar.style.width = val + '%';
     }
-
-    const progressInterval = setInterval(() => {
-        if (isCompleted) return;
-        progress = Math.min(progress + 25, 90);
-        updateProgress(progress);
-        if (progress >= 90) clearInterval(progressInterval);
-    }, 60);
+    updateProgress(progress);
 
     function completePreloader() {
         if (isCompleted) return;
         isCompleted = true;
-        clearInterval(progressInterval);
         updateProgress(100);
 
         setTimeout(() => {
@@ -1199,17 +1263,34 @@ if (document.readyState === 'loading') {
                     preloader.style.display = 'none';
                 }, 400);
             }
-        }, 120);
+        }, 80);
     }
 
-    if (document.readyState === 'complete') {
-        setTimeout(completePreloader, 200);
-    } else {
-        window.addEventListener('load', () => {
-            setTimeout(completePreloader, 150);
-        });
-        setTimeout(completePreloader, 1200);
-    }
+    // Critical Hero Images to monitor
+    const criticalHeroImages = [
+        'images/logo_gold.webp',
+        'images/hero_bg.webp',
+        'images/product_bottle.webp'
+    ];
+
+    let loadedCount = 0;
+    const totalToLoad = criticalHeroImages.length;
+
+    criticalHeroImages.forEach(src => {
+        const img = new Image();
+        img.onload = img.onerror = () => {
+            loadedCount++;
+            progress = Math.round(20 + (loadedCount / totalToLoad) * 75);
+            updateProgress(progress);
+            if (loadedCount >= totalToLoad) {
+                completePreloader();
+            }
+        };
+        img.src = src;
+    });
+
+    // Fallback safety timeout (max 1.2s on slow networks)
+    setTimeout(completePreloader, 1200);
 })();
 
 // Parallax Floating Bokeh Leaves & Flagship Bottle Controller
@@ -1308,7 +1389,7 @@ const scrubSlides = [
         desc: 'Single-press cold expeller milled from sun-dried Kuttiyadi copra at Kozhikode. Pure aroma, zero chemicals, and natural coastal goodness.',
         priceDisplay: '₹340.00',
         rawPrice: 340,
-        image: 'images/flagship_bottle_cutout.png'
+        image: 'images/flagship_bottle_cutout.webp'
     },
     {
         name: 'Easy-Pour Kitchen Spout Pouch (1L)',
@@ -1318,7 +1399,7 @@ const scrubSlides = [
         desc: 'Durable leak-proof spout pouch crafted for daily culinary use. Retains authentic wood-pressed freshness, zero spillage, and eco-smart packaging.',
         priceDisplay: '₹280.00',
         rawPrice: 280,
-        image: 'images/product_pouch_cutout.png'
+        image: 'images/product_pouch_cutout.webp'
     },
     {
         name: 'Classic Pure Coconut Oil Bottle (1L)',
@@ -1328,7 +1409,7 @@ const scrubSlides = [
         desc: 'Everyday traditional cold-pressed oil in an ergonomic family bottle with stay-fresh seal. Unrefined, unbleached, and naturally packed with lauric acid.',
         priceDisplay: '₹290.00',
         rawPrice: 290,
-        image: 'images/product_bottle_cutout.png'
+        image: 'images/product_bottle_cutout.webp'
     }
 ];
 
@@ -1769,6 +1850,41 @@ function searchCatalogProducts(query) {
         emptyMsg.classList.toggle('hidden', visibleCount > 0);
     }
 }
+
+// Policy Modals (Shipping & Terms)
+function openPolicyModal(type) {
+    const modal = document.getElementById(`${type}-modal`);
+    const content = document.getElementById(`${type}-modal-content`);
+    if (!modal || !content) return;
+
+    modal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+    setTimeout(() => {
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+    }, 10);
+}
+
+function closePolicyModal(type) {
+    const modal = document.getElementById(`${type}-modal`);
+    const content = document.getElementById(`${type}-modal-content`);
+    if (!modal || !content) return;
+
+    content.classList.remove('scale-100');
+    content.classList.add('scale-95');
+    setTimeout(() => {
+        modal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+    }, 200);
+}
+
+// Global Escape Key Listener for Modals
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closePolicyModal('shipping');
+        closePolicyModal('terms');
+        if (typeof closeCartDrawer === 'function') closeCartDrawer();
+        if (typeof closeFavoritesModal === 'function') closeFavoritesModal();
+    }
+});
 
 
 

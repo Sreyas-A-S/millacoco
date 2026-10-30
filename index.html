@@ -70,8 +70,8 @@
     <div id="preloader" class="fixed inset-0 z-[99999] bg-[#FAF5EC] flex flex-col items-center justify-center transition-all duration-500 ease-out select-none">
         <div class="flex flex-col items-center text-center space-y-4">
             <!-- Subtle Brand Icon Logo -->
-            <div class="w-16 h-16 rounded-2xl bg-[#1C3822] shadow-lg border border-[#D4A853]/40 flex items-center justify-center p-2 transition-transform duration-300 hover:scale-105">
-                <img src="images/logo_gold.png" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
+            <div class="w-16 h-16 flex items-center justify-center transition-transform duration-300 hover:scale-105">
+                <img src="images/logo_gold.webp" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
             </div>
 
             <!-- Clean Brand Name -->
@@ -100,8 +100,8 @@
                 
                 <!-- Left-Aligned Brand Logo -->
                 <a href="#hero" class="flex items-center space-x-3 group shrink-0">
-                    <div class="w-10 h-10 rounded-2xl bg-[#1C3822] shadow-sm border border-[#D4A853]/40 flex items-center justify-center p-1 group-hover:scale-105 transition-transform duration-300">
-                        <img src="images/logo_gold.png" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
+                    <div class="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                        <img src="images/logo_gold.webp" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
                     </div>
                     <div class="text-left">
                         <h1 class="font-serif text-2xl sm:text-3xl font-extrabold tracking-[0.22em] text-sage-900 uppercase leading-none">
@@ -115,16 +115,16 @@
 
                 <!-- Floating Center Navigation Pill (Desktop) -->
                 <nav class="hidden lg:flex items-center space-x-1 glass-pill px-4 py-1.5 rounded-full shadow-sm border border-white/80">
-                    <a href="index.html" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-[#611B10] text-[#D4A853] shadow-sm transition hover:bg-[#782315]">
+                    <a href="/" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-[#611B10] text-[#D4A853] shadow-sm transition hover:bg-[#782315]">
                         Home
                     </a>
-                    <a href="products.html" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
+                    <a href="/products" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
                         Products
                     </a>
-                    <a href="about.html" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
+                    <a href="/about" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
                         About Us
                     </a>
-                    <a href="contact.html" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
+                    <a href="/contact" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
                         Contact
                     </a>
                 </nav>
@@ -172,10 +172,10 @@
             <!-- Mobile Navigation Drawer -->
             <div id="mobile-menu" class="hidden lg:hidden mt-3 glass-pill p-4 rounded-2xl border border-white/80 shadow-lg">
                 <div class="flex flex-col space-y-2 text-center font-medium text-sm text-sage-900">
-                    <a href="index.html" class="py-2 rounded-xl bg-[#611B10] text-[#D4A853] font-semibold">Home</a>
-                    <a href="products.html" class="py-2 hover:bg-white/60 rounded-xl">Products</a>
-                    <a href="about.html" class="py-2 hover:bg-white/60 rounded-xl">About Us</a>
-                    <a href="contact.html" class="py-2 hover:bg-white/60 rounded-xl">Contact</a>
+                    <a href="/" class="py-2 rounded-xl bg-[#611B10] text-[#D4A853] font-semibold">Home</a>
+                    <a href="/products" class="py-2 hover:bg-white/60 rounded-xl">Products</a>
+                    <a href="/about" class="py-2 hover:bg-white/60 rounded-xl">About Us</a>
+                    <a href="/contact" class="py-2 hover:bg-white/60 rounded-xl">Contact</a>
                 </div>
             </div>
         </header>
@@ -185,9 +185,9 @@
             
             <!-- Hero Background Slideshow with Fade Animation -->
             <div id="hero-bg-slideshow" class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-                <div class="hero-bg-slide active absolute inset-0 bg-cover bg-no-repeat" style="background-image: url('images/hero_bg.png');"></div>
-                <div class="hero-bg-slide absolute inset-0 bg-cover bg-no-repeat opacity-0" style="background-image: url('images/hero_slide_coconuts.jpg');"></div>
-                <div class="hero-bg-slide absolute inset-0 bg-cover bg-no-repeat opacity-0" style="background-image: url('images/hero_slide_harvest.jpg');"></div>
+                <div class="hero-bg-slide active absolute inset-0 bg-cover bg-no-repeat" style="background-image: url('images/hero_bg.webp');"></div>
+                <div class="hero-bg-slide absolute inset-0 bg-cover bg-no-repeat opacity-0" style="background-image: url('images/hero_slide_coconuts.webp');"></div>
+                <div class="hero-bg-slide absolute inset-0 bg-cover bg-no-repeat opacity-0" style="background-image: url('images/hero_slide_harvest.webp');"></div>
             </div>
 
             <!-- Readability Gradient Overlay -->
@@ -307,7 +307,7 @@
                     <button onclick="filterProducts('all')" class="px-3 py-1 bg-sage-800 text-white text-xs rounded-full font-medium filter-btn" data-filter="all">All</button>
                     <button onclick="filterProducts('daily')" class="px-3 py-1 bg-white text-sage-800 text-xs rounded-full font-medium hover:bg-sage-100 transition filter-btn" data-filter="daily">Daily Use</button>
                     <button onclick="filterProducts('bulk')" class="px-3 py-1 bg-white text-sage-800 text-xs rounded-full font-medium hover:bg-sage-100 transition filter-btn" data-filter="bulk">Bulk Cans</button>
-                    <a href="products.html" class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#611B10] bg-[#D4A853]/25 hover:bg-[#D4A853]/40 border border-[#D4A853]/40 transition active:scale-95 ml-auto sm:ml-2">
+                    <a href="/products" class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#611B10] bg-[#D4A853]/25 hover:bg-[#D4A853]/40 border border-[#D4A853]/40 transition active:scale-95 ml-auto sm:ml-2">
                         <span>View All Products</span>
                         <i class="fa-solid fa-arrow-right text-[10px]"></i>
                     </a>
@@ -321,10 +321,10 @@
                 <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="daily">
                     <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-white flex items-center justify-center p-2">
                         <span class="absolute top-2 left-2 z-10 bg-[#611B10] text-[#D4A853] text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">SPOUT POUCH</span>
-                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.png')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 1 Ltr Kitchen Pouch">
+                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.webp')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 1 Ltr Kitchen Pouch">
                             <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
                         </button>
-                        <img src="images/product_pouch.png" alt="Millacoco Pure Coconut Oil 1 Ltr Kitchen Pouch" class="product-card-img w-full h-full object-contain">
+                        <img src="images/product_pouch.webp" alt="Millacoco Pure Coconut Oil 1 Ltr Kitchen Pouch" class="product-card-img w-full h-full object-contain">
                     </div>
                     <div class="px-0.5 pb-0.5 flex flex-col justify-between flex-1">
                         <div>
@@ -343,10 +343,10 @@
                 <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="daily">
                     <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-white flex items-center justify-center p-2">
                         <span class="absolute top-2 left-2 z-10 bg-[#D4A853] text-[#611B10] text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">POPULAR</span>
-                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.png')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 1 Ltr Classic Bottle">
+                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.webp')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 1 Ltr Classic Bottle">
                             <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
                         </button>
-                        <img src="images/product_bottle.png" alt="Millacoco 1 Ltr Pure Coconut Oil Bottle" class="product-card-img w-full h-full object-contain">
+                        <img src="images/product_bottle.webp" alt="Millacoco 1 Ltr Pure Coconut Oil Bottle" class="product-card-img w-full h-full object-contain">
                     </div>
                     <div class="px-0.5 pb-0.5 flex flex-col justify-between flex-1">
                         <div>
@@ -365,10 +365,10 @@
                 <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="bulk">
                     <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-stone-50">
                         <span class="absolute top-2 left-2 z-10 bg-sage-800 text-white text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">TWIN VALUE</span>
-                        <button onclick="toggleFavorite(event, 'Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.jpg')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 2 Ltr Twin Pack (1L x 2)">
+                        <button onclick="toggleFavorite(event, 'Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.webp')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 2 Ltr Twin Pack (1L x 2)">
                             <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
                         </button>
-                        <img src="images/twin_pack.jpg" alt="Millacoco 2 Ltr Twin Pack" class="product-card-img w-full h-full object-cover rounded-2xl">
+                        <img src="images/twin_pack.webp" alt="Millacoco 2 Ltr Twin Pack" class="product-card-img w-full h-full object-cover rounded-2xl">
                     </div>
                     <div class="px-0.5 pb-0.5 flex flex-col justify-between flex-1">
                         <div>
@@ -387,10 +387,10 @@
                 <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="bulk">
                     <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-stone-50">
                         <span class="absolute top-2 left-2 z-10 bg-emerald-700 text-white text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">FAMILY CAN</span>
-                        <button onclick="toggleFavorite(event, 'Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.jpg')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 5 Ltr Household Can">
+                        <button onclick="toggleFavorite(event, 'Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.webp')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco 5 Ltr Household Can">
                             <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
                         </button>
-                        <img src="images/can_5ltr.jpg" alt="Millacoco 5 Ltr Household Can" class="product-card-img w-full h-full object-cover rounded-2xl">
+                        <img src="images/can_5ltr.webp" alt="Millacoco 5 Ltr Household Can" class="product-card-img w-full h-full object-cover rounded-2xl">
                     </div>
                     <div class="px-0.5 pb-0.5 flex flex-col justify-between flex-1">
                         <div>
@@ -409,10 +409,10 @@
                 <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="daily">
                     <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-stone-50">
                         <span class="absolute top-2 left-2 z-10 bg-ambergold-500 text-white text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">SKIN & HAIR</span>
-                        <button onclick="toggleFavorite(event, 'Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.jpg')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco Virgin Hair & Face Oil">
+                        <button onclick="toggleFavorite(event, 'Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.webp')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="Millacoco Virgin Hair & Face Oil">
                             <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
                         </button>
-                        <img src="images/virgin_oil.jpg" alt="Millacoco Virgin Hair & Face Oil" class="product-card-img w-full h-full object-cover rounded-2xl">
+                        <img src="images/virgin_oil.webp" alt="Millacoco Virgin Hair & Face Oil" class="product-card-img w-full h-full object-cover rounded-2xl">
                     </div>
                     <div class="px-0.5 pb-0.5 flex flex-col justify-between flex-1">
                         <div>
@@ -427,13 +427,6 @@
                     </div>
                 </div>
 
-            </div>
-            <!-- Bottom Centered "View All Products" Action Banner -->
-            <div class="mt-8 sm:mt-10 text-center">
-                <a href="products.html" class="inline-flex items-center space-x-2.5 px-7 py-3 rounded-full text-xs sm:text-sm font-bold text-[#611B10] bg-[#D4A853]/25 hover:bg-[#D4A853]/40 border border-[#D4A853]/50 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:scale-95">
-                    <span>Explore All Sizes & Value Packs</span>
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
-                </a>
             </div>
         </section>
 
@@ -556,17 +549,17 @@
                             <div class="bottle-display-wrapper relative z-10 cursor-pointer w-full max-w-[240px] sm:max-w-sm lg:max-w-md h-[320px] sm:h-[420px] lg:h-[480px] flex items-center justify-center p-2 sm:p-4">
                                 
                                 <!-- Slide 0: Heritage Bottle Cutout with Cracked Coconut -->
-                                <img id="scrub-img-0" src="images/flagship_bottle_cutout.png" 
+                                <img id="scrub-img-0" src="images/flagship_bottle_cutout.webp" 
                                      alt="Millacoco Cold Pressed Coconut Oil Bottle Cutout with Fresh Coconut" 
                                      class="scrub-product-img active absolute inset-0 m-auto w-full h-full object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.30)] select-none">
 
                                 <!-- Slide 1: Kitchen Spout Pouch Cutout (Product 1) -->
-                                <img id="scrub-img-1" src="images/product_pouch_cutout.png" 
+                                <img id="scrub-img-1" src="images/product_pouch_cutout.webp" 
                                      alt="Millacoco 1 Ltr Easy Pour Kitchen Spout Pouch Cutout" 
                                      class="scrub-product-img absolute inset-0 m-auto w-full h-full object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.30)] select-none">
 
                                 <!-- Slide 2: Classic Pure Bottle Cutout (Product 2) -->
-                                <img id="scrub-img-2" src="images/product_bottle_cutout.png" 
+                                <img id="scrub-img-2" src="images/product_bottle_cutout.webp" 
                                      alt="Millacoco 1 Ltr Classic Pure Coconut Oil Bottle Cutout" 
                                      class="scrub-product-img absolute inset-0 m-auto w-full h-full object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.30)] select-none">
                             </div>
@@ -831,8 +824,8 @@
                 <!-- Official Address & Mill Info (Left-aligned) -->
                 <div class="lg:col-span-5 space-y-4">
                     <div class="flex items-center space-x-3">
-                        <div class="w-9 h-9 rounded-xl bg-[#1C3822] border border-[#D4A853]/40 flex items-center justify-center p-1 shadow-sm">
-                            <img src="images/logo_gold.png" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
+                        <div class="w-10 h-10 flex items-center justify-center">
+                            <img src="images/logo_gold.webp" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
                         </div>
                         <h3 class="font-serif text-3xl tracking-[0.2em] font-extrabold text-white uppercase">MILLACOCO</h3>
                     </div>
@@ -851,7 +844,7 @@
                         <h4 class="font-bold text-white tracking-wider uppercase text-[11px]">Navigation</h4>
                         <ul class="space-y-2 text-sage-300">
                             <li><a href="#hero" class="hover:text-white transition">Home</a></li>
-                            <li><a href="#categories" class="hover:text-white transition">Shop Products</a></li>
+                            <li><a href="/products" class="hover:text-white transition">Shop Products</a></li>
                             <li><a href="#bestsellers" class="hover:text-white transition">Combo Deals</a></li>
                             <li><a href="#reviews" class="hover:text-white transition">Customer Reviews</a></li>
                         </ul>
@@ -860,8 +853,8 @@
                         <h4 class="font-bold text-white tracking-wider uppercase text-[11px]">Customer Care</h4>
                         <ul class="space-y-2 text-sage-300">
                             <li><a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20ordering%20pure%20Kerala%20coconut%20oil.%20Could%20you%20please%20share%20details?" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">WhatsApp Order</a></li>
-                            <li><a href="#" class="hover:text-white transition">Express Shipping</a></li>
-                            <li><a href="#" class="hover:text-white transition">Terms & Conditions</a></li>
+                            <li><button type="button" onclick="openPolicyModal('shipping')" class="hover:text-white transition text-left cursor-pointer">Express Shipping</button></li>
+                            <li><button type="button" onclick="openPolicyModal('terms')" class="hover:text-white transition text-left cursor-pointer">Terms & Conditions</button></li>
                         </ul>
                     </div>
                 </div>
@@ -927,6 +920,112 @@
             <input type="text" id="search-input" onkeyup="searchProducts()" placeholder="Search 500ml, 1L, 2L, 5L, or Virgin Oil..." class="w-full bg-sage-50 border border-sage-200 text-sage-900 text-xs px-4 py-3 rounded-xl focus:outline-none focus:border-sage-600">
             <div id="search-results" class="space-y-2 max-h-56 overflow-y-auto text-xs text-sage-800">
                 <p class="text-sage-500 italic">Type above to search Millacoco products...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXPRESS SHIPPING MODAL -->
+    <div id="shipping-modal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 pointer-events-none flex items-center justify-center p-4">
+        <div onclick="closePolicyModal('shipping')" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        <div class="relative bg-[#FAF5EC] border border-[#D4A853]/40 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 text-[#2C241D] max-h-[85vh] flex flex-col" id="shipping-modal-content">
+            <div class="flex items-center justify-between pb-4 border-b border-[#D4A853]/30 shrink-0">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-[#611B10] text-[#D4A853] flex items-center justify-center text-lg shadow-sm">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-[#611B10]">Express Shipping</h3>
+                        <p class="text-[11px] text-[#7A6B5D]">Direct Dispatch from Kuttiyadi Mill, Kozhikode</p>
+                    </div>
+                </div>
+                <button onclick="closePolicyModal('shipping')" class="text-[#7A6B5D] hover:text-[#611B10] text-xl p-2 rounded-full transition" title="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="py-5 space-y-4 text-xs leading-relaxed text-[#4A3E36] overflow-y-auto modal-scroll-body flex-1 pr-1.5 my-1">
+                <div class="bg-white/90 p-4 rounded-2xl border border-[#D4A853]/20 shadow-xs">
+                    <h4 class="font-bold text-[#611B10] text-sm mb-1.5 flex items-center gap-2">
+                        <i class="fa-solid fa-clock text-[#D4A853]"></i> Delivery Timelines
+                    </h4>
+                    <ul class="space-y-1.5 text-xs text-[#5D5046]">
+                        <li>• <strong>Kerala & South India:</strong> 1 to 2 business days.</li>
+                        <li>• <strong>Metro Cities (Mumbai, Delhi, Bangalore):</strong> 2 to 3 business days.</li>
+                        <li>• <strong>Rest of India:</strong> 3 to 5 business days with direct speed courier tracking.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white/90 p-4 rounded-2xl border border-[#D4A853]/20 shadow-xs">
+                    <h4 class="font-bold text-[#611B10] text-sm mb-1.5 flex items-center gap-2">
+                        <i class="fa-solid fa-box-open text-[#D4A853]"></i> Zero-Leakage & Safety Guarantee
+                    </h4>
+                    <p>Every bottle is sealed with heat-induction inner caps, bubble-cushioned in multi-ply shock-resistant corrugated casing, and insured for 100% transit safety.</p>
+                </div>
+
+                <div class="bg-white/90 p-4 rounded-2xl border border-[#D4A853]/20 shadow-xs">
+                    <h4 class="font-bold text-[#611B10] text-sm mb-1.5 flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-emerald-600"></i> Live WhatsApp Tracking
+                    </h4>
+                    <p>Once dispatched from our mill in Kozhikode, tracking links and courier details are delivered straight to your WhatsApp.</p>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="closePolicyModal('shipping')" class="w-full bg-[#611B10] hover:bg-[#4a140c] text-white font-bold py-3 rounded-full text-xs transition shadow-md flex items-center justify-center gap-2">
+                    <span>Understood</span>
+                    <i class="fa-solid fa-check text-xs text-[#D4A853]"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TERMS & CONDITIONS MODAL -->
+    <div id="terms-modal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 pointer-events-none flex items-center justify-center p-4">
+        <div onclick="closePolicyModal('terms')" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        <div class="relative bg-[#FAF5EC] border border-[#D4A853]/40 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300 text-[#2C241D] max-h-[85vh] flex flex-col" id="terms-modal-content">
+            <div class="flex items-center justify-between pb-4 border-b border-[#D4A853]/30 shrink-0">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-[#611B10] text-[#D4A853] flex items-center justify-center text-lg shadow-sm">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-[#611B10]">Terms & Purity Guarantee</h3>
+                        <p class="text-[11px] text-[#7A6B5D]">Puthalampurath Oil Mill • Kozhikode</p>
+                    </div>
+                </div>
+                <button onclick="closePolicyModal('terms')" class="text-[#7A6B5D] hover:text-[#611B10] text-xl p-2 rounded-full transition" title="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="py-5 space-y-4 text-xs leading-relaxed text-[#4A3E36] overflow-y-auto modal-scroll-body flex-1 pr-1.5 my-1">
+                <div class="bg-white/90 p-4 rounded-2xl border border-[#D4A853]/20 shadow-xs">
+                    <h4 class="font-bold text-[#611B10] text-sm mb-1.5 flex items-center gap-2">
+                        <i class="fa-solid fa-certificate text-[#D4A853]"></i> 100% Purity & Single-Press Standard
+                    </h4>
+                    <p>Millacoco coconut oil is extracted exclusively from sun-dried Kuttiyadi copra. We guarantee zero mineral oil, zero preservatives, zero liquid paraffin, and zero heat/chemical refining.</p>
+                </div>
+
+                <div class="bg-white/90 p-4 rounded-2xl border border-[#D4A853]/20 shadow-xs">
+                    <h4 class="font-bold text-[#611B10] text-sm mb-1.5 flex items-center gap-2">
+                        <i class="fa-solid fa-rotate-left text-[#D4A853]"></i> Instant Bottle Replacement
+                    </h4>
+                    <p>If any bottle or container arrives damaged or broken during shipping, share a photo via WhatsApp (+91 80897 57815) within 48 hours for an immediate free replacement dispatch.</p>
+                </div>
+
+                <div class="bg-white/90 p-4 rounded-2xl border border-[#D4A853]/20 shadow-xs">
+                    <h4 class="font-bold text-[#611B10] text-sm mb-1.5 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-[#D4A853]"></i> Natural Physical Behavior
+                    </h4>
+                    <p>Pure coconut oil naturally solidifies below 24°C into pure white butter. This is the ultimate physical proof of unadulterated purity. Place bottle in warm water to reliquefy naturally.</p>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="closePolicyModal('terms')" class="w-full bg-[#611B10] hover:bg-[#4a140c] text-white font-bold py-3 rounded-full text-xs transition shadow-md flex items-center justify-center gap-2">
+                    <span>I Agree & Accept</span>
+                    <i class="fa-solid fa-check text-xs text-[#D4A853]"></i>
+                </button>
             </div>
         </div>
     </div>

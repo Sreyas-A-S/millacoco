@@ -26,8 +26,8 @@
     <div id="preloader" class="fixed inset-0 z-[99999] bg-[#FAF5EC] flex flex-col items-center justify-center transition-all duration-500 ease-out select-none">
         <div class="flex flex-col items-center text-center space-y-4">
             <!-- Brand Icon Logo -->
-            <div class="w-16 h-16 rounded-2xl bg-[#1C3822] shadow-lg border border-[#D4A853]/40 flex items-center justify-center p-2 transition-transform duration-300 hover:scale-105">
-                <img src="images/logo_gold.png" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
+            <div class="w-16 h-16 flex items-center justify-center transition-transform duration-300 hover:scale-105">
+                <img src="images/logo_gold.webp" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
             </div>
 
             <!-- Brand Name -->
@@ -55,9 +55,9 @@
             <div id="header-inner" class="flex items-center justify-between gap-4 py-1.5 sm:py-2 px-3 sm:px-4 rounded-3xl transition-all duration-300">
                 
                 <!-- Left-Aligned Brand Logo -->
-                <a href="index.html" class="flex items-center space-x-3 group shrink-0">
-                    <div class="w-10 h-10 rounded-2xl bg-[#1C3822] shadow-sm border border-[#D4A853]/40 flex items-center justify-center p-1 group-hover:scale-105 transition-transform duration-300">
-                        <img src="images/logo_gold.png" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
+                <a href="/" class="flex items-center space-x-3 group shrink-0">
+                    <div class="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                        <img src="images/logo_gold.webp" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
                     </div>
                     <div class="text-left">
                         <h1 class="font-serif text-2xl sm:text-3xl font-extrabold tracking-[0.22em] text-sage-900 uppercase leading-none">
@@ -71,10 +71,10 @@
 
                 <!-- Floating Center Navigation Pill (Desktop) -->
                 <nav class="hidden lg:flex items-center space-x-1 glass-pill px-4 py-1.5 rounded-full shadow-sm border border-white/80">
-                    <a href="index.html" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
+                    <a href="/" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
                         Home
                     </a>
-                    <a href="products.html" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-[#611B10] text-[#D4A853] shadow-sm transition hover:bg-[#782315]">
+                    <a href="/products" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-[#611B10] text-[#D4A853] shadow-sm transition hover:bg-[#782315]">
                         Products
                     </a>
                     <a href="index.html#about" class="px-4 py-1.5 rounded-full text-xs font-medium text-sage-800 hover:bg-white/70 transition">
@@ -131,8 +131,8 @@
             <!-- Mobile Navigation Drawer -->
             <div id="mobile-menu" class="hidden lg:hidden mt-3 glass-pill p-4 rounded-2xl border border-white/80 shadow-lg">
                 <div class="flex flex-col space-y-2 text-center font-medium text-sm text-sage-900">
-                    <a href="index.html" class="py-2 hover:bg-white/60 rounded-xl">Home</a>
-                    <a href="products.html" class="py-2 rounded-xl bg-[#611B10] text-[#D4A853] font-semibold">Products</a>
+                    <a href="/" class="py-2 hover:bg-white/60 rounded-xl">Home</a>
+                    <a href="/products" class="py-2 rounded-xl bg-[#611B10] text-[#D4A853] font-semibold">Products</a>
                     <a href="index.html#about" class="py-2 hover:bg-white/60 rounded-xl">About Us</a>
                 </div>
             </div>
@@ -147,7 +147,7 @@
             <div class="relative z-10 max-w-3xl">
                 <!-- Breadcrumbs -->
                 <nav class="flex items-center space-x-2 text-xs text-sage-600 font-medium mb-3">
-                    <a href="index.html" class="hover:text-[#611B10] transition">Home</a>
+                    <a href="/" class="hover:text-[#611B10] transition">Home</a>
                     <span>/</span>
                     <span class="text-[#611B10] font-semibold">Products</span>
                 </nav>
@@ -249,10 +249,10 @@
                         <span class="absolute top-2.5 left-2.5 bg-[#611B10] text-[#D4A853] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             SPOUT POUCH
                         </span>
-                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.png')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 1 Ltr Kitchen Pouch" title="Save Favorite">
+                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.webp')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 1 Ltr Kitchen Pouch" title="Save Favorite">
                             <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
                         </button>
-                        <img src="images/product_pouch.png" alt="Millacoco 1 Ltr Kitchen Pouch" class="product-card-img w-full h-full object-contain">
+                        <img src="images/product_pouch.webp" alt="Millacoco 1 Ltr Kitchen Pouch" class="product-card-img img-skeleton-pending w-full h-full object-contain" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
                     </div>
                     <div class="px-0.5">
                         <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
@@ -264,7 +264,7 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹280.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.png', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                <button onclick="addToCart('Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-cart-plus text-xs"></i>
                     <span>+ Add to Cart</span>
                 </button>
@@ -278,10 +278,10 @@
                         <span class="absolute top-2.5 left-2.5 bg-ambergold-500 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             BESTSELLER
                         </span>
-                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.png')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 1 Ltr Classic Bottle" title="Save Favorite">
+                        <button onclick="toggleFavorite(event, 'Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.webp')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 1 Ltr Classic Bottle" title="Save Favorite">
                             <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
                         </button>
-                        <img src="images/product_bottle.png" alt="Millacoco 1 Ltr Classic Bottle" class="product-card-img w-full h-full object-contain">
+                        <img src="images/product_bottle.webp" alt="Millacoco 1 Ltr Classic Bottle" class="product-card-img img-skeleton-pending w-full h-full object-contain" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
                     </div>
                     <div class="px-0.5">
                         <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
@@ -293,7 +293,7 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹290.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.png', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                <button onclick="addToCart('Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-cart-plus text-xs"></i>
                     <span>+ Add to Cart</span>
                 </button>
@@ -307,10 +307,10 @@
                         <span class="absolute top-2.5 left-2.5 bg-sage-800 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             TWIN VALUE
                         </span>
-                        <button onclick="toggleFavorite(event, 'Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 2 Ltr Twin Pack (1L x 2)" title="Save Favorite">
+                        <button onclick="toggleFavorite(event, 'Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.webp')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 2 Ltr Twin Pack (1L x 2)" title="Save Favorite">
                             <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
                         </button>
-                        <img src="images/twin_pack.jpg" alt="Millacoco 2 Ltr Twin Pack" class="product-card-img w-full h-full object-cover rounded-2xl">
+                        <img src="images/twin_pack.webp" alt="Millacoco 2 Ltr Twin Pack" class="product-card-img img-skeleton-pending w-full h-full object-cover rounded-2xl" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
                     </div>
                     <div class="px-0.5">
                         <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
@@ -322,7 +322,7 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹570.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                <button onclick="addToCart('Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-cart-plus text-xs"></i>
                     <span>+ Add to Cart</span>
                 </button>
@@ -336,10 +336,10 @@
                         <span class="absolute top-2.5 left-2.5 bg-emerald-700 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             BULK SUPPLY
                         </span>
-                        <button onclick="toggleFavorite(event, 'Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 5 Ltr Household Can" title="Save Favorite">
+                        <button onclick="toggleFavorite(event, 'Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.webp')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 5 Ltr Household Can" title="Save Favorite">
                             <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
                         </button>
-                        <img src="images/can_5ltr.jpg" alt="Millacoco 5 Ltr Household Can" class="product-card-img w-full h-full object-cover rounded-2xl">
+                        <img src="images/can_5ltr.webp" alt="Millacoco 5 Ltr Household Can" class="product-card-img img-skeleton-pending w-full h-full object-cover rounded-2xl" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
                     </div>
                     <div class="px-0.5">
                         <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
@@ -351,7 +351,7 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹1,390.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                <button onclick="addToCart('Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-cart-plus text-xs"></i>
                     <span>+ Add to Cart</span>
                 </button>
@@ -365,10 +365,10 @@
                         <span class="absolute top-2.5 left-2.5 bg-rose-600 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             WELLNESS
                         </span>
-                        <button onclick="toggleFavorite(event, 'Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco Virgin Hair & Face Oil" title="Save Favorite">
+                        <button onclick="toggleFavorite(event, 'Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.webp')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco Virgin Hair & Face Oil" title="Save Favorite">
                             <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
                         </button>
-                        <img src="images/virgin_oil.jpg" alt="Millacoco Virgin Hair & Face Oil" class="product-card-img w-full h-full object-cover rounded-2xl">
+                        <img src="images/virgin_oil.webp" alt="Millacoco Virgin Hair & Face Oil" class="product-card-img img-skeleton-pending w-full h-full object-cover rounded-2xl" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
                     </div>
                     <div class="px-0.5">
                         <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
@@ -380,7 +380,7 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹320.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                <button onclick="addToCart('Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-cart-plus text-xs"></i>
                     <span>+ Add to Cart</span>
                 </button>
@@ -394,10 +394,10 @@
                         <span class="absolute top-2.5 left-2.5 bg-[#D4A853] text-[#611B10] text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             COMBO OFFER
                         </span>
-                        <button onclick="toggleFavorite(event, 'Millacoco Kitchen & Skincare Duo Pack', 590, 'images/combo_duo.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco Kitchen & Skincare Duo Pack" title="Save Favorite">
+                        <button onclick="toggleFavorite(event, 'Millacoco Kitchen & Skincare Duo Pack', 590, 'images/combo_duo.webp')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco Kitchen & Skincare Duo Pack" title="Save Favorite">
                             <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
                         </button>
-                        <img src="images/combo_duo.jpg" alt="Millacoco Kitchen & Skincare Duo Pack" class="product-card-img w-full h-full object-cover rounded-2xl">
+                        <img src="images/combo_duo.webp" alt="Millacoco Kitchen & Skincare Duo Pack" class="product-card-img img-skeleton-pending w-full h-full object-cover rounded-2xl" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
                     </div>
                     <div class="px-0.5">
                         <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
@@ -409,7 +409,7 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹590.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco Kitchen & Skincare Duo Pack', 590, 'images/combo_duo.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                <button onclick="addToCart('Millacoco Kitchen & Skincare Duo Pack', 590, 'images/combo_duo.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-cart-plus text-xs"></i>
                     <span>+ Add to Cart</span>
                 </button>
@@ -423,10 +423,10 @@
                         <span class="absolute top-2.5 left-2.5 bg-sage-700 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             COMPACT
                         </span>
-                        <button onclick="toggleFavorite(event, 'Millacoco 500ml Kitchen Glass Jar', 165, 'images/bottle_500ml.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 500ml Kitchen Glass Jar" title="Save Favorite">
+                        <button onclick="toggleFavorite(event, 'Millacoco 500ml Kitchen Glass Jar', 165, 'images/bottle_500ml.webp')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco 500ml Kitchen Glass Jar" title="Save Favorite">
                             <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
                         </button>
-                        <img src="images/bottle_500ml.jpg" alt="Millacoco 500ml Kitchen Glass Jar" class="product-card-img w-full h-full object-cover rounded-2xl">
+                        <img src="images/bottle_500ml.webp" alt="Millacoco 500ml Kitchen Glass Jar" class="product-card-img img-skeleton-pending w-full h-full object-cover rounded-2xl" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
                     </div>
                     <div class="px-0.5">
                         <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
@@ -438,7 +438,7 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹165.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco 500ml Kitchen Glass Jar', 165, 'images/bottle_500ml.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                <button onclick="addToCart('Millacoco 500ml Kitchen Glass Jar', 165, 'images/bottle_500ml.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-cart-plus text-xs"></i>
                     <span>+ Add to Cart</span>
                 </button>
@@ -452,10 +452,10 @@
                         <span class="absolute top-2.5 left-2.5 bg-[#1C3822] text-[#D4A853] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs border border-[#D4A853]/40">
                             SIGNATURE
                         </span>
-                        <button onclick="toggleFavorite(event, 'Millacoco Heritage Bottle (1L)', 340, 'images/bottle_1ltr.jpg')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco Heritage Bottle (1L)" title="Save Favorite">
+                        <button onclick="toggleFavorite(event, 'Millacoco Heritage Bottle (1L)', 340, 'images/bottle_1ltr.webp')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="Millacoco Heritage Bottle (1L)" title="Save Favorite">
                             <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
                         </button>
-                        <img src="images/bottle_1ltr.jpg" alt="Millacoco Heritage Bottle (1L)" class="product-card-img w-full h-full object-cover rounded-2xl">
+                        <img src="images/bottle_1ltr.webp" alt="Millacoco Heritage Bottle (1L)" class="product-card-img img-skeleton-pending w-full h-full object-cover rounded-2xl" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
                     </div>
                     <div class="px-0.5">
                         <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
@@ -467,7 +467,7 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹340.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco Heritage Bottle (1L)', 340, 'images/bottle_1ltr.jpg', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                <button onclick="addToCart('Millacoco Heritage Bottle (1L)', 340, 'images/bottle_1ltr.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-cart-plus text-xs"></i>
                     <span>+ Add to Cart</span>
                 </button>
@@ -605,8 +605,8 @@
             <!-- Col 1: Brand -->
             <div class="space-y-4">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-2xl bg-[#1C3822] shadow-sm border border-[#D4A853]/40 flex items-center justify-center p-1">
-                        <img src="images/logo_gold.png" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
+                    <div class="w-10 h-10 flex items-center justify-center">
+                        <img src="images/logo_gold.webp" alt="Millacoco Palm 'C' Logo" class="w-full h-full object-contain">
                     </div>
                     <div>
                         <h4 class="font-serif text-xl font-bold tracking-[0.2em] text-[#D4A853] uppercase">
@@ -631,8 +631,8 @@
             <div class="space-y-3">
                 <h5 class="font-serif text-sm font-bold text-[#D4A853] uppercase tracking-wider">Quick Navigation</h5>
                 <ul class="space-y-2 text-xs text-sage-300">
-                    <li><a href="index.html" class="hover:text-white transition">Home</a></li>
-                    <li><a href="products.html" class="hover:text-white transition text-[#D4A853] font-semibold">All Products</a></li>
+                    <li><a href="/" class="hover:text-white transition">Home</a></li>
+                    <li><a href="/products" class="hover:text-white transition text-[#D4A853] font-semibold">All Products</a></li>
                     <li><a href="index.html#bestsellers" class="hover:text-white transition">Special Combo Packs</a></li>
                     <li><a href="index.html#reviews" class="hover:text-white transition">Customer Reviews</a></li>
                     <li><a href="index.html#flagship-bottle" class="hover:text-white transition">The Flagship Bottle</a></li>

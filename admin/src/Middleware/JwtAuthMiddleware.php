@@ -26,7 +26,7 @@ class JwtAuthMiddleware implements MiddlewareInterface
         $token = $this->extractToken($request);
 
         if (!$token) {
-            return $this->unauthorizedResponse('Missing or invalid authorization token.');
+            return $this->unauthorizedResponse($request, 'Missing or invalid authorization token.');
         }
 
         try {
@@ -35,7 +35,7 @@ class JwtAuthMiddleware implements MiddlewareInterface
             $request = $request->withAttribute('jwt_user', $decoded);
             return $handler->handle($request);
         } catch (\Exception $e) {
-            return $this->unauthorizedResponse('Invalid or expired authentication token.');
+            return $this->unauthorizedResponse($request, 'Invalid or expired authentication token.');
         }
     }
 
@@ -56,15 +56,23 @@ class JwtAuthMiddleware implements MiddlewareInterface
         return null;
     }
 
-    private function unauthorizedResponse(string $message): Response
+    private function unauthorizedResponse(Request $request, string $message): Response
     {
-        $response = new SlimResponse(401);
-        $response->getBody()->write(json_encode([
-            'status' => 'error',
-            'message' => $message,
-            'redirect' => '/admin/login'
-        ]));
+        $uri = $request->getUri()->getPath();
 
-        return $response->withHeader('Content-Type', 'application/json');
+        // If it's an API request, return JSON 401
+        if (str_contains($uri, '/api')) {
+            $response = new SlimResponse(401);
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => $message,
+                'redirect' => '/mc-desk/login'
+            ]));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
+
+        // For browser page navigations, automatically redirect to login screen
+        $response = new SlimResponse(302);
+        return $response->withHeader('Location', '/mc-desk/login');
     }
 }

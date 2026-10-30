@@ -58,7 +58,7 @@
             alertBox.classList.add('hidden');
 
             try {
-                const res = await fetch('/admin/api/login', {
+                const res = await fetch('/mc-desk/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -72,7 +72,7 @@
                 if (res.ok && data.status === 'success') {
                     // Save token to sessionStorage for API requests
                     sessionStorage.setItem('admin_jwt', data.token);
-                    window.location.href = '/admin';
+                    window.location.href = '/mc-desk';
                 } else {
                     alertBox.textContent = data.message || 'Authentication failed.';
                     alertBox.classList.remove('hidden');

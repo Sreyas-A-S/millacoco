@@ -105,20 +105,47 @@ body {
     transform: scale(1.06);
 }
 
+/* Custom Scrollbars with Clean Inset Margin */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #FAF5EC;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #D4A853;
-    border-radius: 4px;
+    background: rgba(212, 168, 83, 0.55);
+    border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
+    background: #611B10;
+}
+
+/* Modal Internal Scrollable Body with Clean Hidden/Slim Overflow */
+.modal-scroll-body {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(212, 168, 83, 0.45) transparent;
+    overscroll-behavior: contain;
+}
+
+.modal-scroll-body::-webkit-scrollbar {
+    width: 5px;
+}
+
+.modal-scroll-body::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
+
+.modal-scroll-body::-webkit-scrollbar-thumb {
+    background: rgba(212, 168, 83, 0.45);
+    border-radius: 9999px;
+}
+
+.modal-scroll-body::-webkit-scrollbar-thumb:hover {
     background: #611B10;
 }
 
@@ -480,6 +507,41 @@ html, body {
     z-index: 15;
     border-radius: 1.75rem;
 }
+
+/* Warm Linen Skeleton Shimmer Placeholder */
+.skeleton-box {
+    position: relative;
+    overflow: hidden;
+    background-color: #EDE4D5;
+}
+
+.skeleton-box::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.5) 50%, 
+        rgba(255, 255, 255, 0) 100%);
+    animation: skeleton-shimmer 1.5s infinite;
+}
+
+@keyframes skeleton-shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.img-skeleton-loaded {
+    opacity: 1 !important;
+}
+
+.img-skeleton-pending {
+    opacity: 0;
+    transition: opacity 0.4s ease-in;
+}
+
 
 
 

@@ -7,7 +7,7 @@ return [
         'name' => 'Millacoco Admin',
         'env' => 'production', // 'development' or 'production'
         'debug' => false,      // Display detailed errors only in local development
-        'base_url' => '/admin',
+        'base_url' => '/mc-desk',
     ],
     'db' => [
         'driver' => 'sqlite',

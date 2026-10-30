@@ -78,6 +78,6 @@ class AuthController
         return $response
             ->withHeader('Content-Type', 'application/json')
             // Set secure, HttpOnly, SameSite=Strict cookie for browser sessions
-            ->withHeader('Set-Cookie', "admin_jwt={$token}; Path=/admin; HttpOnly; SameSite=Strict; Max-Age=86400");
+            ->withHeader('Set-Cookie', "admin_jwt={$token}; Path=/mc-desk; HttpOnly; SameSite=Strict; Max-Age=86400");
     }
 }

@@ -1,1 +1,24 @@
+RewriteEngine On
+
+# 1. Protect SQLite and sensitive configuration files
+<FilesMatch "\.(sqlite|db|log|env)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# 2. Redirect explicit /index.html to root /
+RewriteCond %{THE_REQUEST} \s/index\.html[?\s] [NC]
+RewriteRule ^index\.html$ / [R=301,L]
+
+# 3. Redirect explicit .html requests to clean URLs (e.g. /about.html -> /about)
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.html[\s?] [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# 4. Internally resolve clean URLs to their corresponding .html files
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([^/]+)/?$ $1.html [L]
+
+# 5. Fallback 404 handler
 ErrorDocument 404 /404.html

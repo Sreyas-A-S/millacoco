@@ -20,7 +20,7 @@ $settings = require __DIR__ . '/../config/settings.php';
 
 // Instantiate Slim Application
 $app = AppFactory::create();
-$app->setBasePath('/admin');
+$app->setBasePath('/mc-desk');
 
 // Global Security Headers Middleware
 $app->add(new SecurityHeadersMiddleware());
@@ -42,7 +42,7 @@ $errorMiddleware->setErrorHandler(
         $uri = $request->getUri()->getPath();
 
         // If an API endpoint was requested, return 404 JSON
-        if (str_starts_with($uri, '/admin/api')) {
+        if (str_starts_with($uri, '/mc-desk/api')) {
             $response->getBody()->write(json_encode([
                 'status' => 'error',
                 'message' => 'API endpoint not found (404).'

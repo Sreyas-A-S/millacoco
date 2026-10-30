@@ -59,23 +59,23 @@ class DashboardController
 
             <!-- Navigation Links -->
             <nav class="p-4 space-y-1.5 text-xs font-semibold">
-                <a href="/admin" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-white/10 text-[#D4A853] transition">
+                <a href="/mc-desk" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-white/10 text-[#D4A853] transition">
                     <i class="fa-solid fa-chart-pie w-4"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="/admin/products" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
+                <a href="/mc-desk/products" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
                     <i class="fa-solid fa-bottle-droplet w-4"></i>
                     <span>Products & Inventory</span>
                 </a>
-                <a href="/admin/orders" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
+                <a href="/mc-desk/orders" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
                     <i class="fa-solid fa-cart-flatbed w-4"></i>
                     <span>Orders & Dispatch</span>
                 </a>
-                <a href="/admin/agents" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
+                <a href="/mc-desk/agents" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
                     <i class="fa-solid fa-user-tie w-4"></i>
                     <span>Agents & Partners</span>
                 </a>
-                <a href="/admin/documents" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
+                <a href="/mc-desk/documents" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
                     <i class="fa-solid fa-file-shield w-4"></i>
                     <span>Document Types</span>
                 </a>
@@ -187,8 +187,8 @@ class DashboardController
 
     <script>
         function logoutAdmin() {
-            document.cookie = "admin_jwt=; Path=/admin; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-            window.location.href = '/admin/login';
+            document.cookie = "admin_jwt=; Path=/mc-desk; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+            window.location.href = '/mc-desk/login';
         }
     </script>
 </body>
