@@ -26,6 +26,47 @@ class DashboardController
         $adminEmail = htmlspecialchars($jwtUser->email ?? '', ENT_QUOTES, 'UTF-8');
         $adminRole = htmlspecialchars($jwtUser->role ?? 'Staff', ENT_QUOTES, 'UTF-8');
 
+        // Fetch actual showcase metrics from SQLite
+        $totalProducts = (int)$this->db->query("SELECT COUNT(*) FROM products")->fetchColumn();
+        $activeProducts = (int)$this->db->query("SELECT COUNT(*) FROM products WHERE is_active = 1")->fetchColumn();
+        $amazonCount = (int)$this->db->query("SELECT COUNT(*) FROM products WHERE platform_name LIKE '%Amazon%'")->fetchColumn();
+
+        // Fetch products for redirect link overview
+        $stmt = $this->db->query("SELECT id, name, tag, price, platform_name, external_url FROM products ORDER BY sort_order ASC, id ASC");
+        $products = $stmt->fetchAll();
+
+        $rowsHtml = '';
+        foreach ($products as $p) {
+            $id = (int)$p['id'];
+            $name = htmlspecialchars($p['name'], ENT_QUOTES, 'UTF-8');
+            $tag = htmlspecialchars($p['tag'], ENT_QUOTES, 'UTF-8');
+            $platform = htmlspecialchars($p['platform_name'], ENT_QUOTES, 'UTF-8');
+            $url = htmlspecialchars($p['external_url'], ENT_QUOTES, 'UTF-8');
+            $price = number_format((float)$p['price'], 2);
+
+            $rowsHtml .= <<<HTML
+            <tr class="hover:bg-amber-50/40 transition">
+                <td class="py-3 px-3 sm:px-4 font-mono font-bold text-stone-600">#{$id}</td>
+                <td class="py-3 px-3 sm:px-4 font-bold text-[#611B10]">
+                    {$name}
+                    <span class="block text-[10px] text-stone-500 font-normal">{$tag}</span>
+                </td>
+                <td class="py-3 px-3 sm:px-4 font-bold">₹{$price}</td>
+                <td class="py-3 px-3 sm:px-4">
+                    <span class="px-2.5 py-0.5 rounded-full bg-[#D4A853]/20 text-[#611B10] text-[10px] font-bold">{$platform}</span>
+                </td>
+                <td class="py-3 px-3 sm:px-4 max-w-xs truncate text-[11px] font-mono">
+                    <a href="{$url}" target="_blank" class="text-sky-700 hover:underline truncate block">{$url}</a>
+                </td>
+                <td class="py-3 px-3 sm:px-4 text-right">
+                    <a href="/mc-desk/products" class="px-3 py-1 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white rounded-lg text-xs font-semibold transition">
+                        Manage
+                    </a>
+                </td>
+            </tr>
+HTML;
+        }
+
         $html = <<<HTML
 <!DOCTYPE html>
 <html lang="en">
@@ -41,43 +82,56 @@ class DashboardController
         .font-serif { font-family: 'Playfair Display', serif; }
     </style>
 </head>
-<body class="text-[#3a0e07] flex min-h-screen">
+<body class="text-[#3a0e07] flex flex-col md:flex-row min-h-screen">
 
-    <!-- Sidebar -->
-    <aside class="w-64 bg-[#611B10] text-[#FAF5EC] flex flex-col justify-between shrink-0 shadow-xl">
+    <!-- Mobile Top Header Bar -->
+    <div class="md:hidden bg-[#611B10] text-[#FAF5EC] px-4 py-3 flex items-center justify-between shadow-md sticky top-0 z-40">
+        <div class="flex items-center space-x-2.5">
+            <div class="w-8 h-8 rounded-xl bg-[#1C3822] border border-[#D4A853]/40 flex items-center justify-center p-1">
+                <img src="/images/logo_gold.webp" alt="Logo" class="w-full h-full object-contain">
+            </div>
+            <span class="font-serif font-bold text-sm tracking-wider text-white">MILLACOCO</span>
+        </div>
+        <button onclick="toggleMobileSidebar()" class="p-2 rounded-lg bg-white/10 text-[#D4A853] hover:text-white focus:outline-none">
+            <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+    </div>
+
+    <!-- Backdrop for Mobile Drawer -->
+    <div id="mobile-sidebar-backdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden transition-opacity"></div>
+
+    <!-- Responsive Sidebar (Slide-over on mobile, sticky on desktop) -->
+    <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-[#611B10] text-[#FAF5EC] flex flex-col justify-between shrink-0 shadow-2xl transform -translate-x-full md:translate-x-0 md:static transition-transform duration-300">
         <div>
             <!-- Brand Badge -->
-            <div class="p-6 border-b border-[#D4A853]/20 flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-[#1C3822] border border-[#D4A853]/40 flex items-center justify-center p-1.5 shadow">
-                    <img src="/images/logo_gold.png" alt="Logo" class="w-full h-full object-contain">
+            <div class="p-6 border-b border-[#D4A853]/20 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-[#1C3822] border border-[#D4A853]/40 flex items-center justify-center p-1.5 shadow">
+                        <img src="/images/logo_gold.webp" alt="Logo" class="w-full h-full object-contain">
+                    </div>
+                    <div>
+                        <h1 class="font-serif font-bold text-lg tracking-wider text-white">MILLACOCO</h1>
+                        <span class="text-[9px] tracking-widest text-[#D4A853] uppercase block">Admin Control</span>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="font-serif font-bold text-lg tracking-wider text-white">MILLACOCO</h1>
-                    <span class="text-[9px] tracking-widest text-[#D4A853] uppercase block">Admin Control</span>
-                </div>
+                <button onclick="toggleMobileSidebar()" class="md:hidden text-stone-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
             </div>
 
-            <!-- Navigation Links -->
+            <!-- Focused Navigation Links -->
             <nav class="p-4 space-y-1.5 text-xs font-semibold">
                 <a href="/mc-desk" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-white/10 text-[#D4A853] transition">
                     <i class="fa-solid fa-chart-pie w-4"></i>
                     <span>Dashboard</span>
                 </a>
                 <a href="/mc-desk/products" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
-                    <i class="fa-solid fa-bottle-droplet w-4"></i>
-                    <span>Products & Inventory</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square w-4"></i>
+                    <span>Marketplace Redirects</span>
                 </a>
-                <a href="/mc-desk/orders" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
-                    <i class="fa-solid fa-cart-flatbed w-4"></i>
-                    <span>Orders & Dispatch</span>
-                </a>
-                <a href="/mc-desk/agents" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
-                    <i class="fa-solid fa-user-tie w-4"></i>
-                    <span>Agents & Partners</span>
-                </a>
-                <a href="/mc-desk/documents" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
-                    <i class="fa-solid fa-file-shield w-4"></i>
-                    <span>Document Types</span>
+                <a href="/" target="_blank" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
+                    <i class="fa-solid fa-store w-4"></i>
+                    <span>View Public Storefront ↗</span>
                 </a>
             </nav>
         </div>
@@ -97,88 +151,73 @@ class DashboardController
     </aside>
 
     <!-- Main Content Area -->
-    <main class="flex-1 p-8 overflow-y-auto">
-        <header class="flex items-center justify-between mb-8 pb-4 border-b border-[#D4A853]/20">
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+        <header class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 pb-4 border-b border-[#D4A853]/20 gap-3">
             <div>
-                <h2 class="font-serif text-2xl font-bold text-[#611B10]">Executive Overview</h2>
-                <p class="text-xs text-[#611B10]/70 mt-0.5">Real-time store metrics and Kerala copra processing updates.</p>
+                <h2 class="font-serif text-xl sm:text-2xl font-bold text-[#611B10]">Showcase & Redirects Hub</h2>
+                <p class="text-xs text-[#611B10]/70 mt-0.5">Manage public product presentation and outbound e-commerce destination links.</p>
             </div>
             <div class="flex items-center space-x-3">
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
-                    Slim 4 Micro Engine Active
+                    Showcase Catalog Live
                 </span>
             </div>
         </header>
 
-        <!-- Metrics Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-            <div class="bg-white p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
+        <!-- Redirection & Catalog Metric Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mb-6 sm:mb-8">
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-semibold text-[#611B10]/70">Today's Revenue</span>
-                    <i class="fa-solid fa-indian-rupee-sign text-[#D4A853]"></i>
+                    <span class="text-xs font-semibold text-[#611B10]/70">Listed Products</span>
+                    <i class="fa-solid fa-bottle-droplet text-[#D4A853]"></i>
                 </div>
-                <div class="text-2xl font-bold text-[#611B10] mt-2">₹18,450</div>
-                <div class="text-[10px] text-emerald-600 font-semibold mt-1">↑ 14% vs yesterday</div>
+                <div class="text-2xl font-bold text-[#611B10] mt-2">{$totalProducts} Sizes</div>
+                <div class="text-[10px] text-emerald-600 font-semibold mt-1">{$activeProducts} currently active</div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-semibold text-[#611B10]/70">Active Orders</span>
-                    <i class="fa-solid fa-box text-[#D4A853]"></i>
+                    <span class="text-xs font-semibold text-[#611B10]/70">Primary Channel</span>
+                    <i class="fa-brands fa-amazon text-[#D4A853]"></i>
                 </div>
-                <div class="text-2xl font-bold text-[#611B10] mt-2">24</div>
-                <div class="text-[10px] text-[#611B10]/60 font-semibold mt-1">6 awaiting dispatch</div>
+                <div class="text-2xl font-bold text-[#611B10] mt-2">Amazon India</div>
+                <div class="text-[10px] text-stone-500 font-semibold mt-1">{$amazonCount} direct links configured</div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-semibold text-[#611B10]/70">Active Agents</span>
-                    <i class="fa-solid fa-handshake text-[#D4A853]"></i>
+                    <span class="text-xs font-semibold text-[#611B10]/70">Direct Inquiries</span>
+                    <i class="fa-brands fa-whatsapp text-emerald-600"></i>
                 </div>
-                <div class="text-2xl font-bold text-[#611B10] mt-2">12</div>
-                <div class="text-[10px] text-emerald-600 font-semibold mt-1">All verified</div>
-            </div>
-
-            <div class="bg-white p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
-                <div class="flex items-center justify-between">
-                    <span class="text-xs font-semibold text-[#611B10]/70">Oil Inventory</span>
-                    <i class="fa-solid fa-cubes-stacked text-[#D4A853]"></i>
-                </div>
-                <div class="text-2xl font-bold text-[#611B10] mt-2">1,420 L</div>
-                <div class="text-[10px] text-[#611B10]/60 font-semibold mt-1">Cold-pressed batch Kozhikode</div>
+                <div class="text-xl sm:text-2xl font-bold text-[#611B10] mt-2 break-all sm:break-normal">+91 80897 57815</div>
+                <div class="text-[10px] text-stone-500 font-semibold mt-1">WhatsApp business desk</div>
             </div>
         </div>
 
-        <!-- Recent Activity Table -->
-        <div class="bg-white rounded-2xl border border-[#D4A853]/30 p-6 shadow-xs">
-            <h3 class="font-serif font-bold text-base text-[#611B10] mb-4">Latest Store Orders</h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs">
+        <!-- Active Marketplace Redirects Table -->
+        <div class="bg-white rounded-2xl sm:rounded-3xl border border-[#D4A853]/30 p-4 sm:p-6 shadow-xs">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-serif font-bold text-sm sm:text-base text-[#611B10]">Active Marketplace Redirect Links</h3>
+                <a href="/mc-desk/products" class="text-xs font-bold text-[#611B10] hover:text-[#782315] flex items-center gap-1">
+                    <span>Edit Destination URLs</span>
+                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </a>
+            </div>
+            <div class="overflow-x-auto -mx-4 sm:mx-0">
+                <table class="w-full text-left text-xs min-w-[600px] sm:min-w-full">
                     <thead>
                         <tr class="border-b border-[#D4A853]/20 text-[#611B10]/60 font-bold uppercase tracking-wider text-[10px]">
-                            <th class="py-3 px-4">Order ID</th>
-                            <th class="py-3 px-4">Customer</th>
-                            <th class="py-3 px-4">Items</th>
-                            <th class="py-3 px-4">Total</th>
-                            <th class="py-3 px-4">Status</th>
+                            <th class="py-3 px-3 sm:px-4">ID</th>
+                            <th class="py-3 px-3 sm:px-4">Product</th>
+                            <th class="py-3 px-3 sm:px-4">Listed Price</th>
+                            <th class="py-3 px-3 sm:px-4">Destination</th>
+                            <th class="py-3 px-3 sm:px-4">Marketplace URL</th>
+                            <th class="py-3 px-3 sm:px-4 text-right">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-stone-100">
-                        <tr class="hover:bg-amber-50/40">
-                            <td class="py-3 px-4 font-mono font-bold text-[#611B10]">#MC-1082</td>
-                            <td class="py-3 px-4 font-medium">Anand Menon (Kochi)</td>
-                            <td class="py-3 px-4 text-stone-600">1L Classic Bottle × 2</td>
-                            <td class="py-3 px-4 font-bold">₹580.00</td>
-                            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">Paid</span></td>
-                        </tr>
-                        <tr class="hover:bg-amber-50/40">
-                            <td class="py-3 px-4 font-mono font-bold text-[#611B10]">#MC-1081</td>
-                            <td class="py-3 px-4 font-medium">Divya Nambiar (Calicut)</td>
-                            <td class="py-3 px-4 text-stone-600">Virgin Hair Oil × 1, Duo Pack × 1</td>
-                            <td class="py-3 px-4 font-bold">₹910.00</td>
-                            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold">Processing</span></td>
-                        </tr>
+                        {$rowsHtml}
                     </tbody>
                 </table>
             </div>
@@ -186,6 +225,18 @@ class DashboardController
     </main>
 
     <script>
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('admin-sidebar');
+            const backdrop = document.getElementById('mobile-sidebar-backdrop');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                backdrop.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                backdrop.classList.add('hidden');
+            }
+        }
+
         function logoutAdmin() {
             document.cookie = "admin_jwt=; Path=/mc-desk; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
             window.location.href = '/mc-desk/login';

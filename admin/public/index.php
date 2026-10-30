@@ -87,6 +87,7 @@ $app->group('', function ($group) use ($dashboardController, $productController)
     $group->get('', [$dashboardController, 'index']);
     $group->get('/', [$dashboardController, 'index']);
     $group->get('/dashboard', [$dashboardController, 'index']);
+    $group->get('/products', [$productController, 'renderProductsPage']);
     $group->get('/api/admin/products', [$productController, 'index']);
     $group->put('/api/admin/products/{id}', [$productController, 'update']);
 })->add(new JwtAuthMiddleware($settings['jwt']));
