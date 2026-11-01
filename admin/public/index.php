@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Millacoco\Admin\Controllers\AuthController;
 use Millacoco\Admin\Controllers\DashboardController;
 use Millacoco\Admin\Controllers\ProductController;
+use Millacoco\Admin\Controllers\SettingsController;
 use Millacoco\Admin\Middleware\JwtAuthMiddleware;
 use Millacoco\Admin\Middleware\RateLimitMiddleware;
 use Millacoco\Admin\Middleware\SecurityHeadersMiddleware;
@@ -63,14 +64,17 @@ $errorMiddleware->setErrorHandler(
 // Initialize DB (Lazy-loaded PDO instance)
 $db = Database::getConnection($settings['db']);
 
-// Auth & Product Controllers
+// Auth, Product, & Settings Controllers
 $authController = new AuthController($db, $settings);
 $dashboardController = new DashboardController($db);
 $productController = new ProductController($db);
+$settingsController = new SettingsController($db);
 
 // --- Public Routes ---
 // Endpoint for public storefront to fetch current active products & external URLs
 $app->get('/api/products', [$productController, 'getPublicProducts']);
+// Endpoint for public storefront to fetch current site copy & contact settings
+$app->get('/api/settings', [$settingsController, 'getPublicSettings']);
 
 // Rate limit login endpoint: max 5 login attempts per 60 seconds per IP
 $app->post('/api/login', [$authController, 'login'])
@@ -83,13 +87,17 @@ $app->get('/login', function (Request $request, Response $response) {
 });
 
 // --- Protected Admin Routes (Guarded by JwtAuthMiddleware) ---
-$app->group('', function ($group) use ($dashboardController, $productController) {
+$app->group('', function ($group) use ($dashboardController, $productController, $settingsController) {
     $group->get('', [$dashboardController, 'index']);
     $group->get('/', [$dashboardController, 'index']);
     $group->get('/dashboard', [$dashboardController, 'index']);
     $group->get('/products', [$productController, 'renderProductsPage']);
     $group->get('/api/admin/products', [$productController, 'index']);
     $group->put('/api/admin/products/{id}', [$productController, 'update']);
+    
+    // Content & Settings Management
+    $group->get('/settings', [$settingsController, 'renderSettingsPage']);
+    $group->post('/api/admin/settings', [$settingsController, 'updateSettings']);
 })->add(new JwtAuthMiddleware($settings['jwt']));
 
 $app->run();

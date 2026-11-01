@@ -67,9 +67,9 @@
     <link rel="shortcut icon" href="favicon.ico?v=2">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="script.js?v=3.5" defer></script>
+    <script src="script.min.js?v=3.5" defer></script>
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=3.5">
+    <link rel="stylesheet" href="style.min.css?v=3.5">
     <style>
         /* Immediate Header Collapse & Stage Motion (Guaranteed Zero-Cache Lag) */
         #main-header {
@@ -350,7 +350,7 @@
             </div>
         </section>
 
-        <!-- SHOP BY CATEGORY / PRODUCT SIZES SECTION -->
+<!-- SHOP BY CATEGORY / PRODUCT SIZES SECTION -->
         <section id="categories" class="mb-16 scroll-reveal">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
                 <div>
@@ -501,12 +501,12 @@
                             <span id="combo-carousel-counter" class="text-xs font-mono text-[#D4A853] bg-white/10 px-2.5 py-0.5 rounded-full border border-white/15">01 / 03</span>
                         </div>
 
-                        <h2 id="combo-title" class="text-3xl sm:text-4xl lg:text-5xl font-serif leading-tight min-h-[4.5rem] transition-opacity duration-300 text-white">
+                        <h2 id="combo-title" class="text-3xl sm:text-4xl lg:text-5xl font-serif leading-tight h-[6.5rem] sm:h-[7.5rem] lg:h-[8.5rem] flex flex-col justify-center transition-opacity duration-300 text-white">
                             Healthy Kitchen.<br>
                             <span class="font-handwriting font-normal text-[#D4A853] text-4xl sm:text-5xl">Happy Family.</span>
                         </h2>
 
-                        <p id="combo-desc" class="text-xs sm:text-sm text-stone-200/90 max-w-md leading-relaxed min-h-[2.5rem] transition-opacity duration-300">
+                        <p id="combo-desc" class="text-xs sm:text-sm text-stone-200/90 max-w-md leading-relaxed h-[3.8rem] sm:h-[4.2rem] flex items-center transition-opacity duration-300">
                             1 Ltr Classic Cooking Oil + Virgin Scalp &amp; Skincare Oil with complimentary express delivery across India.
                         </p>
 
@@ -544,7 +544,101 @@
             </div>
         </section>
 
-        <!-- FLAGSHIP BOTTLE SHOWCASE WITH SCROLL SCRUB SEQUENCE -->
+        <!-- BRAND QUALITIES & PRODUCT EXCELLENCE SECTION (Full Bleed Edge-to-Edge) -->
+        <section id="brand-qualities" class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-white border-y border-[#D4A853]/25 py-12 sm:py-16 my-10 sm:my-14 shadow-xs">
+            <div class="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">
+                <!-- Section Header -->
+                <div class="purity-header-reveal text-center max-w-xl mx-auto mb-10 sm:mb-12">
+                    <div class="inline-flex items-center space-x-2 text-[10px] sm:text-xs tracking-widest text-[#611B10] font-bold uppercase mb-2">
+                        <span class="w-6 sm:w-10 h-[1px] bg-[#D4A853]"></span>
+                        <span>UNCOMPROMISING PURITY</span>
+                        <span class="w-6 sm:w-10 h-[1px] bg-[#D4A853]"></span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-serif text-sage-900 font-bold leading-tight">
+                        Crafted With Single-Origin Heritage
+                    </h2>
+                </div>
+
+                <!-- 6 Organic Quality Cards Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-6 lg:gap-6 items-start">
+                    
+                    <!-- 1. Superior Quality -->
+                    <div class="purity-card-blur group flex flex-col items-center text-center">
+                        <div class="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1.5">
+                            <div class="relative w-full h-full overflow-hidden shadow-md border-2 border-[#D4A853]/40 group-hover:border-[#611B10] group-hover:shadow-xl transition-all duration-500 rounded-[64%_36%_60%_40%/42%_64%_36%_58%]">
+                                <img src="images/hero_bottle.webp" alt="Superior Quality Coconut Oil" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                        </div>
+                        <h3 class="mt-4 font-serif font-bold text-xs sm:text-[13px] tracking-wider text-sage-900 uppercase leading-snug">
+                            Superior<br>Quality
+                        </h3>
+                    </div>
+
+                    <!-- 2. Sustainable Packaging -->
+                    <div class="purity-card-blur group flex flex-col items-center text-center">
+                        <div class="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1.5">
+                            <div class="relative w-full h-full overflow-hidden shadow-md border-2 border-[#D4A853]/40 group-hover:border-[#611B10] group-hover:shadow-xl transition-all duration-500 rounded-[38%_62%_35%_65%/62%_38%_65%_35%]">
+                                <img src="images/can_5ltr.webp" alt="Sustainable Packaging Can" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                        </div>
+                        <h3 class="mt-4 font-serif font-bold text-xs sm:text-[13px] tracking-wider text-sage-900 uppercase leading-snug">
+                            Sustainable<br>Packaging
+                        </h3>
+                    </div>
+
+                    <!-- 3. Made From Own Copra -->
+                    <div class="purity-card-blur group flex flex-col items-center text-center">
+                        <div class="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1.5">
+                            <div class="relative w-full h-full overflow-hidden shadow-md border-2 border-[#D4A853]/40 group-hover:border-[#611B10] group-hover:shadow-xl transition-all duration-500 rounded-[58%_42%_68%_32%/45%_58%_42%_55%]">
+                                <img src="images/feat_own_copra.webp" alt="Made From Own Copra" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                        </div>
+                        <h3 class="mt-4 font-serif font-bold text-xs sm:text-[13px] tracking-wider text-sage-900 uppercase leading-snug">
+                            Made From<br>Own Copra
+                        </h3>
+                    </div>
+
+                    <!-- 4. No Chemicals Or Additives -->
+                    <div class="purity-card-blur group flex flex-col items-center text-center">
+                        <div class="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1.5">
+                            <div class="relative w-full h-full overflow-hidden shadow-md border-2 border-[#D4A853]/40 group-hover:border-[#611B10] group-hover:shadow-xl transition-all duration-500 rounded-[40%_60%_34%_66%/64%_40%_60%_36%]">
+                                <img src="images/feat_no_chemicals.webp" alt="No Chemicals Or Preservatives" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                        </div>
+                        <h3 class="mt-4 font-serif font-bold text-xs sm:text-[13px] tracking-wider text-sage-900 uppercase leading-snug">
+                            No Chemicals<br>Or Additives
+                        </h3>
+                    </div>
+
+                    <!-- 5. Handpicked Raw Material 100% Sulphur Free -->
+                    <div class="purity-card-blur group flex flex-col items-center text-center">
+                        <div class="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1.5">
+                            <div class="relative w-full h-full overflow-hidden shadow-md border-2 border-[#D4A853]/40 group-hover:border-[#611B10] group-hover:shadow-xl transition-all duration-500 rounded-[66%_34%_55%_45%/38%_66%_34%_62%]">
+                                <img src="images/feat_sulphur_free.webp" alt="Handpicked 100% Sulphur Free Copra" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                        </div>
+                        <h3 class="mt-4 font-serif font-bold text-xs sm:text-[13px] tracking-wider text-sage-900 uppercase leading-snug">
+                            Handpicked Copra<br>100% Sulphur Free
+                        </h3>
+                    </div>
+
+                    <!-- 6. Geographically Indicated - Kuttiyadi Copra -->
+                    <div class="purity-card-blur group flex flex-col items-center text-center">
+                        <div class="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1.5">
+                            <div class="relative w-full h-full overflow-hidden shadow-md border-2 border-[#D4A853]/40 group-hover:border-[#611B10] group-hover:shadow-xl transition-all duration-500 rounded-[45%_55%_65%_35%/58%_42%_58%_42%]">
+                                <img src="images/feat_kuttiyadi_gi.webp" alt="Geographically Indicated Kuttiyadi Copra" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                        </div>
+                        <h3 class="mt-4 font-serif font-bold text-xs sm:text-[13px] tracking-wider text-sage-900 uppercase leading-snug">
+                            GI Indicated -<br>Kuttiyadi Copra
+                        </h3>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+<!-- FLAGSHIP BOTTLE SHOWCASE WITH SCROLL SCRUB SEQUENCE -->
         <section id="flagship-bottle" class="relative my-8 sm:my-14 h-[260vh]">
             
             <!-- Sticky Showcase Stage -->
@@ -697,7 +791,7 @@
     </div>
 
     <!-- MODERN TESTIMONIALS SECTION (WARM LUXURY LINEN & AMBER GOLD PALETTE) -->
-    <section id="reviews" class="relative w-full py-16 sm:py-24 my-8 overflow-hidden select-none bg-gradient-to-br from-[#FAF5EC] via-[#F6ECE0] to-[#EFE1CC] border-y border-[#D4A853]/20">
+    <section id="reviews" class="relative w-full py-16 sm:py-24 mt-8 mb-0 overflow-hidden select-none bg-gradient-to-br from-[#FAF5EC] via-[#F6ECE0] to-[#EFE1CC] border-t border-[#D4A853]/20">
         
         <!-- Warm Amber Glow Lights -->
         <div class="absolute -top-24 right-1/4 w-96 h-96 bg-[#D4A853]/15 rounded-full blur-3xl pointer-events-none"></div>
@@ -866,72 +960,71 @@
     </section>
 
     <!-- FOOTER & OFFICIAL MILL DETAILS -->
-    <footer id="footer" class="bg-sage-900 text-sage-100 p-8 sm:p-12 lg:p-16 relative overflow-hidden m-0 rounded-none">
+    <footer id="footer" class="bg-sage-900 text-sage-100 pt-10 sm:pt-14 lg:pt-16 pb-24 sm:pb-12 px-5 sm:px-10 lg:px-16 relative overflow-hidden m-0 rounded-none">
         <!-- Botanical Palm Leaves & Floral Pattern fading in from bottom -->
         <div class="footer-botanical" aria-hidden="true"></div>
 
-        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-12 border-b border-sage-800">
+        <div class="max-w-[1440px] mx-auto relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 pb-10 sm:pb-12 border-b border-sage-800">
                 
-                <!-- Official Address & Mill Info (Left-aligned) -->
-                <div class="lg:col-span-5 space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 flex items-center justify-center">
+                <!-- Official Address & Mill Info -->
+                <div class="lg:col-span-5 space-y-4 text-left">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 p-1.5 flex items-center justify-center shrink-0 shadow-inner">
                             <img src="images/logo_gold.webp" alt="Millacoco Logo" class="w-full h-full object-contain">
                         </div>
-                        <h3 class="font-serif text-3xl tracking-[0.2em] font-extrabold text-white uppercase">MILLACOCO</h3>
+                        <div>
+                            <h3 class="font-serif text-2xl sm:text-3xl tracking-[0.2em] font-extrabold text-white uppercase leading-none">
+                                MILLACOCO
+                            </h3>
+                            <span class="block text-[8px] sm:text-[9px] tracking-[0.35em] text-[#D4A853] font-medium uppercase mt-1">
+                                Pure Kerala Coconut Oil
+                            </span>
+                        </div>
                     </div>
-                    <p class="text-xs text-sage-200/90 leading-relaxed max-w-xs">
-                        Puthalampurath Oil Mill, Melur PO, Chengottukavu, Kozhikode, Kerala 673306
+
+                    <p class="text-xs text-sage-200/90 leading-relaxed max-w-sm pt-0.5">
+                        <span data-site-address>Puthalampurath Oil Mill, Melur PO, Chengottukavu, Kozhikode, Kerala 673306</span>
                     </p>
+
                     <div class="text-xs text-sage-300 space-y-2.5 pt-1">
                         <p class="flex items-center">
                             <i class="fa-solid fa-envelope w-5 text-[#D4A853] shrink-0"></i>
-                            <a href="mailto:millacocococonutoil@gmail.com" class="hover:text-white transition no-underline">
-                                millacocococonutoil@gmail.com
+                            <a href="mailto:<span data-site-email>millacocococonutoil@gmail.com</span>" class="hover:text-white transition no-underline break-all">
+                                <span data-site-email>millacocococonutoil@gmail.com</span>
                             </a>
                         </p>
-                        <p class="flex items-center">
-                            <i class="fa-solid fa-phone w-5 text-[#D4A853] shrink-0"></i>
-                            <a href="tel:+918089757815" class="hover:text-white transition no-underline">
-                                +91 80897 57815
+                        <div class="flex flex-wrap items-center gap-2 pt-1">
+                            <a href="tel:<span data-site-phone>+918089757815</span>" class="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full text-white text-xs transition border border-white/10">
+                                <i class="fa-solid fa-phone text-[#D4A853] text-[10px]"></i>
+                                <span><span data-site-phone>+91 80897 57815</span></span>
                             </a>
-                            <span class="text-sage-500 mx-1.5">•</span>
-                            <a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20pure%20Kerala%20coconut%20oil." target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-semibold transition inline-flex items-center gap-1">
-                                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                            <a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20pure%20Kerala%20coconut%20oil." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-emerald-600/30 hover:bg-emerald-600/40 text-emerald-300 px-3 py-1.5 rounded-full text-xs font-medium transition border border-emerald-500/30">
+                                <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                                <span>WhatsApp Us</span>
                             </a>
-                        </p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Footer Quick Links -->
-                <div class="lg:col-span-3 grid grid-cols-2 gap-4 text-xs">
-                    <div class="space-y-3">
-                        <h4 class="font-bold text-white tracking-wider uppercase text-[11px]">Navigation</h4>
-                        <ul class="space-y-2 text-sage-300">
-                            <li><a href="#hero" class="hover:text-white transition">Home</a></li>
-                            <li><a href="/products" class="hover:text-white transition">Shop Products</a></li>
-                            <li><a href="#bestsellers" class="hover:text-white transition">Combo Deals</a></li>
-                            <li><a href="#reviews" class="hover:text-white transition">Customer Reviews</a></li>
-                        </ul>
-                    </div>
-                    <div class="space-y-3">
-                        <h4 class="font-bold text-white tracking-wider uppercase text-[11px]">Customer Care</h4>
-                        <ul class="space-y-2 text-sage-300">
-                            <li><a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20ordering%20pure%20Kerala%20coconut%20oil.%20Could%20you%20please%20share%20details?" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">WhatsApp Order</a></li>
-                            <li><button type="button" onclick="openPolicyModal('shipping')" class="hover:text-white transition text-left cursor-pointer">Express Shipping</button></li>
-                            <li><button type="button" onclick="openPolicyModal('terms')" class="hover:text-white transition text-left cursor-pointer">Terms & Conditions</button></li>
-                        </ul>
-                    </div>
+                <div class="lg:col-span-3 space-y-3 text-xs pt-2 sm:pt-0">
+                    <h4 class="font-bold text-[#D4A853] tracking-widest uppercase text-[11px]">Navigation</h4>
+                    <ul class="space-y-2.5 text-sage-300">
+                        <li><a href="#hero" class="hover:text-white transition flex items-center gap-1.5"><span class="text-[#D4A853]/60 text-[8px]">•</span> Home</a></li>
+                        <li><a href="/products" class="hover:text-white transition flex items-center gap-1.5"><span class="text-[#D4A853]/60 text-[8px]">•</span> Shop Products</a></li>
+                        <li><a href="#bestsellers" class="hover:text-white transition flex items-center gap-1.5"><span class="text-[#D4A853]/60 text-[8px]">•</span> Combo Deals</a></li>
+                        <li><a href="#reviews" class="hover:text-white transition flex items-center gap-1.5"><span class="text-[#D4A853]/60 text-[8px]">•</span> Customer Reviews</a></li>
+                    </ul>
                 </div>
 
                 <!-- Newsletter Subscription Form -->
-                <div class="lg:col-span-4 space-y-3">
-                    <h4 class="font-bold text-white tracking-wider uppercase text-[11px]">Get Fresh Oil Updates</h4>
-                    <p class="text-xs text-sage-200/80">Subscribe to get copra harvest updates and direct mill discount codes.</p>
-                    <form onsubmit="handleSubscribe(event)" class="flex items-center mt-2">
-                        <input type="email" required placeholder="Enter email address" class="w-full bg-sage-800 border border-sage-700 text-white text-xs px-4 py-3 rounded-l-full focus:outline-none focus:border-ambergold-400 placeholder-sage-400">
-                        <button type="submit" class="bg-ambergold-400 hover:bg-ambergold-300 text-sage-900 font-bold text-xs px-5 py-3 rounded-r-full transition shrink-0">
+                <div class="lg:col-span-4 space-y-3 pt-2 sm:pt-0">
+                    <h4 class="font-bold text-[#D4A853] tracking-widest uppercase text-[11px]">Get Fresh Oil Updates</h4>
+                    <p class="text-xs text-sage-200/80 leading-relaxed">Subscribe to get copra harvest updates and direct mill discount codes.</p>
+                    <form onsubmit="handleSubscribe(event)" class="flex items-center mt-3">
+                        <input type="email" required placeholder="Enter email address" class="w-full bg-sage-800/90 border border-sage-700/80 text-white text-xs px-4 py-3 rounded-l-full focus:outline-none focus:border-[#D4A853] placeholder-sage-400 shadow-inner">
+                        <button type="submit" class="bg-[#D4A853] hover:bg-[#c29643] text-[#611B10] font-bold text-xs px-5 py-3 rounded-r-full transition shrink-0 active:scale-95 shadow-sm">
                             Send
                         </button>
                     </form>
@@ -939,10 +1032,10 @@
 
             </div>
 
-            <!-- Copyright -->
-            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-sage-400">
+            <!-- Copyright & Safe Area for Mobile FAB -->
+            <div class="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-center sm:text-left text-[11px] text-sage-400">
                 <p>&copy; 2026 Millacoco Coconut Oil (Puthalampurath Oil Mill). All rights reserved.</p>
-                <p class="mt-2 sm:mt-0">Melur PO, Chengottukavu, Kozhikode, Kerala</p>
+                <p class="text-sage-400/90">Melur PO, Chengottukavu, Kozhikode, Kerala</p>
             </div>
         </div>
     </footer>
@@ -1076,7 +1169,7 @@
                     <h4 class="font-bold text-[#611B10] text-sm mb-1.5 flex items-center gap-2">
                         <i class="fa-solid fa-rotate-left text-[#D4A853]"></i> Instant Bottle Replacement
                     </h4>
-                    <p>If any bottle or container arrives damaged or broken during shipping, share a photo via WhatsApp (+91 80897 57815) within 48 hours for an immediate free replacement dispatch.</p>
+                    <p>If any bottle or container arrives damaged or broken during shipping, share a photo via WhatsApp (<span data-site-phone>+91 80897 57815</span>) within 48 hours for an immediate free replacement dispatch.</p>
                 </div>
 
                 <div class="bg-white/90 p-4 rounded-2xl border border-[#D4A853]/20 shadow-xs">

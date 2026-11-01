@@ -112,9 +112,9 @@
     <link rel="shortcut icon" href="favicon.ico?v=2">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="script.js?v=4.0" defer></script>
+    <script src="script.min.js?v=4.0" defer></script>
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=4.0">
+    <link rel="stylesheet" href="style.min.css?v=4.0">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -218,11 +218,6 @@
                         <span id="fav-counter" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] xs:text-[10px] font-bold w-3.5 h-3.5 xs:w-4 xs:h-4 rounded-full flex items-center justify-center shadow">0</span>
                     </button>
 
-                    <!-- Shopping Cart Button -->
-                    <button id="cart-btn" class="relative w-8 h-8 xs:w-9 xs:h-9 rounded-full bg-white/80 hover:bg-white text-sage-800 transition shadow-sm flex items-center justify-center shrink-0" title="Cart">
-                        <i class="fa-solid fa-bag-shopping text-xs xs:text-sm"></i>
-                        <span id="cart-counter" class="absolute -top-1 -right-1 bg-ambergold-500 text-white text-[9px] xs:text-[10px] font-bold w-3.5 h-3.5 xs:w-4 xs:h-4 rounded-full flex items-center justify-center shadow">0</span>
-                    </button>
 
                     <!-- Mobile Menu Toggle Button -->
                     <button id="mobile-menu-btn" class="lg:hidden w-8 h-8 xs:w-9 xs:h-9 rounded-full bg-white/80 shadow-sm text-sage-800 hover:bg-white transition flex items-center justify-center shrink-0 focus:outline-none" title="Menu">
@@ -286,7 +281,7 @@
             <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                  data-category="cooking" data-price="280" data-rating="4.9" data-title="Millacoco 1 Ltr Kitchen Pouch" data-desc="Easy-pour kitchen spout pack for daily cooking">
                 <div>
-                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                    <div class="relative w-full aspect-square bg-white rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
                         <span class="absolute top-2.5 left-2.5 bg-[#611B10] text-[#D4A853] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             SPOUT POUCH
                         </span>
@@ -305,9 +300,9 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹280.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco 1 Ltr Kitchen Pouch', 280, 'images/product_pouch.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-cart-plus text-xs"></i>
-                    <span>+ Add to Cart</span>
+                <button onclick="redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX1')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <span>Buy</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </button>
             </div>
 
@@ -315,7 +310,7 @@
             <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                  data-category="cooking" data-price="290" data-rating="5.0" data-title="Millacoco 1 Ltr Classic Bottle" data-desc="Daily kitchen staple and body massage bottle">
                 <div>
-                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                    <div class="relative w-full aspect-square bg-white rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
                         <span class="absolute top-2.5 left-2.5 bg-ambergold-500 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             BESTSELLER
                         </span>
@@ -334,9 +329,9 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹290.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco 1 Ltr Classic Bottle', 290, 'images/product_bottle.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-cart-plus text-xs"></i>
-                    <span>+ Add to Cart</span>
+                <button onclick="redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX2')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <span>Buy</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </button>
             </div>
 
@@ -344,7 +339,7 @@
             <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                  data-category="bundles" data-price="570" data-rating="4.8" data-title="Millacoco 2 Ltr Twin Pack" data-desc="Twin pack savings with two 1L bottles">
                 <div>
-                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                    <div class="relative w-full aspect-square bg-white rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
                         <span class="absolute top-2.5 left-2.5 bg-sage-800 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             TWIN VALUE
                         </span>
@@ -363,9 +358,9 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹570.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco 2 Ltr Twin Pack (1L x 2)', 570, 'images/twin_pack.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-cart-plus text-xs"></i>
-                    <span>+ Add to Cart</span>
+                <button onclick="redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX3')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <span>Buy</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </button>
             </div>
 
@@ -373,7 +368,7 @@
             <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                  data-category="bundles" data-price="1390" data-rating="4.9" data-title="Millacoco 5 Ltr Household Can" data-desc="Heavy-duty can for joint families and festive cooking">
                 <div>
-                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                    <div class="relative w-full aspect-square bg-white rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
                         <span class="absolute top-2.5 left-2.5 bg-emerald-700 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             BULK SUPPLY
                         </span>
@@ -392,9 +387,9 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹1,390.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco 5 Ltr Household Can', 1390, 'images/can_5ltr.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-cart-plus text-xs"></i>
-                    <span>+ Add to Cart</span>
+                <button onclick="redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX4')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <span>Buy</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </button>
             </div>
 
@@ -402,7 +397,7 @@
             <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                  data-category="wellness" data-price="320" data-rating="5.0" data-title="Millacoco Virgin Hair & Face Oil" data-desc="Deep scalp nourishment and anti-aging face glow">
                 <div>
-                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                    <div class="relative w-full aspect-square bg-white rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
                         <span class="absolute top-2.5 left-2.5 bg-rose-600 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             WELLNESS
                         </span>
@@ -421,9 +416,9 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹320.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco Virgin Hair & Face Oil', 320, 'images/virgin_oil.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-cart-plus text-xs"></i>
-                    <span>+ Add to Cart</span>
+                <button onclick="redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX5')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <span>Buy</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </button>
             </div>
 
@@ -431,7 +426,7 @@
             <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                  data-category="bundles" data-price="590" data-rating="4.9" data-title="Millacoco Kitchen & Skincare Duo" data-desc="1L Classic Bottle + Virgin Hair Oil duo offer">
                 <div>
-                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                    <div class="relative w-full aspect-square bg-white rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
                         <span class="absolute top-2.5 left-2.5 bg-[#D4A853] text-[#611B10] text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             COMBO OFFER
                         </span>
@@ -450,9 +445,9 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹590.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco Kitchen & Skincare Duo Pack', 590, 'images/combo_duo.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-cart-plus text-xs"></i>
-                    <span>+ Add to Cart</span>
+                <button onclick="redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX6')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <span>Buy</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </button>
             </div>
 
@@ -460,7 +455,7 @@
             <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                  data-category="cooking" data-price="165" data-rating="4.8" data-title="Millacoco 500ml Kitchen Glass Jar" data-desc="Compact table and kitchen glass dispenser">
                 <div>
-                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                    <div class="relative w-full aspect-square bg-white rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
                         <span class="absolute top-2.5 left-2.5 bg-sage-700 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
                             COMPACT
                         </span>
@@ -479,9 +474,9 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹165.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco 500ml Kitchen Glass Jar', 165, 'images/bottle_500ml.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-cart-plus text-xs"></i>
-                    <span>+ Add to Cart</span>
+                <button onclick="redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX7')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <span>Buy</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </button>
             </div>
 
@@ -489,7 +484,7 @@
             <div class="catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                  data-category="cooking" data-price="340" data-rating="5.0" data-title="Millacoco Heritage Bottle (1L)" data-desc="Signature single-press wood expeller milled coconut oil">
                 <div>
-                    <div class="relative w-full aspect-square bg-sage-50 rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                    <div class="relative w-full aspect-square bg-white rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
                         <span class="absolute top-2.5 left-2.5 bg-[#1C3822] text-[#D4A853] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs border border-[#D4A853]/40">
                             SIGNATURE
                         </span>
@@ -508,12 +503,29 @@
                         <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹340.00</p>
                     </div>
                 </div>
-                <button onclick="addToCart('Millacoco Heritage Bottle (1L)', 340, 'images/bottle_1ltr.webp', event)" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-cart-plus text-xs"></i>
-                    <span>+ Add to Cart</span>
+                <button onclick="redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX8')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+                    <span>Buy</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </button>
             </div>
 
+        </div>
+
+        <!-- Infinite Scroll Sentinel & Batch Loading Indicator -->
+        <div id="catalog-infinite-sentinel" class="w-full py-6 flex flex-col items-center justify-center">
+            <!-- Loading indicator spinner shown when fetching next batch -->
+            <div id="catalog-loading-indicator" class="hidden flex items-center space-x-2.5 bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-full border border-[#D4A853]/40 shadow-sm text-xs font-semibold text-[#611B10]">
+                <i class="fa-solid fa-circle-notch fa-spin text-sm text-[#D4A853]"></i>
+                <span>Loading more pure oils...</span>
+            </div>
+            <!-- End of catalog subtle label -->
+            <div id="catalog-end-indicator" class="hidden text-center text-xs text-sage-500 py-3">
+                <span class="inline-flex items-center gap-2">
+                    <span class="w-8 h-[1px] bg-sage-300"></span>
+                    <span>All products loaded</span>
+                    <span class="w-8 h-[1px] bg-sage-300"></span>
+                </span>
+            </div>
         </div>
 
         <!-- Empty search results placeholder -->
@@ -528,64 +540,69 @@
             </button>
         </div>
 
-        <!-- Direct WhatsApp Bulk Assistance Callout -->
-        <section class="bg-gradient-to-r from-[#1C3822] to-[#2E6F40] text-white rounded-3xl p-6 sm:p-10 mb-16 shadow-xl relative overflow-hidden">
-            <div class="absolute -right-12 -top-12 w-64 h-64 rounded-full bg-[#D4A853]/15 blur-2xl pointer-events-none"></div>
-            <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                <div>
-                    <span class="text-[10px] tracking-widest text-[#D4A853] font-bold uppercase block mb-1">
-                        INSTITUTIONAL & BULK SUPPLY
-                    </span>
-                    <h3 class="font-serif text-2xl sm:text-3xl font-bold leading-tight">
-                        Need Custom Quantity or 15L Commercial Tins?
+        <!-- Direct WhatsApp Bulk Assistance Callout (Full-Bleed Edge-to-Edge with Atmospheric Estate Imagery) -->
+        <section class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mb-0 rounded-none py-14 sm:py-20 px-4 sm:px-8 lg:px-16 border-t border-[#D4A853]/40 shadow-2xl relative overflow-hidden bg-[#0D2012]">
+            <!-- Photographic Estate Background with Deep Forest & Gold Gradient Overlay -->
+            <div class="absolute inset-0 z-0 bg-cover bg-center opacity-30 transform scale-105" style="background-image: url('images/hero_slide_harvest.webp');"></div>
+            <div class="absolute inset-0 z-[1] bg-gradient-to-r from-[#0A1A0F]/95 via-[#0E2314]/90 to-[#142E1C]/80"></div>
+            
+            <!-- Botanical Leaf Motif Texture -->
+            <div class="absolute inset-0 z-[2] opacity-15 pointer-events-none" style="background-image: url('images/botanical-pattern.svg'); background-repeat: repeat-x; background-position: bottom center; background-size: 400px 320px;"></div>
+
+            <!-- Ambient Golden Glow Flare -->
+            <div class="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-[#D4A853]/25 blur-3xl pointer-events-none z-[2]"></div>
+            <div class="absolute left-1/3 -bottom-20 w-80 h-80 rounded-full bg-[#2D6A4F]/30 blur-3xl pointer-events-none z-[2]"></div>
+
+            <div class="max-w-[1440px] mx-auto relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+                <div class="space-y-3.5 max-w-2xl">
+                    <div class="inline-flex items-center space-x-2 text-[10px] sm:text-xs tracking-widest text-[#D4A853] font-bold uppercase bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#D4A853]/40 shadow-xs">
+                        <i class="fa-solid fa-industry text-[11px]"></i>
+                        <span>INSTITUTIONAL &amp; BULK SUPPLY • DIRECT FROM MILL</span>
+                    </div>
+
+                    <h3 class="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold leading-tight text-white">
+                        Need Custom Quantity or <span class="text-[#D4A853]">15L Commercial Tins</span>?
                     </h3>
-                    <p class="text-xs sm:text-sm text-white/80 mt-1.5 max-w-xl">
-                        We deliver fresh unrefined copra oil directly to restaurants, Ayurvedic clinics, and catering kitchens across India with wholesale tiered pricing.
+
+                    <p class="text-xs sm:text-sm text-stone-200/90 leading-relaxed font-medium">
+                        We deliver fresh single-press unrefined copra oil directly to Ayurvedic clinics, luxury wellness spas, restaurants, and retail distribution agencies across India with tiered mill-direct pricing.
                     </p>
+
+                    <!-- Trust Micro-Pills -->
+                    <div class="flex flex-wrap items-center gap-2.5 pt-1 text-[11px] text-stone-200">
+                        <span class="inline-flex items-center gap-1.5 bg-black/30 backdrop-blur-xs px-3 py-1 rounded-full border border-white/10">
+                            <i class="fa-solid fa-tags text-[#D4A853]"></i>
+                            <span>Tiered Mill Pricing</span>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 bg-black/30 backdrop-blur-xs px-3 py-1 rounded-full border border-white/10">
+                            <i class="fa-solid fa-box-open text-[#D4A853]"></i>
+                            <span>Food-Grade Sealed Steel Tins</span>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 bg-black/30 backdrop-blur-xs px-3 py-1 rounded-full border border-white/10">
+                            <i class="fa-solid fa-truck-fast text-[#D4A853]"></i>
+                            <span>Direct Dispatch from Kozhikode</span>
+                        </span>
+                    </div>
                 </div>
-                <a href="https://wa.me/918089757815?text=Hello%20Millacoco%2C%20I%20need%20wholesale%20or%20bulk%20supply%20information." target="_blank" class="bg-[#D4A853] hover:bg-white text-[#1C3822] px-6 py-3 rounded-full text-xs sm:text-sm font-bold transition shadow-md flex items-center space-x-2 shrink-0 active:scale-95">
-                    <i class="fa-brands fa-whatsapp text-base"></i>
-                    <span>Talk to Milling Desk</span>
-                </a>
+
+                <!-- Call-to-Action Action Buttons -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 w-full sm:w-auto">
+                    <a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20bulk%20supply%20and%2015L%20commercial%20tins.%20Could%20you%20please%20share%20institutional%20pricing?" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="inline-flex items-center justify-center space-x-2.5 bg-gradient-to-r from-[#D4A853] via-[#e2bb6a] to-[#c29643] hover:brightness-110 text-[#2B1006] px-7 py-3.5 rounded-full text-xs sm:text-sm font-extrabold transition-all duration-300 shadow-xl transform hover:-translate-y-0.5 active:scale-95 border border-[#FFE29A]/50">
+                        <i class="fa-brands fa-whatsapp text-lg text-[#142E1C]"></i>
+                        <span>Talk to Milling Desk</span>
+                    </a>
+                    <a href="tel:+918089757815" 
+                       class="inline-flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/20 text-white px-5 py-3.5 rounded-full text-xs sm:text-sm font-semibold transition border border-white/20 active:scale-95">
+                        <i class="fa-solid fa-phone text-xs text-[#D4A853]"></i>
+                        <span>+91 80897 57815</span>
+                    </a>
+                </div>
             </div>
         </section>
 
-    </div>
-
-    <!-- CART SLIDE-OVER DRAWER -->
-    <div id="cart-drawer" class="fixed inset-0 z-[9999] invisible opacity-0 pointer-events-none transition-all duration-300">
-        <div id="cart-overlay" class="absolute inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-300"></div>
-        <div id="cart-content" class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-[#FAF5EC] shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 border-l border-[#D4A853]/30">
-            <!-- Cart Header -->
-            <div class="p-5 border-b border-sage-200/80 flex items-center justify-between bg-white/60">
-                <div class="flex items-center space-x-2.5">
-                    <i class="fa-solid fa-bag-shopping text-[#611B10]"></i>
-                    <h3 class="font-serif font-bold text-base text-[#611B10]">Your Shopping Bag</h3>
-                </div>
-                <button id="close-cart" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-sage-600 hover:text-sage-900 shadow-xs transition" title="Close">
-                    <i class="fa-solid fa-xmark text-sm"></i>
-                </button>
-            </div>
-
-            <!-- Cart Items Container -->
-            <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
-
-            <!-- Cart Footer & Checkout -->
-            <div class="p-5 border-t border-sage-200/80 bg-white/80 space-y-3">
-                <div class="flex justify-between items-center text-xs text-sage-700">
-                    <span>Shipping Charges:</span>
-                    <span class="text-emerald-700 font-bold">FREE across India</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="font-serif font-bold text-sm text-sage-900">Total Subtotal:</span>
-                    <span id="cart-subtotal" class="price-tag font-bold text-lg text-[#611B10]">₹0.00</span>
-                </div>
-                <button onclick="checkout()" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-serif font-bold text-xs py-3.5 rounded-full transition shadow-md active:scale-95 flex items-center justify-center space-x-2">
-                    <i class="fa-brands fa-whatsapp text-sm"></i>
-                    <span>PROCEED VIA WHATSAPP ORDER</span>
-                </button>
-            </div>
-        </div>
     </div>
 
     <!-- FAVORITES MODAL DRAWER -->
@@ -627,7 +644,7 @@
             </div>
             <div class="relative">
                 <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-sage-400 text-xs"></i>
-                <input type="text" id="search-input" onkeyup="searchProducts()" placeholder="Search sizes, 1L pouch, virgin oil..." class="w-full bg-sage-50 border border-sage-200 rounded-full pl-9 pr-4 py-2 text-xs text-sage-900 focus:outline-none focus:ring-2 focus:ring-sage-700/20">
+                <input type="text" id="search-input" onkeyup="searchProducts()" placeholder="Search sizes, 1L pouch, virgin oil..." class="w-full bg-white border border-sage-200 rounded-full pl-9 pr-4 py-2 text-xs text-sage-900 focus:outline-none focus:ring-2 focus:ring-sage-700/20">
             </div>
             <div id="search-results" class="max-h-60 overflow-y-auto space-y-2 pt-2"></div>
         </div>
@@ -642,72 +659,72 @@
     
 
         <!-- FOOTER & OFFICIAL MILL DETAILS -->
-    <footer id="footer" class="bg-sage-900 text-sage-100 p-8 sm:p-12 lg:p-16 relative overflow-hidden m-0 rounded-none">
+    <!-- FOOTER & OFFICIAL MILL DETAILS -->
+    <footer id="footer" class="bg-sage-900 text-sage-100 pt-10 sm:pt-14 lg:pt-16 pb-24 sm:pb-12 px-5 sm:px-10 lg:px-16 relative overflow-hidden m-0 rounded-none">
         <!-- Botanical Palm Leaves & Floral Pattern fading in from bottom -->
         <div class="footer-botanical" aria-hidden="true"></div>
 
-        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-12 border-b border-sage-800">
+        <div class="max-w-[1440px] mx-auto relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 pb-10 sm:pb-12 border-b border-sage-800">
                 
-                <!-- Official Address & Mill Info (Left-aligned) -->
-                <div class="lg:col-span-5 space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 flex items-center justify-center">
+                <!-- Official Address & Mill Info -->
+                <div class="lg:col-span-5 space-y-4 text-left">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 p-1.5 flex items-center justify-center shrink-0 shadow-inner">
                             <img src="images/logo_gold.webp" alt="Millacoco Logo" class="w-full h-full object-contain">
                         </div>
-                        <h3 class="font-serif text-3xl tracking-[0.2em] font-extrabold text-white uppercase">MILLACOCO</h3>
+                        <div>
+                            <h3 class="font-serif text-2xl sm:text-3xl tracking-[0.2em] font-extrabold text-white uppercase leading-none">
+                                MILLACOCO
+                            </h3>
+                            <span class="block text-[8px] sm:text-[9px] tracking-[0.35em] text-[#D4A853] font-medium uppercase mt-1">
+                                Pure Kerala Coconut Oil
+                            </span>
+                        </div>
                     </div>
-                    <p class="text-xs text-sage-200/90 leading-relaxed max-w-xs">
-                        Puthalampurath Oil Mill, Melur PO, Chengottukavu, Kozhikode, Kerala 673306
+
+                    <p class="text-xs text-sage-200/90 leading-relaxed max-w-sm pt-0.5">
+                        <span data-site-address>Puthalampurath Oil Mill, Melur PO, Chengottukavu, Kozhikode, Kerala 673306</span>
                     </p>
+
                     <div class="text-xs text-sage-300 space-y-2.5 pt-1">
                         <p class="flex items-center">
                             <i class="fa-solid fa-envelope w-5 text-[#D4A853] shrink-0"></i>
-                            <a href="mailto:millacocococonutoil@gmail.com" class="hover:text-white transition no-underline">
-                                millacocococonutoil@gmail.com
+                            <a href="mailto:<span data-site-email>millacocococonutoil@gmail.com</span>" class="hover:text-white transition no-underline break-all">
+                                <span data-site-email>millacocococonutoil@gmail.com</span>
                             </a>
                         </p>
-                        <p class="flex items-center">
-                            <i class="fa-solid fa-phone w-5 text-[#D4A853] shrink-0"></i>
-                            <a href="tel:+918089757815" class="hover:text-white transition no-underline">
-                                +91 80897 57815
+                        <div class="flex flex-wrap items-center gap-2 pt-1">
+                            <a href="tel:<span data-site-phone>+918089757815</span>" class="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full text-white text-xs transition border border-white/10">
+                                <i class="fa-solid fa-phone text-[#D4A853] text-[10px]"></i>
+                                <span><span data-site-phone>+91 80897 57815</span></span>
                             </a>
-                            <span class="text-sage-500 mx-1.5">•</span>
-                            <a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20pure%20Kerala%20coconut%20oil." target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-semibold transition inline-flex items-center gap-1">
-                                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                            <a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20pure%20Kerala%20coconut%20oil." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-emerald-600/30 hover:bg-emerald-600/40 text-emerald-300 px-3 py-1.5 rounded-full text-xs font-medium transition border border-emerald-500/30">
+                                <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                                <span>WhatsApp Us</span>
                             </a>
-                        </p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Footer Quick Links -->
-                <div class="lg:col-span-3 grid grid-cols-2 gap-4 text-xs">
-                    <div class="space-y-3">
-                        <h4 class="font-bold text-white tracking-wider uppercase text-[11px]">Navigation</h4>
-                        <ul class="space-y-2 text-sage-300">
-                            <li><a href="/" class="hover:text-white transition">Home</a></li>
-                            <li><a href="/products" class="hover:text-white transition">Shop Products</a></li>
-                            <li><a href="/#bestsellers" class="hover:text-white transition">Combo Deals</a></li>
-                            <li><a href="/#reviews" class="hover:text-white transition">Customer Reviews</a></li>
-                        </ul>
-                    </div>
-                    <div class="space-y-3">
-                        <h4 class="font-bold text-white tracking-wider uppercase text-[11px]">Customer Care</h4>
-                        <ul class="space-y-2 text-sage-300">
-                            <li><a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20ordering%20pure%20Kerala%20coconut%20oil.%20Could%20you%20please%20share%20details?" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">WhatsApp Order</a></li>
-                            <li><button type="button" onclick="openPolicyModal('shipping')" class="hover:text-white transition text-left cursor-pointer">Express Shipping</button></li>
-                            <li><button type="button" onclick="openPolicyModal('terms')" class="hover:text-white transition text-left cursor-pointer">Terms & Conditions</button></li>
-                        </ul>
-                    </div>
+                <div class="lg:col-span-3 space-y-3 text-xs pt-2 sm:pt-0">
+                    <h4 class="font-bold text-[#D4A853] tracking-widest uppercase text-[11px]">Navigation</h4>
+                    <ul class="space-y-2.5 text-sage-300">
+                        <li><a href="/" class="hover:text-white transition flex items-center gap-1.5"><span class="text-[#D4A853]/60 text-[8px]">•</span> Home</a></li>
+                        <li><a href="/products" class="hover:text-white transition flex items-center gap-1.5"><span class="text-[#D4A853]/60 text-[8px]">•</span> Shop Products</a></li>
+                        <li><a href="/#bestsellers" class="hover:text-white transition flex items-center gap-1.5"><span class="text-[#D4A853]/60 text-[8px]">•</span> Combo Deals</a></li>
+                        <li><a href="/#reviews" class="hover:text-white transition flex items-center gap-1.5"><span class="text-[#D4A853]/60 text-[8px]">•</span> Customer Reviews</a></li>
+                    </ul>
                 </div>
 
                 <!-- Newsletter Subscription Form -->
-                <div class="lg:col-span-4 space-y-3">
-                    <h4 class="font-bold text-white tracking-wider uppercase text-[11px]">Get Fresh Oil Updates</h4>
-                    <p class="text-xs text-sage-200/80">Subscribe to get copra harvest updates and direct mill discount codes.</p>
-                    <form onsubmit="handleSubscribe(event)" class="flex items-center mt-2">
-                        <input type="email" required placeholder="Enter email address" class="w-full bg-sage-800 border border-sage-700 text-white text-xs px-4 py-3 rounded-l-full focus:outline-none focus:border-ambergold-400 placeholder-sage-400">
-                        <button type="submit" class="bg-ambergold-400 hover:bg-ambergold-300 text-sage-900 font-bold text-xs px-5 py-3 rounded-r-full transition shrink-0">
+                <div class="lg:col-span-4 space-y-3 pt-2 sm:pt-0">
+                    <h4 class="font-bold text-[#D4A853] tracking-widest uppercase text-[11px]">Get Fresh Oil Updates</h4>
+                    <p class="text-xs text-sage-200/80 leading-relaxed">Subscribe to get copra harvest updates and direct mill discount codes.</p>
+                    <form onsubmit="handleSubscribe(event)" class="flex items-center mt-3">
+                        <input type="email" required placeholder="Enter email address" class="w-full bg-sage-800/90 border border-sage-700/80 text-white text-xs px-4 py-3 rounded-l-full focus:outline-none focus:border-[#D4A853] placeholder-sage-400 shadow-inner">
+                        <button type="submit" class="bg-[#D4A853] hover:bg-[#c29643] text-[#611B10] font-bold text-xs px-5 py-3 rounded-r-full transition shrink-0 active:scale-95 shadow-sm">
                             Send
                         </button>
                     </form>
@@ -715,10 +732,10 @@
 
             </div>
 
-            <!-- Copyright -->
-            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-sage-400">
+            <!-- Copyright & Safe Area for Mobile FAB -->
+            <div class="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-center sm:text-left text-[11px] text-sage-400">
                 <p>&copy; 2026 Millacoco Coconut Oil (Puthalampurath Oil Mill). All rights reserved.</p>
-                <p class="mt-2 sm:mt-0">Melur PO, Chengottukavu, Kozhikode, Kerala</p>
+                <p class="text-sage-400/90">Melur PO, Chengottukavu, Kozhikode, Kerala</p>
             </div>
         </div>
     </footer>
@@ -759,7 +776,7 @@
                 <h3 class="font-serif font-bold text-lg text-sage-900">Search Products</h3>
                 <button id="close-search" class="text-sage-700 hover:text-sage-900" title="Close Search"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <input type="text" id="search-input" onkeyup="searchProducts()" placeholder="Search 500ml, 1L, 2L, 5L, or Virgin Oil..." class="w-full bg-sage-50 border border-sage-200 text-sage-900 text-xs px-4 py-3 rounded-xl focus:outline-none focus:border-sage-600">
+            <input type="text" id="search-input" onkeyup="searchProducts()" placeholder="Search 500ml, 1L, 2L, 5L, or Virgin Oil..." class="w-full bg-white border border-sage-200 text-sage-900 text-xs px-4 py-3 rounded-xl focus:outline-none focus:border-sage-600">
             <div id="search-results" class="space-y-2 max-h-56 overflow-y-auto text-xs text-sage-800">
                 <p class="text-sage-500 italic">Type above to search Millacoco products...</p>
             </div>
@@ -852,7 +869,7 @@
                     <h4 class="font-bold text-[#611B10] text-sm mb-1.5 flex items-center gap-2">
                         <i class="fa-solid fa-rotate-left text-[#D4A853]"></i> Instant Bottle Replacement
                     </h4>
-                    <p>If any bottle or container arrives damaged or broken during shipping, share a photo via WhatsApp (+91 80897 57815) within 48 hours for an immediate free replacement dispatch.</p>
+                    <p>If any bottle or container arrives damaged or broken during shipping, share a photo via WhatsApp (<span data-site-phone>+91 80897 57815</span>) within 48 hours for an immediate free replacement dispatch.</p>
                 </div>
 
                 <div class="bg-white/90 p-4 rounded-2xl border border-[#D4A853]/20 shadow-xs">

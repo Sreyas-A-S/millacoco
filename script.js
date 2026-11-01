@@ -609,7 +609,7 @@ function renderDynamicProductGrid() {
                         <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹${item.price.toFixed(2)}</p>
                     </div>
                     <button onclick="redirectToPlatform('${item.externalUrl}')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
-                        <span>Buy on ${item.platform}</span>
+                        <span>Buy${item.platform}</span>
                         <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                     </button>
                 </div>
@@ -621,6 +621,84 @@ function renderDynamicProductGrid() {
 
 // Automatically sync from SQLite when DOM loads
 document.addEventListener('DOMContentLoaded', syncProductsFromDatabase);
+
+// Asynchronously sync dynamic site settings (contact info, hero text, about copy) from SQLite
+async function syncSiteSettingsFromDatabase() {
+    try {
+        const res = await fetch('/mc-desk/api/settings');
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json.status !== 'success' || !json.data) return;
+        const s = json.data;
+
+        // 1. Phone number sync across headers, footers & links
+        if (s.contact_phone) {
+            document.querySelectorAll('[data-site-phone]').forEach(el => el.innerText = s.contact_phone);
+            document.querySelectorAll('a[href^="tel:"]').forEach(a => {
+                a.href = 'tel:' + s.contact_phone.replace(/[^0-9+]/g, '');
+            });
+        }
+
+        // 2. Email address sync
+        if (s.contact_email) {
+            document.querySelectorAll('[data-site-email]').forEach(el => el.innerText = s.contact_email);
+            document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
+                a.href = 'mailto:' + s.contact_email;
+            });
+        }
+
+        // 3. Address sync
+        if (s.contact_address) {
+            document.querySelectorAll('[data-site-address]').forEach(el => el.innerText = s.contact_address);
+        }
+
+        // 4. Working hours sync
+        if (s.contact_working_hours) {
+            document.querySelectorAll('[data-site-hours]').forEach(el => el.innerText = s.contact_working_hours);
+        }
+
+        // 5. Google Map Embed Sync
+        if (s.contact_map_embed) {
+            const mapIframe = document.querySelector('iframe[src*="google.com/maps"]');
+            if (mapIframe) mapIframe.src = s.contact_map_embed;
+        }
+
+        // 6. Homepage Hero Copy Sync
+        if (s.home_hero_title) {
+            const heroTitle = document.querySelector('[data-site-hero-title]');
+            if (heroTitle) heroTitle.innerHTML = s.home_hero_title;
+        }
+        if (s.home_hero_subtitle) {
+            const heroSub = document.querySelector('[data-site-hero-subtitle]');
+            if (heroSub) heroSub.innerText = s.home_hero_subtitle;
+        }
+        if (s.home_hero_badge) {
+            const heroBadge = document.querySelector('[data-site-hero-badge]');
+            if (heroBadge) heroBadge.innerText = s.home_hero_badge;
+        }
+
+        // 7. About Us Copy Sync
+        if (s.about_headline) {
+            const aboutHead = document.querySelector('[data-site-about-headline]');
+            if (aboutHead) aboutHead.innerText = s.about_headline;
+        }
+        if (s.about_story) {
+            const aboutStory = document.querySelector('[data-site-about-story]');
+            if (aboutStory) aboutStory.innerText = s.about_story;
+        }
+        if (s.about_mission) {
+            const aboutMission = document.querySelector('[data-site-about-mission]');
+            if (aboutMission) aboutMission.innerText = s.about_mission;
+        }
+    } catch (e) {
+        // Fallback quietly to static HTML content
+        console.debug('Storefront using static default text content.');
+    }
+}
+
+// Automatically sync settings on page load
+document.addEventListener('DOMContentLoaded', syncSiteSettingsFromDatabase);
+
 
 // Global helper to redirect to external e-commerce platform
 function redirectToPlatform(url) {
@@ -707,7 +785,7 @@ function searchHeaderProducts() {
     let html = '<div class="text-[10px] uppercase font-bold text-sage-500 tracking-wider px-1 pb-1">Products Found</div>';
     filtered.forEach(item => {
         html += `
-            <div class="flex items-center justify-between p-2 hover:bg-sage-50/90 rounded-xl transition duration-200 cursor-pointer group" onclick="redirectToPlatform('${item.externalUrl}'); clearHeaderSearch();">
+            <div class="flex items-center justify-between p-2 hover:bg-white/90 rounded-xl transition duration-200 cursor-pointer group" onclick="redirectToPlatform('${item.externalUrl}'); clearHeaderSearch();">
                 <div class="flex items-center space-x-3">
                     <img src="${item.image}" alt="${item.name}" class="w-10 h-10 object-cover rounded-lg border border-sage-200 shadow-xs">
                     <div>
@@ -824,7 +902,7 @@ function searchProducts() {
     let html = '';
     filtered.forEach(item => {
         html += `
-            <div class="flex items-center justify-between p-2.5 hover:bg-sage-50 rounded-xl cursor-pointer transition" onclick="redirectToPlatform('${item.externalUrl}'); document.getElementById('search-modal').classList.add('hidden');">
+            <div class="flex items-center justify-between p-2.5 hover:bg-white rounded-xl cursor-pointer transition" onclick="redirectToPlatform('${item.externalUrl}'); document.getElementById('search-modal').classList.add('hidden');">
                 <div class="flex items-center space-x-3">
                     <img src="${item.image}" alt="${item.name}" class="w-10 h-10 object-cover rounded-lg border border-sage-200">
                     <div>
@@ -1835,10 +1913,220 @@ function initComboCarousel() {
 }
 
 // Dedicated Products Page (products.html) Filtering, Search & Sorting Logic
-function filterCatalog(category, clickedBtn) {
-    const cards = document.querySelectorAll('.catalog-card');
-    const buttons = document.querySelectorAll('.catalog-filter-btn');
 
+// -----------------------------------------------------------------------------
+// Products Page: Batch by Batch Infinite Scroll without Page Refresh
+// -----------------------------------------------------------------------------
+let catalogBatchState = {
+    allProducts: [],
+    currentCategory: 'all',
+    searchQuery: '',
+    sortCriteria: 'featured',
+    pageSize: 4, // Loads products batch by batch (4 items per batch)
+    renderedCount: 0,
+    isLoading: false,
+    observer: null
+};
+
+function renderCatalogProductCard(item) {
+    const card = document.createElement('div');
+    card.className = 'catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between animate-fade-in';
+    card.setAttribute('data-category', item.category || 'cooking');
+    card.setAttribute('data-price', item.price || 0);
+    card.setAttribute('data-rating', item.rating || 5.0);
+    card.setAttribute('data-title', item.name);
+    card.setAttribute('data-desc', item.desc || '');
+
+    const tagBadge = item.tag ? `
+        <span class="absolute top-2.5 left-2.5 bg-[#611B10] text-[#D4A853] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
+            ${item.tag}
+        </span>` : '';
+
+    card.innerHTML = `
+        <div>
+            <div class="relative w-full aspect-square bg-white rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+                ${tagBadge}
+                <button onclick="toggleFavorite(event, '${item.name.replace(/'/g, "\'")}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="${item.name}" title="Save Favorite">
+                    <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
+                </button>
+                <img src="${item.image}" alt="${item.name}" class="product-card-img img-skeleton-pending w-full h-full object-contain" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
+            </div>
+            <div class="px-0.5">
+                <div class="flex items-center space-x-1 text-[#D4A853] text-[10px] mb-1">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <span class="text-sage-500 text-[10px] ml-1">(${item.rating || '5.0'})</span>
+                </div>
+                <h3 class="font-serif font-bold text-xs sm:text-base text-sage-900 leading-snug">${item.name}</h3>
+                <p class="text-[10px] sm:text-xs text-sage-600 my-1 line-clamp-2">${item.desc || ''}</p>
+                <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹${item.price}.00</p>
+            </div>
+        </div>
+        <button onclick="redirectToPlatform('${item.externalUrl || ('https://wa.me/918089757815?text=' + encodeURIComponent('Hello Millacoco, I would like to order ' + item.name))}')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
+            <span>Buy</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+        </button>
+    `;
+    return card;
+}
+
+function getFilteredSortedCatalog() {
+    let list = [...catalogBatchState.allProducts];
+
+    // Filter by Category
+    if (catalogBatchState.currentCategory !== 'all') {
+        list = list.filter(item => (item.category || '').toLowerCase() === catalogBatchState.currentCategory.toLowerCase());
+    }
+
+    // Filter by Search Query
+    if (catalogBatchState.searchQuery) {
+        const q = catalogBatchState.searchQuery;
+        list = list.filter(item => 
+            (item.name || '').toLowerCase().includes(q) ||
+            (item.desc || '').toLowerCase().includes(q) ||
+            (item.tag || '').toLowerCase().includes(q)
+        );
+    }
+
+    // Sort
+    const crit = catalogBatchState.sortCriteria;
+    if (crit === 'price-low') {
+        list.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
+    } else if (crit === 'price-high') {
+        list.sort((a, b) => (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0));
+    } else if (crit === 'rating') {
+        list.sort((a, b) => (parseFloat(b.rating) || 5) - (parseFloat(a.rating) || 5));
+    }
+
+    return list;
+}
+
+function loadNextProductBatch() {
+    if (catalogBatchState.isLoading) return;
+    const grid = document.getElementById('catalog-grid');
+    const loadingIndicator = document.getElementById('catalog-loading-indicator');
+    const endIndicator = document.getElementById('catalog-end-indicator');
+    const emptyMsg = document.getElementById('catalog-empty-msg');
+    if (!grid) return;
+
+    const filteredList = getFilteredSortedCatalog();
+
+    if (filteredList.length === 0) {
+        if (emptyMsg) emptyMsg.classList.remove('hidden');
+        if (loadingIndicator) loadingIndicator.classList.add('hidden');
+        if (endIndicator) endIndicator.classList.add('hidden');
+        return;
+    } else {
+        if (emptyMsg) emptyMsg.classList.add('hidden');
+    }
+
+    if (catalogBatchState.renderedCount >= filteredList.length) {
+        if (loadingIndicator) loadingIndicator.classList.add('hidden');
+        if (endIndicator && filteredList.length > catalogBatchState.pageSize) endIndicator.classList.remove('hidden');
+        return;
+    }
+
+    catalogBatchState.isLoading = true;
+    if (loadingIndicator) loadingIndicator.classList.remove('hidden');
+
+    // Simulate smooth batch streaming (delay 250ms for realistic zero-jump transition)
+    setTimeout(() => {
+        const nextBatch = filteredList.slice(
+            catalogBatchState.renderedCount,
+            catalogBatchState.renderedCount + catalogBatchState.pageSize
+        );
+
+        nextBatch.forEach(item => {
+            const cardEl = renderCatalogProductCard(item);
+            grid.appendChild(cardEl);
+        });
+
+        catalogBatchState.renderedCount += nextBatch.length;
+        catalogBatchState.isLoading = false;
+
+        if (loadingIndicator) loadingIndicator.classList.add('hidden');
+        if (catalogBatchState.renderedCount >= filteredList.length) {
+            if (endIndicator && filteredList.length > catalogBatchState.pageSize) {
+                endIndicator.classList.remove('hidden');
+            }
+        }
+    }, 250);
+}
+
+function resetAndRenderCatalog() {
+    const grid = document.getElementById('catalog-grid');
+    const endIndicator = document.getElementById('catalog-end-indicator');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+    catalogBatchState.renderedCount = 0;
+    if (endIndicator) endIndicator.classList.add('hidden');
+
+    loadNextProductBatch();
+}
+
+function initCatalogInfiniteScroll() {
+    const grid = document.getElementById('catalog-grid');
+    const sentinel = document.getElementById('catalog-infinite-sentinel');
+    if (!grid || !sentinel) return;
+
+    // Harvest initial HTML cards into memory catalog if productCatalog is not yet fully populated
+    if (catalogBatchState.allProducts.length === 0) {
+        const existingCards = Array.from(grid.querySelectorAll('.catalog-card'));
+        if (existingCards.length > 0) {
+            catalogBatchState.allProducts = existingCards.map(card => {
+                const buyBtn = card.querySelector('button[onclick*="redirectToPlatform"]');
+                let externalUrl = '';
+                if (buyBtn) {
+                    const match = buyBtn.getAttribute('onclick').match(/redirectToPlatform\(['"]([^'"]+)['"]\)/);
+                    if (match) externalUrl = match[1];
+                }
+                return {
+                    name: card.getAttribute('data-title') || '',
+                    desc: card.getAttribute('data-desc') || '',
+                    category: card.getAttribute('data-category') || 'cooking',
+                    price: parseFloat(card.getAttribute('data-price')) || 290,
+                    rating: card.getAttribute('data-rating') || '5.0',
+                    tag: card.querySelector('span.absolute')?.textContent.trim() || '',
+                    image: card.querySelector('img')?.getAttribute('src') || 'images/product_bottle.webp',
+                    externalUrl: externalUrl
+                };
+            });
+        } else if (typeof productCatalog !== 'undefined' && productCatalog.length > 0) {
+            catalogBatchState.allProducts = [...productCatalog];
+        }
+    }
+
+    // Clear static markup and render first batch (e.g. 4 products)
+    resetAndRenderCatalog();
+
+    // IntersectionObserver to auto-load next batch when user scrolls near the bottom
+    if ('IntersectionObserver' in window) {
+        catalogBatchState.observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !catalogBatchState.isLoading) {
+                    loadNextProductBatch();
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '200px 0px', // Pre-fetch 200px before bottom
+            threshold: 0.1
+        });
+
+        catalogBatchState.observer.observe(sentinel);
+    } else {
+        // Fallback for older browsers
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 400) {
+                loadNextProductBatch();
+            }
+        }, { passive: true });
+    }
+}
+
+function filterCatalog(category, clickedBtn) {
+    catalogBatchState.currentCategory = category;
+    const buttons = document.querySelectorAll('.catalog-filter-btn');
     if (clickedBtn) {
         buttons.forEach(btn => {
             btn.classList.remove('bg-[#611B10]', 'text-[#D4A853]', 'shadow-sm');
@@ -1847,22 +2135,17 @@ function filterCatalog(category, clickedBtn) {
         clickedBtn.classList.remove('bg-white', 'text-sage-800');
         clickedBtn.classList.add('bg-[#611B10]', 'text-[#D4A853]', 'shadow-sm');
     }
+    resetAndRenderCatalog();
+}
 
-    let visibleCount = 0;
-    cards.forEach(card => {
-        const itemCat = card.getAttribute('data-category');
-        if (category === 'all' || itemCat === category) {
-            card.style.display = 'flex';
-            visibleCount++;
-        } else {
-            card.style.display = 'none';
-        }
-    });
+function sortCatalog(criteria) {
+    catalogBatchState.sortCriteria = criteria;
+    resetAndRenderCatalog();
+}
 
-    const emptyMsg = document.getElementById('catalog-empty-msg');
-    if (emptyMsg) {
-        emptyMsg.classList.toggle('hidden', visibleCount > 0);
-    }
+function searchCatalogProducts(query) {
+    catalogBatchState.searchQuery = query.toLowerCase().trim();
+    resetAndRenderCatalog();
 }
 
 function sortCatalog(criteria) {
@@ -1946,3 +2229,45 @@ document.addEventListener('keydown', (e) => {
 
 
 
+
+// Uncompromising Purity Section: Smooth Header Fade-Up & Sequential Blur-In Items
+function initPuritySectionAnimation() {
+    const section = document.getElementById('brand-qualities');
+    if (!section) return;
+
+    const header = section.querySelector('.purity-header-reveal');
+    const cards = section.querySelectorAll('.purity-card-blur');
+
+    if (!('IntersectionObserver' in window)) {
+        if (header) header.classList.add('is-visible');
+        cards.forEach(c => c.classList.add('is-visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // 1. Smoothly fade up header text
+                if (header) {
+                    header.classList.add('is-visible');
+                }
+
+                // 2. Sequential blur-in animation for each quality card item
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('is-visible');
+                    }, 250 + (index * 130)); // 130ms stagger between each item
+                });
+
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    observer.observe(section);
+}
+
+document.addEventListener('DOMContentLoaded', initPuritySectionAnimation);

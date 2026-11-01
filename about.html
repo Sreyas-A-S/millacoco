@@ -30,9 +30,9 @@
     <link rel="shortcut icon" href="favicon.ico?v=2">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="script.js?v=4.0" defer></script>
+    <script src="script.min.js?v=4.0" defer></script>
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=4.0">
+    <link rel="stylesheet" href="style.min.css?v=4.0">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -129,15 +129,94 @@
             </div>
         </header>
 
-        <!-- HERO BANNER -->
-        <section class="relative bg-gradient-to-br from-[#FAF5EC] via-[#F5ECE0] to-[#EFE1CC] rounded-[2.5rem] p-8 sm:p-14 lg:p-16 mb-12 border border-[#D4A853]/30 shadow-sm overflow-hidden text-center">
-            <span class="font-handwriting text-[#D4A853] text-2xl sm:text-3xl font-semibold">Our Heritage & Craft</span>
-            <h1 class="text-3xl sm:text-5xl font-serif text-[#611B10] font-bold mt-2 mb-4 leading-tight">
-                Rooted in Kuttiyadi Copra,<br>Bottled Pure in Kozhikode
-            </h1>
-            <p class="max-w-2xl mx-auto text-xs sm:text-sm text-sage-800 leading-relaxed font-medium">
-                Millacoco began with a single unshakeable promise: to bring pure, unadulterated cold-pressed coconut oil from Kerala’s lush coastal groves directly to your kitchen and wellness rituals, without additives, sulphur, or shortcuts.
-            </p>
+        <!-- HERO SECTION (Cinematic Kerala Heritage Banner) -->
+        <section id="about-hero" class="relative rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-12 lg:p-16 mb-12 sm:mb-16 border border-white/80 overflow-hidden shadow-lg min-h-[380px] sm:min-h-[440px] flex flex-col justify-between">
+            <!-- Background Image with Fade & Warm Gradient Overlay -->
+            <div class="absolute inset-0 z-0 bg-cover bg-no-repeat bg-[center_right] transform scale-105" style="background-image: url('images/hero_about.webp');"></div>
+            <div class="absolute inset-0 z-[1] bg-gradient-to-r from-[#FAF5EC] via-[#FAF5EC]/90 sm:via-[#FAF5EC]/75 60% via-[#FAF5EC]/30 80% to-transparent pointer-events-none"></div>
+
+            <!-- Top Pill / Status Tag -->
+            <div class="relative z-10 flex flex-wrap items-center justify-between gap-3 mb-4">
+                <div class="inline-flex items-center space-x-2 text-[10px] sm:text-xs tracking-widest text-[#611B10] font-bold uppercase bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#D4A853]/50 shadow-xs">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>AUTHENTIC MALABAR HERITAGE</span>
+                </div>
+
+                <div class="hidden sm:inline-flex items-center space-x-2 text-[11px] font-semibold text-[#611B10] bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#D4A853]/40 shadow-xs">
+                    <i class="fa-solid fa-certificate text-[#D4A853]"></i>
+                    <span>Puthalampurath Oil Mill • Est. Kerala</span>
+                </div>
+            </div>
+
+            <!-- Hero Main Headline Content inside Frosted Glassmorphic Shield Card for 100% Readability -->
+            <div class="relative z-10 max-w-xl my-auto glass-card p-6 sm:p-8 rounded-3xl border border-white/90 shadow-xl space-y-3">
+                <span class="font-handwriting text-[#9C6D18] text-2xl sm:text-4xl font-bold block">
+                    Our Heritage &amp; Craft
+                </span>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#611B10] font-extrabold leading-tight tracking-tight">
+                    Rooted in Kuttiyadi Copra,<br>Bottled Pure in Kozhikode
+                </h1>
+                <p class="text-xs sm:text-sm text-stone-800 leading-relaxed font-semibold">
+                    Millacoco began with an unshakeable promise: to bring unadulterated, single-press cold-milled coconut oil from Kerala’s lush coastal groves directly to your kitchen and wellness rituals, without additives, sulphur, or shortcuts.
+                </p>
+
+                <!-- Quick Action Fast-Pills -->
+                <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-2">
+                    <a href="/products" class="inline-flex items-center space-x-2 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs font-bold px-5 py-2.5 rounded-full shadow-md transition-all duration-200 border border-[#D4A853]/40 transform hover:-translate-y-0.5 active:scale-95">
+                        <span>Explore Products</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                    <a href="/contact" class="inline-flex items-center space-x-2 bg-white/90 hover:bg-white text-sage-900 text-xs font-bold px-5 py-2.5 rounded-full shadow-sm transition-all duration-200 border border-sage-200 transform hover:-translate-y-0.5 active:scale-95">
+                        <i class="fa-solid fa-location-dot text-[#D4A853]"></i>
+                        <span>Visit Our Mill</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4-PILLAR TRUST BADGES (Matching Homepage Excellence Strip) -->
+        <section class="mb-14">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-5">
+                <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/90 shadow-sm flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5">
+                    <div class="w-11 h-11 rounded-xl bg-[#611B10]/10 border border-[#611B10]/20 flex items-center justify-center text-[#611B10] shrink-0 text-base">
+                        <i class="fa-solid fa-sun"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-sage-900 leading-tight">100% Sun-Dried</h4>
+                        <p class="text-[10px] sm:text-[11px] text-sage-600 mt-0.5">Naturally cured in Kerala</p>
+                    </div>
+                </div>
+
+                <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/90 shadow-sm flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-600/10 border border-emerald-600/20 flex items-center justify-center text-emerald-700 shrink-0 text-base">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-sage-900 leading-tight">Zero Sulphur</h4>
+                        <p class="text-[10px] sm:text-[11px] text-sage-600 mt-0.5">No chemical fumigation</p>
+                    </div>
+                </div>
+
+                <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/90 shadow-sm flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5">
+                    <div class="w-11 h-11 rounded-xl bg-[#D4A853]/20 border border-[#D4A853]/40 flex items-center justify-center text-[#611B10] shrink-0 text-base">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-sage-900 leading-tight">GI Tagged Copra</h4>
+                        <p class="text-[10px] sm:text-[11px] text-sage-600 mt-0.5">Famous Kuttiyadi origin</p>
+                    </div>
+                </div>
+
+                <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/90 shadow-sm flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5">
+                    <div class="w-11 h-11 rounded-xl bg-[#1C3822]/10 border border-[#1C3822]/20 flex items-center justify-center text-[#1C3822] shrink-0 text-base">
+                        <i class="fa-solid fa-bottle-droplet"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-sage-900 leading-tight">Cold Expeller Milled</h4>
+                        <p class="text-[10px] sm:text-[11px] text-sage-600 mt-0.5">Nutrients fully retained</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- STORY GRID WITH IMAGERY -->
@@ -148,160 +227,351 @@
                     <span>The Kuttiyadi Legacy</span>
                 </div>
                 <h2 class="text-2xl sm:text-4xl font-serif text-[#611B10] font-bold leading-snug">
-                    Kerala’s Richest Coconuts, Sun-Dried to Perfection
+                    Kerala’s Richest Coconuts, Sun-Dried to Golden Perfection
                 </h2>
-                <p class="text-xs sm:text-sm text-sage-800 leading-relaxed">
-                    Kuttiyadi coconuts are world-renowned for their dense white copra and sweet, intense natural oil content. We partner directly with local farmers who handpick fully matured coconuts, dry them naturally under the Kerala sun, and carefully grade every single piece before milling.
+                <p class="text-xs sm:text-sm text-sage-800 leading-relaxed font-medium">
+                    Kuttiyadi coconuts are celebrated across the Malabar coast for their dense white copra and sweet, intense natural oil profile. We partner directly with generational farmers who harvest fully matured coconuts, dry them naturally under the open Kerala sun, and meticulously inspect every cup before milling.
                 </p>
-                <div class="grid grid-cols-2 gap-4 pt-2">
-                    <div class="bg-white/80 p-4 rounded-2xl border border-[#D4A853]/30 shadow-xs">
-                        <div class="text-xl font-bold text-[#611B10] font-serif">100% Sun-Dried</div>
-                        <p class="text-[11px] text-stone-600 mt-1">Zero smoke, zero chemical bleaching, zero artificial scent.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                    <div class="bg-white/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
+                        <div class="text-xl font-bold text-[#611B10] font-serif flex items-center gap-2">
+                            <i class="fa-solid fa-sun text-[#D4A853] text-sm"></i>
+                            <span>100% Sun-Dried</span>
+                        </div>
+                        <p class="text-[11px] text-stone-600 mt-1.5 leading-relaxed">Zero smoke, zero chemical bleaching, zero artificial scent. Just pure coastal sunshine.</p>
                     </div>
-                    <div class="bg-white/80 p-4 rounded-2xl border border-[#D4A853]/30 shadow-xs">
-                        <div class="text-xl font-bold text-[#611B10] font-serif">Puthalampurath Mill</div>
-                        <p class="text-[11px] text-stone-600 mt-1">Single cold-press expeller extraction in Chengottukavu.</p>
+                    <div class="bg-white/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
+                        <div class="text-xl font-bold text-[#611B10] font-serif flex items-center gap-2">
+                            <i class="fa-solid fa-gear text-[#D4A853] text-sm"></i>
+                            <span>Puthalampurath Mill</span>
+                        </div>
+                        <p class="text-[11px] text-stone-600 mt-1.5 leading-relaxed">Single cold-press expeller extraction unit based at Chengottukavu, Kozhikode.</p>
                     </div>
                 </div>
             </div>
 
             <!-- Heritage Visual Showcase -->
-            <div class="relative rounded-3xl overflow-hidden border border-white/80 shadow-xl aspect-4/3 bg-stone-100">
-                <img src="images/copra_heritage.webp" alt="Kerala Copra Heritage" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
-                    <div class="text-white">
-                        <span class="text-[10px] uppercase font-bold tracking-widest text-[#D4A853]">Authentic Origin</span>
-                        <h4 class="font-serif text-lg font-bold">Puthalampurath Oil Mill, Melur PO, Kozhikode</h4>
+            <div class="relative rounded-3xl overflow-hidden border border-white/80 shadow-xl aspect-4/3 bg-stone-100 group">
+                <img src="images/copra_heritage.webp" alt="Kerala Copra Heritage" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-6 sm:p-8">
+                    <div class="text-white space-y-1">
+                        <span class="inline-block text-[10px] uppercase font-bold tracking-widest text-[#D4A853] bg-black/40 px-2.5 py-1 rounded-full backdrop-blur-xs">Authentic Origin</span>
+                        <h4 class="font-serif text-lg sm:text-xl font-bold">Puthalampurath Oil Mill, Melur PO, Kozhikode</h4>
+                        <p class="text-xs text-white/80">Generational milling tradition preserving the real aroma of Malabar coconut oil.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3 CORE PILLARS -->
+        <!-- 4-STEP PRODUCTION JOURNEY (From Grove to Bottle) -->
+        <section class="mb-16 sm:mb-20">
+            <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+                <div class="inline-flex items-center space-x-2 text-[10px] sm:text-xs tracking-widest text-[#611B10] font-bold uppercase mb-2 bg-[#611B10]/10 px-3.5 py-1 rounded-full border border-[#611B10]/20">
+                    <i class="fa-solid fa-seedling"></i>
+                    <span>CRAFTED THE TRADITIONAL WAY</span>
+                </div>
+                <h3 class="text-2xl sm:text-4xl font-serif text-[#611B10] font-bold leading-tight">
+                    From Kerala Groves to Your Kitchen
+                </h3>
+                <p class="text-xs sm:text-sm text-sage-800 mt-2 max-w-lg mx-auto">
+                    Four rigorous, chemical-free steps that safeguard every drop of natural aroma, high Lauric acid, and pure edible nutrition.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Step 1 -->
+                <div class="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 border border-[#D4A853]/30 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-serif text-3xl font-extrabold text-[#D4A853]/60 group-hover:text-[#D4A853] transition-colors">01</span>
+                            <div class="w-12 h-12 rounded-2xl bg-[#611B10]/10 text-[#611B10] flex items-center justify-center text-lg border border-[#611B10]/20">
+                                <i class="fa-solid fa-tree"></i>
+                            </div>
+                        </div>
+                        <h4 class="font-serif font-bold text-base text-[#611B10] leading-snug">Single-Origin Harvest</h4>
+                        <p class="text-xs text-stone-600 mt-2.5 leading-relaxed">
+                            Hand-selected from mature coconut palms grown in the coastal Kuttiyadi belt, prized for high kernel oil density.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-stone-100 flex items-center gap-1.5 text-[10px] font-bold text-emerald-700">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Generational Groves</span>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 border border-[#D4A853]/30 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-serif text-3xl font-extrabold text-[#D4A853]/60 group-hover:text-[#D4A853] transition-colors">02</span>
+                            <div class="w-12 h-12 rounded-2xl bg-[#D4A853]/20 text-[#611B10] flex items-center justify-center text-lg border border-[#D4A853]/30">
+                                <i class="fa-solid fa-sun"></i>
+                            </div>
+                        </div>
+                        <h4 class="font-serif font-bold text-base text-[#611B10] leading-snug">Natural Sun Curing</h4>
+                        <p class="text-xs text-stone-600 mt-2.5 leading-relaxed">
+                            Copra cups dried under the tropical Kerala sun on raised wooden racks. Zero sulphur fumigation or chemical bleaching.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-stone-100 flex items-center gap-1.5 text-[10px] font-bold text-emerald-700">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>100% Sulphur Free</span>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 border border-[#D4A853]/30 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-serif text-3xl font-extrabold text-[#D4A853]/60 group-hover:text-[#D4A853] transition-colors">03</span>
+                            <div class="w-12 h-12 rounded-2xl bg-[#1C3822]/10 text-[#1C3822] flex items-center justify-center text-lg border border-[#1C3822]/20">
+                                <i class="fa-solid fa-gears"></i>
+                            </div>
+                        </div>
+                        <h4 class="font-serif font-bold text-base text-[#611B10] leading-snug">Slow Expeller Pressing</h4>
+                        <p class="text-xs text-stone-600 mt-2.5 leading-relaxed">
+                            Milled at ambient low temperatures below 45°C to protect delicate antioxidants, vitamins, and signature coconut fragrance.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-stone-100 flex items-center gap-1.5 text-[10px] font-bold text-emerald-700">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>First Cold Milled</span>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 border border-[#D4A853]/30 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-serif text-3xl font-extrabold text-[#D4A853]/60 group-hover:text-[#D4A853] transition-colors">04</span>
+                            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-700 flex items-center justify-center text-lg border border-amber-500/20">
+                                <i class="fa-solid fa-filter"></i>
+                            </div>
+                        </div>
+                        <h4 class="font-serif font-bold text-base text-[#611B10] leading-snug">Cotton Micro-Filtration</h4>
+                        <p class="text-xs text-stone-600 mt-2.5 leading-relaxed">
+                            Double natural sedimentation followed by organic cotton filtering for crystal clarity without chemical deodorization.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-stone-100 flex items-center gap-1.5 text-[10px] font-bold text-emerald-700">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Chemical-Free Finish</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4 AUTHENTIC HERITAGE PILLARS WITH PHOTOGRAPHY -->
+        <section class="mb-16 sm:mb-20">
+            <div class="text-center max-w-xl mx-auto mb-10">
+                <div class="inline-flex items-center space-x-2 text-[10px] sm:text-xs tracking-widest text-[#611B10] font-bold uppercase mb-2">
+                    <span class="w-6 sm:w-10 h-[1px] bg-[#D4A853]"></span>
+                    <span>OUR UNCOMPROMISED PROMISE</span>
+                    <span class="w-6 sm:w-10 h-[1px] bg-[#D4A853]"></span>
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-serif text-[#611B10] font-bold">The Four Pillars of Millacoco</h3>
+                <p class="text-xs sm:text-sm text-sage-700 mt-1.5">Pure, unrefined edible grade coconut oil you can trust blindly.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-3xl p-5 border border-[#D4A853]/30 shadow-sm hover:shadow-lg transition-all text-center flex flex-col items-center">
+                    <div class="w-28 h-28 mb-3 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-1.5 border border-stone-100 shadow-inner">
+                        <img src="images/feat_kuttiyadi_gi.webp" alt="GI Tagged Kuttiyadi Copra" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <h4 class="font-serif font-bold text-base text-[#611B10]">GI Kuttiyadi Copra</h4>
+                    <p class="text-xs text-stone-600 mt-1.5 leading-relaxed">
+                        Famous geographically indicated coastal variety renowned for naturally rich kernel sweetness and high oil density.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-3xl p-5 border border-[#D4A853]/30 shadow-sm hover:shadow-lg transition-all text-center flex flex-col items-center">
+                    <div class="w-28 h-28 mb-3 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-1.5 border border-stone-100 shadow-inner">
+                        <img src="images/feat_own_copra.webp" alt="Own Mill Extraction" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <h4 class="font-serif font-bold text-base text-[#611B10]">In-House Milled</h4>
+                    <p class="text-xs text-stone-600 mt-1.5 leading-relaxed">
+                        Milled under strict supervision at Puthalampurath Oil Mill, Chengottukavu. Complete control from copra to bottle.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-3xl p-5 border border-[#D4A853]/30 shadow-sm hover:shadow-lg transition-all text-center flex flex-col items-center">
+                    <div class="w-28 h-28 mb-3 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-1.5 border border-stone-100 shadow-inner">
+                        <img src="images/feat_sulphur_free.webp" alt="100% Sulphur Free" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <h4 class="font-serif font-bold text-base text-[#611B10]">Zero Sulphur Added</h4>
+                    <p class="text-xs text-stone-600 mt-1.5 leading-relaxed">
+                        Cured exclusively under natural sunlight. Free from toxic sulfur dioxide preservatives and chemical smoke.
+                    </p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white rounded-3xl p-5 border border-[#D4A853]/30 shadow-sm hover:shadow-lg transition-all text-center flex flex-col items-center">
+                    <div class="w-28 h-28 mb-3 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-1.5 border border-stone-100 shadow-inner">
+                        <img src="images/feat_no_chemicals.webp" alt="Chemical Free and Edible" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <h4 class="font-serif font-bold text-base text-[#611B10]">100% Pure &amp; Edible</h4>
+                    <p class="text-xs text-stone-600 mt-1.5 leading-relaxed">
+                        Safe for cooking, newborn baby massage, skin moisturization, and traditional Ayurvedic wellness routines.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3 CORE PILLARS (Glassmorphic Cards) -->
         <section class="mb-16">
             <div class="text-center max-w-xl mx-auto mb-10">
+                <div class="inline-flex items-center space-x-2 text-[10px] sm:text-xs tracking-widest text-[#611B10] font-bold uppercase mb-1">
+                    <span class="w-6 sm:w-10 h-[1px] bg-[#D4A853]"></span>
+                    <span>PURITY YOU CAN TASTE & FEEL</span>
+                    <span class="w-6 sm:w-10 h-[1px] bg-[#D4A853]"></span>
+                </div>
                 <h3 class="text-2xl sm:text-3xl font-serif text-[#611B10] font-bold">Why Millacoco Stands Apart</h3>
-                <p class="text-xs sm:text-sm text-sage-700 mt-2">Every drop tested for uncompromised coastal purity.</p>
+                <p class="text-xs sm:text-sm text-sage-700 mt-2">Every bottle batch-tested for uncompromised coastal purity.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-[#D4A853]/30 shadow-sm text-center">
-                    <div class="w-14 h-14 mx-auto rounded-2xl bg-[#1C3822] text-[#D4A853] flex items-center justify-center text-xl mb-4 shadow">
-                        <i class="fa-solid fa-droplet"></i>
+                <div class="bg-white/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/90 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 mx-auto rounded-2xl bg-[#1C3822] text-[#D4A853] flex items-center justify-center text-xl mb-4 shadow-md">
+                            <i class="fa-solid fa-droplet"></i>
+                        </div>
+                        <h4 class="font-serif font-bold text-lg text-[#611B10]">First Cold-Pressed</h4>
+                        <p class="text-xs text-stone-600 mt-2.5 leading-relaxed">
+                            Extracted at ambient temperature to retain high Lauric acid, Vitamin E, and original sweet Kerala aroma without burning the oil.
+                        </p>
                     </div>
-                    <h4 class="font-serif font-bold text-base text-[#611B10]">First Cold-Pressed</h4>
-                    <p class="text-xs text-stone-600 mt-2 leading-relaxed">
-                        Extracted at ambient temperature to retain high Lauric acid, Vitamin E, and original sweet Kerala aroma.
-                    </p>
+                    <div class="pt-4 mt-4 border-t border-stone-100 text-[11px] font-semibold text-[#1C3822]">
+                        ✓ Rich Lauric Acid Profile
+                    </div>
                 </div>
 
-                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-[#D4A853]/30 shadow-sm text-center">
-                    <div class="w-14 h-14 mx-auto rounded-2xl bg-[#611B10] text-[#D4A853] flex items-center justify-center text-xl mb-4 shadow">
-                        <i class="fa-solid fa-leaf"></i>
+                <div class="bg-white/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/90 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 mx-auto rounded-2xl bg-[#611B10] text-[#D4A853] flex items-center justify-center text-xl mb-4 shadow-md">
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
+                        <h4 class="font-serif font-bold text-lg text-[#611B10]">Zero Adulteration</h4>
+                        <p class="text-xs text-stone-600 mt-2.5 leading-relaxed">
+                            No palm oil blends, no liquid paraffin, no preservatives, and zero sulphur fumigation. Guaranteed 100% edible purity.
+                        </p>
                     </div>
-                    <h4 class="font-serif font-bold text-base text-[#611B10]">Zero Adulteration</h4>
-                    <p class="text-xs text-stone-600 mt-2 leading-relaxed">
-                        No palm oil blends, no liquid paraffin, no preservatives, and no sulphur fumigation. 100% edible purity.
-                    </p>
+                    <div class="pt-4 mt-4 border-t border-stone-100 text-[11px] font-semibold text-[#611B10]">
+                        ✓ 100% Pure & Lab Tested
+                    </div>
                 </div>
 
-                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-[#D4A853]/30 shadow-sm text-center">
-                    <div class="w-14 h-14 mx-auto rounded-2xl bg-[#D4A853] text-[#611B10] flex items-center justify-center text-xl mb-4 shadow">
-                        <i class="fa-solid fa-kitchen-set"></i>
+                <div class="bg-white/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/90 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 mx-auto rounded-2xl bg-[#D4A853] text-[#611B10] flex items-center justify-center text-xl mb-4 shadow-md">
+                            <i class="fa-solid fa-kitchen-set"></i>
+                        </div>
+                        <h4 class="font-serif font-bold text-lg text-[#611B10]">Versatile Wellness</h4>
+                        <p class="text-xs text-stone-600 mt-2.5 leading-relaxed">
+                            Equally nourishing for authentic Malabar culinary cooking, newborn baby massage, skin hydration, and scalp conditioning.
+                        </p>
                     </div>
-                    <h4 class="font-serif font-bold text-base text-[#611B10]">Versatile Wellness</h4>
-                    <p class="text-xs text-stone-600 mt-2 leading-relaxed">
-                        Equally nourishing for authentic Malabar cooking, newborn baby massage, and scalp conditioning.
-                    </p>
+                    <div class="pt-4 mt-4 border-t border-stone-100 text-[11px] font-semibold text-[#D4A853]">
+                        ✓ Culinary & Cosmetic Grade
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA BANNER -->
-        <section class="bg-[#611B10] text-[#FAF5EC] rounded-3xl p-8 sm:p-12 text-center border border-[#D4A853]/40 shadow-xl mb-16 relative overflow-hidden">
-            <h3 class="font-serif text-2xl sm:text-4xl font-bold mb-3 text-white">Experience Authentic Kerala Goodness</h3>
-            <p class="text-xs sm:text-sm text-stone-200 max-w-lg mx-auto mb-6">
-                Explore our pure copra oil range, available in spill-proof kitchen pouches, heritage glass bottles, and bulk supply cans.
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-4">
-                <a href="/products" class="bg-[#D4A853] hover:bg-[#e0b764] text-[#3D140C] font-bold text-xs px-7 py-3 rounded-full transition shadow-md">
-                    VIEW PRODUCTS
-                </a>
-                <a href="/contact" class="border border-white/50 hover:border-white text-white font-medium text-xs px-7 py-3 rounded-full transition">
-                    CONTACT MILL
-                </a>
+        <!-- CTA BANNER (Rich Maroon & Gold) -->
+        <section class="bg-[#611B10] text-[#FAF5EC] rounded-[2rem] sm:rounded-3xl p-8 sm:p-12 text-center border border-[#D4A853]/40 shadow-xl mb-16 relative overflow-hidden">
+            <div class="absolute inset-0 bg-cover bg-no-repeat opacity-15 pointer-events-none" style="background-image: url('images/hero_slide_coconuts.webp');"></div>
+            <div class="relative z-10 max-w-xl mx-auto space-y-3">
+                <span class="inline-block text-[10px] font-bold uppercase tracking-widest text-[#D4A853] bg-white/10 px-3 py-1 rounded-full border border-white/15">
+                    Order Directly from the Source
+                </span>
+                <h3 class="font-serif text-2xl sm:text-4xl font-bold text-white leading-tight">
+                    Experience Authentic Kerala Goodness
+                </h3>
+                <p class="text-xs sm:text-sm text-stone-200 leading-relaxed max-w-lg mx-auto">
+                    Explore our pure copra oil range, available in spill-proof kitchen pouches, heritage glass bottles, and bulk supply cans.
+                </p>
+                <div class="flex flex-wrap items-center justify-center gap-3 pt-3">
+                    <a href="/products" class="bg-[#D4A853] hover:bg-[#e0b764] text-[#3D140C] font-bold text-xs px-7 py-3 rounded-full transition shadow-md active:scale-95">
+                        VIEW PRODUCTS
+                    </a>
+                    <a href="/contact" class="border border-white/50 hover:border-white text-white font-medium text-xs px-7 py-3 rounded-full transition active:scale-95">
+                        CONTACT MILL
+                    </a>
+                </div>
             </div>
         </section>
 
     </div>
 
-        <!-- FOOTER & OFFICIAL MILL DETAILS -->
-    <footer id="footer" class="bg-sage-900 text-sage-100 p-8 sm:p-12 lg:p-16 relative overflow-hidden m-0 rounded-none">
+    <!-- FOOTER & OFFICIAL MILL DETAILS -->
+    <footer id="footer" class="bg-sage-900 text-sage-100 pt-10 sm:pt-14 lg:pt-16 pb-24 sm:pb-12 px-5 sm:px-10 lg:px-16 relative overflow-hidden m-0 rounded-none">
         <!-- Botanical Palm Leaves & Floral Pattern fading in from bottom -->
         <div class="footer-botanical" aria-hidden="true"></div>
 
-        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-12 border-b border-sage-800">
+        <div class="max-w-[1440px] mx-auto relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 pb-10 sm:pb-12 border-b border-sage-800">
                 
-                <!-- Official Address & Mill Info (Left-aligned) -->
-                <div class="lg:col-span-5 space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 flex items-center justify-center">
+                <!-- Official Address & Mill Info -->
+                <div class="lg:col-span-5 space-y-4 text-left">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 p-1.5 flex items-center justify-center shrink-0 shadow-inner">
                             <img src="images/logo_gold.webp" alt="Millacoco Logo" class="w-full h-full object-contain">
                         </div>
-                        <h3 class="font-serif text-3xl tracking-[0.2em] font-extrabold text-white uppercase">MILLACOCO</h3>
+                        <div>
+                            <h3 class="font-serif text-2xl sm:text-3xl tracking-[0.2em] font-extrabold text-white uppercase leading-none">
+                                MILLACOCO
+                            </h3>
+                            <span class="block text-[8px] sm:text-[9px] tracking-[0.35em] text-[#D4A853] font-medium uppercase mt-1">
+                                Pure Kerala Coconut Oil
+                            </span>
+                        </div>
                     </div>
-                    <p class="text-xs text-sage-200/90 leading-relaxed max-w-xs">
-                        Puthalampurath Oil Mill, Melur PO, Chengottukavu, Kozhikode, Kerala 673306
+
+                    <p class="text-xs text-sage-200/90 leading-relaxed max-w-sm pt-0.5">
+                        <span data-site-address>Puthalampurath Oil Mill, Melur PO, Chengottukavu, Kozhikode, Kerala 673306</span>
                     </p>
+
                     <div class="text-xs text-sage-300 space-y-2.5 pt-1">
                         <p class="flex items-center">
                             <i class="fa-solid fa-envelope w-5 text-[#D4A853] shrink-0"></i>
-                            <a href="mailto:millacocococonutoil@gmail.com" class="hover:text-white transition no-underline">
-                                millacocococonutoil@gmail.com
+                            <a href="mailto:<span data-site-email>millacocococonutoil@gmail.com</span>" class="hover:text-white transition no-underline break-all">
+                                <span data-site-email>millacocococonutoil@gmail.com</span>
                             </a>
                         </p>
-                        <p class="flex items-center">
-                            <i class="fa-solid fa-phone w-5 text-[#D4A853] shrink-0"></i>
-                            <a href="tel:+918089757815" class="hover:text-white transition no-underline">
-                                +91 80897 57815
+                        <div class="flex flex-wrap items-center gap-2 pt-1">
+                            <a href="tel:<span data-site-phone>+918089757815</span>" class="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full text-white text-xs transition border border-white/10">
+                                <i class="fa-solid fa-phone text-[#D4A853] text-[10px]"></i>
+                                <span><span data-site-phone>+91 80897 57815</span></span>
                             </a>
-                            <span class="text-sage-500 mx-1.5">•</span>
-                            <a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20pure%20Kerala%20coconut%20oil." target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-semibold transition inline-flex items-center gap-1">
-                                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                            <a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20pure%20Kerala%20coconut%20oil." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-emerald-600/30 hover:bg-emerald-600/40 text-emerald-300 px-3 py-1.5 rounded-full text-xs font-medium transition border border-emerald-500/30">
+                                <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                                <span>WhatsApp Us</span>
                             </a>
-                        </p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Footer Quick Links -->
-                <div class="lg:col-span-3 grid grid-cols-2 gap-4 text-xs">
-                    <div class="space-y-3">
-                        <h4 class="font-bold text-white tracking-wider uppercase text-[11px]">Navigation</h4>
-                        <ul class="space-y-2 text-sage-300">
-                            <li><a href="/" class="hover:text-white transition">Home</a></li>
-                            <li><a href="/products" class="hover:text-white transition">Shop Products</a></li>
-                            <li><a href="/#bestsellers" class="hover:text-white transition">Combo Deals</a></li>
-                            <li><a href="/#reviews" class="hover:text-white transition">Customer Reviews</a></li>
-                        </ul>
-                    </div>
-                    <div class="space-y-3">
-                        <h4 class="font-bold text-white tracking-wider uppercase text-[11px]">Customer Care</h4>
-                        <ul class="space-y-2 text-sage-300">
-                            <li><a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20ordering%20pure%20Kerala%20coconut%20oil.%20Could%20you%20please%20share%20details?" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">WhatsApp Order</a></li>
-                            <li><button type="button" onclick="openPolicyModal('shipping')" class="hover:text-white transition text-left cursor-pointer">Express Shipping</button></li>
-                            <li><button type="button" onclick="openPolicyModal('terms')" class="hover:text-white transition text-left cursor-pointer">Terms & Conditions</button></li>
-                        </ul>
-                    </div>
+                <div class="lg:col-span-3 space-y-3 text-xs pt-2 sm:pt-0">
+                    <h4 class="font-bold text-[#D4A853] tracking-widest uppercase text-[11px]">Navigation</h4>
+                    <ul class="space-y-2.5 text-sage-300">
+                        <li><a href="/" class="hover:text-white transition flex items-center gap-1.5"><span class="text-[#D4A853]/60 text-[8px]">•</span> Home</a></li>
+                        <li><a href="/products" class="hover:text-white transition flex items-center gap-1.5"><span class="text-[#D4A853]/60 text-[8px]">•</span> Shop Products</a></li>
+                        <li><a href="/#bestsellers" class="hover:text-white transition flex items-center gap-1.5"><span class="text-[#D4A853]/60 text-[8px]">•</span> Combo Deals</a></li>
+                        <li><a href="/#reviews" class="hover:text-white transition flex items-center gap-1.5"><span class="text-[#D4A853]/60 text-[8px]">•</span> Customer Reviews</a></li>
+                    </ul>
                 </div>
 
                 <!-- Newsletter Subscription Form -->
-                <div class="lg:col-span-4 space-y-3">
-                    <h4 class="font-bold text-white tracking-wider uppercase text-[11px]">Get Fresh Oil Updates</h4>
-                    <p class="text-xs text-sage-200/80">Subscribe to get copra harvest updates and direct mill discount codes.</p>
-                    <form onsubmit="handleSubscribe(event)" class="flex items-center mt-2">
-                        <input type="email" required placeholder="Enter email address" class="w-full bg-sage-800 border border-sage-700 text-white text-xs px-4 py-3 rounded-l-full focus:outline-none focus:border-ambergold-400 placeholder-sage-400">
-                        <button type="submit" class="bg-ambergold-400 hover:bg-ambergold-300 text-sage-900 font-bold text-xs px-5 py-3 rounded-r-full transition shrink-0">
+                <div class="lg:col-span-4 space-y-3 pt-2 sm:pt-0">
+                    <h4 class="font-bold text-[#D4A853] tracking-widest uppercase text-[11px]">Get Fresh Oil Updates</h4>
+                    <p class="text-xs text-sage-200/80 leading-relaxed">Subscribe to get copra harvest updates and direct mill discount codes.</p>
+                    <form onsubmit="handleSubscribe(event)" class="flex items-center mt-3">
+                        <input type="email" required placeholder="Enter email address" class="w-full bg-sage-800/90 border border-sage-700/80 text-white text-xs px-4 py-3 rounded-l-full focus:outline-none focus:border-[#D4A853] placeholder-sage-400 shadow-inner">
+                        <button type="submit" class="bg-[#D4A853] hover:bg-[#c29643] text-[#611B10] font-bold text-xs px-5 py-3 rounded-r-full transition shrink-0 active:scale-95 shadow-sm">
                             Send
                         </button>
                     </form>
@@ -309,10 +579,10 @@
 
             </div>
 
-            <!-- Copyright -->
-            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-sage-400">
+            <!-- Copyright & Safe Area for Mobile FAB -->
+            <div class="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-center sm:text-left text-[11px] text-sage-400">
                 <p>&copy; 2026 Millacoco Coconut Oil (Puthalampurath Oil Mill). All rights reserved.</p>
-                <p class="mt-2 sm:mt-0">Melur PO, Chengottukavu, Kozhikode, Kerala</p>
+                <p class="text-sage-400/90">Melur PO, Chengottukavu, Kozhikode, Kerala</p>
             </div>
         </div>
     </footer>
@@ -448,7 +718,7 @@
                     <h4 class="font-bold text-[#611B10] text-sm mb-1.5 flex items-center gap-2">
                         <i class="fa-solid fa-rotate-left text-[#D4A853]"></i> Instant Bottle Replacement
                     </h4>
-                    <p>If any bottle or container arrives damaged or broken during shipping, share a photo via WhatsApp (+91 80897 57815) within 48 hours for an immediate free replacement dispatch.</p>
+                    <p>If any bottle or container arrives damaged or broken during shipping, share a photo via WhatsApp (<span data-site-phone>+91 80897 57815</span>) within 48 hours for an immediate free replacement dispatch.</p>
                 </div>
 
                 <div class="bg-white/90 p-4 rounded-2xl border border-[#D4A853]/20 shadow-xs">

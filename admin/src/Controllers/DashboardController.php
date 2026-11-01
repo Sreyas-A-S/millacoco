@@ -129,6 +129,14 @@ HTML;
                     <i class="fa-solid fa-arrow-up-right-from-square w-4"></i>
                     <span>Marketplace Redirects</span>
                 </a>
+                <a href="/mc-desk/settings" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
+                    <i class="fa-solid fa-sliders w-4"></i>
+                    <span>Site Content & Copy</span>
+                </a>
+                <a href="/mc-desk/settings" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
+                    <i class="fa-solid fa-sliders w-4"></i>
+                    <span>Site Content & Copy</span>
+                </a>
                 <a href="/" target="_blank" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
                     <i class="fa-solid fa-store w-4"></i>
                     <span>View Public Storefront ↗</span>
