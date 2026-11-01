@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    
+    <!-- Home Page -->
+    <url>
+        <loc>https://millacoco.com/</loc>
+        <lastmod>2026-11-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://millacoco.com/images/hero_bottle.webp</image:loc>
+            <image:title>Millacoco 100% Pure Kerala Coconut Oil</image:title>
+            <image:caption>Authentic Malabar Kuttiyadi Copra Coconut Oil</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://millacoco.com/images/flagship_bottle_cutout.webp</image:loc>
+            <image:title>Millacoco Flagship 1 Litre Classic Bottle</image:title>
+        </image:image>
+    </url>
+
+    <!-- Products Catalog -->
+    <url>
+        <loc>https://millacoco.com/products.html</loc>
+        <lastmod>2026-11-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://millacoco.com/images/product_bottle.webp</image:loc>
+            <image:title>Millacoco 1 Ltr Classic Pure Coconut Oil Bottle</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://millacoco.com/images/product_pouch.webp</image:loc>
+            <image:title>Millacoco 1 Ltr Kitchen Refill Pouch</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://millacoco.com/images/can_5ltr.webp</image:loc>
+            <image:title>Millacoco 5 Ltr Household Can Pure Coconut Oil</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://millacoco.com/images/virgin_oil.webp</image:loc>
+            <image:title>Millacoco Pure Cold-Pressed Virgin Hair and Skin Oil</image:title>
+        </image:image>
+    </url>
+
+    <!-- About Us Page -->
+    <url>
+        <loc>https://millacoco.com/about.html</loc>
+        <lastmod>2026-11-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://millacoco.com/images/copra_heritage.webp</image:loc>
+            <image:title>Kuttiyadi Copra Heritage &amp; Traditional Sun-Drying</image:title>
+        </image:image>
+    </url>
+
+    <!-- Contact Page -->
+    <url>
+        <loc>https://millacoco.com/contact.html</loc>
+        <lastmod>2026-11-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+</urlset>

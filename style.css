@@ -512,7 +512,7 @@ html, body {
 .skeleton-box {
     position: relative;
     overflow: hidden;
-    background-color: #EDE4D5;
+    background-color: #FFFFFF;
 }
 
 .skeleton-box::after {
@@ -545,3 +545,30 @@ html, body {
 
 
 
+
+/* WhatsApp FAB periodic gentle shake animation (every 10s) */
+.whatsapp-fab-shake {
+    animation: whatsapp-periodic-shake 10s ease-in-out infinite;
+    transform-origin: center bottom;
+}
+
+@keyframes whatsapp-periodic-shake {
+    0%, 88%, 100% {
+        transform: rotate(0deg) scale(1);
+    }
+    90% {
+        transform: rotate(-12deg) scale(1.08);
+    }
+    92% {
+        transform: rotate(10deg) scale(1.08);
+    }
+    94% {
+        transform: rotate(-8deg) scale(1.08);
+    }
+    96% {
+        transform: rotate(6deg) scale(1.08);
+    }
+    98% {
+        transform: rotate(-3deg) scale(1.04);
+    }
+}

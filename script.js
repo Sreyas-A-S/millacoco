@@ -595,7 +595,7 @@ function renderDynamicProductGrid() {
     productCatalog.forEach(item => {
         html += `
             <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="${item.category}">
-                <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square skeleton-box rounded-2xl flex items-center justify-center p-2">
+                <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-white flex items-center justify-center p-2">
                     <span class="absolute top-2 left-2 z-10 bg-[#611B10] text-[#D4A853] text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs uppercase">${item.tag}</span>
                     <button onclick="toggleFavorite(event, '${item.name}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="${item.name}">
                         <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
@@ -730,6 +730,62 @@ function searchHeaderProducts() {
     dropdown.classList.remove('hidden');
 }
 
+
+// Mobile Header Inline Search Expand / Collapse Logic
+function expandMobileSearch() {
+    const brandText = document.getElementById('header-brand-text');
+    const searchWrapper = document.getElementById('header-search-wrapper');
+    const searchBtn = document.getElementById('search-btn');
+    const mobileClose = document.getElementById('mobile-search-close');
+    const searchInput = document.getElementById('header-search-input');
+
+    if (brandText) {
+        brandText.classList.add('hidden', 'opacity-0');
+    }
+    if (searchBtn) {
+        searchBtn.classList.add('hidden');
+    }
+    if (searchWrapper) {
+        searchWrapper.classList.remove('hidden');
+        searchWrapper.classList.add('flex-1', 'w-full', 'max-w-[calc(100vw-110px)]');
+    }
+    if (mobileClose) {
+        mobileClose.classList.remove('hidden');
+    }
+    if (searchInput) {
+        setTimeout(() => searchInput.focus(), 50);
+    }
+}
+
+function collapseMobileSearch() {
+    const brandText = document.getElementById('header-brand-text');
+    const searchWrapper = document.getElementById('header-search-wrapper');
+    const searchBtn = document.getElementById('search-btn');
+    const mobileClose = document.getElementById('mobile-search-close');
+    const searchInput = document.getElementById('header-search-input');
+    const searchDropdown = document.getElementById('header-search-dropdown');
+
+    if (brandText) {
+        brandText.classList.remove('hidden', 'opacity-0');
+    }
+    if (searchBtn) {
+        searchBtn.classList.remove('hidden');
+    }
+    if (searchWrapper) {
+        searchWrapper.classList.add('hidden');
+        searchWrapper.classList.remove('flex-1', 'w-full', 'max-w-[calc(100vw-110px)]');
+    }
+    if (mobileClose) {
+        mobileClose.classList.add('hidden');
+    }
+    if (searchInput) {
+        searchInput.value = '';
+    }
+    if (searchDropdown) {
+        searchDropdown.classList.add('hidden');
+    }
+}
+
 function clearHeaderSearch() {
     const input = document.getElementById('header-search-input');
     const dropdown = document.getElementById('header-search-dropdown');
@@ -737,6 +793,9 @@ function clearHeaderSearch() {
     if (input) input.value = '';
     if (dropdown) dropdown.classList.add('hidden');
     if (clearBtn) clearBtn.classList.add('hidden');
+    if (window.innerWidth < 640 && typeof collapseMobileSearch === 'function') {
+        collapseMobileSearch();
+    }
 }
 
 // Modal Search Logic (for mobile / icon trigger)
@@ -842,12 +901,11 @@ function initApp() {
     const searchModal = document.getElementById('search-modal');
     const closeSearch = document.getElementById('close-search');
 
-    if (searchBtn && searchModal) {
-        searchBtn.addEventListener('click', () => {
-            searchModal.classList.remove('hidden');
-            searchModal.classList.add('flex');
-            const searchInput = document.getElementById('search-input');
-            if (searchInput) searchInput.focus();
+    // Mobile search button expands inline in header across title space
+    if (searchBtn) {
+        searchBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            expandMobileSearch();
         });
     }
 

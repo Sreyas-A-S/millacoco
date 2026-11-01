@@ -1,0 +1,133 @@
+# ==============================================================================
+# Nginx Server Configuration for Millacoco Production
+# Domain: millacoco.com / www.millacoco.com
+# ==============================================================================
+
+# 1. HTTP to HTTPS & Canonical www Redirect
+server {
+    listen 80;
+    listen [::]:80;
+    server_name millacoco.com www.millacoco.com;
+    return 301 https://millacoco.com$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name www.millacoco.com;
+
+    # SSL Certificates (e.g. Let's Encrypt / Certbot)
+    ssl_certificate /etc/letsencrypt/live/millacoco.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/millacoco.com/privkey.pem;
+
+    return 301 https://millacoco.com$request_uri;
+}
+
+# 2. Main Production Virtual Host
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name millacoco.com;
+
+    root /var/www/millacoco;
+    index index.html index.php;
+
+    # SSL Certificates & Hardening
+    ssl_certificate /etc/letsencrypt/live/millacoco.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/millacoco.com/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 1d;
+
+    # Security Headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+
+    # Character Set & Gzip Compression
+    charset utf-8;
+    gzip on;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_types text/plain text/css text/xml application/json application/javascript application/xml+rss application/atom+xml image/svg+xml;
+
+    # --------------------------------------------------------------------------
+    # Security Rule 1: Block sensitive files, databases, logs, hidden files
+    # --------------------------------------------------------------------------
+    location ~* \.(sqlite|db|log|env|git|htaccess|sql)$ {
+        deny all;
+        return 404;
+    }
+
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    # --------------------------------------------------------------------------
+    # Storefront Clean URLs & 404 Handling
+    # --------------------------------------------------------------------------
+    # Custom 404 Page (Points to /404.html)
+    error_page 404 /404.html;
+
+    location = /404.html {
+        internal;
+    }
+
+    # Redirect explicit /index.html to root /
+    location = /index.html {
+        return 301 /;
+    }
+
+    # Main Storefront Route Resolution:
+    # 1. Exact static file ($uri)
+    # 2. Exact directory ($uri/)
+    # 3. Clean HTML page without extension ($uri.html) e.g. /products -> /products.html
+    # 4. Fallback to 404 error page (instead of bouncing to homepage)
+    location / {
+        try_files $uri $uri/ $uri.html =404;
+    }
+
+    # --------------------------------------------------------------------------
+    # High-Performance Caching for Static Assets (Images, WebP, SVGs, CSS, JS)
+    # --------------------------------------------------------------------------
+    location ~* \.(?:ico|png|jpg|jpeg|gif|webp|svg|woff|woff2|ttf|eot)$ {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public, max-age=15552000, immutable";
+        try_files $uri =404;
+    }
+
+    location ~* \.(?:css|js)$ {
+        expires 7d;
+        access_log off;
+        add_header Cache-Control "public, max-age=604800";
+        try_files $uri =404;
+    }
+
+    # --------------------------------------------------------------------------
+    # Admin Backend: Slim 4 Front Controller (/mc-desk)
+    # --------------------------------------------------------------------------
+    location /mc-desk {
+        alias /var/www/millacoco/admin/public;
+        try_files $uri $uri/ @mc_desk;
+
+        location ~ \.php$ {
+            include fastcgi_params;
+            fastcgi_pass unix:/run/php/php8.2-fpm.sock; # Adjust PHP-FPM socket version as needed (e.g. php8.1, php8.2, php8.3)
+            fastcgi_param SCRIPT_FILENAME /var/www/millacoco/admin/public/index.php;
+            fastcgi_param SCRIPT_NAME /mc-desk/index.php;
+        }
+    }
+
+    location @mc_desk {
+        rewrite /mc-desk/(.*)$ /mc-desk/index.php last;
+    }
+
+}
