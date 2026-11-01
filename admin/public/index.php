@@ -6,6 +6,7 @@ use Millacoco\Admin\Controllers\AuthController;
 use Millacoco\Admin\Controllers\DashboardController;
 use Millacoco\Admin\Controllers\ProductController;
 use Millacoco\Admin\Controllers\SettingsController;
+use Millacoco\Admin\Controllers\ContentController;
 use Millacoco\Admin\Middleware\JwtAuthMiddleware;
 use Millacoco\Admin\Middleware\RateLimitMiddleware;
 use Millacoco\Admin\Middleware\SecurityHeadersMiddleware;
@@ -64,17 +65,18 @@ $errorMiddleware->setErrorHandler(
 // Initialize DB (Lazy-loaded PDO instance)
 $db = Database::getConnection($settings['db']);
 
-// Auth, Product, & Settings Controllers
+// Controllers
 $authController = new AuthController($db, $settings);
 $dashboardController = new DashboardController($db);
 $productController = new ProductController($db);
 $settingsController = new SettingsController($db);
+$contentController = new ContentController($db);
 
 // --- Public Routes ---
-// Endpoint for public storefront to fetch current active products & external URLs
 $app->get('/api/products', [$productController, 'getPublicProducts']);
-// Endpoint for public storefront to fetch current site copy & contact settings
 $app->get('/api/settings', [$settingsController, 'getPublicSettings']);
+$app->get('/api/combos', [$contentController, 'getPublicCombos']);
+$app->get('/api/testimonials', [$contentController, 'getPublicTestimonials']);
 
 // Rate limit login endpoint: max 5 login attempts per 60 seconds per IP
 $app->post('/api/login', [$authController, 'login'])
@@ -87,7 +89,7 @@ $app->get('/login', function (Request $request, Response $response) {
 });
 
 // --- Protected Admin Routes (Guarded by JwtAuthMiddleware) ---
-$app->group('', function ($group) use ($dashboardController, $productController, $settingsController) {
+$app->group('', function ($group) use ($dashboardController, $productController, $settingsController, $contentController, $authController) {
     $group->get('', [$dashboardController, 'index']);
     $group->get('/', [$dashboardController, 'index']);
     $group->get('/dashboard', [$dashboardController, 'index']);
@@ -95,9 +97,18 @@ $app->group('', function ($group) use ($dashboardController, $productController,
     $group->get('/api/admin/products', [$productController, 'index']);
     $group->put('/api/admin/products/{id}', [$productController, 'update']);
     
-    // Content & Settings Management
+    // Site Settings Management
     $group->get('/settings', [$settingsController, 'renderSettingsPage']);
     $group->post('/api/admin/settings', [$settingsController, 'updateSettings']);
+
+    // Combos & Reviews Hub
+    $group->get('/combos-reviews', [$contentController, 'renderContentManagerPage']);
+    $group->put('/api/admin/combos/{id}', [$contentController, 'updateCombo']);
+    $group->post('/api/admin/testimonials', [$contentController, 'createTestimonial']);
+    $group->delete('/api/admin/testimonials/{id}', [$contentController, 'deleteTestimonial']);
+    
+    // Admin Password Update
+    $group->post('/api/admin/change-password', [$authController, 'updatePassword']);
 })->add(new JwtAuthMiddleware($settings['jwt']));
 
 $app->run();

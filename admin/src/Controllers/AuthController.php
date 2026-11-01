@@ -80,4 +80,78 @@ class AuthController
             // Set secure, HttpOnly, SameSite=Strict cookie for browser sessions
             ->withHeader('Set-Cookie', "admin_jwt={$token}; Path=/mc-desk; HttpOnly; SameSite=Strict; Max-Age=86400");
     }
+
+    /**
+     * Admin: Update password verifying current password and confirming new password
+     */
+    public function updatePassword(Request $request, Response $response): Response
+    {
+        $jwtUser = $request->getAttribute('jwt_user');
+        $userId = $jwtUser->sub ?? null;
+
+        if (!$userId) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Unauthorized user session.'
+            ]));
+            return $response->withStatus(401)->withHeader('Content-Type', 'application/json');
+        }
+
+        $data = (array)$request->getParsedBody();
+        $currentPassword = (string)($data['current_password'] ?? '');
+        $newPassword = (string)($data['new_password'] ?? '');
+        $confirmPassword = (string)($data['confirm_password'] ?? '');
+
+        if (empty($currentPassword) || empty($newPassword) || empty($confirmPassword)) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Please provide current password, new password, and confirmation.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        if ($newPassword !== $confirmPassword) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'New password and confirmation password do not match.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        if (strlen($newPassword) < 6) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'New password must be at least 6 characters long.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        // Fetch current hash from database
+        $stmt = $this->db->prepare('SELECT id, password_hash FROM users WHERE id = :id LIMIT 1');
+        $stmt->execute([':id' => $userId]);
+        $user = $stmt->fetch();
+
+        if (!$user || !password_verify($currentPassword, $user['password_hash'])) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Current password entered is incorrect.'
+            ]));
+            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+        }
+
+        // Hash new password with bcrypt
+        $newHash = password_hash($newPassword, PASSWORD_BCRYPT, ['cost' => 12]);
+
+        $updateStmt = $this->db->prepare('UPDATE users SET password_hash = :hash, updated_at = CURRENT_TIMESTAMP WHERE id = :id');
+        $updateStmt->execute([
+            ':hash' => $newHash,
+            ':id' => $userId
+        ]);
+
+        $response->getBody()->write(json_encode([
+            'status' => 'success',
+            'message' => 'Password updated successfully! Please use your new password next time you sign in.'
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
 }

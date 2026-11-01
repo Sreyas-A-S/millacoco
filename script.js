@@ -2271,3 +2271,72 @@ function initPuritySectionAnimation() {
 }
 
 document.addEventListener('DOMContentLoaded', initPuritySectionAnimation);
+
+// Asynchronously sync dynamic Combo Packs from SQLite API
+async function syncCombosFromDatabase() {
+    try {
+        const res = await fetch('/mc-desk/api/combos');
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
+            comboPacks.length = 0;
+            json.data.forEach(item => comboPacks.push(item));
+            if (typeof initComboCarousel === 'function') {
+                initComboCarousel();
+            }
+        }
+    } catch (e) {
+        console.debug('Combos running with local fallback');
+    }
+}
+
+// Asynchronously sync dynamic Testimonials from SQLite API
+async function syncTestimonialsFromDatabase() {
+    const track = document.getElementById('testimonials-track');
+    if (!track) return;
+    try {
+        const res = await fetch('/mc-desk/api/testimonials');
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
+            let html = '';
+            json.data.forEach(t => {
+                const stars = Array(t.rating || 5).fill('<i class="fa-solid fa-star text-[#D4A853]"></i>').join('');
+                html += `
+                    <div class="testimonial-card flex-none w-[300px] xs:w-[340px] sm:w-[380px] bg-white/95 rounded-[2rem] p-5 sm:p-6 border border-[#D4A853]/25 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between select-none">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-1 text-xs">
+                                    ${stars}
+                                </div>
+                                <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/60">
+                                    <i class="fa-solid fa-circle-check text-[8px] mr-1"></i>${t.tag || 'Verified Buyer'}
+                                </span>
+                            </div>
+                            <p class="text-xs sm:text-sm text-stone-700 leading-relaxed italic mb-4 font-normal">
+                                "${t.quote}"
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-stone-100 flex items-center justify-between">
+                            <div>
+                                <h4 class="font-serif font-bold text-xs sm:text-sm text-[#611B10]">${t.author_name}</h4>
+                                <p class="text-[10px] text-stone-500">${t.author_location}</p>
+                            </div>
+                            <div class="w-8 h-8 rounded-full bg-[#FAF5EC] border border-[#D4A853]/30 flex items-center justify-center text-[#611B10] text-xs font-serif font-bold">
+                                ${t.author_name.charAt(0)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            track.innerHTML = html;
+        }
+    } catch (e) {
+        console.debug('Testimonials running with static fallback');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    syncCombosFromDatabase();
+    syncTestimonialsFromDatabase();
+});

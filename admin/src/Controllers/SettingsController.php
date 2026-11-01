@@ -232,6 +232,10 @@ HTML;
                     <i class="fa-solid fa-arrow-up-right-from-square w-4"></i>
                     <span>Marketplace Redirects</span>
                 </a>
+                <a href="/mc-desk/combos-reviews" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
+                    <i class="fa-solid fa-box-open w-4"></i>
+                    <span>Combos & Reviews</span>
+                </a>
                 <a href="/mc-desk/settings" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-white/10 text-[#D4A853] transition">
                     <i class="fa-solid fa-sliders w-4"></i>
                     <span>Site Content & Copy</span>
@@ -250,7 +254,10 @@ HTML;
                     <div class="text-xs font-bold text-white">{$adminName}</div>
                     <div class="text-[10px] text-[#D4A853]">{$adminRole}</div>
                 </div>
-                <button onclick="logoutAdmin()" class="text-xs text-[#FAF5EC]/70 hover:text-white p-2" title="Logout">
+                                <button onclick="openPasswordModal()" class="text-xs text-[#FAF5EC]/70 hover:text-[#D4A853] p-1.5 transition" title="Change Password">
+                    <i class="fa-solid fa-key"></i>
+                </button>
+                <button onclick="logoutAdmin()" class="text-xs text-[#FAF5EC]/70 hover:text-white p-1.5 transition" title="Logout">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 </button>
             </div>
@@ -379,6 +386,112 @@ HTML;
             window.location.href = '/mc-desk/login';
         }
     </script>
+
+    <!-- Change Password Modal -->
+    <div id="password-modal" class="fixed inset-0 z-50 invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div onclick="closePasswordModal()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <div class="relative bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-[#D4A853]/40">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                <div class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-[#611B10] text-[#D4A853] flex items-center justify-center text-sm shadow-xs">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <h4 class="font-serif font-bold text-base text-[#611B10]">Update Admin Password</h4>
+                </div>
+                <button onclick="closePasswordModal()" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div id="pwd-alert" class="hidden my-3 p-3 rounded-xl text-xs font-semibold"></div>
+
+            <form onsubmit="handleChangePassword(event)" class="space-y-3.5 pt-2 text-xs">
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Current Password</label>
+                    <input type="password" id="pwd-current" required placeholder="Enter current password" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:border-[#611B10] focus:ring-2 focus:ring-[#611B10]/15 outline-none transition">
+                </div>
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">New Password (min 6 chars)</label>
+                    <input type="password" id="pwd-new" required minlength="6" placeholder="Enter new strong password" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:border-[#611B10] focus:ring-2 focus:ring-[#611B10]/15 outline-none transition">
+                </div>
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Confirm New Password</label>
+                    <input type="password" id="pwd-confirm" required minlength="6" placeholder="Repeat new password" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:border-[#611B10] focus:ring-2 focus:ring-[#611B10]/15 outline-none transition">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closePasswordModal()" class="px-4 py-2.5 rounded-xl border border-stone-200 text-stone-600 hover:bg-stone-50 font-semibold transition">Cancel</button>
+                    <button type="submit" id="pwd-submit-btn" class="px-5 py-2.5 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition shadow-sm active:scale-95 flex items-center gap-1.5">
+                        <i class="fa-solid fa-shield-halved text-xs"></i>
+                        <span>Save Password</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<script>
+        function openPasswordModal() {
+            const modal = document.getElementById('password-modal');
+            const alertBox = document.getElementById('pwd-alert');
+            alertBox.classList.add('hidden');
+            document.getElementById('pwd-current').value = '';
+            document.getElementById('pwd-new').value = '';
+            document.getElementById('pwd-confirm').value = '';
+            modal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        }
+
+        function closePasswordModal() {
+            const modal = document.getElementById('password-modal');
+            modal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        }
+
+        async function handleChangePassword(e) {
+            e.preventDefault();
+            const alertBox = document.getElementById('pwd-alert');
+            const btn = document.getElementById('pwd-submit-btn');
+
+            const current_password = document.getElementById('pwd-current').value;
+            const new_password = document.getElementById('pwd-new').value;
+            const confirm_password = document.getElementById('pwd-confirm').value;
+
+            if (new_password !== confirm_password) {
+                alertBox.className = 'my-3 p-3 rounded-xl text-xs font-semibold bg-rose-50 border border-rose-200 text-rose-800';
+                alertBox.textContent = 'New password and confirm password do not match.';
+                alertBox.classList.remove('hidden');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+            try {
+                const res = await fetch('/mc-desk/api/admin/change-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ current_password, new_password, confirm_password })
+                });
+
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    alertBox.className = 'my-3 p-3 rounded-xl text-xs font-semibold bg-emerald-50 border border-emerald-200 text-emerald-800';
+                    alertBox.textContent = data.message;
+                    alertBox.classList.remove('hidden');
+                    setTimeout(() => {
+                        closePasswordModal();
+                    }, 2000);
+                } else {
+                    alertBox.className = 'my-3 p-3 rounded-xl text-xs font-semibold bg-rose-50 border border-rose-200 text-rose-800';
+                    alertBox.textContent = data.message || 'Error updating password';
+                    alertBox.classList.remove('hidden');
+                }
+            } catch (err) {
+                alertBox.className = 'my-3 p-3 rounded-xl text-xs font-semibold bg-rose-50 border border-rose-200 text-rose-800';
+                alertBox.textContent = 'Network or server error';
+                alertBox.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-shield-halved text-xs"></i> <span>Save Password</span>';
+            }
+        }
+</script>
 </body>
 </html>
 HTML;

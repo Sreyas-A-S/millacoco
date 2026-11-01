@@ -318,8 +318,8 @@
                         <span class="text-xs font-serif font-bold text-[#611B10]">Authentic Malabar Origin</span>
                     </div>
 
-                    <!-- Floating Social Proof & Rating Badge Bottom-Right -->
-                    <div class="pointer-events-auto bg-[#611B10]/95 backdrop-blur-md text-white px-3.5 py-2.5 sm:p-3.5 rounded-2xl border border-[#D4A853]/50 shadow-2xl flex items-center justify-between sm:justify-start gap-3 w-full sm:w-auto max-w-xs mx-auto sm:mr-0 transform hover:-translate-y-1 transition duration-300">
+                    <!-- Floating Social Proof & Rating Badge Bottom-Right (Hidden on Mobile) -->
+                    <div class="hidden sm:flex pointer-events-auto bg-[#611B10]/95 backdrop-blur-md text-white sm:p-3.5 rounded-2xl border border-[#D4A853]/50 shadow-2xl items-center justify-start gap-3 sm:w-auto max-w-xs sm:mr-0 transform hover:-translate-y-1 transition duration-300">
                         <div class="flex items-center gap-2.5">
                             <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#D4A853]/20 border border-[#D4A853]/40 flex items-center justify-center text-[#D4A853] text-xs sm:text-sm shrink-0">
                                 <i class="fa-solid fa-star"></i>
@@ -544,93 +544,98 @@
             </div>
         </section>
 
-        <!-- BRAND QUALITIES & PRODUCT EXCELLENCE SECTION (Full Bleed Edge-to-Edge) -->
-        <section id="brand-qualities" class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-white border-y border-[#D4A853]/25 py-12 sm:py-16 my-10 sm:my-14 shadow-xs">
-            <div class="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">
+        <!-- BRAND QUALITIES & PRODUCT EXCELLENCE SECTION (Full Bleed with Soft Fading Top & Bottom) -->
+        <section id="brand-qualities" class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-gradient-to-b from-[#FAF5EC] via-white 15% via-white 85% to-[#FAF5EC] py-16 sm:py-20 my-6 sm:my-10 relative overflow-hidden">
+            <!-- Top Soft Fading Accent Line -->
+            <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#D4A853]/35 to-transparent pointer-events-none"></div>
+            <!-- Bottom Soft Fading Accent Line -->
+            <div class="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#D4A853]/35 to-transparent pointer-events-none"></div>
+
+            <div class="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
                 <!-- Section Header -->
                 <div class="purity-header-reveal text-center max-w-xl mx-auto mb-10 sm:mb-12">
                     <div class="inline-flex items-center space-x-2 text-[10px] sm:text-xs tracking-widest text-[#611B10] font-bold uppercase mb-2">
                         <span class="w-6 sm:w-10 h-[1px] bg-[#D4A853]"></span>
-                        <span>UNCOMPROMISING PURITY</span>
+                        <span>AUTHENTIC KERALA MILLING</span>
                         <span class="w-6 sm:w-10 h-[1px] bg-[#D4A853]"></span>
                     </div>
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-serif text-sage-900 font-bold leading-tight">
-                        Crafted With Single-Origin Heritage
+                        Six Hallmarks of Our Craft
                     </h2>
                 </div>
 
                 <!-- 6 Organic Quality Cards Grid -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-6 lg:gap-6 items-start">
                     
-                    <!-- 1. Superior Quality -->
+                    <!-- 1. Single-Press Cold Milled -->
                     <div class="purity-card-blur group flex flex-col items-center text-center">
                         <div class="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1.5">
                             <div class="relative w-full h-full overflow-hidden shadow-md border-2 border-[#D4A853]/40 group-hover:border-[#611B10] group-hover:shadow-xl transition-all duration-500 rounded-[64%_36%_60%_40%/42%_64%_36%_58%]">
-                                <img src="images/hero_bottle.webp" alt="Superior Quality Coconut Oil" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                <img src="images/hero_bottle.webp" alt="Single-Press Cold Milled Coconut Oil" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             </div>
                         </div>
                         <h3 class="mt-4 font-serif font-bold text-xs sm:text-[13px] tracking-wider text-sage-900 uppercase leading-snug">
-                            Superior<br>Quality
+                            Single-Press<br>Cold Milled
                         </h3>
                     </div>
 
-                    <!-- 2. Sustainable Packaging -->
+                    <!-- 2. Food-Grade Steel Tins -->
                     <div class="purity-card-blur group flex flex-col items-center text-center">
                         <div class="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1.5">
                             <div class="relative w-full h-full overflow-hidden shadow-md border-2 border-[#D4A853]/40 group-hover:border-[#611B10] group-hover:shadow-xl transition-all duration-500 rounded-[38%_62%_35%_65%/62%_38%_65%_35%]">
-                                <img src="images/can_5ltr.webp" alt="Sustainable Packaging Can" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                <img src="images/can_5ltr.webp" alt="Food-Grade Sealed Steel Tins" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             </div>
                         </div>
                         <h3 class="mt-4 font-serif font-bold text-xs sm:text-[13px] tracking-wider text-sage-900 uppercase leading-snug">
-                            Sustainable<br>Packaging
+                            Food-Grade<br>Steel Tins
                         </h3>
                     </div>
 
-                    <!-- 3. Made From Own Copra -->
+                    <!-- 3. In-House Copra Selection -->
                     <div class="purity-card-blur group flex flex-col items-center text-center">
                         <div class="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1.5">
                             <div class="relative w-full h-full overflow-hidden shadow-md border-2 border-[#D4A853]/40 group-hover:border-[#611B10] group-hover:shadow-xl transition-all duration-500 rounded-[58%_42%_68%_32%/45%_58%_42%_55%]">
-                                <img src="images/feat_own_copra.webp" alt="Made From Own Copra" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                <img src="images/feat_own_copra.webp" alt="In-House Copra Selection" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             </div>
                         </div>
                         <h3 class="mt-4 font-serif font-bold text-xs sm:text-[13px] tracking-wider text-sage-900 uppercase leading-snug">
-                            Made From<br>Own Copra
+                            In-House Copra<br>Selection
                         </h3>
                     </div>
 
-                    <!-- 4. No Chemicals Or Additives -->
+                    <!-- 4. Zero Heat Or Bleaching -->
                     <div class="purity-card-blur group flex flex-col items-center text-center">
                         <div class="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1.5">
                             <div class="relative w-full h-full overflow-hidden shadow-md border-2 border-[#D4A853]/40 group-hover:border-[#611B10] group-hover:shadow-xl transition-all duration-500 rounded-[40%_60%_34%_66%/64%_40%_60%_36%]">
-                                <img src="images/feat_no_chemicals.webp" alt="No Chemicals Or Preservatives" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                <img src="images/feat_no_chemicals.webp" alt="Zero Heat Or Chemical Bleaching" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             </div>
                         </div>
                         <h3 class="mt-4 font-serif font-bold text-xs sm:text-[13px] tracking-wider text-sage-900 uppercase leading-snug">
-                            No Chemicals<br>Or Additives
+                            Zero Heat<br>Or Bleaching
                         </h3>
                     </div>
 
-                    <!-- 5. Handpicked Raw Material 100% Sulphur Free -->
+                    <!-- 5. Sun-Cured Zero Sulphur -->
                     <div class="purity-card-blur group flex flex-col items-center text-center">
                         <div class="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1.5">
                             <div class="relative w-full h-full overflow-hidden shadow-md border-2 border-[#D4A853]/40 group-hover:border-[#611B10] group-hover:shadow-xl transition-all duration-500 rounded-[66%_34%_55%_45%/38%_66%_34%_62%]">
-                                <img src="images/feat_sulphur_free.webp" alt="Handpicked 100% Sulphur Free Copra" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                <img src="images/feat_sulphur_free.webp" alt="Sun-Cured Zero Sulphur Copra" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             </div>
                         </div>
                         <h3 class="mt-4 font-serif font-bold text-xs sm:text-[13px] tracking-wider text-sage-900 uppercase leading-snug">
-                            Handpicked Copra<br>100% Sulphur Free
+                            Sun-Cured<br>Zero Sulphur
                         </h3>
                     </div>
 
-                    <!-- 6. Geographically Indicated - Kuttiyadi Copra -->
+                    <!-- 6. GI Kuttiyadi Coconut Origin -->
                     <div class="purity-card-blur group flex flex-col items-center text-center">
                         <div class="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1.5">
                             <div class="relative w-full h-full overflow-hidden shadow-md border-2 border-[#D4A853]/40 group-hover:border-[#611B10] group-hover:shadow-xl transition-all duration-500 rounded-[45%_55%_65%_35%/58%_42%_58%_42%]">
-                                <img src="images/feat_kuttiyadi_gi.webp" alt="Geographically Indicated Kuttiyadi Copra" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                <img src="images/feat_kuttiyadi_gi.webp" alt="GI Kuttiyadi Coconut Origin" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             </div>
                         </div>
                         <h3 class="mt-4 font-serif font-bold text-xs sm:text-[13px] tracking-wider text-sage-900 uppercase leading-snug">
-                            GI Indicated -<br>Kuttiyadi Copra
+                            GI Kuttiyadi<br>Coconut Origin
                         </h3>
                     </div>
 
@@ -839,7 +844,7 @@
                     
                     <!-- Slide Card 1 -->
                     <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3 sm:px-4">
-                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
+                        <div class="max-w-[300px] xs:max-w-[330px] sm:max-w-none mx-auto bg-white/95 backdrop-blur-md rounded-[1.75rem] p-5 xs:p-6 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[210px] sm:min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
                             <div>
                                 <div class="flex items-center space-x-4 mb-4">
                                     <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80" alt="Ananya Menoki" class="w-14 h-14 rounded-full object-cover shrink-0 border-2 border-[#D4A853]/40 shadow-sm">
@@ -860,7 +865,7 @@
 
                     <!-- Slide Card 2 -->
                     <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3 sm:px-4">
-                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
+                        <div class="max-w-[300px] xs:max-w-[330px] sm:max-w-none mx-auto bg-white/95 backdrop-blur-md rounded-[1.75rem] p-5 xs:p-6 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[210px] sm:min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
                             <div>
                                 <div class="flex items-center space-x-4 mb-4">
                                     <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=150&q=80" alt="Dr. Rajesh Nambiar" class="w-14 h-14 rounded-full object-cover shrink-0 border-2 border-[#D4A853]/40 shadow-sm">
@@ -881,7 +886,7 @@
 
                     <!-- Slide Card 3 -->
                     <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3 sm:px-4">
-                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
+                        <div class="max-w-[300px] xs:max-w-[330px] sm:max-w-none mx-auto bg-white/95 backdrop-blur-md rounded-[1.75rem] p-5 xs:p-6 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[210px] sm:min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
                             <div>
                                 <div class="flex items-center space-x-4 mb-4">
                                     <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="Sujata Pillai" class="w-14 h-14 rounded-full object-cover shrink-0 border-2 border-[#D4A853]/40 shadow-sm">
@@ -902,7 +907,7 @@
 
                     <!-- Slide Card 4 -->
                     <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3 sm:px-4">
-                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
+                        <div class="max-w-[300px] xs:max-w-[330px] sm:max-w-none mx-auto bg-white/95 backdrop-blur-md rounded-[1.75rem] p-5 xs:p-6 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[210px] sm:min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
                             <div>
                                 <div class="flex items-center space-x-4 mb-4">
                                     <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Chef Gautam Nair" class="w-14 h-14 rounded-full object-cover shrink-0 border-2 border-[#D4A853]/40 shadow-sm">
@@ -923,7 +928,7 @@
 
                     <!-- Slide Card 5 -->
                     <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3 sm:px-4">
-                        <div class="bg-white/95 backdrop-blur-md rounded-[1.75rem] p-7 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
+                        <div class="max-w-[300px] xs:max-w-[330px] sm:max-w-none mx-auto bg-white/95 backdrop-blur-md rounded-[1.75rem] p-5 xs:p-6 sm:p-8 shadow-[0_14px_35px_rgba(97,27,16,0.06)] border border-[#D4A853]/30 flex flex-col justify-between h-full min-h-[210px] sm:min-h-[230px] transition hover:shadow-lg hover:border-[#D4A853]/60">
                             <div>
                                 <div class="flex items-center space-x-4 mb-4">
                                     <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Meera Krishnan" class="w-14 h-14 rounded-full object-cover shrink-0 border-2 border-[#D4A853]/40 shadow-sm">
