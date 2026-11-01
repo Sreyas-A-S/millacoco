@@ -1633,6 +1633,10 @@ window.orderCurrentScrubProduct = function(event) {
     if (event) event.preventDefault();
     const product = scrubSlides[currentScrubIndex];
     if (product) {
+        if (product.externalUrl) {
+            redirectToPlatform(product.externalUrl);
+            return;
+        }
         const target = productCatalog.find(p => p.name.includes(product.name) || product.name.includes(p.name));
         const url = target ? target.externalUrl : 'https://www.amazon.in';
         redirectToPlatform(url);
@@ -2336,7 +2340,54 @@ async function syncTestimonialsFromDatabase() {
     }
 }
 
+
+// Asynchronously sync dynamic Flagship Showcase from SQLite API
+async function syncFlagshipFromDatabase() {
+    try {
+        const res = await fetch('/mc-desk/api/flagship');
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
+            json.data.forEach((slide, idx) => {
+                if (scrubSlides[idx]) {
+                    scrubSlides[idx].name = slide.title;
+                    scrubSlides[idx].title = slide.title;
+                    scrubSlides[idx].subtitle = slide.subtitle || '';
+                    scrubSlides[idx].script = slide.script_accent || '';
+                    scrubSlides[idx].desc = slide.description || '';
+                    scrubSlides[idx].rawPrice = slide.price;
+                    scrubSlides[idx].priceDisplay = '₹' + Number(slide.price).toFixed(2);
+                    scrubSlides[idx].image = slide.image_cutout || scrubSlides[idx].image;
+                    scrubSlides[idx].externalUrl = slide.external_url || '';
+
+                    // Update image DOM src if present
+                    const imgEl = document.getElementById(`scrub-img-${idx}`);
+                    if (imgEl && slide.image_cutout) {
+                        imgEl.src = slide.image_cutout;
+                    }
+                }
+            });
+
+            // Update tab labels in DOM
+            const tabs = document.querySelectorAll('.scrub-tab');
+            json.data.forEach((slide, idx) => {
+                if (tabs[idx] && slide.tab_label) {
+                    tabs[idx].textContent = slide.tab_label;
+                }
+            });
+
+            // Refresh current active slide
+            if (typeof setScrubSlide === 'function') {
+                setScrubSlide(currentScrubIndex, false);
+            }
+        }
+    } catch (e) {
+        console.debug('Flagship showcase running with local fallback');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     syncCombosFromDatabase();
     syncTestimonialsFromDatabase();
+    syncFlagshipFromDatabase();
 });

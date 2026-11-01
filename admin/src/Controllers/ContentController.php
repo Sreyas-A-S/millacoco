@@ -669,4 +669,119 @@ HTML;
         ]));
         return $response->withHeader('Content-Type', 'application/json');
     }
+
+    /**
+     * Admin API: Updates a Testimonial
+     */
+    public function updateTestimonial(Request $request, Response $response, array $args): Response
+    {
+        $id = (int)($args['id'] ?? 0);
+        $body = (array)$request->getParsedBody();
+
+        $authorName = trim((string)($body['author_name'] ?? ''));
+        $authorLocation = trim((string)($body['author_location'] ?? ''));
+        $tag = trim((string)($body['tag'] ?? 'Verified Buyer'));
+        $quote = trim((string)($body['quote'] ?? ''));
+        $rating = (int)($body['rating'] ?? 5);
+
+        if (empty($authorName) || empty($quote)) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Author name and review quote cannot be empty.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        $stmt = $this->db->prepare(
+            "UPDATE testimonials 
+             SET author_name = :author, author_location = :loc, tag = :tag, quote = :quote, rating = :rating 
+             WHERE id = :id"
+        );
+        $stmt->execute([
+            ':author' => $authorName,
+            ':loc' => $authorLocation,
+            ':tag' => $tag,
+            ':quote' => $quote,
+            ':rating' => $rating,
+            ':id' => $id
+        ]);
+
+        $response->getBody()->write(json_encode([
+            'status' => 'success',
+            'message' => 'Review updated successfully!'
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
+     * Public API: Returns flagship showcase slides
+     */
+    public function getPublicFlagship(Request $request, Response $response): Response
+    {
+        $stmt = $this->db->query("SELECT id, slide_index, tab_label, script_accent, title, subtitle, description, price, image_cutout, external_url FROM flagship_slides WHERE is_active = 1 ORDER BY slide_index ASC");
+        $slides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($slides as &$s) {
+            $s['slide_index'] = (int)$s['slide_index'];
+            $s['price'] = (float)$s['price'];
+        }
+
+        $response->getBody()->write(json_encode([
+            'status' => 'success',
+            'data' => $slides
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
+     * Admin API: Updates a flagship slide
+     */
+    public function updateFlagshipSlide(Request $request, Response $response, array $args): Response
+    {
+        $id = (int)($args['id'] ?? 0);
+        $body = (array)$request->getParsedBody();
+
+        $title = trim((string)($body['title'] ?? ''));
+        $subtitle = trim((string)($body['subtitle'] ?? ''));
+        $scriptAccent = trim((string)($body['script_accent'] ?? ''));
+        $tabLabel = trim((string)($body['tab_label'] ?? ''));
+        $desc = trim((string)($body['description'] ?? ''));
+        $price = (float)($body['price'] ?? 0);
+        $imageCutout = trim((string)($body['image_cutout'] ?? ''));
+        $externalUrl = trim((string)($body['external_url'] ?? ''));
+
+        if (empty($title)) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Flagship product title cannot be empty.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        $stmt = $this->db->prepare(
+            "UPDATE flagship_slides 
+             SET title = :title, subtitle = :subtitle, script_accent = :script_accent, 
+                 tab_label = :tab_label, description = :desc, price = :price, 
+                 image_cutout = :image_cutout, external_url = :external_url,
+                 updated_at = CURRENT_TIMESTAMP
+             WHERE id = :id"
+        );
+        $stmt->execute([
+            ':title' => $title,
+            ':subtitle' => $subtitle,
+            ':script_accent' => $scriptAccent,
+            ':tab_label' => $tabLabel,
+            ':desc' => $desc,
+            ':price' => $price,
+            ':image_cutout' => $imageCutout,
+            ':external_url' => $externalUrl,
+            ':id' => $id
+        ]);
+
+        $response->getBody()->write(json_encode([
+            'status' => 'success',
+            'message' => 'Flagship product updated successfully!'
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
 }

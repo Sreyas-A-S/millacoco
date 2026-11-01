@@ -40,10 +40,15 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-stonebg text-sage-900 font-sans antialiased selection:bg-ambergold-300 selection:text-sage-900">
+<body class="bg-stonebg text-sage-900 font-sans antialiased selection:bg-ambergold-300 selection:text-sage-900 relative">
+
+    <!-- Luxury Vintage Damask Watermark Pattern Overlay (Blended seamlessly into background) -->
+    <div class="fixed inset-0 pointer-events-none opacity-[0.045] sm:opacity-[0.055] z-0" 
+         style="background-image: url('images/damask_gold_watermark.webp'); background-size: 300px; background-repeat: repeat;" 
+         aria-hidden="true"></div>
 
     <!-- Main Container -->
-    <div class="max-w-[1440px] mx-auto px-2.5 xs:px-4 sm:px-6 lg:px-10 py-2 sm:py-4">
+    <div class="max-w-[1440px] mx-auto px-2.5 xs:px-4 sm:px-6 lg:px-10 py-2 sm:py-4 relative z-10">
 
         <!-- HEADER & NAVIGATION -->
         <header id="main-header" class="sticky top-2 z-50 mb-3 sm:mb-4 transition-all duration-300">
@@ -130,7 +135,7 @@
         </header>
 
         <!-- HERO SECTION (Cinematic Kerala Heritage Banner) -->
-        <section id="about-hero" class="relative rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-12 lg:p-16 mb-12 sm:mb-16 border border-white/80 overflow-hidden shadow-lg min-h-[380px] sm:min-h-[440px] flex flex-col justify-between">
+        <section id="about-hero" class="relative rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-12 lg:p-16 mb-12 sm:mb-16 border border-white/80 overflow-hidden shadow-lg min-h-[380px] sm:min-h-[440px] flex flex-col justify-between relative">
             <!-- Background Image with Fade & Warm Gradient Overlay -->
             <div class="absolute inset-0 z-0 bg-cover bg-no-repeat bg-[center_right] transform scale-105" style="background-image: url('images/hero_about.webp');"></div>
             <div class="absolute inset-0 z-[1] bg-gradient-to-r from-[#FAF5EC] via-[#FAF5EC]/90 sm:via-[#FAF5EC]/75 60% via-[#FAF5EC]/30 80% to-transparent pointer-events-none"></div>
@@ -177,7 +182,7 @@
         <!-- 4-PILLAR TRUST BADGES (Matching Homepage Excellence Strip) -->
         <section class="mb-14">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-5">
-                <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/90 shadow-sm flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5">
+                <div class="glass-card rounded-2xl p-4 sm:p-5 flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5">
                     <div class="w-11 h-11 rounded-xl bg-[#611B10]/10 border border-[#611B10]/20 flex items-center justify-center text-[#611B10] shrink-0 text-base">
                         <i class="fa-solid fa-sun"></i>
                     </div>
@@ -187,7 +192,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/90 shadow-sm flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5">
+                <div class="glass-card rounded-2xl p-4 sm:p-5 flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5">
                     <div class="w-11 h-11 rounded-xl bg-emerald-600/10 border border-emerald-600/20 flex items-center justify-center text-emerald-700 shrink-0 text-base">
                         <i class="fa-solid fa-shield-halved"></i>
                     </div>
@@ -197,7 +202,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/90 shadow-sm flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5">
+                <div class="glass-card rounded-2xl p-4 sm:p-5 flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5">
                     <div class="w-11 h-11 rounded-xl bg-[#D4A853]/20 border border-[#D4A853]/40 flex items-center justify-center text-[#611B10] shrink-0 text-base">
                         <i class="fa-solid fa-award"></i>
                     </div>
@@ -207,7 +212,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/90 shadow-sm flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5">
+                <div class="glass-card rounded-2xl p-4 sm:p-5 flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5">
                     <div class="w-11 h-11 rounded-xl bg-[#1C3822]/10 border border-[#1C3822]/20 flex items-center justify-center text-[#1C3822] shrink-0 text-base">
                         <i class="fa-solid fa-bottle-droplet"></i>
                     </div>
@@ -481,8 +486,9 @@
         </section>
 
         <!-- CTA BANNER (Rich Maroon & Gold) -->
-        <section class="bg-[#611B10] text-[#FAF5EC] rounded-[2rem] sm:rounded-3xl p-8 sm:p-12 text-center border border-[#D4A853]/40 shadow-xl mb-16 relative overflow-hidden">
             <div class="absolute inset-0 bg-cover bg-no-repeat opacity-15 pointer-events-none" style="background-image: url('images/hero_slide_coconuts.webp');"></div>
+            <!-- Vintage Damask Gold Emboss Overlay -->
+            <div class="absolute inset-0 opacity-[0.08] pointer-events-none" style="background-image: url('images/damask_gold_watermark.webp'); background-size: 260px; background-repeat: repeat;"></div>
             <div class="relative z-10 max-w-xl mx-auto space-y-3">
                 <span class="inline-block text-[10px] font-bold uppercase tracking-widest text-[#D4A853] bg-white/10 px-3 py-1 rounded-full border border-white/15">
                     Order Directly from the Source

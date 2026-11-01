@@ -59,7 +59,7 @@ class DashboardController
                     <a href="{$url}" target="_blank" class="text-sky-700 hover:underline truncate block">{$url}</a>
                 </td>
                 <td class="py-3 px-3 sm:px-4 text-right">
-                    <a href="/mc-desk/products" class="px-3 py-1 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white rounded-lg text-xs font-semibold transition">
+                    <a href="/mc-desk/content" class="px-3 py-1 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white rounded-lg text-xs font-semibold transition">
                         Manage
                     </a>
                 </td>
@@ -125,25 +125,9 @@ HTML;
                     <i class="fa-solid fa-chart-pie w-4"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="/mc-desk/products" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
-                    <i class="fa-solid fa-arrow-up-right-from-square w-4"></i>
-                    <span>Marketplace Redirects</span>
-                </a>
-                <a href="/mc-desk/combos-reviews" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
-                    <i class="fa-solid fa-box-open w-4"></i>
-                    <span>Combos & Reviews</span>
-                </a>
-                <a href="/mc-desk/settings" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
-                    <i class="fa-solid fa-sliders w-4"></i>
-                    <span>Site Content & Copy</span>
-                </a>
-                <a href="/mc-desk/combos-reviews" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
-                    <i class="fa-solid fa-box-open w-4"></i>
-                    <span>Combos & Reviews</span>
-                </a>
-                <a href="/mc-desk/settings" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
-                    <i class="fa-solid fa-sliders w-4"></i>
-                    <span>Site Content & Copy</span>
+                <a href="/mc-desk/content" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
+                    <i class="fa-solid fa-layer-group w-4"></i>
+                    <span>Content Management</span>
                 </a>
                 <a href="/" target="_blank" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
                     <i class="fa-solid fa-store w-4"></i>
@@ -218,7 +202,7 @@ HTML;
         <div class="bg-white rounded-2xl sm:rounded-3xl border border-[#D4A853]/30 p-4 sm:p-6 shadow-xs">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="font-serif font-bold text-sm sm:text-base text-[#611B10]">Active Marketplace Redirect Links</h3>
-                <a href="/mc-desk/products" class="text-xs font-bold text-[#611B10] hover:text-[#782315] flex items-center gap-1">
+                <a href="/mc-desk/content" class="text-xs font-bold text-[#611B10] hover:text-[#782315] flex items-center gap-1">
                     <span>Edit Destination URLs</span>
                     <i class="fa-solid fa-arrow-right text-[10px]"></i>
                 </a>

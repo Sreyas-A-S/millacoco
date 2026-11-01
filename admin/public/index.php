@@ -77,6 +77,7 @@ $app->get('/api/products', [$productController, 'getPublicProducts']);
 $app->get('/api/settings', [$settingsController, 'getPublicSettings']);
 $app->get('/api/combos', [$contentController, 'getPublicCombos']);
 $app->get('/api/testimonials', [$contentController, 'getPublicTestimonials']);
+$app->get('/api/flagship', [$contentController, 'getPublicFlagship']);
 
 // Rate limit login endpoint: max 5 login attempts per 60 seconds per IP
 $app->post('/api/login', [$authController, 'login'])
@@ -93,7 +94,11 @@ $app->group('', function ($group) use ($dashboardController, $productController,
     $group->get('', [$dashboardController, 'index']);
     $group->get('/', [$dashboardController, 'index']);
     $group->get('/dashboard', [$dashboardController, 'index']);
+    $group->get('/content', [$productController, 'renderProductsPage']);
     $group->get('/products', [$productController, 'renderProductsPage']);
+    $group->post('/api/admin/products', [$productController, 'create']);
+    $group->post('/api/admin/fetch-metadata', [$productController, 'fetchUrlMetadata']);
+    $group->post('/api/admin/upload-photo', [$productController, 'uploadProductPhoto']);
     $group->get('/api/admin/products', [$productController, 'index']);
     $group->put('/api/admin/products/{id}', [$productController, 'update']);
     
@@ -105,7 +110,9 @@ $app->group('', function ($group) use ($dashboardController, $productController,
     $group->get('/combos-reviews', [$contentController, 'renderContentManagerPage']);
     $group->put('/api/admin/combos/{id}', [$contentController, 'updateCombo']);
     $group->post('/api/admin/testimonials', [$contentController, 'createTestimonial']);
+    $group->put('/api/admin/testimonials/{id}', [$contentController, 'updateTestimonial']);
     $group->delete('/api/admin/testimonials/{id}', [$contentController, 'deleteTestimonial']);
+    $group->put('/api/admin/flagship/{id}', [$contentController, 'updateFlagshipSlide']);
     
     // Admin Password Update
     $group->post('/api/admin/change-password', [$authController, 'updatePassword']);

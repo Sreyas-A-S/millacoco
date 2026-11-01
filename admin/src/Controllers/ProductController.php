@@ -39,7 +39,7 @@ class ProductController
     }
 
     /**
-     * HTML View: Product Management Screen in Admin
+     * Admin HTML: Unified Content & Catalog Management Hub
      */
     public function renderProductsPage(Request $request, Response $response): Response
     {
@@ -47,24 +47,64 @@ class ProductController
         $adminName = htmlspecialchars($jwtUser->name ?? 'Admin', ENT_QUOTES, 'UTF-8');
         $adminRole = htmlspecialchars($jwtUser->role ?? 'Staff', ENT_QUOTES, 'UTF-8');
 
-        $stmt = $this->db->query(
-            "SELECT id, name, tag, category, price, image, external_url, platform_name, is_active 
-             FROM products 
-             ORDER BY sort_order ASC, id ASC"
-        );
+        // 1. Fetch Products
+        $stmt = $this->db->query("SELECT * FROM products ORDER BY sort_order ASC, id ASC");
         $products = $stmt->fetchAll();
 
-        $rowsHtml = '';
+        // 2. Fetch Combos
+        $stmtCombos = $this->db->query("SELECT * FROM combo_packs ORDER BY sort_order ASC, id ASC");
+        $combos = $stmtCombos->fetchAll();
+
+        // 3. Fetch Testimonials
+        $stmtTestimonials = $this->db->query("SELECT * FROM testimonials ORDER BY sort_order ASC, id ASC");
+        $testimonials = $stmtTestimonials->fetchAll();
+
+        // 4. Fetch Site Settings
+        $stmtSettings = $this->db->query("SELECT * FROM site_settings ORDER BY category ASC, key ASC");
+        $settingsRows = $stmtSettings->fetchAll();
+
+        // 4b. Fetch Flagship Showcase Slides
+        $stmtFlagship = $this->db->query("SELECT * FROM flagship_slides ORDER BY slide_index ASC");
+        $flagshipSlides = $stmtFlagship->fetchAll();
+
+        // 5. Fetch all distinct Tags and Categories for auto-complete datalists
+        $distinctTagsStmt = $this->db->query("SELECT DISTINCT tag FROM products WHERE tag IS NOT NULL AND TRIM(tag) != '' ORDER BY tag ASC");
+        $existingTags = $distinctTagsStmt->fetchAll(\PDO::FETCH_COLUMN);
+
+        $distinctCatsStmt = $this->db->query("SELECT DISTINCT category FROM products WHERE category IS NOT NULL AND TRIM(category) != '' ORDER BY category ASC");
+        $existingCats = $distinctCatsStmt->fetchAll(\PDO::FETCH_COLUMN);
+
+        // Standard default recommendations if empty
+        $defaultTags = ['Bestseller', 'Spout Pouch', 'Twin Value', 'Bulk Supply', 'Skincare', 'New Arrival', 'Signature Bottle', 'Kitchen Essential', 'Ayurvedic Wellness'];
+        $defaultCats = ['daily', 'bulk', 'wellness', 'cooking', 'bundles'];
+
+        $allTags = array_values(array_unique(array_filter(array_merge($defaultTags, $existingTags))));
+        $allCats = array_values(array_unique(array_filter(array_merge($defaultCats, $existingCats))));
+
+        $tagsDatalistOptions = '';
+        foreach ($allTags as $tVal) {
+            $safeVal = htmlspecialchars($tVal, ENT_QUOTES, 'UTF-8');
+            $tagsDatalistOptions .= "<option value='{$safeVal}'>";
+        }
+
+        $catsDatalistOptions = '';
+        foreach ($allCats as $cVal) {
+            $safeVal = htmlspecialchars($cVal, ENT_QUOTES, 'UTF-8');
+            $catsDatalistOptions .= "<option value='{$safeVal}'>";
+        }
+
+        // Build Products Rows
+        $productRowsHtml = '';
         foreach ($products as $p) {
             $id = (int)$p['id'];
             $name = htmlspecialchars($p['name'], ENT_QUOTES, 'UTF-8');
             $img = htmlspecialchars($p['image'], ENT_QUOTES, 'UTF-8');
-            $tag = htmlspecialchars($p['tag'], ENT_QUOTES, 'UTF-8');
+            $tag = htmlspecialchars($p['tag'] ?? 'Bestseller', ENT_QUOTES, 'UTF-8');
             $url = htmlspecialchars($p['external_url'], ENT_QUOTES, 'UTF-8');
             $platform = htmlspecialchars($p['platform_name'], ENT_QUOTES, 'UTF-8');
             $price = number_format((float)$p['price'], 2);
 
-            $rowsHtml .= <<<HTML
+            $productRowsHtml .= <<<HTML
             <tr class="hover:bg-amber-50/40 transition">
                 <td class="py-3 px-4 font-mono font-bold text-stone-600">#{$id}</td>
                 <td class="py-3 px-4">
@@ -84,12 +124,185 @@ class ProductController
                     <a href="{$url}" target="_blank" class="hover:underline text-sky-700 truncate block">{$url}</a>
                 </td>
                 <td class="py-3 px-4 text-right">
-                    <button onclick="openEditModal({$id}, '{$name}', {$p['price']}, '{$platform}', '{$url}')" class="px-3 py-1 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white rounded-lg text-xs font-semibold transition shadow-xs">
-                        Edit Link
+                    <button onclick='openEditModal({$id}, "{$name}", {$p['price']}, "{$tag}", "{$p['category']}", "{$platform}", "{$img}", "{$url}", "{$p['description']}")' class="px-3.5 py-1.5 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white rounded-xl text-xs font-semibold transition shadow-xs flex items-center gap-1.5 ml-auto">
+                        <i class="fa-solid fa-pen-to-square text-[10px]"></i>
+                        <span>Edit Product</span>
                     </button>
                 </td>
             </tr>
 HTML;
+        }
+
+        // Build Flagship Showcase Cards
+        $flagshipHtml = '';
+        foreach ($flagshipSlides as $fs) {
+            $fsId = (int)$fs['id'];
+            $fsIndex = (int)$fs['slide_index'];
+            $fsTab = htmlspecialchars($fs['tab_label'] ?? '', ENT_QUOTES, 'UTF-8');
+            $fsScript = htmlspecialchars($fs['script_accent'] ?? '', ENT_QUOTES, 'UTF-8');
+            $fsTitle = htmlspecialchars($fs['title'] ?? '', ENT_QUOTES, 'UTF-8');
+            $fsSubtitle = htmlspecialchars($fs['subtitle'] ?? '', ENT_QUOTES, 'UTF-8');
+            $fsDesc = htmlspecialchars($fs['description'] ?? '', ENT_QUOTES, 'UTF-8');
+            $fsPrice = number_format((float)$fs['price'], 2);
+            $fsRawPrice = (float)$fs['price'];
+            $fsImg = htmlspecialchars($fs['image_cutout'] ?? '', ENT_QUOTES, 'UTF-8');
+            $fsUrl = htmlspecialchars($fs['external_url'] ?? '', ENT_QUOTES, 'UTF-8');
+
+            $fsScriptJs = htmlspecialchars(json_encode($fs['script_accent'] ?? ''), ENT_QUOTES, 'UTF-8');
+            $fsTitleJs = htmlspecialchars(json_encode($fs['title'] ?? ''), ENT_QUOTES, 'UTF-8');
+            $fsSubtitleJs = htmlspecialchars(json_encode($fs['subtitle'] ?? ''), ENT_QUOTES, 'UTF-8');
+            $fsTabJs = htmlspecialchars(json_encode($fs['tab_label'] ?? ''), ENT_QUOTES, 'UTF-8');
+            $fsDescJs = htmlspecialchars(json_encode($fs['description'] ?? ''), ENT_QUOTES, 'UTF-8');
+            $fsImgJs = htmlspecialchars(json_encode($fs['image_cutout'] ?? ''), ENT_QUOTES, 'UTF-8');
+            $fsUrlJs = htmlspecialchars(json_encode($fs['external_url'] ?? ''), ENT_QUOTES, 'UTF-8');
+
+            $flagshipHtml .= <<<HTML
+            <div class="bg-white rounded-2xl p-5 border border-[#D4A853]/30 shadow-2xs hover:shadow-md transition flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider bg-[#611B10] text-[#D4A853] px-2.5 py-1 rounded-full">Slide #{$fsIndex} &bull; {$fsTab}</span>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">Active Showcase</span>
+                    </div>
+                    <div class="flex items-start gap-4 mb-3">
+                        <img src="/{$fsImg}" alt="{$fsTitle}" class="w-16 h-20 object-contain rounded-xl bg-stone-50 border border-stone-200 p-1 shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <span class="text-[11px] font-semibold text-[#2E6F40] italic block truncate">{$fsScript}</span>
+                            <h4 class="font-serif font-bold text-sm text-[#611B10] leading-snug truncate">{$fsTitle}</h4>
+                            <p class="text-[11px] text-stone-500 mt-0.5 font-medium truncate">{$fsSubtitle}</p>
+                            <div class="flex items-baseline gap-2 mt-1.5">
+                                <span class="font-bold text-sm text-stone-900">₹{$fsPrice}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-stone-600 line-clamp-3 mb-4 bg-stone-50 p-2.5 rounded-xl border border-stone-100">{$fsDesc}</p>
+                    <div class="text-[10px] text-stone-500 truncate mb-3 bg-stone-50 px-2.5 py-1.5 rounded-lg border border-stone-100">
+                        <i class="fa-solid fa-link text-[#D4A853] mr-1"></i> <span class="font-mono">{$fsUrl}</span>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-stone-100 flex items-center justify-end">
+                    <button type="button" onclick='openEditFlagshipModal({$fsId}, {$fsTitleJs}, {$fsSubtitleJs}, {$fsScriptJs}, {$fsTabJs}, {$fsDescJs}, {$fsRawPrice}, {$fsImgJs}, {$fsUrlJs})' class="px-3.5 py-1.5 rounded-xl bg-stone-100 hover:bg-[#611B10] text-stone-700 hover:text-white font-bold text-xs transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-pen-to-square text-[11px]"></i>
+                        <span>Edit Flagship Slide</span>
+                    </button>
+                </div>
+            </div>
+HTML;
+        }
+
+        // Build Combos Cards
+        $combosHtml = '';
+        foreach ($combos as $c) {
+            $id = (int)$c['id'];
+            $cid = htmlspecialchars($c['combo_id'], ENT_QUOTES, 'UTF-8');
+            $name = htmlspecialchars($c['name'], ENT_QUOTES, 'UTF-8');
+            $badge = htmlspecialchars($c['badge'], ENT_QUOTES, 'UTF-8');
+            $subtitle = htmlspecialchars($c['subtitle'], ENT_QUOTES, 'UTF-8');
+            $desc = htmlspecialchars($c['description'], ENT_QUOTES, 'UTF-8');
+            $price = number_format((float)$c['price'], 2);
+            $oldPrice = $c['old_price'] ? number_format((float)$c['old_price'], 2) : '';
+            $img = htmlspecialchars($c['image'], ENT_QUOTES, 'UTF-8');
+            $btnLabel = htmlspecialchars($c['btn_label'], ENT_QUOTES, 'UTF-8');
+
+            $combosHtml .= <<<HTML
+            <div class="bg-white rounded-2xl p-5 border border-[#D4A853]/30 shadow-2xs hover:shadow-md transition flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider bg-[#611B10] text-[#D4A853] px-2.5 py-1 rounded-full">{$badge}</span>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">Active</span>
+                    </div>
+                    <div class="flex items-start gap-4 mb-3">
+                        <img src="/{$img}" alt="{$name}" class="w-16 h-16 object-contain rounded-xl bg-stone-50 border border-stone-200 p-1 shrink-0">
+                        <div>
+                            <h4 class="font-serif font-bold text-sm text-[#611B10] leading-snug">{$name}</h4>
+                            <p class="text-[11px] text-stone-500 mt-0.5 font-medium">{$subtitle}</p>
+                            <div class="flex items-baseline gap-2 mt-1.5">
+                                <span class="font-bold text-sm text-stone-900">₹{$price}</span>
+                                <span class="text-[11px] text-stone-400 line-through">₹{$oldPrice}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-stone-600 line-clamp-2 mb-4 bg-stone-50 p-2.5 rounded-xl border border-stone-100">{$desc}</p>
+                </div>
+                <div class="pt-2 border-t border-stone-100 flex items-center justify-between">
+                    <span class="text-[11px] font-mono text-stone-400">ID: {$cid}</span>
+                    <button type="button" onclick='openEditComboModal({$id}, {$c['price']}, "{$btnLabel}", "{$desc}")' class="px-4 py-1.5 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold text-xs transition shadow-sm active:scale-95 flex items-center gap-1.5">
+                        <i class="fa-solid fa-pen-to-square text-[10px]"></i>
+                        <span>Edit Combo</span>
+                    </button>
+                </div>
+            </div>
+HTML;
+        }
+
+        // Build Testimonials Rows
+        $testimonialsHtml = '';
+        foreach ($testimonials as $t) {
+            $id = (int)$t['id'];
+            $name = htmlspecialchars($t['author_name'], ENT_QUOTES, 'UTF-8');
+            $location = htmlspecialchars($t['author_location'], ENT_QUOTES, 'UTF-8');
+            $tag = htmlspecialchars($t['tag'] ?? 'Verified Buyer', ENT_QUOTES, 'UTF-8');
+            $quote = htmlspecialchars($t['quote'], ENT_QUOTES, 'UTF-8');
+            $rating = (int)$t['rating'];
+            $stars = str_repeat('<i class="fa-solid fa-star text-amber-500 text-[10px]"></i>', $rating);
+
+            $testimonialsHtml .= <<<HTML
+            <tr class="hover:bg-amber-50/40 transition">
+                <td class="py-3 px-4 font-mono font-bold text-stone-500">#{$id}</td>
+                <td class="py-3 px-4">
+                    <div class="font-bold text-[#611B10] text-xs">{$name}</div>
+                    <span class="text-[10px] text-stone-500">{$location}</span>
+                </td>
+                <td class="py-3 px-4">
+                    <div class="flex items-center gap-0.5">{$stars}</div>
+                    <span class="text-[9px] font-semibold bg-emerald-50 text-emerald-700 px-1.5 py-0.2 rounded-full mt-0.5 inline-block">{$tag}</span>
+                </td>
+                <td class="py-3 px-4 text-xs text-stone-600 max-w-sm italic">
+                    "{$quote}"
+                </td>
+                <td class="py-3 px-4 text-right whitespace-nowrap">
+                    <button type="button" onclick='openEditTestimonialModal({$id}, "{$name}", "{$location}", "{$tag}", {$rating}, "{$quote}")' class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold mr-1.5 transition" title="Edit Review">
+                        <i class="fa-solid fa-pen-to-square text-[10px]"></i>
+                    </button>
+                    <button type="button" onclick="deleteTestimonial({$id})" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 transition" title="Delete Review">
+                        <i class="fa-solid fa-trash-can text-xs"></i>
+                    </button>
+                </td>
+            </tr>
+HTML;
+        }
+
+        // Build Settings Fields Grouped
+        $settingsCategorized = ['contact' => [], 'homepage' => [], 'about' => [], 'social' => []];
+        foreach ($settingsRows as $row) {
+            $cat = $row['category'] ?? 'general';
+            if (!isset($settingsCategorized[$cat])) $settingsCategorized[$cat] = [];
+            $settingsCategorized[$cat][] = $row;
+        }
+
+        $settingsFieldsHtml = '';
+        foreach ($settingsCategorized as $catKey => $items) {
+            if (empty($items)) continue;
+            $catTitle = ucfirst($catKey);
+            $settingsFieldsHtml .= "<div class='sm:col-span-2 pt-2 border-b border-stone-200 pb-1 font-serif font-bold text-sm text-[#611B10]'>{$catTitle} Settings</div>";
+            foreach ($items as $item) {
+                $key = htmlspecialchars($item['key'], ENT_QUOTES, 'UTF-8');
+                $val = htmlspecialchars($item['value'], ENT_QUOTES, 'UTF-8');
+                $label = htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8');
+                $desc = htmlspecialchars($item['description'] ?? '', ENT_QUOTES, 'UTF-8');
+                $type = $item['field_type'] ?? 'text';
+
+                $input = $type === 'textarea'
+                    ? "<textarea name='{$key}' rows='2' class='w-full px-3 py-2 rounded-xl border border-stone-200 text-xs focus:border-[#611B10] outline-none'>{$val}</textarea>"
+                    : "<input type='text' name='{$key}' value='{$val}' class='w-full px-3 py-2 rounded-xl border border-stone-200 text-xs focus:border-[#611B10] outline-none'>";
+
+                $settingsFieldsHtml .= <<<HTML
+                <div class="bg-stone-50/60 p-3.5 rounded-2xl border border-stone-200/80">
+                    <label class="block text-xs font-bold text-[#611B10] mb-0.5">{$label}</label>
+                    <p class="text-[10px] text-stone-500 mb-2">{$desc}</p>
+                    {$input}
+                </div>
+HTML;
+            }
         }
 
         $html = <<<HTML
@@ -98,13 +311,18 @@ HTML;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products & Marketplace Redirects - Millacoco Admin</title>
+    <title>Content Management Hub - Millacoco Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FAF5EC; }
         .font-serif { font-family: 'Playfair Display', serif; }
+        .hub-tab.active {
+            background-color: #611B10;
+            color: #D4A853;
+            box-shadow: 0 4px 12px rgba(97, 27, 16, 0.15);
+        }
     </style>
 </head>
 <body class="text-[#3a0e07] flex flex-col md:flex-row min-h-screen">
@@ -125,7 +343,7 @@ HTML;
     <!-- Backdrop for Mobile Drawer -->
     <div id="mobile-sidebar-backdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden transition-opacity"></div>
 
-    <!-- Responsive Sidebar (Slide-over on mobile, sticky on desktop) -->
+    <!-- Responsive Sidebar (Streamlined to single Content Management item) -->
     <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-[#611B10] text-[#FAF5EC] flex flex-col justify-between shrink-0 shadow-2xl transform -translate-x-full md:translate-x-0 md:static transition-transform duration-300">
         <div>
             <!-- Brand Badge -->
@@ -150,25 +368,9 @@ HTML;
                     <i class="fa-solid fa-chart-pie w-4"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="/mc-desk/products" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-white/10 text-[#D4A853] transition">
-                    <i class="fa-solid fa-arrow-up-right-from-square w-4"></i>
-                    <span>Marketplace Redirects</span>
-                </a>
-                <a href="/mc-desk/combos-reviews" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
-                    <i class="fa-solid fa-box-open w-4"></i>
-                    <span>Combos & Reviews</span>
-                </a>
-                <a href="/mc-desk/settings" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
-                    <i class="fa-solid fa-sliders w-4"></i>
-                    <span>Site Content & Copy</span>
-                </a>
-                <a href="/mc-desk/combos-reviews" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
-                    <i class="fa-solid fa-box-open w-4"></i>
-                    <span>Combos & Reviews</span>
-                </a>
-                <a href="/mc-desk/settings" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
-                    <i class="fa-solid fa-sliders w-4"></i>
-                    <span>Site Content & Copy</span>
+                <a href="/mc-desk/content" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-white/10 text-[#D4A853] transition">
+                    <i class="fa-solid fa-layer-group w-4"></i>
+                    <span>Content Management</span>
                 </a>
                 <a href="/" target="_blank" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/5 text-[#FAF5EC]/80 hover:text-white transition">
                     <i class="fa-solid fa-store w-4"></i>
@@ -177,83 +379,532 @@ HTML;
             </nav>
         </div>
 
+        <!-- User Info / Logout -->
         <div class="p-4 border-t border-[#D4A853]/20 bg-black/10 flex items-center justify-between">
             <div>
                 <div class="text-xs font-bold text-white">{$adminName}</div>
                 <div class="text-[10px] text-[#D4A853]">{$adminRole}</div>
             </div>
-                            <button onclick="openPasswordModal()" class="text-xs text-[#FAF5EC]/70 hover:text-[#D4A853] p-1.5 transition" title="Change Password">
+            <div class="flex items-center gap-1">
+                <button onclick="openPasswordModal()" class="text-xs text-[#FAF5EC]/70 hover:text-[#D4A853] p-1.5 transition" title="Change Password">
                     <i class="fa-solid fa-key"></i>
                 </button>
                 <button onclick="logoutAdmin()" class="text-xs text-[#FAF5EC]/70 hover:text-white p-1.5 transition" title="Logout">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 </button>
+            </div>
         </div>
     </aside>
 
     <!-- Main Content Area -->
     <main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
-        <header class="flex items-center justify-between mb-8 pb-4 border-b border-[#D4A853]/20">
+        <header class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 pb-4 border-b border-[#D4A853]/20 gap-3">
             <div>
-                <h2 class="font-serif text-2xl font-bold text-[#611B10]">Products & Marketplace Redirects</h2>
-                <p class="text-xs text-[#611B10]/70 mt-0.5">Manage product pricing and destination URLs (Amazon, Flipkart, etc.)</p>
+                <h2 class="font-serif text-xl sm:text-2xl font-bold text-[#611B10]">Content Management Hub</h2>
+                <p class="text-xs text-[#611B10]/70 mt-0.5">Manage products, combo packs, customer reviews, and site text copy in one unified place.</p>
             </div>
-            <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
-                SQLite Live Sync
-            </span>
+            <div class="flex items-center gap-2">
+                <button onclick="openAddProductModal()" class="px-4 py-2.5 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold text-xs shadow-md transition active:scale-95 flex items-center gap-1.5">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add New Product</span>
+                </button>
+            </div>
         </header>
 
-        <div class="bg-white rounded-3xl border border-[#D4A853]/30 p-6 shadow-xs overflow-hidden">
-            <table class="w-full text-left text-xs">
-                <thead>
-                    <tr class="border-b border-[#D4A853]/20 text-[#611B10]/60 font-bold uppercase tracking-wider text-[10px]">
-                        <th class="py-3 px-4">ID</th>
-                        <th class="py-3 px-4">Product Name</th>
-                        <th class="py-3 px-4">Price</th>
-                        <th class="py-3 px-4">Platform</th>
-                        <th class="py-3 px-4">External URL</th>
-                        <th class="py-3 px-4 text-right">Action</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-stone-100">
-                    {$rowsHtml}
-                </tbody>
-            </table>
+        <!-- Sub-Navigation Tabs inside Content Management -->
+        <div class="flex flex-wrap items-center gap-2 mb-6">
+            <button type="button" onclick="switchHubSection('products', this)" class="hub-tab active px-4 py-2 rounded-full text-xs font-bold bg-white text-[#611B10] border border-[#D4A853]/30 transition flex items-center gap-2">
+                <i class="fa-solid fa-bottle-droplet"></i>
+                <span>Products Catalog</span>
+            </button>
+            <button type="button" onclick="switchHubSection('flagship', this)" class="hub-tab px-4 py-2 rounded-full text-xs font-bold bg-white text-stone-700 hover:text-[#611B10] border border-[#D4A853]/30 transition flex items-center gap-2">
+                <i class="fa-solid fa-bottle-water"></i>
+                <span>Flagship Showcase</span>
+            </button>
+            <button type="button" onclick="switchHubSection('combos', this)" class="hub-tab px-4 py-2 rounded-full text-xs font-bold bg-white text-stone-700 hover:text-[#611B10] border border-[#D4A853]/30 transition flex items-center gap-2">
+                <i class="fa-solid fa-boxes-packing"></i>
+                <span>Combo Offers</span>
+            </button>
+            <button type="button" onclick="switchHubSection('reviews', this)" class="hub-tab px-4 py-2 rounded-full text-xs font-bold bg-white text-stone-700 hover:text-[#611B10] border border-[#D4A853]/30 transition flex items-center gap-2">
+                <i class="fa-solid fa-star"></i>
+                <span>Customer Reviews</span>
+            </button>
+            <button type="button" onclick="switchHubSection('settings', this)" class="hub-tab px-4 py-2 rounded-full text-xs font-bold bg-white text-stone-700 hover:text-[#611B10] border border-[#D4A853]/30 transition flex items-center gap-2">
+                <i class="fa-solid fa-sliders"></i>
+                <span>Site Texts &amp; Contact</span>
+            </button>
         </div>
-    </main>
 
-    <!-- Edit Product Modal -->
-    <div id="edit-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-[#D4A853]/40 shadow-2xl">
-            <div class="flex items-center justify-between pb-4 border-b border-stone-200">
-                <h3 class="font-serif text-lg font-bold text-[#611B10]" id="modal-product-name">Edit Product</h3>
-                <button onclick="closeEditModal()" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <!-- Section 1: Products Catalog Table -->
+        <div id="hub-section-products" class="hub-pane space-y-4">
+            <div class="bg-white rounded-2xl sm:rounded-3xl border border-[#D4A853]/30 p-4 sm:p-6 shadow-2xs overflow-hidden">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-serif font-bold text-base text-[#611B10]">Active Products &amp; Purchase Redirection</h3>
+                    <button onclick="openAddProductModal()" class="text-xs font-bold text-[#611B10] hover:underline flex items-center gap-1">
+                        <i class="fa-solid fa-plus text-[10px]"></i>
+                        <span>Add Product</span>
+                    </button>
+                </div>
+                <div class="overflow-x-auto -mx-4 sm:mx-0">
+                    <table class="w-full text-left text-xs min-w-[650px] sm:min-w-full">
+                        <thead>
+                            <tr class="border-b border-[#D4A853]/20 text-[#611B10]/60 font-bold uppercase tracking-wider text-[10px]">
+                                <th class="py-3 px-4">ID</th>
+                                <th class="py-3 px-4">Product Name</th>
+                                <th class="py-3 px-4">Price</th>
+                                <th class="py-3 px-4">Destination</th>
+                                <th class="py-3 px-4">Marketplace URL</th>
+                                <th class="py-3 px-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-100">
+                            {$productRowsHtml}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1b: Flagship Bottle Showcase -->
+        <div id="hub-section-flagship" class="hub-pane hidden space-y-4">
+            <div class="bg-white rounded-2xl sm:rounded-3xl border border-[#D4A853]/30 p-4 sm:p-6 shadow-2xs">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                    <div>
+                        <h3 class="font-serif font-bold text-base text-[#611B10]">Interactive Flagship Bottle Showcase</h3>
+                        <p class="text-xs text-stone-500">Manage the 3 interactive products featured in the homepage scroll-scrub showcase.</p>
+                    </div>
+                    <span class="text-xs font-semibold px-3 py-1 bg-[#FAF5EC] text-[#611B10] border border-[#D4A853]/30 rounded-full w-fit">
+                        <i class="fa-solid fa-arrows-spin mr-1 text-[#2E6F40]"></i> Live Storefront Synced
+                    </span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    {$flagshipHtml}
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Combo Offers -->
+        <div id="hub-section-combos" class="hub-pane hidden space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {$combosHtml}
+            </div>
+        </div>
+
+        <!-- Section 3: Customer Reviews -->
+        <div id="hub-section-reviews" class="hub-pane hidden space-y-6">
+            <!-- Add Testimonial -->
+            <div class="bg-white rounded-2xl sm:rounded-3xl p-5 border border-[#D4A853]/30 shadow-2xs">
+                <h4 class="font-serif font-bold text-sm text-[#611B10] mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-plus-circle text-[#D4A853]"></i>
+                    <span>Add Verified Customer Review</span>
+                </h4>
+                <form onsubmit="handleCreateTestimonial(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-3 text-xs">
+                    <div class="sm:col-span-4">
+                        <label class="block font-bold text-stone-700 mb-1">Customer Name</label>
+                        <input type="text" id="t-author" required placeholder="e.g. Maya Suresh" class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                    </div>
+                    <div class="sm:col-span-4">
+                        <label class="block font-bold text-stone-700 mb-1">City / Location</label>
+                        <input type="text" id="t-location" required placeholder="e.g. Kozhikode, Kerala" class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                    </div>
+                    <div class="sm:col-span-4">
+                        <label class="block font-bold text-stone-700 mb-1">Category / Tag</label>
+                        <input type="text" id="t-tag" placeholder="e.g. Traditional Cooking" class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                    </div>
+                    <div class="sm:col-span-12">
+                        <label class="block font-bold text-stone-700 mb-1">Review Quote</label>
+                        <textarea id="t-quote" required rows="2" placeholder="Experience feedback..." class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]"></textarea>
+                    </div>
+                    <div class="sm:col-span-12 flex justify-end">
+                        <button type="submit" class="px-5 py-2 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition shadow-sm active:scale-95 flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Publish Testimonial</span>
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <form onsubmit="handleProductUpdate(event)" class="space-y-4 pt-4">
-                <input type="hidden" id="edit-id">
-                <div>
-                    <label class="block text-xs font-bold text-[#611B10] uppercase mb-1">Price (₹)</label>
-                    <input type="number" step="0.01" id="edit-price" required class="w-full px-4 py-2.5 rounded-xl border border-stone-200 text-xs focus:ring-2 focus:ring-[#D4A853] focus:outline-none">
+            <!-- Published Reviews Table -->
+            <div class="bg-white rounded-2xl sm:rounded-3xl border border-[#D4A853]/30 p-4 sm:p-6 shadow-2xs">
+                <h4 class="font-serif font-bold text-sm text-[#611B10] mb-4">Published Reviews</h4>
+                <div class="overflow-x-auto -mx-4 sm:mx-0">
+                    <table class="w-full text-left text-xs min-w-[600px] sm:min-w-full">
+                        <thead>
+                            <tr class="border-b border-[#D4A853]/20 text-[#611B10]/60 font-bold uppercase tracking-wider text-[10px]">
+                                <th class="py-3 px-4">ID</th>
+                                <th class="py-3 px-4">Author</th>
+                                <th class="py-3 px-4">Rating</th>
+                                <th class="py-3 px-4">Quote</th>
+                                <th class="py-3 px-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-100">
+                            {$testimonialsHtml}
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+        </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-[#611B10] uppercase mb-1">Platform Name</label>
-                    <input type="text" id="edit-platform" required class="w-full px-4 py-2.5 rounded-xl border border-stone-200 text-xs focus:ring-2 focus:ring-[#D4A853] focus:outline-none" placeholder="e.g. Amazon, Flipkart, WhatsApp">
+        <!-- Section 4: Site Texts & Contact -->
+        <div id="hub-section-settings" class="hub-pane hidden space-y-4">
+            <form id="unified-settings-form" onsubmit="event.preventDefault(); saveUnifiedSettings();" class="bg-white rounded-2xl sm:rounded-3xl border border-[#D4A853]/30 p-5 sm:p-7 shadow-2xs space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                    <div>
+                        <h4 class="font-serif font-bold text-base text-[#611B10]">Site Copy &amp; Contact Details</h4>
+                        <p class="text-xs text-stone-500 mt-0.5">Changes update live on all public storefront pages.</p>
+                    </div>
+                    <button type="submit" class="px-5 py-2.5 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold text-xs shadow-md transition active:scale-95 flex items-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Save Changes</span>
+                    </button>
                 </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-[#611B10] uppercase mb-1">External Redirect URL</label>
-                    <input type="url" id="edit-url" required class="w-full px-4 py-2.5 rounded-xl border border-stone-200 text-xs focus:ring-2 focus:ring-[#D4A853] focus:outline-none" placeholder="https://www.amazon.in/dp/...">
-                </div>
-
-                <div class="flex items-center justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeEditModal()" class="px-4 py-2 rounded-xl border border-stone-200 text-xs font-semibold text-stone-600 hover:bg-stone-50">Cancel</button>
-                    <button type="submit" id="save-btn" class="px-6 py-2 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs font-bold transition">Save Changes</button>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {$settingsFieldsHtml}
                 </div>
             </form>
         </div>
+    </main>
+
+        <!-- Reusable Dynamic Datalists for Tags and Categories -->
+    <datalist id="product-tags-list">
+        {$tagsDatalistOptions}
+    </datalist>
+
+    <datalist id="product-categories-list">
+        {$catsDatalistOptions}
+    </datalist>
+
+    <!-- ADD PRODUCT MODAL (With Live Image Inspector & Custom Upload) -->
+    <div id="add-product-modal" class="fixed inset-0 z-50 invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div onclick="closeAddProductModal()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <div class="relative bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-[#D4A853]/40 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                <h4 class="font-serif font-bold text-base text-[#611B10] flex items-center gap-2">
+                    <i class="fa-solid fa-plus text-[#D4A853]"></i>
+                    <span>Add New Product</span>
+                </h4>
+                <button onclick="closeAddProductModal()" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleCreateProduct(event)" class="space-y-3.5 pt-3 text-xs">
+                
+                <!-- Destination Purchase URL -->
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Destination Purchase URL (Amazon, Meesho, etc.)</label>
+                    <input type="url" id="add-p-url" required placeholder="https://www.amazon.in/dp/..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                </div>
+
+                <!-- Live Image Preview & Choice Box -->
+                <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200 flex items-center gap-4">
+                    <div class="relative w-16 h-16 rounded-xl bg-white border border-stone-300 p-1 flex items-center justify-center shrink-0 overflow-hidden shadow-xs">
+                        <img id="add-p-preview-img" src="/images/product_bottle.webp" alt="Preview" class="w-full h-full object-contain">
+                    </div>
+                    <div class="flex-1 space-y-1.5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-stone-500 block">Product Photo Selection</span>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 hover:border-[#611B10] text-stone-700 font-semibold text-[11px] transition shadow-2xs">
+                                <i class="fa-solid fa-cloud-arrow-up text-[#611B10]"></i>
+                                <span>Upload New Photo</span>
+                                <input type="file" accept="image/*" class="hidden" onchange="handleUploadPhoto('add', this)">
+                            </label>
+                            <span id="add-p-source-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-stone-100 text-stone-600 font-medium">Ready</span>
+                        </div>
+                        <input type="hidden" id="add-p-image" value="images/product_bottle.webp">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Product Title</label>
+                    <input type="text" id="add-p-name" required placeholder="e.g. Millacoco 500ml Glass Jar" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Price (₹)</label>
+                        <input type="number" step="0.01" id="add-p-price" required placeholder="290.00" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Badge Tag (Type or Search)</label>
+                        <input type="text" id="add-p-tag" list="product-tags-list" placeholder="Choose or type custom tag..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Category (Type or Search)</label>
+                        <input type="text" id="add-p-cat" list="product-categories-list" required placeholder="Choose or type custom category..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Platform Name</label>
+                        <input type="text" id="add-p-platform" value="Amazon" placeholder="Amazon, WhatsApp, etc." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Description</label>
+                    <textarea id="add-p-desc" rows="2" placeholder="Brief product benefits and features..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t border-stone-100">
+                    <button type="button" onclick="closeAddProductModal()" class="px-4 py-2 rounded-xl border border-stone-200 text-stone-600 hover:bg-stone-50">Cancel</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition shadow-sm active:scale-95">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- EDIT PRODUCT MODAL (Full Product Info, Live Image Inspector & Custom Upload) -->
+    <div id="edit-modal" class="fixed inset-0 z-50 invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div onclick="closeEditModal()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <div class="relative bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-[#D4A853]/40 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                <h4 class="font-serif font-bold text-base text-[#611B10]" id="modal-product-name">Edit Product Details</h4>
+                <button onclick="closeEditModal()" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="handleProductUpdate(event)" class="space-y-3 pt-3 text-xs">
+                <input type="hidden" id="edit-id">
+
+                <!-- Destination Purchase URL -->
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Destination Purchase URL</label>
+                    <input type="url" id="edit-url" required class="w-full px-3.5 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                </div>
+
+                <!-- Live Image Preview & Choice Box -->
+                <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200 flex items-center gap-4">
+                    <div class="relative w-16 h-16 rounded-xl bg-white border border-stone-300 p-1 flex items-center justify-center shrink-0 overflow-hidden shadow-xs">
+                        <img id="edit-p-preview-img" src="/images/product_bottle.webp" alt="Preview" class="w-full h-full object-contain">
+                    </div>
+                    <div class="flex-1 space-y-1.5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-stone-500 block">Current Photo</span>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 hover:border-[#611B10] text-stone-700 font-semibold text-[11px] transition shadow-2xs">
+                                <i class="fa-solid fa-cloud-arrow-up text-[#611B10]"></i>
+                                <span>Upload New Photo</span>
+                                <input type="file" accept="image/*" class="hidden" onchange="handleUploadPhoto('edit', this)">
+                            </label>
+                            <span id="edit-p-source-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-stone-100 text-stone-600 font-medium">Current photo</span>
+                        </div>
+                        <input type="hidden" id="edit-image" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Product Title</label>
+                    <input type="text" id="edit-name" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Price (₹)</label>
+                        <input type="number" step="0.01" id="edit-price" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Badge Tag (Type or Search)</label>
+                        <input type="text" id="edit-tag" list="product-tags-list" placeholder="Choose or type custom tag..." class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Category (Type or Search)</label>
+                        <input type="text" id="edit-cat" list="product-categories-list" required placeholder="Choose or type custom category..." class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Platform Name</label>
+                        <input type="text" id="edit-platform" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Description</label>
+                    <textarea id="edit-desc" rows="2" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t border-stone-100">
+                    <button type="button" onclick="closeEditModal()" class="px-4 py-2 rounded-xl border border-stone-200 text-stone-600 hover:bg-stone-50">Cancel</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- EDIT FLAGSHIP SLIDE MODAL -->
+    <div id="flagship-modal" class="fixed inset-0 z-50 invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div onclick="closeFlagshipModal()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <div class="relative bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-[#D4A853]/40 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                <div>
+                    <h4 class="font-serif font-bold text-base text-[#611B10]">Edit Flagship Product Slide</h4>
+                    <p class="text-[11px] text-stone-500">Updates live on homepage interactive bottle showcase</p>
+                </div>
+                <button onclick="closeFlagshipModal()" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="handleSaveFlagship(event)" class="space-y-3 pt-3 text-xs">
+                <input type="hidden" id="edit-flagship-id">
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Tab Label (e.g. 01 Bottle)</label>
+                        <input type="text" id="edit-flagship-tab" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Script Handwriting Accent</label>
+                        <input type="text" id="edit-flagship-script" placeholder="e.g. The Signature Flagship" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Product Title</label>
+                    <input type="text" id="edit-flagship-title" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none font-bold">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Subtitle / Tagline</label>
+                    <input type="text" id="edit-flagship-subtitle" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Detailed Description</label>
+                    <textarea id="edit-flagship-desc" rows="3" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Price (₹)</label>
+                        <input type="number" step="0.01" id="edit-flagship-price" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Cutout Asset Path</label>
+                        <input type="text" id="edit-flagship-image" required placeholder="images/flagship_bottle_cutout.webp" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Direct Buy / WhatsApp Order URL</label>
+                    <input type="text" id="edit-flagship-url" placeholder="https://wa.me/918089757815?text=..." class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                </div>
+
+                <div class="flex justify-end gap-2 pt-3 border-t border-stone-100">
+                    <button type="button" onclick="closeFlagshipModal()" class="px-4 py-2 rounded-xl border border-stone-200 text-stone-600 hover:bg-stone-50">Cancel</button>
+                    <button type="submit" id="btn-save-flagship" class="px-5 py-2 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Save Flagship Slide</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- EDIT COMBO MODAL -->
+    <div id="combo-modal" class="fixed inset-0 z-50 invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div onclick="closeComboModal()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <div class="relative bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-[#D4A853]/40">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                <h4 class="font-serif font-bold text-base text-[#611B10]">Edit Combo Offer</h4>
+                <button onclick="closeComboModal()" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="handleSaveCombo(event)" class="space-y-3 pt-3 text-xs">
+                <input type="hidden" id="edit-combo-id">
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Price (₹)</label>
+                    <input type="number" step="0.01" id="edit-combo-price" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                </div>
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Button Action Text</label>
+                    <input type="text" id="edit-combo-btn" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                </div>
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Description</label>
+                    <textarea id="edit-combo-desc" rows="3" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeComboModal()" class="px-4 py-2 rounded-xl border border-stone-200 text-stone-600 hover:bg-stone-50">Cancel</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition">Save Combo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <!-- EDIT TESTIMONIAL MODAL -->
+    <div id="edit-testimonial-modal" class="fixed inset-0 z-50 invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div onclick="closeEditTestimonialModal()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <div class="relative bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-[#D4A853]/40">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                <h4 class="font-serif font-bold text-base text-[#611B10]">Edit Customer Review</h4>
+                <button onclick="closeEditTestimonialModal()" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="handleUpdateTestimonial(event)" class="space-y-3 pt-3 text-xs">
+                <input type="hidden" id="edit-t-id">
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Customer Name</label>
+                    <input type="text" id="edit-t-author" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Location / City</label>
+                        <input type="text" id="edit-t-location" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Tag / Category</label>
+                        <input type="text" id="edit-t-tag" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Star Rating (1 - 5)</label>
+                    <select id="edit-t-rating" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                        <option value="5">⭐⭐⭐⭐⭐ (5 Stars)</option>
+                        <option value="4">⭐⭐⭐⭐ (4 Stars)</option>
+                        <option value="3">⭐⭐⭐ (3 Stars)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Review Quote</label>
+                    <textarea id="edit-t-quote" rows="3" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeEditTestimonialModal()" class="px-4 py-2 rounded-xl border border-stone-200 text-stone-600 hover:bg-stone-50">Cancel</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition">Update Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CHANGE PASSWORD MODAL -->
+    <div id="password-modal" class="fixed inset-0 z-50 invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div onclick="closePasswordModal()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <div class="relative bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-[#D4A853]/40">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                <div class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-[#611B10] text-[#D4A853] flex items-center justify-center text-sm shadow-xs">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <h4 class="font-serif font-bold text-base text-[#611B10]">Update Admin Password</h4>
+                </div>
+                <button onclick="closePasswordModal()" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="pwd-alert" class="hidden my-3 p-3 rounded-xl text-xs font-semibold"></div>
+            <form onsubmit="handleChangePassword(event)" class="space-y-3.5 pt-2 text-xs">
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Current Password</label>
+                    <input type="password" id="pwd-current" required placeholder="Enter current password" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                </div>
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">New Password (min 6 chars)</label>
+                    <input type="password" id="pwd-new" required minlength="6" placeholder="Enter new strong password" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                </div>
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Confirm New Password</label>
+                    <input type="password" id="pwd-confirm" required minlength="6" placeholder="Repeat new password" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closePasswordModal()" class="px-4 py-2.5 rounded-xl border border-stone-200 text-stone-600 hover:bg-stone-50 font-semibold">Cancel</button>
+                    <button type="submit" id="pwd-submit-btn" class="px-5 py-2.5 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition shadow-sm active:scale-95 flex items-center gap-1.5">
+                        <i class="fa-solid fa-shield-halved text-xs"></i>
+                        <span>Save Password</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Feedback Notification -->
+    <div id="hub-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-[#611B10] text-[#D4A853] px-5 py-3.5 rounded-2xl shadow-2xl border border-[#D4A853]/40 flex items-center gap-3 text-xs font-bold">
+        <i class="fa-solid fa-circle-check text-base text-emerald-400"></i>
+        <span id="hub-toast-msg">Settings saved successfully!</span>
     </div>
 
     <script>
@@ -269,99 +920,408 @@ HTML;
             }
         }
 
-        function openEditModal(id, name, price, platform, url) {
-            document.getElementById('edit-id').value = id;
-            document.getElementById('modal-product-name').textContent = 'Edit: ' + name;
-            document.getElementById('edit-price').value = price;
-            document.getElementById('edit-platform').value = platform;
-            document.getElementById('edit-url').value = url;
-            document.getElementById('edit-modal').classList.remove('hidden');
-            document.getElementById('edit-modal').classList.add('flex');
+        function switchHubSection(tabKey, btn) {
+            document.querySelectorAll('.hub-pane').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById('hub-section-' + tabKey);
+            if (target) target.classList.remove('hidden');
+
+            document.querySelectorAll('.hub-tab').forEach(b => {
+                b.classList.remove('active', 'bg-[#611B10]', 'text-[#D4A853]');
+                b.classList.add('bg-white', 'text-stone-700');
+            });
+            btn.classList.add('active', 'bg-[#611B10]', 'text-[#D4A853]');
+            btn.classList.remove('bg-white', 'text-stone-700');
         }
 
+        function showHubToast(msg, isError = false) {
+            const toast = document.getElementById('hub-toast');
+            const toastMsg = document.getElementById('hub-toast-msg');
+            toastMsg.innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // Add Product Modal
+        function openAddProductModal() {
+            const m = document.getElementById('add-product-modal');
+            m.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        }
+        function closeAddProductModal() {
+            const m = document.getElementById('add-product-modal');
+            m.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        }
+
+        async function handleCreateProduct(e) {
+            e.preventDefault();
+            const name = document.getElementById('add-p-name').value;
+            const price = parseFloat(document.getElementById('add-p-price').value);
+            const tag = document.getElementById('add-p-tag').value || 'Bestseller';
+            const category = document.getElementById('add-p-cat').value;
+            const platform_name = document.getElementById('add-p-platform').value || 'Amazon';
+            const image = document.getElementById('add-p-image').value || 'images/product_bottle.webp';
+            const external_url = document.getElementById('add-p-url').value;
+            const description = document.getElementById('add-p-desc').value;
+
+            try {
+                const res = await fetch('/mc-desk/api/admin/products', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, price, tag, category, platform_name, image, external_url, description })
+                });
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Error adding product');
+                }
+            } catch (err) {
+                alert('Network connection error');
+            }
+        }
+
+        
+        // Auto Fetch / Inspect Image & Title from URL
+        async function autoInspectUrl(mode) {
+            const urlInput = document.getElementById(mode + '-p-url') || document.getElementById(mode + '-url');
+            const statusEl = document.getElementById(mode + '-fetch-status');
+            const previewImg = document.getElementById(mode + '-p-preview-img');
+            const imageInput = document.getElementById(mode + '-p-image') || document.getElementById(mode + '-image');
+            const sourceBadge = document.getElementById(mode + '-p-source-badge');
+            const nameInput = document.getElementById(mode + '-p-name') || document.getElementById(mode + '-name');
+
+            const url = urlInput.value.trim();
+            if (!url || !url.startsWith('http')) return;
+
+            statusEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-stone-500"></i> Fetching product image...';
+
+            try {
+                const res = await fetch('/mc-desk/api/admin/fetch-metadata', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: url })
+                });
+
+                const json = await res.json();
+                if (res.ok && json.status === 'success' && json.data) {
+                    if (json.data.image) {
+                        previewImg.src = json.data.image;
+                        imageInput.value = json.data.image;
+                        sourceBadge.innerText = 'Source Image (from link)';
+                        sourceBadge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold';
+                        statusEl.innerHTML = '<span class="text-emerald-700 font-bold"><i class="fa-solid fa-circle-check"></i> Image loaded</span>';
+                    } else if (json.data.protected) {
+                        statusEl.innerHTML = '<span class="text-amber-700 font-medium"><i class="fa-solid fa-shield-halved"></i> Site protected &bull; Name inferred &bull; Upload photo below</span>';
+                    } else {
+                        statusEl.innerHTML = '<span class="text-stone-500">No open image tag found on page</span>';
+                    }
+
+                    if (json.data.title && nameInput && !nameInput.value) {
+                        nameInput.value = json.data.title.split('|')[0].split(':')[0].trim();
+                    }
+                } else {
+                    statusEl.innerHTML = '<span class="text-stone-400">Could not read image from URL</span>';
+                }
+            } catch (e) {
+                statusEl.innerHTML = '<span class="text-stone-400">Link reachable or protected</span>';
+            }
+        }
+
+        // Handle Custom Local Photo Upload
+        async function handleUploadPhoto(mode, inputEl) {
+            if (!inputEl.files || !inputEl.files[0]) return;
+            const file = inputEl.files[0];
+            const formData = new FormData();
+            formData.append('photo', file);
+
+            const previewImg = document.getElementById(mode + '-p-preview-img');
+            const imageInput = document.getElementById(mode + '-p-image') || document.getElementById(mode + '-image');
+            const sourceBadge = document.getElementById(mode + '-p-source-badge');
+
+            sourceBadge.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading...';
+
+            try {
+                const res = await fetch('/mc-desk/api/admin/upload-photo', {
+                    method: 'POST',
+                    body: formData
+                });
+                const json = await res.json();
+                if (res.ok && json.status === 'success') {
+                    previewImg.src = '/' + json.image_path;
+                    imageInput.value = json.image_path;
+                    sourceBadge.innerText = 'Custom uploaded photo';
+                    sourceBadge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-semibold';
+                } else {
+                    alert(json.message || 'Failed to upload photo');
+                    sourceBadge.innerText = 'Upload failed';
+                }
+            } catch (e) {
+                alert('Network error while uploading');
+                sourceBadge.innerText = 'Upload failed';
+            }
+        }
+
+        // Edit Product (Full Product Info & Image)
+        function openEditModal(id, name, price, tag, category, platform, image, url, desc) {
+            const previewImg = document.getElementById('edit-p-preview-img');
+            const sourceBadge = document.getElementById('edit-p-source-badge');
+            if (previewImg) previewImg.src = image.startsWith('http') ? image : '/' + image;
+            if (sourceBadge) {
+                sourceBadge.innerText = 'Current product image';
+                sourceBadge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-stone-200 text-stone-600 font-medium';
+            }
+
+            document.getElementById('edit-id').value = id;
+            document.getElementById('modal-product-name').innerText = 'Edit ' + name;
+            document.getElementById('edit-name').value = name;
+            document.getElementById('edit-price').value = price;
+            document.getElementById('edit-tag').value = tag || 'Bestseller';
+            document.getElementById('edit-cat').value = category || 'daily';
+            document.getElementById('edit-platform').value = platform || 'Amazon';
+            document.getElementById('edit-image').value = image || 'images/product_bottle.webp';
+            document.getElementById('edit-url').value = url || '';
+            document.getElementById('edit-desc').value = desc || '';
+
+            const modal = document.getElementById('edit-modal');
+            modal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        }
         function closeEditModal() {
-            document.getElementById('edit-modal').classList.add('hidden');
-            document.getElementById('edit-modal').classList.remove('flex');
+            document.getElementById('edit-modal').classList.add('invisible', 'opacity-0', 'pointer-events-none');
         }
 
         async function handleProductUpdate(e) {
             e.preventDefault();
             const id = document.getElementById('edit-id').value;
-            const price = document.getElementById('edit-price').value;
-            const platform = document.getElementById('edit-platform').value;
-            const url = document.getElementById('edit-url').value;
-            const btn = document.getElementById('save-btn');
-
-            btn.disabled = true;
-            btn.textContent = 'Saving...';
+            const name = document.getElementById('edit-name').value;
+            const price = parseFloat(document.getElementById('edit-price').value);
+            const tag = document.getElementById('edit-tag').value;
+            const category = document.getElementById('edit-cat').value;
+            const platform_name = document.getElementById('edit-platform').value;
+            const image = document.getElementById('edit-image').value;
+            const external_url = document.getElementById('edit-url').value;
+            const description = document.getElementById('edit-desc').value;
 
             try {
                 const res = await fetch('/mc-desk/api/admin/products/' + id, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ price: price, platform_name: platform, external_url: url })
+                    body: JSON.stringify({ name, price, tag, category, platform_name, image, external_url, description })
                 });
                 const data = await res.json();
-                if (data.status === 'success') {
-                    location.reload();
+                if (res.ok && data.status === 'success') {
+                    window.location.reload();
                 } else {
-                    alert(data.message || 'Error updating product.');
+                    alert(data.message || 'Error updating product');
                 }
             } catch (err) {
-                alert('Connection error.');
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'Save Changes';
+                alert('Network error');
             }
         }
 
-        function logoutAdmin() {
-            document.cookie = "admin_jwt=; Path=/mc-desk; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-            window.location.href = '/mc-desk/login';
+        // Combos
+        // Flagship Showcase Functions
+        function openEditFlagshipModal(id, title, subtitle, scriptAccent, tabLabel, desc, price, imageCutout, externalUrl) {
+            document.getElementById('edit-flagship-id').value = id;
+            document.getElementById('edit-flagship-title').value = title || '';
+            document.getElementById('edit-flagship-subtitle').value = subtitle || '';
+            document.getElementById('edit-flagship-script').value = scriptAccent || '';
+            document.getElementById('edit-flagship-tab').value = tabLabel || '';
+            document.getElementById('edit-flagship-desc').value = desc || '';
+            document.getElementById('edit-flagship-price').value = price || 0;
+            document.getElementById('edit-flagship-image').value = imageCutout || '';
+            document.getElementById('edit-flagship-url').value = externalUrl || '';
+            document.getElementById('flagship-modal').classList.remove('invisible', 'opacity-0', 'pointer-events-none');
         }
-    </script>
 
-    <!-- Change Password Modal -->
-    <div id="password-modal" class="fixed inset-0 z-50 invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
-        <div onclick="closePasswordModal()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
-        <div class="relative bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-[#D4A853]/40">
-            <div class="flex items-center justify-between pb-3 border-b border-stone-200">
-                <div class="flex items-center space-x-2.5">
-                    <div class="w-8 h-8 rounded-xl bg-[#611B10] text-[#D4A853] flex items-center justify-center text-sm shadow-xs">
-                        <i class="fa-solid fa-key"></i>
-                    </div>
-                    <h4 class="font-serif font-bold text-base text-[#611B10]">Update Admin Password</h4>
-                </div>
-                <button onclick="closePasswordModal()" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
+        function closeFlagshipModal() {
+            document.getElementById('flagship-modal').classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        }
 
-            <div id="pwd-alert" class="hidden my-3 p-3 rounded-xl text-xs font-semibold"></div>
+        async function handleSaveFlagship(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-save-flagship');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Saving...';
+            btn.disabled = true;
 
-            <form onsubmit="handleChangePassword(event)" class="space-y-3.5 pt-2 text-xs">
-                <div>
-                    <label class="block font-bold text-stone-700 mb-1">Current Password</label>
-                    <input type="password" id="pwd-current" required placeholder="Enter current password" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:border-[#611B10] focus:ring-2 focus:ring-[#611B10]/15 outline-none transition">
-                </div>
-                <div>
-                    <label class="block font-bold text-stone-700 mb-1">New Password (min 6 chars)</label>
-                    <input type="password" id="pwd-new" required minlength="6" placeholder="Enter new strong password" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:border-[#611B10] focus:ring-2 focus:ring-[#611B10]/15 outline-none transition">
-                </div>
-                <div>
-                    <label class="block font-bold text-stone-700 mb-1">Confirm New Password</label>
-                    <input type="password" id="pwd-confirm" required minlength="6" placeholder="Repeat new password" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:border-[#611B10] focus:ring-2 focus:ring-[#611B10]/15 outline-none transition">
-                </div>
-                <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closePasswordModal()" class="px-4 py-2.5 rounded-xl border border-stone-200 text-stone-600 hover:bg-stone-50 font-semibold transition">Cancel</button>
-                    <button type="submit" id="pwd-submit-btn" class="px-5 py-2.5 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition shadow-sm active:scale-95 flex items-center gap-1.5">
-                        <i class="fa-solid fa-shield-halved text-xs"></i>
-                        <span>Save Password</span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
+            const id = document.getElementById('edit-flagship-id').value;
+            const payload = {
+                title: document.getElementById('edit-flagship-title').value,
+                subtitle: document.getElementById('edit-flagship-subtitle').value,
+                script_accent: document.getElementById('edit-flagship-script').value,
+                tab_label: document.getElementById('edit-flagship-tab').value,
+                description: document.getElementById('edit-flagship-desc').value,
+                price: parseFloat(document.getElementById('edit-flagship-price').value),
+                image_cutout: document.getElementById('edit-flagship-image').value,
+                external_url: document.getElementById('edit-flagship-url').value
+            };
 
-<script>
+            try {
+                const res = await fetch('/mc-desk/api/admin/flagship/' + id, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    showHubToast('Flagship slide updated successfully!');
+                    closeFlagshipModal();
+                    setTimeout(() => window.location.reload(), 600);
+                } else {
+                    alert(data.message || 'Error updating flagship slide');
+                }
+            } catch (err) {
+                alert('Network error updating flagship slide');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        function openEditComboModal(id, price, btnLabel, desc) {
+            document.getElementById('edit-combo-id').value = id;
+            document.getElementById('edit-combo-price').value = price;
+            document.getElementById('edit-combo-btn').value = btnLabel;
+            document.getElementById('edit-combo-desc').value = desc;
+            document.getElementById('combo-modal').classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        }
+        function closeComboModal() {
+            document.getElementById('combo-modal').classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        }
+
+        async function handleSaveCombo(e) {
+            e.preventDefault();
+            const id = document.getElementById('edit-combo-id').value;
+            const price = parseFloat(document.getElementById('edit-combo-price').value);
+            const btn_label = document.getElementById('edit-combo-btn').value;
+            const description = document.getElementById('edit-combo-desc').value;
+
+            try {
+                const res = await fetch('/mc-desk/api/admin/combos/' + id, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ price, btn_label, description })
+                });
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Error updating combo');
+                }
+            } catch (err) {
+                alert('Network error');
+            }
+        }
+
+        // Testimonials
+        async function handleCreateTestimonial(e) {
+            e.preventDefault();
+            const author_name = document.getElementById('t-author').value;
+            const author_location = document.getElementById('t-location').value;
+            const tag = document.getElementById('t-tag').value || 'Verified Buyer';
+            const quote = document.getElementById('t-quote').value;
+
+            try {
+                const res = await fetch('/mc-desk/api/admin/testimonials', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ author_name, author_location, tag, quote, rating: 5 })
+                });
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Error adding review');
+                }
+            } catch (err) {
+                alert('Network error');
+            }
+        }
+
+        async function deleteTestimonial(id) {
+            if (!confirm('Are you sure you want to remove this customer review?')) return;
+            try {
+                const res = await fetch('/mc-desk/api/admin/testimonials/' + id, { method: 'DELETE' });
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Error deleting review');
+                }
+            } catch (err) {
+                alert('Network error');
+            }
+        }
+
+        // Settings
+        async function saveUnifiedSettings() {
+            const form = document.getElementById('unified-settings-form');
+            const formData = new FormData(form);
+            const payload = {};
+            for (let [k, v] of formData.entries()) {
+                payload[k] = v;
+            }
+
+            try {
+                const res = await fetch('/mc-desk/api/admin/settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    showHubToast('All site copy and contact settings saved!');
+                } else {
+                    alert(data.message || 'Error saving settings');
+                }
+            } catch (err) {
+                alert('Network error');
+            }
+        }
+
+        // Password Modal
+        
+        function openEditTestimonialModal(id, author, location, tag, rating, quote) {
+            document.getElementById('edit-t-id').value = id;
+            document.getElementById('edit-t-author').value = author;
+            document.getElementById('edit-t-location').value = location;
+            document.getElementById('edit-t-tag').value = tag || 'Verified Buyer';
+            document.getElementById('edit-t-rating').value = rating || 5;
+            document.getElementById('edit-t-quote').value = quote;
+
+            document.getElementById('edit-testimonial-modal').classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        }
+        function closeEditTestimonialModal() {
+            document.getElementById('edit-testimonial-modal').classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        }
+
+        async function handleUpdateTestimonial(e) {
+            e.preventDefault();
+            const id = document.getElementById('edit-t-id').value;
+            const author_name = document.getElementById('edit-t-author').value;
+            const author_location = document.getElementById('edit-t-location').value;
+            const tag = document.getElementById('edit-t-tag').value;
+            const rating = parseInt(document.getElementById('edit-t-rating').value, 10);
+            const quote = document.getElementById('edit-t-quote').value;
+
+            try {
+                const res = await fetch('/mc-desk/api/admin/testimonials/' + id, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ author_name, author_location, tag, rating, quote })
+                });
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Error updating review');
+                }
+            } catch (err) {
+                alert('Network error');
+            }
+        }
+
         function openPasswordModal() {
             const modal = document.getElementById('password-modal');
             const alertBox = document.getElementById('pwd-alert');
@@ -371,10 +1331,8 @@ HTML;
             document.getElementById('pwd-confirm').value = '';
             modal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
         }
-
         function closePasswordModal() {
-            const modal = document.getElementById('password-modal');
-            modal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+            document.getElementById('password-modal').classList.add('invisible', 'opacity-0', 'pointer-events-none');
         }
 
         async function handleChangePassword(e) {
@@ -408,9 +1366,7 @@ HTML;
                     alertBox.className = 'my-3 p-3 rounded-xl text-xs font-semibold bg-emerald-50 border border-emerald-200 text-emerald-800';
                     alertBox.textContent = data.message;
                     alertBox.classList.remove('hidden');
-                    setTimeout(() => {
-                        closePasswordModal();
-                    }, 2000);
+                    setTimeout(() => closePasswordModal(), 2000);
                 } else {
                     alertBox.className = 'my-3 p-3 rounded-xl text-xs font-semibold bg-rose-50 border border-rose-200 text-rose-800';
                     alertBox.textContent = data.message || 'Error updating password';
@@ -425,7 +1381,12 @@ HTML;
                 btn.innerHTML = '<i class="fa-solid fa-shield-halved text-xs"></i> <span>Save Password</span>';
             }
         }
-</script>
+
+        function logoutAdmin() {
+            document.cookie = "admin_jwt=; Path=/mc-desk; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+            window.location.href = '/mc-desk/login';
+        }
+    </script>
 </body>
 </html>
 HTML;
@@ -455,6 +1416,57 @@ HTML;
     }
 
     /**
+     * Admin API: Create a new Product
+     */
+    public function create(Request $request, Response $response): Response
+    {
+        $data = (array)$request->getParsedBody();
+
+        $name = trim((string)($data['name'] ?? ''));
+        $price = filter_var($data['price'] ?? 0, FILTER_VALIDATE_FLOAT);
+        $tag = trim((string)($data['tag'] ?? 'Bestseller'));
+        $category = trim((string)($data['category'] ?? 'daily'));
+        $platform = trim((string)($data['platform_name'] ?? 'Amazon'));
+        $image = trim((string)($data['image'] ?? 'images/product_bottle.webp'));
+        $externalUrl = filter_var(trim($data['external_url'] ?? ''), FILTER_SANITIZE_URL);
+        $desc = trim((string)($data['description'] ?? ''));
+
+        if (empty($name) || $price <= 0 || empty($externalUrl)) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Product name, valid price, and external purchase URL are required.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name), '-'));
+        $slug = $slug . '-' . time();
+
+        $stmt = $this->db->prepare(
+            "INSERT INTO products (name, slug, tag, category, price, image, description, external_url, platform_name, sort_order, is_active)
+             VALUES (:name, :slug, :tag, :category, :price, :image, :description, :external_url, :platform_name, 10, 1)"
+        );
+
+        $stmt->execute([
+            ':name' => $name,
+            ':slug' => $slug,
+            ':tag' => $tag,
+            ':category' => $category,
+            ':price' => $price,
+            ':image' => $image,
+            ':description' => $desc,
+            ':external_url' => $externalUrl,
+            ':platform_name' => $platform
+        ]);
+
+        $response->getBody()->write(json_encode([
+            'status' => 'success',
+            'message' => 'Product added successfully!'
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
      * Admin API: Update a product's external redirect URL, platform name, and price
      */
     public function update(Request $request, Response $response, array $args): Response
@@ -462,42 +1474,287 @@ HTML;
         $productId = (int)($args['id'] ?? 0);
         $data = (array)$request->getParsedBody();
 
-        $externalUrl = filter_var(trim($data['external_url'] ?? ''), FILTER_SANITIZE_URL);
-        $platformName = htmlspecialchars(trim($data['platform_name'] ?? 'Amazon'), ENT_QUOTES, 'UTF-8');
+        $name = trim((string)($data['name'] ?? ''));
         $price = filter_var($data['price'] ?? 0, FILTER_VALIDATE_FLOAT);
+        $tag = trim((string)($data['tag'] ?? 'Bestseller'));
+        $category = trim((string)($data['category'] ?? 'daily'));
+        $platformName = htmlspecialchars(trim($data['platform_name'] ?? 'Amazon'), ENT_QUOTES, 'UTF-8');
+        $image = trim((string)($data['image'] ?? 'images/product_bottle.webp'));
+        $externalUrl = filter_var(trim($data['external_url'] ?? ''), FILTER_SANITIZE_URL);
+        $description = trim((string)($data['description'] ?? ''));
         $isActive = isset($data['is_active']) ? (int)(bool)$data['is_active'] : 1;
 
-        if (empty($externalUrl) || !filter_var($externalUrl, FILTER_VALIDATE_URL)) {
+        if (empty($name) || $price <= 0 || empty($externalUrl) || !filter_var($externalUrl, FILTER_VALIDATE_URL)) {
             $response->getBody()->write(json_encode([
                 'status' => 'error',
-                'message' => 'Please provide a valid destination URL (e.g. https://www.amazon.in/dp/...)'
+                'message' => 'Product name, valid price, and valid destination URL are required.'
             ]));
             return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
         }
 
         $stmt = $this->db->prepare(
             "UPDATE products 
-             SET external_url = :external_url,
-                 platform_name = :platform_name,
+             SET name = :name,
                  price = :price,
+                 tag = :tag,
+                 category = :category,
+                 platform_name = :platform_name,
+                 image = :image,
+                 external_url = :external_url,
+                 description = :description,
                  is_active = :is_active,
                  updated_at = CURRENT_TIMESTAMP 
              WHERE id = :id"
         );
 
         $stmt->execute([
-            'external_url' => $externalUrl,
-            'platform_name' => $platformName,
-            'price' => $price,
-            'is_active' => $isActive,
-            'id' => $productId
+            ':name' => $name,
+            ':price' => $price,
+            ':tag' => $tag,
+            ':category' => $category,
+            ':platform_name' => $platformName,
+            ':image' => $image,
+            ':external_url' => $externalUrl,
+            ':description' => $description,
+            ':is_active' => $isActive,
+            ':id' => $productId
         ]);
 
         $response->getBody()->write(json_encode([
             'status' => 'success',
-            'message' => 'Product redirect URL updated successfully.'
+            'message' => 'Product details and redirect updated successfully.'
         ]));
 
         return $response->withHeader('Content-Type', 'application/json');
     }
+
+    /**
+     * Admin API: Fetches preview metadata & image from an external product URL (OpenGraph / Twitter card / Schema.org)
+     */
+    public function fetchUrlMetadata(Request $request, Response $response): Response
+    {
+        $data = (array)$request->getParsedBody();
+        $targetUrl = filter_var(trim($data['url'] ?? ''), FILTER_SANITIZE_URL);
+
+        if (empty($targetUrl) || !filter_var($targetUrl, FILTER_VALIDATE_URL)) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Please provide a valid URL to inspect.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        // Multi-tier scraper mimicking genuine browser and social-link preview crawlers (WhatsApp/Facebook)
+        $fetchHtml = function(string $url, string $userAgent, array $extraHeaders = []): ?string {
+            if (function_exists('curl_init')) {
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                curl_setopt($ch, CURLOPT_MAXREDIRS, 6);
+                curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+                curl_setopt($ch, CURLOPT_TIMEOUT, 9);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
+                $headers = array_merge([
+                    'User-Agent: ' . $userAgent,
+                    'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                    'Accept-Language: en-US,en;q=0.9',
+                    'Sec-Ch-Ua: "Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+                    'Sec-Ch-Ua-Mobile: ?0',
+                    'Sec-Ch-Ua-Platform: "Windows"',
+                    'Sec-Fetch-Dest: document',
+                    'Sec-Fetch-Mode: navigate',
+                    'Sec-Fetch-Site: none',
+                    'Sec-Fetch-User: ?1',
+                    'Upgrade-Insecure-Requests: 1'
+                ], $extraHeaders);
+
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                $result = curl_exec($ch);
+                $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+
+                if ($result !== false && $code >= 200 && $code < 400 && strlen($result) > 100) {
+                    return $result;
+                }
+            }
+
+            // Fallback to stream context
+            $ctx = stream_context_create([
+                'http' => [
+                    'timeout' => 8,
+                    'follow_location' => 1,
+                    'max_redirects' => 5,
+                    'user_agent' => $userAgent
+                ],
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false
+                ]
+            ]);
+            $res = @file_get_contents($url, false, $ctx);
+            return ($res !== false && !empty($res)) ? $res : null;
+        };
+
+        // Tier 1: Real Chrome Browser UA
+        $html = $fetchHtml($targetUrl, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36');
+
+        // Tier 2: WhatsApp / Meta Social Link Preview Crawler UA (how WhatsApp unrolls links)
+        if (!$html) {
+            $html = $fetchHtml($targetUrl, 'WhatsApp/2.23.23.77 N', ['Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8']);
+        }
+
+        // Tier 3: Facebook External Hit Crawler UA
+        if (!$html) {
+            $html = $fetchHtml($targetUrl, 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)');
+        }
+
+        // If HTML could not be directly fetched due to strict retail bot walls (e.g. Akamai on Meesho)
+        if ($html === false || empty($html)) {
+            $parsedUrl = parse_url($targetUrl);
+            $path = $parsedUrl['path'] ?? '';
+            $inferredTitle = null;
+
+            // Extract readable product title from e-commerce URL slugs
+            if (str_contains($targetUrl, 'meesho.com')) {
+                // e.g. /portronics-luxcell-.../p/6ihva0
+                $slug = explode('/p/', $path)[0];
+                $slug = trim($slug, '/');
+                if (!empty($slug)) {
+                    $inferredTitle = ucwords(str_replace(['-', '_'], ' ', $slug));
+                }
+            } elseif (str_contains($targetUrl, 'flipkart.com')) {
+                // e.g. /product-slug/p/itm...
+                $slug = explode('/p/', $path)[0];
+                $slug = trim($slug, '/');
+                if (!empty($slug)) {
+                    $inferredTitle = ucwords(str_replace(['-', '_'], ' ', $slug));
+                }
+            } elseif (str_contains($targetUrl, 'amazon.')) {
+                // e.g. /product-title/dp/...
+                if (preg_match('#/([^/]+)/dp/#i', $path, $sm)) {
+                    $inferredTitle = ucwords(str_replace(['-', '_'], ' ', $sm[1]));
+                }
+            }
+
+            $response->getBody()->write(json_encode([
+                'status' => 'success',
+                'data' => [
+                    'title' => $inferredTitle,
+                    'image' => null,
+                    'protected' => true,
+                    'notice' => 'Destination site (e.g. Meesho/Akamai) requires browser JS or is protected. Product name auto-inferred from URL. You can upload or paste the product photo directly.'
+                ]
+            ]));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
+
+        $imageUrl = null;
+        $title = null;
+
+        // 1. og:image
+        if (preg_match('/<meta\s+[^>]*property=[\'"]og:image[\'"][^>]*content=[\'"]([^\'"]+)[\'"]/i', $html, $m)) {
+            $imageUrl = $m[1];
+        } elseif (preg_match('/<meta\s+[^>]*content=[\'"]([^\'"]+)[\'"][^>]*property=[\'"]og:image[\'"]/i', $html, $m)) {
+            $imageUrl = $m[1];
+        }
+
+        // 2. twitter:image
+        if (!$imageUrl) {
+            if (preg_match('/<meta\s+[^>]*name=[\'"]twitter:image[\'"][^>]*content=[\'"]([^\'"]+)[\'"]/i', $html, $m)) {
+                $imageUrl = $m[1];
+            } elseif (preg_match('/<meta\s+[^>]*content=[\'"]([^\'"]+)[\'"][^>]*name=[\'"]twitter:image[\'"]/i', $html, $m)) {
+                $imageUrl = $m[1];
+            }
+        }
+
+        // 3. Amazon specific main image extraction (data-old-hires or dynamic landingImage)
+        if (!$imageUrl && str_contains($targetUrl, 'amazon')) {
+            if (preg_match('/data-old-hires=[\'"]([^\'"]+)[\'"]/i', $html, $m)) {
+                $imageUrl = $m[1];
+            } elseif (preg_match('/id=[\'"]landingImage[\'"][^>]*src=[\'"]([^\'"]+)[\'"]/i', $html, $m)) {
+                $imageUrl = $m[1];
+            }
+        }
+
+        // 4. Title tag extraction
+        if (preg_match('/<meta\s+[^>]*property=[\'"]og:title[\'"][^>]*content=[\'"]([^\'"]+)[\'"]/i', $html, $m)) {
+            $title = html_entity_decode(trim($m[1]), ENT_QUOTES, 'UTF-8');
+        } elseif (preg_match('/<title[^>]*>(.*?)<\/title>/is', $html, $m)) {
+            $title = html_entity_decode(trim($m[1]), ENT_QUOTES, 'UTF-8');
+        }
+
+        $response->getBody()->write(json_encode([
+            'status' => 'success',
+            'data' => [
+                'title' => $title,
+                'image' => $imageUrl
+            ]
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
+     * Admin API: Upload custom product photo
+     */
+    public function uploadProductPhoto(Request $request, Response $response): Response
+    {
+        $uploadedFiles = $request->getUploadedFiles();
+        if (empty($uploadedFiles['photo'])) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'No image file uploaded.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        $photo = $uploadedFiles['photo'];
+        if ($photo->getError() !== UPLOAD_ERR_OK) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Upload error occurred.'
+            ]));
+            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+        }
+
+        $filename = $photo->getClientFilename();
+        $ext = strtolower(pathinfo((string)$filename, PATHINFO_EXTENSION));
+
+        if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'])) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Only JPG, PNG, WEBP, or GIF image formats are accepted.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        $imagesDir = __DIR__ . '/../../../images';
+        if (!is_dir($imagesDir)) {
+            @mkdir($imagesDir, 0755, true);
+        }
+
+        $safeName = 'product_upload_' . time() . '_' . bin2hex(random_bytes(3)) . '.' . $ext;
+        $targetPath = $imagesDir . '/' . $safeName;
+
+        try {
+            $photo->moveTo($targetPath);
+        } catch (\Throwable $e) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Failed to save uploaded file: ' . $e->getMessage()
+            ]));
+            return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+        }
+
+        $relativePath = 'images/' . $safeName;
+        $response->getBody()->write(json_encode([
+            'status' => 'success',
+            'image_path' => $relativePath,
+            'message' => 'Photo uploaded successfully!'
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
 }
