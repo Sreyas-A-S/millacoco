@@ -609,7 +609,7 @@ function renderDynamicProductGrid() {
                         <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹${item.price.toFixed(2)}</p>
                     </div>
                     <button onclick="redirectToPlatform('${item.externalUrl}')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
-                        <span>Buy${item.platform}</span>
+                        <span>Buy</span>
                         <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                     </button>
                 </div>
