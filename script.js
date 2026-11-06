@@ -639,6 +639,14 @@ async function syncSiteSettingsFromDatabase() {
             });
         }
 
+        // 1b. WhatsApp sync across chat buttons
+        if (s.contact_whatsapp) {
+            const num = s.contact_whatsapp.replace(/[^0-9]/g, '');
+            document.querySelectorAll('a[href*="wa.me/"]').forEach(a => {
+                a.href = a.href.replace(/wa\.me\/[0-9]+/, 'wa.me/' + num);
+            });
+        }
+
         // 2. Email address sync
         if (s.contact_email) {
             document.querySelectorAll('[data-site-email]').forEach(el => el.innerText = s.contact_email);

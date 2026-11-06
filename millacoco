@@ -1,0 +1,161 @@
+# 1. HTTP to HTTPS Redirection (Port 80)
+server {
+    if ($host = www.millacoco.in) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    if ($host = millacoco.in) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    listen 80;
+    listen [::]:80;
+    server_name millacoco.in www.millacoco.in;
+
+    # Drop requests with invalid Host headers early
+    if ($host !~* ^(millacoco\.in|www\.millacoco\.in)$ ) {
+        return 444;
+    }
+
+    # Query string exploit blocking (eval, base64, system calls)
+    if ($query_string ~* "(config-create|\bbase64_encode\b|\beval\b|\bpassthru\b|\bshell_exec\b|\bsystem\b|\bassert\b)") {
+        return 444;
+    }
+
+    # Drop scanners and botnets on port 80 immediately
+    if ($http_user_agent ~* "(Palo\ Alto|Cortex-Xpanse|Censys|Shodan|Shadowserver|BinaryEdge|LeakIX|Rapid7|ZoomEye|nmap|masscan|zgrab|Nikto|sqlmap|Nuclei|gobuster|dirbuster|WPScan|Go-http-client|libredtail)") {
+        return 444;
+    }
+
+    # Redirect legitimate traffic to HTTPS
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+# 2. Main HTTPS Server for Slim Framework (Port 443)
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name millacoco.in www.millacoco.in;
+
+    # Slim MUST point to the public folder where index.php lives to hide dependencies
+    root /var/www/millacoco;
+    index index.php index.html index.htm;
+
+    # SSL Configuration (Certbot paths)
+    ssl_certificate /etc/letsencrypt/live/millacoco.in/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/millacoco.in/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    # Connection and Body Size limits
+    client_max_body_size 25M;
+    proxy_read_timeout 120s;
+
+    # Standard Security Headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+
+    server_tokens off;
+
+
+    # Admin Backend & API: Slim 4 (/mc-desk)
+    location ^~ /mc-desk {
+        alias /var/www/millacoco/admin/public;
+        try_files $uri $uri/ @mc_desk;
+
+        location ~ \.php$ {
+            include fastcgi_params;
+            fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+            fastcgi_param SCRIPT_FILENAME /var/www/millacoco/admin/public/index.php;
+            fastcgi_param SCRIPT_NAME /mc-desk/index.php;
+        }
+    }
+
+    location @mc_desk {
+        rewrite /mc-desk/(.*)$ /mc-desk/index.php last;
+    }
+    # ==========================================
+    # SECURITY & BOT BLOCKING
+    # ==========================================
+
+    # Block malicious bots but allow Meta/WhatsApp previews
+    set $block_bot 0;
+    if ($http_user_agent ~* "(Palo\ Alto|Cortex-Xpanse|Censys|Shodan|Shadowserver|BinaryEdge|LeakIX|Rapid7|ZoomEye|nmap|masscan|zgrab|Nikto|sqlmap|Nuclei|gobuster|dirbuster|WPScan|Go-http-client|libredtail|python-requests|httpx|curl|Wget|Scrapy|PhantomJS|HeadlessChrome|Puppeteer|Playwright)") {
+        set $block_bot 1;
+    }
+    if ($http_user_agent ~* "(WhatsApp|facebookexternalhit)") {
+        set $block_bot 0;
+    }
+    if ($block_bot = 1) {
+        return 444;
+    }
+
+    # Query string exploit blocking (HTTPS)
+    if ($query_string ~* "(config-create|\bbase64_encode\b|\beval\b|\bpassthru\b|\bshell_exec\b|\bsystem\b|\bassert\b)") {
+        return 444;
+    }
+
+    # Instantly drop direct requests to hidden dotfiles (.env, .git)
+    location ~ /\.(?!well-known).* {
+        deny all;
+        access_log off;
+        log_not_found off;
+        return 444;
+    }
+
+    # Block typical exploits, non-PHP scripts, and Markdown files
+    location ~* /(cgi-bin|bin/sh) { return 444; }
+    location ~* \.(aspx?|jsp|cgi|pl)$ { return 444; }
+    location ~* /(wp-admin|wp-content|wp-includes|xmlrpc\.php) { return 444; }
+    location ~* \.md$ { return 444; }
+
+    # ==========================================
+    # SLIM ROUTING & PHP-FPM
+    # ==========================================
+
+    # Main Slim Front Controller
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # Pass PHP scripts to PHP-FPM
+    location ~ \.php$ {
+        # Prevent zero-day arbitrary code execution by checking file existence
+        try_files $uri =404;
+
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+        # Verify this socket version matches your active PHP installation
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+
+        fastcgi_index index.php;
+        include fastcgi_params;
+
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+
+        # Prevent PHP timeouts on heavy scripts
+        fastcgi_read_timeout 60s;
+        fastcgi_connect_timeout 60s;
+    }
+
+    # ==========================================
+    # STATIC ASSET CACHING
+    # ==========================================
+
+    # Cache static assets to reduce server load
+    location ~* \.(?:css|js|woff2?|eot|ttf|otf|svg|gif|png|jpe?g|webp|ico)$ {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public, max-age=15768000, immutable";
+    }
+
+    # Disable logging for root text files
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+}
