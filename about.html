@@ -31,6 +31,7 @@
     <!-- Tailwind CSS -->
     <script>(function(){const w=console.warn;console.warn=function(...a){if(typeof a[0]==="string"&&a[0].includes("cdn.tailwindcss.com"))return;w.apply(console,a);};})();</script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="script.min.js?v=7.0" defer></script>
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="style.min.css?v=4.0">
@@ -256,12 +257,15 @@
                 </div>
             </div>
 
-            <!-- Heritage Visual Showcase -->
-            <div class="relative rounded-3xl overflow-hidden border border-white/80 shadow-xl aspect-4/3 bg-stone-100 group reveal-scale delay-150">
+            <!-- Heritage Visual Showcase (Modern Architectural Frame) -->
+            <div class="relative rounded-tr-[5.5rem] rounded-bl-[5.5rem] rounded-tl-3xl rounded-br-3xl overflow-hidden border-2 border-white/90 shadow-2xl aspect-4/3 bg-stone-100 group reveal-scale delay-150">
                 <img src="images/copra_heritage.webp" alt="Kerala Copra Heritage" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-6 sm:p-8">
                     <div class="text-white space-y-1">
-                        <span class="inline-block text-[10px] uppercase font-bold tracking-widest text-[#D4A853] bg-black/40 px-2.5 py-1 rounded-full backdrop-blur-xs">Authentic Origin</span>
+                        <span class="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-widest text-[#D4A853] bg-black/50 px-3 py-1 rounded-full backdrop-blur-md border border-[#D4A853]/40">
+                            <i class="fa-solid fa-certificate text-[9px]"></i>
+                            <span>Authentic Origin</span>
+                        </span>
                         <h4 class="font-serif text-lg sm:text-xl font-bold">Puthalampurath Oil Mill, Melur PO, Kozhikode</h4>
                         <p class="text-xs text-white/80">Generational milling tradition preserving the real aroma of Malabar coconut oil.</p>
                     </div>
@@ -286,7 +290,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 <!-- Step 1 -->
-                <div class="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 border border-[#D4A853]/30 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group reveal-on-scroll">
+                <div class="relative bg-white/90 backdrop-blur-md rounded-tl-[3.5rem] rounded-br-[3.5rem] rounded-tr-2xl rounded-bl-2xl p-6 sm:p-7 border border-[#D4A853]/35 shadow-xs hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal-on-scroll">
                     <div>
                         <div class="flex items-center justify-between mb-4">
                             <span class="font-serif text-3xl font-extrabold text-[#D4A853]/60 group-hover:text-[#D4A853] transition-colors">01</span>
@@ -306,7 +310,7 @@
                 </div>
 
                 <!-- Step 2 -->
-                <div class="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 border border-[#D4A853]/30 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group reveal-on-scroll">
+                <div class="relative bg-white/90 backdrop-blur-md rounded-tl-[3.5rem] rounded-br-[3.5rem] rounded-tr-2xl rounded-bl-2xl p-6 sm:p-7 border border-[#D4A853]/35 shadow-xs hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal-on-scroll">
                     <div>
                         <div class="flex items-center justify-between mb-4">
                             <span class="font-serif text-3xl font-extrabold text-[#D4A853]/60 group-hover:text-[#D4A853] transition-colors">02</span>
@@ -326,7 +330,7 @@
                 </div>
 
                 <!-- Step 3 -->
-                <div class="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 border border-[#D4A853]/30 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group reveal-on-scroll">
+                <div class="relative bg-white/90 backdrop-blur-md rounded-tl-[3.5rem] rounded-br-[3.5rem] rounded-tr-2xl rounded-bl-2xl p-6 sm:p-7 border border-[#D4A853]/35 shadow-xs hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal-on-scroll">
                     <div>
                         <div class="flex items-center justify-between mb-4">
                             <span class="font-serif text-3xl font-extrabold text-[#D4A853]/60 group-hover:text-[#D4A853] transition-colors">03</span>
@@ -346,7 +350,7 @@
                 </div>
 
                 <!-- Step 4 -->
-                <div class="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 border border-[#D4A853]/30 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group reveal-on-scroll">
+                <div class="relative bg-white/90 backdrop-blur-md rounded-tl-[3.5rem] rounded-br-[3.5rem] rounded-tr-2xl rounded-bl-2xl p-6 sm:p-7 border border-[#D4A853]/35 shadow-xs hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group reveal-on-scroll">
                     <div>
                         <div class="flex items-center justify-between mb-4">
                             <span class="font-serif text-3xl font-extrabold text-[#D4A853]/60 group-hover:text-[#D4A853] transition-colors">04</span>
@@ -381,9 +385,9 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Card 1 -->
-                <div class="bg-white rounded-3xl p-5 border border-[#D4A853]/30 shadow-sm hover:shadow-lg transition-all text-center flex flex-col items-center reveal-on-scroll">
-                    <div class="w-28 h-28 mb-3 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-1.5 border border-stone-100 shadow-inner">
-                        <img src="images/feat_kuttiyadi_gi.webp" alt="GI Tagged Kuttiyadi Copra" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300">
+                <div class="bg-white rounded-t-[3.5rem] rounded-b-3xl p-5 sm:p-6 border border-[#D4A853]/35 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center flex flex-col items-center group reveal-on-scroll">
+                    <div class="w-full h-44 mb-4 rounded-t-full rounded-b-2xl bg-gradient-to-b from-[#FAF5EC] via-[#F4EBE0] to-white flex items-center justify-center p-3 relative border border-[#D4A853]/25 shadow-inner">
+                        <img src="images/feat_kuttiyadi_gi_trans.webp" alt="GI Tagged Kuttiyadi Copra" class="w-32 h-32 object-contain drop-shadow-[0_12px_18px_rgba(97,27,16,0.18)] group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500">
                     </div>
                     <h4 class="font-serif font-bold text-base text-[#611B10]">GI Kuttiyadi Copra</h4>
                     <p class="text-xs text-stone-600 mt-1.5 leading-relaxed">
@@ -392,9 +396,9 @@
                 </div>
 
                 <!-- Card 2 -->
-                <div class="bg-white rounded-3xl p-5 border border-[#D4A853]/30 shadow-sm hover:shadow-lg transition-all text-center flex flex-col items-center reveal-on-scroll">
-                    <div class="w-28 h-28 mb-3 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-1.5 border border-stone-100 shadow-inner">
-                        <img src="images/feat_own_copra.webp" alt="Own Mill Extraction" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300">
+                <div class="bg-white rounded-t-[3.5rem] rounded-b-3xl p-5 sm:p-6 border border-[#D4A853]/35 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center flex flex-col items-center group reveal-on-scroll">
+                    <div class="w-full h-44 mb-4 rounded-t-full rounded-b-2xl bg-gradient-to-b from-[#FAF5EC] via-[#F4EBE0] to-white flex items-center justify-center p-3 relative border border-[#D4A853]/25 shadow-inner">
+                        <img src="images/feat_own_copra_trans.webp" alt="Own Mill Extraction" class="w-32 h-32 object-contain drop-shadow-[0_12px_18px_rgba(97,27,16,0.18)] group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500">
                     </div>
                     <h4 class="font-serif font-bold text-base text-[#611B10]">In-House Milled</h4>
                     <p class="text-xs text-stone-600 mt-1.5 leading-relaxed">
@@ -403,9 +407,9 @@
                 </div>
 
                 <!-- Card 3 -->
-                <div class="bg-white rounded-3xl p-5 border border-[#D4A853]/30 shadow-sm hover:shadow-lg transition-all text-center flex flex-col items-center reveal-on-scroll">
-                    <div class="w-28 h-28 mb-3 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-1.5 border border-stone-100 shadow-inner">
-                        <img src="images/feat_sulphur_free.webp" alt="100% Sulphur Free" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300">
+                <div class="bg-white rounded-t-[3.5rem] rounded-b-3xl p-5 sm:p-6 border border-[#D4A853]/35 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center flex flex-col items-center group reveal-on-scroll">
+                    <div class="w-full h-44 mb-4 rounded-t-full rounded-b-2xl bg-gradient-to-b from-[#FAF5EC] via-[#F4EBE0] to-white flex items-center justify-center p-3 relative border border-[#D4A853]/25 shadow-inner">
+                        <img src="images/feat_sulphur_free_trans.webp" alt="100% Sulphur Free" class="w-32 h-32 object-contain drop-shadow-[0_12px_18px_rgba(97,27,16,0.18)] group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500">
                     </div>
                     <h4 class="font-serif font-bold text-base text-[#611B10]">Zero Sulphur Added</h4>
                     <p class="text-xs text-stone-600 mt-1.5 leading-relaxed">
@@ -414,9 +418,9 @@
                 </div>
 
                 <!-- Card 4 -->
-                <div class="bg-white rounded-3xl p-5 border border-[#D4A853]/30 shadow-sm hover:shadow-lg transition-all text-center flex flex-col items-center reveal-on-scroll">
-                    <div class="w-28 h-28 mb-3 rounded-2xl overflow-hidden bg-white flex items-center justify-center p-1.5 border border-stone-100 shadow-inner">
-                        <img src="images/feat_no_chemicals.webp" alt="Chemical Free and Edible" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300">
+                <div class="bg-white rounded-t-[3.5rem] rounded-b-3xl p-5 sm:p-6 border border-[#D4A853]/35 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center flex flex-col items-center group reveal-on-scroll">
+                    <div class="w-full h-44 mb-4 rounded-t-full rounded-b-2xl bg-gradient-to-b from-[#FAF5EC] via-[#F4EBE0] to-white flex items-center justify-center p-3 relative border border-[#D4A853]/25 shadow-inner">
+                        <img src="images/feat_no_chemicals_trans.webp" alt="Chemical Free and Edible" class="w-32 h-32 object-contain drop-shadow-[0_12px_18px_rgba(97,27,16,0.18)] group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500">
                     </div>
                     <h4 class="font-serif font-bold text-base text-[#611B10]">100% Pure &amp; Edible</h4>
                     <p class="text-xs text-stone-600 mt-1.5 leading-relaxed">
@@ -439,7 +443,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/90 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center flex flex-col justify-between reveal-on-scroll">
+                <div class="bg-white/90 backdrop-blur-md rounded-tl-[3.5rem] rounded-br-[3.5rem] rounded-tr-2xl rounded-bl-2xl p-6 sm:p-8 border border-[#D4A853]/35 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center flex flex-col justify-between reveal-on-scroll">
                     <div>
                         <div class="w-14 h-14 mx-auto rounded-2xl bg-[#1C3822] text-[#D4A853] flex items-center justify-center text-xl mb-4 shadow-md">
                             <i class="fa-solid fa-droplet"></i>
@@ -454,7 +458,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/90 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center flex flex-col justify-between reveal-on-scroll">
+                <div class="bg-white/90 backdrop-blur-md rounded-tl-[3.5rem] rounded-br-[3.5rem] rounded-tr-2xl rounded-bl-2xl p-6 sm:p-8 border border-[#D4A853]/35 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center flex flex-col justify-between reveal-on-scroll">
                     <div>
                         <div class="w-14 h-14 mx-auto rounded-2xl bg-[#611B10] text-[#D4A853] flex items-center justify-center text-xl mb-4 shadow-md">
                             <i class="fa-solid fa-leaf"></i>
@@ -469,7 +473,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/90 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center flex flex-col justify-between reveal-on-scroll">
+                <div class="bg-white/90 backdrop-blur-md rounded-tl-[3.5rem] rounded-br-[3.5rem] rounded-tr-2xl rounded-bl-2xl p-6 sm:p-8 border border-[#D4A853]/35 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center flex flex-col justify-between reveal-on-scroll">
                     <div>
                         <div class="w-14 h-14 mx-auto rounded-2xl bg-[#D4A853] text-[#611B10] flex items-center justify-center text-xl mb-4 shadow-md">
                             <i class="fa-solid fa-kitchen-set"></i>
