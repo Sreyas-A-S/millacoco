@@ -657,7 +657,18 @@ async function syncSiteSettingsFromDatabase() {
 
         // 3. Address sync
         if (s.contact_address) {
-            document.querySelectorAll('[data-site-address]').forEach(el => el.innerText = s.contact_address);
+            document.querySelectorAll('[data-site-address]').forEach(el => {
+                if (el.tagName === 'P' && el.querySelector('strong')) {
+                    const parts = s.contact_address.split(',').map(p => p.trim());
+                    if (parts.length >= 2) {
+                        el.innerHTML = `<strong class="text-sage-900">${parts[0]}</strong><br>${parts.slice(1, -1).join(', ')}<br>${parts[parts.length - 1]}, India`;
+                    } else {
+                        el.innerText = s.contact_address;
+                    }
+                } else {
+                    el.innerText = s.contact_address;
+                }
+            });
         }
 
         // 4. Working hours sync
