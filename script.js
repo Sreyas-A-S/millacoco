@@ -1565,6 +1565,77 @@ if (document.readyState === 'loading') {
     requestAnimationFrame(updateParallax);
 })();
 
+// Parallax Controller for About Page Botanical Typography Centerpiece (#parallax-millacoco)
+(function initMillacocoTypographyParallax() {
+    const section = document.getElementById('parallax-millacoco');
+    if (!section) return;
+
+    const centerpiece = section.querySelector('.parallax-centerpiece');
+    const leaves = section.querySelectorAll('.parallax-leaf');
+    let ticking = false;
+    let mouseX = 0, mouseY = 0;
+    let currentX = 0, currentY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            mouseX = (e.clientX - centerX) / (rect.width / 2);
+            mouseY = (e.clientY - centerY) / (rect.height / 2);
+            mouseX = Math.max(-1, Math.min(1, mouseX));
+            mouseY = Math.max(-1, Math.min(1, mouseY));
+        }
+        requestUpdate();
+    }, { passive: true });
+
+    function update() {
+        const rect = section.getBoundingClientRect();
+        const inView = rect.top < window.innerHeight && rect.bottom > 0;
+        if (!inView) {
+            ticking = false;
+            return;
+        }
+
+        currentX += (mouseX - currentX) * 0.08;
+        currentY += (mouseY - currentY) * 0.08;
+
+        // Scroll progress through viewport (-1 to 1)
+        const scrollProgress = ((window.innerHeight / 2) - (rect.top + rect.height / 2)) / (window.innerHeight);
+        const scrollOffsetY = scrollProgress * 28; // subtle smooth scroll parallax
+
+        if (centerpiece) {
+            const tiltX = -currentY * 3.5;
+            const tiltY = currentX * 4;
+            centerpiece.style.transform = `perspective(1000px) translateY(${scrollOffsetY.toFixed(1)}px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
+        }
+
+        leaves.forEach((leaf) => {
+            const speed = parseFloat(leaf.dataset.speed || 0.08);
+            const rot = parseFloat(leaf.dataset.rot || 0);
+            const moveX = currentX * 40 * speed;
+            const moveY = (currentY * 40 * speed) + (scrollProgress * 50 * speed);
+            leaf.style.transform = `translate3d(${moveX.toFixed(1)}px, ${moveY.toFixed(1)}px, 0px) rotate(${rot}deg)`;
+        });
+
+        if (Math.abs(mouseX - currentX) > 0.002 || Math.abs(mouseY - currentY) > 0.002) {
+            requestAnimationFrame(update);
+        } else {
+            ticking = false;
+        }
+    }
+
+    function requestUpdate() {
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+        }
+    }
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    requestUpdate();
+})();
+
 // ==========================================
 // FLAGSHIP PRODUCT SCROLL SCRUB CONTROLLER
 // ==========================================
