@@ -1207,7 +1207,7 @@ function initTestimonialsCarousel() {
 
 // High-performance Smooth Viewport Scroll-Into-View Animations
 function initScrollReveal() {
-    const targets = document.querySelectorAll('.reveal-on-scroll, .reveal-scale, .reveal-fade, .scroll-reveal');
+    const targets = document.querySelectorAll('.reveal-on-scroll, .reveal-scale, .reveal-fade, .reveal-blur, .scroll-reveal');
     if (!targets.length) return;
 
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
