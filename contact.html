@@ -41,7 +41,12 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-stonebg text-sage-900 font-sans antialiased selection:bg-ambergold-300 selection:text-sage-900">
+<body class="bg-stonebg text-sage-900 font-sans antialiased selection:bg-ambergold-300 selection:text-sage-900 relative">
+
+    <!-- Luxury Vintage Damask Watermark Pattern Overlay (Blended seamlessly into background) -->
+    <div class="fixed inset-0 pointer-events-none opacity-[0.045] sm:opacity-[0.055] z-0" 
+         style="background-image: url('images/damask_gold_watermark.webp'); background-size: 300px; background-repeat: repeat;" 
+         aria-hidden="true"></div>
 
     <!-- Main Container -->
     <div class="max-w-[1440px] mx-auto px-2.5 xs:px-4 sm:px-6 lg:px-10 py-2 sm:py-4">
@@ -130,230 +135,430 @@
             </div>
         </header>
 
-        <!-- HERO SECTION (Atmospheric Kerala Heritage Banner) -->
-        <section id="contact-hero" class="relative rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-12 lg:p-14 mb-10 sm:mb-14 border border-white/80 overflow-hidden shadow-lg min-h-[360px] sm:min-h-[400px] flex flex-col justify-between relative">
-            <!-- Background Image with Stronger Readability Gradient Overlay -->
-            <div class="absolute inset-0 z-0 bg-cover bg-no-repeat bg-[center_right] transform scale-105" style="background-image: url('images/hero_contact.webp');"></div>
-            <div class="absolute inset-0 z-[1] bg-gradient-to-r from-[#FAF5EC] via-[#FAF5EC]/90 sm:via-[#FAF5EC]/75 60% via-[#FAF5EC]/30 80% to-transparent pointer-events-none"></div>
+        <!-- HERO SECTION (Modern Editorial Botanical 3-Column Layout - Connected to Nature & Craft) -->
+        <section id="contact-hero" class="relative rounded-[2.5rem] p-6 sm:p-10 lg:p-14 mb-12 sm:mb-16 bg-white/90 backdrop-blur-md border border-stone-200/80 shadow-xl overflow-hidden reveal-on-scroll">
+            <!-- Subtle Watermark Ambient Glow -->
+            <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-[#4B6638]/5 blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-[#D4A853]/10 blur-3xl pointer-events-none"></div>
 
-            <!-- Top Pill / Status Tag -->
-            <div class="relative z-10 flex flex-wrap items-center justify-between gap-3 mb-4">
-                <div class="inline-flex items-center space-x-2 text-[10px] sm:text-xs tracking-widest text-[#611B10] font-bold uppercase bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#D4A853]/50 shadow-xs">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>DIRECT FROM KOZHIKODE MILL</span>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center relative z-10">
+                
+                <!-- LEFT COLUMN: Typography, Direct Mill Desk & Contact CTAs (5 Cols) -->
+                <div class="lg:col-span-5 flex flex-col justify-between space-y-6">
+                    <div>
+                        <!-- Pill Category Eyebrow -->
+                        <div class="inline-flex items-center space-x-2 text-[10px] sm:text-xs tracking-widest text-[#4B6638] font-bold uppercase mb-4 bg-[#4B6638]/10 px-3.5 py-1.5 rounded-full border border-[#4B6638]/20">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span>DIRECT FROM KOZHIKODE MILL</span>
+                        </div>
+
+                        <!-- Main Bold Editorial Headline -->
+                        <h1 class="text-3xl sm:text-4xl lg:text-[3.2rem] font-serif text-[#611B10] font-bold leading-[1.12] tracking-tight">
+                            Get In Touch<br>
+                            Direct With Our<br>
+                            <span class="inline-block bg-[#4B6638] text-white px-3.5 py-0.5 rounded-2xl font-serif mt-1 shadow-sm">Millers</span>
+                        </h1>
+
+                        <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-medium mt-4">
+                            Have questions about our fresh batch cold-pressings, home delivery orders, retail agency distribution, or bulk copra oil containers? Speak directly with our master expeller millers at Kozhikode.
+                        </p>
+
+                        <!-- CTA Action Buttons -->
+                        <div class="flex flex-wrap items-center gap-3 pt-4">
+                            <a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I%20have%20an%20inquiry%20regarding%20pure%20Kerala%20coconut%20oil." 
+                               target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-6 py-3.5 rounded-full transition shadow-md active:scale-95 transform hover:-translate-y-0.5">
+                                <i class="fa-brands fa-whatsapp text-sm"></i>
+                                <span>Instant WhatsApp Desk</span>
+                            </a>
+                            <a href="tel:+918089757815" 
+                               class="inline-flex items-center gap-2 text-xs font-bold text-stone-700 hover:text-[#611B10] px-4 py-3 rounded-full border border-stone-200 hover:border-stone-400 transition bg-white/80 active:scale-95 shadow-xs">
+                                <span class="w-6 h-6 rounded-full bg-[#611B10] text-[#D4A853] flex items-center justify-center text-[9px] shadow-xs">
+                                    <i class="fa-solid fa-phone"></i>
+                                </span>
+                                <span><span data-site-phone>+91 80897 57815</span></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mill Working Hours Indicator -->
+                    <div class="pt-4 sm:pt-6 flex items-center gap-2.5 text-[10px] sm:text-[11px] font-bold text-stone-500 uppercase tracking-wider">
+                        <span class="w-6 h-6 rounded-full bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-700">
+                            <i class="fa-solid fa-clock text-[10px]"></i>
+                        </span>
+                        <span>Mill Hours: <strong class="text-stone-700 normal-case" data-site-hours>Mon–Sat 8:00 AM – 8:00 PM</strong></span>
+                    </div>
                 </div>
 
-                <div class="hidden sm:inline-flex items-center space-x-2 text-[11px] font-semibold text-[#611B10] bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#D4A853]/40 shadow-xs">
-                    <i class="fa-solid fa-clock text-[#D4A853]"></i>
-                    <span>Visiting Hours: 8:00 AM – 7:30 PM (Mon–Sat)</span>
-                </div>
-            </div>
+                <!-- CENTER COLUMN: Vertical Heritage Kerala Grove & Mill Asset Frame (4 Cols) -->
+                <div class="lg:col-span-4 flex justify-center">
+                    <div class="relative w-full max-w-sm lg:max-w-none h-[440px] sm:h-[520px] lg:h-[560px] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white group">
+                        <img src="images/hero_contact.webp" alt="Millacoco Kozhikode Oil Mill Harvest & Craft" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                        
+                        <!-- Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/10 pointer-events-none"></div>
 
-            <!-- Hero Main Headline Content inside Frosted Glassmorphic Shield Card for 100% Readability -->
-            <div class="relative z-10 max-w-xl my-auto glass-card p-6 sm:p-8 rounded-3xl border border-white/90 shadow-xl space-y-3 reveal-scale">
-                <span class="font-handwriting text-[#9C6D18] text-2xl sm:text-4xl font-bold block">
-                    Direct Mill Desk
-                </span>
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#611B10] font-extrabold leading-tight tracking-tight">
-                    Get in Touch with Us
-                </h1>
-                <p class="text-xs sm:text-sm text-stone-800 leading-relaxed font-semibold">
-                    Have questions about fresh batch pressing, home delivery orders, retail agency distribution, or bulk copra oil containers? Speak directly with our master millers at Kozhikode.
-                </p>
+                        <!-- Top Floating Mini Tag -->
+                        <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-md rounded-full px-3 py-1 text-[10px] font-bold text-[#4B6638] border border-white/80 shadow-sm">
+                            <i class="fa-solid fa-industry mr-1"></i> Puthalampurath Mill
+                        </div>
 
-                <!-- Quick Contact Fast-Pills -->
-                <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-2">
-                    <a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I%20have%20an%20inquiry%20regarding%20pure%20Kerala%20coconut%20oil." 
-                       target="_blank" rel="noopener noreferrer"
-                       class="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-5 py-2.5 rounded-full shadow-md transition-all duration-200 transform hover:-translate-y-0.5 active:scale-95">
-                        <i class="fa-brands fa-whatsapp text-sm"></i>
-                        <span>Instant WhatsApp Desk</span>
-                    </a>
-                    <a href="tel:+918089757815" 
-                       class="inline-flex items-center space-x-2 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs font-bold px-5 py-2.5 rounded-full shadow-md transition-all duration-200 border border-[#D4A853]/40 transform hover:-translate-y-0.5 active:scale-95">
-                        <i class="fa-solid fa-phone text-xs"></i>
-                        <span>Call +91 80897 57815</span>
-                    </a>
+                        <!-- Bottom Floating Botanical Card -->
+                        <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-3.5 text-center border border-white/80 shadow-lg">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-[#4B6638] block">Chengottukavu, Kozhikode</span>
+                            <span class="text-xs sm:text-sm font-serif font-bold text-[#611B10]">Fresh Expeller Extraction Desk</span>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- RIGHT COLUMN: Fast Dispatch & Direct Mill Inquiry Highlight (3 Cols) -->
+                <div class="lg:col-span-3 flex flex-col justify-center space-y-6 lg:pl-2">
+                    <!-- Minimalist Botanical Line-Art Flourish -->
+                    <div class="w-16 h-16 rounded-2xl bg-[#4B6638]/10 text-[#4B6638] flex items-center justify-center text-2xl border border-[#4B6638]/20 shadow-xs">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="inline-block text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                            Direct Doorstep Delivery
+                        </div>
+                        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-[#611B10] leading-tight">
+                            Freshly Pressed Dispatch
+                        </h3>
+                        <p class="text-xs text-stone-600 leading-relaxed font-medium">
+                            Bottled and dispatched within 24 hours of cold pressing. Available in consumer retail packs as well as bulk institutional supply across Kerala and nationwide.
+                        </p>
+                    </div>
+
+                    <!-- Clean Divider -->
+                    <div class="border-t border-stone-200 pt-4">
+                        <a href="#contact-inquiry-card" class="inline-flex items-center gap-2 text-xs font-bold text-[#611B10] hover:text-[#4B6638] group transition">
+                            <span>Drop Us a Message</span>
+                            <i class="fa-solid fa-arrow-down-long text-xs transform group-hover:translate-y-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-        <!-- 4-PILLAR TRUST BADGES (Glassmorphic Strip) -->
-        <section class="mb-12 relative">
-            <!-- Subtle ambient glow orb behind glass -->
-            <div class="absolute -top-10 left-1/4 w-72 h-72 rounded-full bg-[#D4A853]/20 blur-3xl pointer-events-none -z-10"></div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-4">
-                <div class="glass-card rounded-2xl p-4 flex items-center space-x-3 transition-transform hover:-translate-y-1 reveal-on-scroll delay-75">
-                    <div class="w-10 h-10 rounded-xl bg-[#611B10]/10 border border-[#611B10]/20 flex items-center justify-center text-[#611B10] shrink-0 text-sm">
+        <!-- 4-PILLAR TRUST BADGES (Matching About Us & Homepage Excellence Strip with Blur-In Cascade) -->
+        <section class="mb-14">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-5">
+                <div class="glass-card rounded-2xl p-4 sm:p-5 flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5 reveal-blur delay-75">
+                    <div class="w-11 h-11 rounded-xl bg-[#611B10]/10 border border-[#611B10]/20 flex items-center justify-center text-[#611B10] shrink-0 text-base">
                         <i class="fa-solid fa-seedling"></i>
                     </div>
                     <div>
                         <h4 class="text-xs font-bold text-sage-900 leading-tight">Own Sun-Dried Copra</h4>
-                        <p class="text-[10px] text-sage-600 mt-0.5">Single-origin Kuttiyadi</p>
+                        <p class="text-[10px] text-sage-600 mt-0.5 font-medium">Single-origin Kuttiyadi</p>
                     </div>
                 </div>
 
-                <div class="glass-card rounded-2xl p-4 flex items-center space-x-3 transition-transform hover:-translate-y-1 reveal-on-scroll delay-150">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-600/10 border border-emerald-600/20 flex items-center justify-center text-emerald-700 shrink-0 text-sm">
+                <div class="glass-card rounded-2xl p-4 sm:p-5 flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5 reveal-blur delay-150">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-600/10 border border-emerald-600/20 flex items-center justify-center text-emerald-700 shrink-0 text-base">
                         <i class="fa-solid fa-shield-halved"></i>
                     </div>
                     <div>
                         <h4 class="text-xs font-bold text-sage-900 leading-tight">100% Sulphur Free</h4>
-                        <p class="text-[10px] text-sage-600 mt-0.5">Zero chemical treatment</p>
+                        <p class="text-[10px] text-sage-600 mt-0.5 font-medium">Zero chemical treatment</p>
                     </div>
                 </div>
 
-                <div class="glass-card rounded-2xl p-4 flex items-center space-x-3 transition-transform hover:-translate-y-1 reveal-on-scroll delay-200">
-                    <div class="w-10 h-10 rounded-xl bg-[#D4A853]/20 border border-[#D4A853]/40 flex items-center justify-center text-[#611B10] shrink-0 text-sm">
+                <div class="glass-card rounded-2xl p-4 sm:p-5 flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5 reveal-blur delay-200">
+                    <div class="w-11 h-11 rounded-xl bg-[#D4A853]/20 border border-[#D4A853]/40 flex items-center justify-center text-[#611B10] shrink-0 text-base">
                         <i class="fa-solid fa-truck-fast"></i>
                     </div>
                     <div>
                         <h4 class="text-xs font-bold text-sage-900 leading-tight">Fast Direct Dispatch</h4>
-                        <p class="text-[10px] text-sage-600 mt-0.5">Bottled fresh in Kozhikode</p>
+                        <p class="text-[10px] text-sage-600 mt-0.5 font-medium">Bottled fresh in Kozhikode</p>
                     </div>
                 </div>
 
-                <div class="glass-card rounded-2xl p-4 flex items-center space-x-3 transition-transform hover:-translate-y-1 reveal-on-scroll delay-300">
-                    <div class="w-10 h-10 rounded-xl bg-[#1C3822]/10 border border-[#1C3822]/20 flex items-center justify-center text-[#1C3822] shrink-0 text-sm">
+                <div class="glass-card rounded-2xl p-4 sm:p-5 flex items-center space-x-3.5 transition-transform hover:-translate-y-0.5 reveal-blur delay-300">
+                    <div class="w-11 h-11 rounded-xl bg-[#1C3822]/10 border border-[#1C3822]/20 flex items-center justify-center text-[#1C3822] shrink-0 text-base">
                         <i class="fa-solid fa-handshake"></i>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold text-sage-900 leading-tight">Wholesale & Retail</h4>
-                        <p class="text-[10px] text-sage-600 mt-0.5">Bulk cans & dealership</p>
+                        <h4 class="text-xs font-bold text-sage-900 leading-tight">Wholesale &amp; Retail</h4>
+                        <p class="text-[10px] text-sage-600 mt-0.5 font-medium">Bulk supply &amp; agency</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CONTACT DETAILS, INQUIRY FORM & MAP (Ambient Glassmorphic Layout) -->
-        <div class="relative mb-16">
-            <!-- Ambient Glowing Color Orbs for Real Glass Refraction -->
-            <div class="absolute -top-12 -left-12 w-80 h-80 rounded-full bg-[#D4A853]/25 blur-3xl pointer-events-none -z-10"></div>
-            <div class="absolute top-1/3 -right-12 w-96 h-96 rounded-full bg-[#2D6A4F]/20 blur-3xl pointer-events-none -z-10"></div>
-            <div class="absolute -bottom-10 left-1/3 w-80 h-80 rounded-full bg-[#611B10]/15 blur-3xl pointer-events-none -z-10"></div>
+        <!-- 2-TIER BOTANICAL DIRECTORY & INQUIRY BENTO (Matching About Page Craft Architecture) -->
+        <section class="mb-20 sm:mb-24 relative reveal-on-scroll">
+            <!-- Section Header -->
+            <div class="text-center max-w-xl mx-auto mb-8 sm:mb-10">
+                <span class="inline-block text-[11px] font-bold uppercase tracking-widest text-[#4B6638] bg-[#4B6638]/10 px-3.5 py-1 rounded-full mb-3 border border-[#4B6638]/20">
+                    Direct Mill Communication
+                </span>
+                <h3 class="text-2xl sm:text-4xl font-serif text-[#611B10] font-bold leading-tight">
+                    Visit, Connect &amp; Order
+                </h3>
+                <p class="text-xs sm:text-sm text-stone-600 mt-2 max-w-lg mx-auto">
+                    Choose how you'd like to get in touch. We welcome consumer requests, farm visits, and wholesale distribution inquiries.
+                </p>
+            </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-                
-                <!-- Direct Mill Info Cards (5 Cols) -->
-                <div class="lg:col-span-5 space-y-4 sm:space-y-5">
-                    
-                    <!-- Mill Location Card (Glassmorphic) -->
-                    <div class="glass-card rounded-3xl p-6 sm:p-7 transition-all duration-300 reveal-on-scroll delay-75">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 rounded-2xl bg-[#611B10] text-[#D4A853] flex items-center justify-center text-lg shrink-0 shadow-md">
-                                <i class="fa-solid fa-location-dot"></i>
+            <div class="w-full relative px-0 sm:px-2">
+                <!-- Floating Top Green Strip Card (Overlapping Aesthetic) -->
+                <div class="relative z-20 bg-[#4B6638] text-white rounded-3xl p-5 sm:p-7 shadow-xl mx-4 sm:mx-12 lg:mx-20 -mb-8 sm:-mb-10 border border-white/20">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 text-center">
+                        <div class="flex flex-col items-center space-y-1.5 group">
+                            <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center text-lg text-emerald-200">
+                                <i class="fa-solid fa-bolt"></i>
                             </div>
-                            <div class="flex-1">
-                                <span class="inline-block text-[9px] uppercase tracking-widest text-[#611B10] font-bold bg-[#D4A853]/25 px-2.5 py-0.5 rounded-full mb-1">Registered Expeller Mill</span>
-                                <h4 class="font-serif font-bold text-lg text-[#611B10]">Mill Location</h4>
-                                <p class="text-xs text-stone-700 mt-1 leading-relaxed" data-site-address>
-                                    <strong class="text-sage-900">Puthalampurath Oil Mill</strong><br>
-                                    Melur PO, Chengottukavu<br>
-                                    Kozhikode, Kerala 673306, India
-                                </p>
-                                <div class="mt-3.5 pt-3 border-t border-stone-200/60 flex items-center justify-between text-[11px] text-stone-600">
-                                    <span><i class="fa-solid fa-road text-[#D4A853] mr-1"></i> Near NH-66 Corridor</span>
-                                    <a href="https://maps.google.com/?q=Puthalampurath+Oil+Mill+Melur+Chengottukavu+Kozhikode+Kerala" target="_blank" rel="noopener noreferrer" class="text-[#611B10] font-bold hover:underline">View Map →</a>
-                                </div>
-                            </div>
+                            <span class="text-xs font-bold text-white tracking-wide">15-Min Response</span>
+                            <span class="text-[10px] text-white/75 hidden sm:block">During Mill Operating Hours</span>
                         </div>
-                    </div>
-
-                    <!-- Direct Call & WhatsApp Card (Glassmorphic) -->
-                    <div class="glass-card rounded-3xl p-6 sm:p-7 transition-all duration-300 reveal-on-scroll delay-150">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-xl shrink-0 shadow-md">
-                                <i class="fa-brands fa-whatsapp"></i>
+                        
+                        <div class="flex flex-col items-center space-y-1.5 group">
+                            <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center text-lg text-emerald-200">
+                                <i class="fa-solid fa-map-pin"></i>
                             </div>
-                            <div class="flex-1">
-                                <span class="inline-block text-[9px] uppercase tracking-widest text-emerald-800 font-bold bg-emerald-100/80 px-2.5 py-0.5 rounded-full mb-1">Active Support</span>
-                                <h4 class="font-serif font-bold text-lg text-[#611B10]">Direct Call & WhatsApp</h4>
-                                <p class="text-xs text-stone-700 mt-1" data-site-hours>Available Mon–Sat: 8:00 AM – 8:00 PM</p>
-                                
-                                <div class="flex flex-wrap items-center gap-2 mt-3.5">
-                                    <a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20ordering%20pure%20Kerala%20coconut%20oil." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-full text-xs font-semibold shadow-xs transition active:scale-95">
-                                        <i class="fa-brands fa-whatsapp"></i>
-                                        <span>Chat WhatsApp</span>
-                                    </a>
-                                    <a href="tel:+918089757815" class="inline-flex items-center gap-1.5 glass-card hover:bg-white/90 text-sage-900 px-4 py-2 rounded-full text-xs font-semibold transition active:scale-95">
-                                        <i class="fa-solid fa-phone text-xs text-[#611B10]"></i>
-                                        <span><span data-site-phone>+91 80897 57815</span></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Email Inquiries Card (Glassmorphic) -->
-                    <div class="glass-card rounded-3xl p-6 sm:p-7 transition-all duration-300 reveal-on-scroll delay-200">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 rounded-2xl bg-[#1C3822] text-[#D4A853] flex items-center justify-center text-lg shrink-0 shadow-md">
-                                <i class="fa-solid fa-envelope"></i>
-                            </div>
-                            <div class="flex-1">
-                                <span class="inline-block text-[9px] uppercase tracking-widest text-sage-800 font-bold bg-sage-200/70 px-2.5 py-0.5 rounded-full mb-1">Official Inbox</span>
-                                <h4 class="font-serif font-bold text-lg text-[#611B10]">Email Inquiries</h4>
-                                <p class="text-xs text-stone-700 mt-1">For general questions, institutional supply, and retail distribution.</p>
-                                <a href="mailto:millacocococonutoil@gmail.com" class="inline-flex items-center gap-1.5 mt-3.5 text-xs font-bold text-[#611B10] hover:text-[#782315] break-all bg-[#D4A853]/20 px-3.5 py-1.5 rounded-full border border-[#D4A853]/40">
-                                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                                    <span data-site-email>millacocococonutoil@gmail.com</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Quick Mill Inquiry Form (Glassmorphic) -->
-                    <div class="glass-card rounded-3xl p-6 sm:p-7 transition-all duration-300 reveal-on-scroll delay-250">
-                        <div class="flex items-center space-x-3 mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-[#611B10]/10 text-[#611B10] flex items-center justify-center text-base">
-                                <i class="fa-solid fa-paper-plane"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-serif font-bold text-base text-[#611B10]">Quick Message to Mill</h4>
-                                <p class="text-[11px] text-stone-600">We reply in 15 mins during mill hours</p>
-                            </div>
+                            <span class="text-xs font-bold text-white tracking-wide">Near NH-66</span>
+                            <span class="text-[10px] text-white/75 hidden sm:block">Easy Road Freight &amp; Access</span>
                         </div>
 
-                        <form id="contact-inquiry-form" onsubmit="handleContactInquiry(event)" class="space-y-3">
-                            <div>
-                                <input type="text" id="contact-name" required placeholder="Your Name" class="w-full glass-input text-xs px-3.5 py-2.5 rounded-xl text-sage-900 placeholder-stone-500 focus:outline-none">
+                        <div class="flex flex-col items-center space-y-1.5 group">
+                            <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center text-lg text-emerald-200">
+                                <i class="fa-solid fa-box-open"></i>
                             </div>
-                            <div>
-                                <input type="tel" id="contact-phone" required placeholder="Phone / WhatsApp Number" class="w-full glass-input text-xs px-3.5 py-2.5 rounded-xl text-sage-900 placeholder-stone-500 focus:outline-none">
-                            </div>
-                            <div>
-                                <textarea id="contact-message" required rows="2" placeholder="Tell us what size or quantity you need..." class="w-full glass-input text-xs px-3.5 py-2.5 rounded-xl text-sage-900 placeholder-stone-500 focus:outline-none resize-none"></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold text-xs py-3 rounded-xl transition shadow-md flex items-center justify-center gap-2 active:scale-95">
-                                <span>Send Directly to WhatsApp</span>
-                                <i class="fa-brands fa-whatsapp text-sm text-emerald-400"></i>
-                            </button>
-                        </form>
-                    </div>
+                            <span class="text-xs font-bold text-white tracking-wide">Sample Tins</span>
+                            <span class="text-[10px] text-white/75 hidden sm:block">For Wholesale &amp; Stores</span>
+                        </div>
 
+                        <div class="flex flex-col items-center space-y-1.5 group">
+                            <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center text-lg text-emerald-200">
+                                <i class="fa-solid fa-headset"></i>
+                            </div>
+                            <span class="text-xs font-bold text-white tracking-wide">Malayalam &amp; English</span>
+                            <span class="text-[10px] text-white/75 hidden sm:block">Direct Telephone Support</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Right Column: Interactive Map (7 Cols) -->
-                <div class="lg:col-span-7 h-full">
+                <!-- Lower White Card (Interactive Mill Map, Quick Message & Contact Cards) -->
+                <div class="relative z-10 bg-white rounded-[2.5rem] p-6 sm:p-10 lg:p-12 pt-16 sm:pt-20 border border-stone-200/80 shadow-lg">
                     
-                    <!-- Clean Full-Height Interactive Mill Map Card -->
-                    <div class="glass-card rounded-3xl overflow-hidden relative w-full h-full min-h-[520px] lg:min-h-[640px] shadow-lg reveal-scale delay-150">
-                        <iframe 
-                            title="Millacoco Puthalampurath Oil Mill Location"
-                            src="https://maps.google.com/maps?q=Puthalampurath+Oil+Mill+Melur+Chengottukavu+Kozhikode+Kerala+673306&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                            class="absolute inset-0 w-full h-full border-0 filter saturate-[1.1] contrast-[1.02]"
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade"
-                            allowfullscreen>
-                        </iframe>
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+                        
+                        <!-- Left Column: Quick Contact Cards & Direct Message Form (5 Cols) -->
+                        <div class="lg:col-span-5 flex flex-col justify-between space-y-5">
+                            
+                            <!-- Mill Location Card -->
+                            <div class="bg-stone-50/80 rounded-2xl p-5 sm:p-6 border border-stone-200/60 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-[#611B10] text-[#D4A853] flex items-center justify-center text-lg shrink-0 shadow-md">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <span class="inline-block text-[9px] uppercase tracking-widest text-[#611B10] font-bold bg-[#D4A853]/25 px-2.5 py-0.5 rounded-full mb-1">Registered Expeller Mill</span>
+                                        <h4 class="font-serif font-bold text-lg text-[#611B10]">Mill Location</h4>
+                                        <p class="text-xs text-stone-700 mt-1 leading-relaxed" data-site-address>
+                                            <strong class="text-sage-900">Puthalampurath Oil Mill</strong><br>
+                                            Melur PO, Chengottukavu<br>
+                                            Kozhikode, Kerala 673306, India
+                                        </p>
+                                        <div class="mt-3.5 pt-3 border-t border-stone-200/60 flex items-center justify-between text-[11px] text-stone-600">
+                                            <span><i class="fa-solid fa-road text-[#4B6638] mr-1"></i> Near NH-66 Corridor</span>
+                                            <a href="https://maps.google.com/?q=Puthalampurath+Oil+Mill+Melur+Chengottukavu+Kozhikode+Kerala" target="_blank" rel="noopener noreferrer" class="text-[#611B10] font-bold hover:underline inline-flex items-center gap-1">
+                                                <span>View Directions</span>
+                                                <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Direct WhatsApp & Phone Card -->
+                            <div class="bg-stone-50/80 rounded-2xl p-5 sm:p-6 border border-stone-200/60 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-xl shrink-0 shadow-md">
+                                        <i class="fa-brands fa-whatsapp"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <span class="inline-block text-[9px] uppercase tracking-widest text-emerald-800 font-bold bg-emerald-100/80 px-2.5 py-0.5 rounded-full mb-1">Instant Support</span>
+                                        <h4 class="font-serif font-bold text-lg text-[#611B10]">Direct Call &amp; WhatsApp</h4>
+                                        <p class="text-xs text-stone-700 mt-1" data-site-hours>Available Mon–Sat: 8:00 AM – 8:00 PM</p>
+                                        
+                                        <div class="flex flex-wrap items-center gap-2 mt-3.5">
+                                            <a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20ordering%20pure%20Kerala%20coconut%20oil." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-full text-xs font-semibold shadow-xs transition active:scale-95">
+                                                <i class="fa-brands fa-whatsapp"></i>
+                                                <span>Chat WhatsApp</span>
+                                            </a>
+                                            <a href="tel:+918089757815" class="inline-flex items-center gap-1.5 bg-white hover:bg-stone-100 text-sage-900 border border-stone-200 px-4 py-2 rounded-full text-xs font-semibold transition active:scale-95 shadow-2xs">
+                                                <i class="fa-solid fa-phone text-xs text-[#611B10]"></i>
+                                                <span><span data-site-phone>+91 80897 57815</span></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email Card -->
+                            <div class="bg-stone-50/80 rounded-2xl p-5 sm:p-6 border border-stone-200/60 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-[#1C3822] text-[#D4A853] flex items-center justify-center text-lg shrink-0 shadow-md">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <span class="inline-block text-[9px] uppercase tracking-widest text-[#4B6638] font-bold bg-[#4B6638]/10 px-2.5 py-0.5 rounded-full mb-1">Official Desk</span>
+                                        <h4 class="font-serif font-bold text-lg text-[#611B10]">Email Inquiries</h4>
+                                        <p class="text-xs text-stone-700 mt-1">For institutional contracts, bulk container freight, and retailer agency requests.</p>
+                                        <a href="mailto:millacocococonutoil@gmail.com" class="inline-flex items-center gap-1.5 mt-3 text-xs font-bold text-[#611B10] hover:text-[#782315] break-all bg-[#D4A853]/20 px-3.5 py-1.5 rounded-full border border-[#D4A853]/40">
+                                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                            <span data-site-email>millacocococonutoil@gmail.com</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Interactive WhatsApp Message Dispatcher -->
+                            <div id="contact-inquiry-card" class="bg-gradient-to-br from-stone-50 to-[#4B6638]/5 rounded-2xl p-5 sm:p-6 border border-stone-200/80 shadow-sm">
+                                <div class="flex items-center space-x-3 mb-4">
+                                    <div class="w-10 h-10 rounded-xl bg-[#4B6638]/10 text-[#4B6638] flex items-center justify-center text-base">
+                                        <i class="fa-solid fa-paper-plane"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-serif font-bold text-base text-[#611B10]">Quick Inquiry Dispatch</h4>
+                                        <p class="text-[11px] text-stone-600">Connects straight to our WhatsApp desk</p>
+                                    </div>
+                                </div>
+
+                                <form id="contact-inquiry-form" onsubmit="handleContactInquiry(event)" class="space-y-3">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-1">Your Name</label>
+                                            <input type="text" id="contact-name" required placeholder="e.g. Ramesh Nair" class="w-full bg-white border border-stone-300 rounded-xl text-xs px-3.5 py-2.5 text-sage-900 placeholder-stone-400 focus:outline-none focus:border-[#4B6638] focus:ring-1 focus:ring-[#4B6638]">
+                                        </div>
+                                        <div>
+                                            <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-1">Phone / WhatsApp</label>
+                                            <input type="tel" id="contact-phone" required placeholder="e.g. +91 98765 43210" class="w-full bg-white border border-stone-300 rounded-xl text-xs px-3.5 py-2.5 text-sage-900 placeholder-stone-400 focus:outline-none focus:border-[#4B6638] focus:ring-1 focus:ring-[#4B6638]">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-1">Inquiry Purpose</label>
+                                        <select id="contact-inquiry-type" class="w-full bg-white border border-stone-300 rounded-xl text-xs px-3.5 py-2.5 text-sage-900 focus:outline-none focus:border-[#4B6638] focus:ring-1 focus:ring-[#4B6638]">
+                                            <option value="Consumer Home Order">Personal / Home Delivery Order</option>
+                                            <option value="Retail Distribution / Dealership">Retail Store / Supermarket Agency</option>
+                                            <option value="Bulk Supply (5L / 15L Cans)">Bulk Supply (Restaurants, Caterers &amp; Ayurvedic)</option>
+                                            <option value="Mill Visit Request">Mill Visit / General Question</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-1">Message or Requirement</label>
+                                        <textarea id="contact-message" required rows="2" placeholder="Tell us what quantity or questions you have..." class="w-full bg-white border border-stone-300 rounded-xl text-xs px-3.5 py-2.5 text-sage-900 placeholder-stone-400 focus:outline-none focus:border-[#4B6638] focus:ring-1 focus:ring-[#4B6638] resize-none"></textarea>
+                                    </div>
+
+                                    <button type="submit" class="w-full bg-[#4B6638] hover:bg-[#3D532E] text-white font-bold text-xs py-3 rounded-xl transition shadow-md flex items-center justify-center gap-2 active:scale-95">
+                                        <span>Send Directly to WhatsApp</span>
+                                        <i class="fa-brands fa-whatsapp text-sm text-emerald-300"></i>
+                                    </button>
+                                </form>
+                            </div>
+
+                        </div>
+
+                        <!-- Right Column: Interactive Map & Visiting Guide (7 Cols) -->
+                        <div class="lg:col-span-7 flex flex-col space-y-4">
+                            
+                            <!-- Google Map Container with Refined Rounded Frame -->
+                            <div class="relative w-full rounded-2xl overflow-hidden border border-stone-200/80 shadow-md min-h-[420px] sm:min-h-[500px] lg:flex-1">
+                                <iframe 
+                                    title="Millacoco Puthalampurath Oil Mill Location"
+                                    src="https://maps.google.com/maps?q=Puthalampurath+Oil+Mill+Melur+Chengottukavu+Kozhikode+Kerala+673306&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                                    class="absolute inset-0 w-full h-full border-0 filter saturate-[1.1] contrast-[1.02]"
+                                    loading="lazy" 
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    allowfullscreen>
+                                </iframe>
+                                
+                                <!-- Floating Map Info Badge -->
+                                <div class="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-xs bg-white/95 backdrop-blur-md rounded-xl p-3 border border-white shadow-lg flex items-center space-x-3 pointer-events-auto">
+                                    <div class="w-9 h-9 rounded-lg bg-[#611B10] text-[#D4A853] flex items-center justify-center text-sm shrink-0">
+                                        <i class="fa-solid fa-route"></i>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <p class="text-[10px] font-bold text-[#611B10] uppercase tracking-wider">Kozhikode Malabar Corridor</p>
+                                        <p class="text-[11px] text-stone-600 truncate">Melur, Chengottukavu (673306)</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Visiting Guidelines & FAQ Highlights (3-Box Strip) -->
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div class="bg-stone-50/80 rounded-xl p-3.5 border border-stone-200/60 text-left">
+                                    <span class="text-[9px] font-bold text-[#4B6638] uppercase tracking-wider block mb-1">
+                                        <i class="fa-solid fa-door-open mr-1"></i> Mill Visits
+                                    </span>
+                                    <p class="text-[11px] text-stone-600 leading-snug">Visitors are welcome to witness live cold-expeller extraction directly at the mill.</p>
+                                </div>
+                                <div class="bg-stone-50/80 rounded-xl p-3.5 border border-stone-200/60 text-left">
+                                    <span class="text-[9px] font-bold text-[#4B6638] uppercase tracking-wider block mb-1">
+                                        <i class="fa-solid fa-truck-ramp-box mr-1"></i> Direct Loading
+                                    </span>
+                                    <p class="text-[11px] text-stone-600 leading-snug">Spill-proof commercial vehicles can directly pull in for container pickups.</p>
+                                </div>
+                                <div class="bg-stone-50/80 rounded-xl p-3.5 border border-stone-200/60 text-left">
+                                    <span class="text-[9px] font-bold text-[#4B6638] uppercase tracking-wider block mb-1">
+                                        <i class="fa-solid fa-stamp mr-1"></i> Lab Batch COA
+                                    </span>
+                                    <p class="text-[11px] text-stone-600 leading-snug">Batch laboratory certificates available on-request for commercial retail clients.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
 
                 </div>
 
             </div>
+        </section>
 
-        </div>
+        <!-- FULL-WIDTH BOTANICAL TYPOGRAPHY BANNER (Matching About Page Editorial Parallax) -->
+        <section id="parallax-millacoco" class="relative left-1/2 -translate-x-1/2 w-screen max-w-none my-4 sm:my-6 bg-white overflow-hidden border-y border-stone-200/50 shadow-2xs">
+            <div class="w-full flex items-center justify-center p-0 m-0">
+                <div class="w-full max-w-[1400px] h-32 sm:h-44 md:h-52 lg:h-64 flex items-center justify-center overflow-hidden py-1 sm:py-2">
+                    <img src="images/millacoco_botanical_banner.png" 
+                         alt="MILLACOCO Pure Kerala Coconut Oil Botanical Wordmark" 
+                         loading="lazy"
+                         class="w-full max-w-[1400px] h-auto object-contain drop-shadow-md">
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA BANNER (Modern Rounded Pill Aesthetic) -->
+        <section class="relative bg-gradient-to-br from-[#611B10] via-[#4A1208] to-[#2D0B05] rounded-[2.5rem] p-8 sm:p-14 text-center text-white overflow-hidden shadow-2xl mb-16 border border-[#D4A853]/40 reveal-scale">
+            <div class="absolute inset-0 bg-cover bg-no-repeat opacity-15 pointer-events-none" style="background-image: url('images/hero_slide_coconuts.webp');"></div>
+            <!-- Vintage Damask Gold Emboss Overlay -->
+            <div class="absolute inset-0 opacity-[0.08] pointer-events-none" style="background-image: url('images/damask_gold_watermark.webp'); background-size: 260px; background-repeat: repeat;"></div>
+            <div class="relative z-10 max-w-xl mx-auto space-y-3">
+                <span class="inline-block text-[10px] font-bold uppercase tracking-widest text-[#D4A853] bg-white/10 px-3 py-1 rounded-full border border-white/15">
+                    Order Directly from the Source
+                </span>
+                <h3 class="font-serif text-2xl sm:text-4xl font-bold text-white leading-tight">
+                    Experience Authentic Kerala Goodness
+                </h3>
+                <p class="text-xs sm:text-sm text-stone-200 leading-relaxed max-w-lg mx-auto">
+                    Explore our pure copra oil range, available in spill-proof kitchen pouches, heritage glass bottles, and bulk supply cans.
+                </p>
+                <div class="flex flex-wrap items-center justify-center gap-3 pt-3">
+                    <a href="/products" class="bg-[#D4A853] hover:bg-[#e0b764] text-[#3D140C] font-bold text-xs px-7 py-3 rounded-full transition shadow-md active:scale-95">
+                        VIEW PRODUCTS
+                    </a>
+                    <a href="https://wa.me/918089757815?text=Hello%20Millacoco!%20I'm%20interested%20in%20ordering%20pure%20Kerala%20coconut%20oil." target="_blank" rel="noopener noreferrer" class="border border-white/50 hover:border-white text-white font-medium text-xs px-7 py-3 rounded-full transition active:scale-95 flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                        <span>CHAT WHATSAPP</span>
+                    </a>
+                </div>
+            </div>
+        </section>
 
     </div>
 

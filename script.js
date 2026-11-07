@@ -957,6 +957,39 @@ function showToast(message) {
     }
 }
 
+// Contact Inquiry to WhatsApp Form Handler
+function handleContactInquiry(e) {
+    if (e) e.preventDefault();
+    const nameEl = document.getElementById('contact-name');
+    const phoneEl = document.getElementById('contact-phone');
+    const inquiryTypeEl = document.getElementById('contact-inquiry-type');
+    const messageEl = document.getElementById('contact-message');
+
+    const name = nameEl ? nameEl.value.trim() : '';
+    const phone = phoneEl ? phoneEl.value.trim() : '';
+    const inquiryType = inquiryTypeEl ? inquiryTypeEl.value : 'General Inquiry';
+    const message = messageEl ? messageEl.value.trim() : '';
+
+    if (!name || !message) {
+        showToast('Please provide your name and message.');
+        return;
+    }
+
+    const waText = `*New Inquiry from Millacoco Website*\n\n` +
+                   `*Name:* ${name}\n` +
+                   (phone ? `*Phone/WhatsApp:* ${phone}\n` : '') +
+                   `*Inquiry Nature:* ${inquiryType}\n` +
+                   `*Message:* ${message}\n\n` +
+                   `_Sent via millacoco.com Direct Desk_`;
+
+    showToast('Redirecting to Millacoco WhatsApp Desk...');
+    const waUrl = `https://wa.me/918089757815?text=${encodeURIComponent(waText)}`;
+    window.open(waUrl, '_blank');
+    if (e && e.target && typeof e.target.reset === 'function') {
+        e.target.reset();
+    }
+}
+
 // Newsletter Handler
 function handleSubscribe(e) {
     e.preventDefault();
