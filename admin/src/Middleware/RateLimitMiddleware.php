@@ -48,11 +48,15 @@ class RateLimitMiddleware implements MiddlewareInterface
         if (count($attempts) >= $this->maxAttempts) {
             $oldestAttempt = reset($attempts);
             $retryAfter = max(1, $this->decaySeconds - ($currentTime - $oldestAttempt));
+            $mins = ceil($retryAfter / 60);
+            $msg = $retryAfter > 60
+                ? "Too many failed attempts. Security lock active. Please wait {$mins} minute(s) before trying again."
+                : "Too many failed attempts. Security lock active. Please wait {$retryAfter} second(s) before trying again.";
 
             $response = new SlimResponse(429);
             $response->getBody()->write(json_encode([
                 'status' => 'error',
-                'message' => 'Too many requests. Please try again later.',
+                'message' => $msg,
                 'retry_after_seconds' => $retryAfter,
             ]));
 

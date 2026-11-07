@@ -26,6 +26,47 @@ class AuthController
         $email = trim($data['email'] ?? '');
         $password = (string)($data['password'] ?? '');
 
+        // 1. Verify CAPTCHA Code
+        $captchaToken = (string)($data['captcha_token'] ?? '');
+        $captchaAnswer = strtoupper(trim((string)($data['captcha_answer'] ?? '')));
+
+        if (empty($captchaToken) || empty($captchaAnswer)) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Please enter the verification security code.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        $tokenData = json_decode((string)base64_decode($captchaToken), true);
+        if (!is_array($tokenData) || empty($tokenData['sig']) || empty($tokenData['t'])) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Invalid security token. Please refresh the code.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        // Expire challenge after 5 minutes
+        if ((time() - (int)$tokenData['t']) > 300) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Security code has expired. Please refresh and try again.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        $secret = $this->settings['jwt']['secret'] ?? 'millacoco-admin-secret-2026';
+        $expectedSig = hash_hmac('sha256', $captchaAnswer . '|' . $tokenData['t'], $secret);
+
+        if (!hash_equals($expectedSig, $tokenData['sig'])) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Incorrect verification code. Please check and try again.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
         if (empty($email) || empty($password)) {
             $response->getBody()->write(json_encode([
                 'status' => 'error',
@@ -152,6 +193,65 @@ class AuthController
             'status' => 'success',
             'message' => 'Password updated successfully! Please use your new password next time you sign in.'
         ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
+     * Generate an encrypted visual SVG challenge
+     */
+    public function getCaptcha(Request $request, Response $response): Response
+    {
+        // 5 unambiguous alphanumeric characters (excludes easily confused letters like 0/O, 1/I)
+        $charset = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+        $code = '';
+        $maxIndex = strlen($charset) - 1;
+        for ($i = 0; $i < 5; $i++) {
+            $code .= $charset[random_int(0, $maxIndex)];
+        }
+
+        $time = time();
+        $secret = $this->settings['jwt']['secret'] ?? 'millacoco-admin-secret-2026';
+        $sig = hash_hmac('sha256', $code . '|' . $time, $secret);
+        $token = base64_encode(json_encode(['sig' => $sig, 't' => $time]));
+
+        $width = 170;
+        $height = 46;
+        $charElements = '';
+        $colors = ['#611B10', '#852112', '#1C3822', '#26542D', '#916317'];
+
+        // Noise lines
+        $noiseLines = '';
+        for ($i = 0; $i < 3; $i++) {
+            $x1 = random_int(5, 40);
+            $y1 = random_int(5, $height - 5);
+            $x2 = random_int($width - 40, $width - 5);
+            $y2 = random_int(5, $height - 5);
+            $lineColor = $colors[random_int(0, count($colors) - 1)];
+            $noiseLines .= "<line x1='{$x1}' y1='{$y1}' x2='{$x2}' y2='{$y2}' stroke='{$lineColor}' stroke-width='1.5' stroke-opacity='0.25' />";
+        }
+
+        $step = ($width - 30) / 5;
+        for ($i = 0; $i < 5; $i++) {
+            $char = $code[$i];
+            $x = 18 + ($i * $step) + random_int(-2, 2);
+            $y = 31 + random_int(-3, 3);
+            $rot = random_int(-14, 14);
+            $col = $colors[$i % count($colors)];
+            $charElements .= "<text x='{$x}' y='{$y}' font-family='monospace, sans-serif' font-weight='800' font-size='22' fill='{$col}' transform='rotate({$rot}, {$x}, {$y})' letter-spacing='2'>{$char}</text>";
+        }
+
+        $svg = "<svg xmlns='http://www.w3.org/2000/svg' width='{$width}' height='{$height}' viewBox='0 0 {$width} {$height}' style='border-radius:10px; background:#FAF5EC; display:block;'>
+            <rect width='100%' height='100%' fill='#FAF5EC' rx='10' stroke='#D4A853' stroke-opacity='0.4' stroke-width='1'/>
+            {$noiseLines}
+            {$charElements}
+        </svg>";
+
+        $response->getBody()->write(json_encode([
+            'status' => 'success',
+            'captcha_token' => $token,
+            'captcha_svg' => $svg
+        ]));
+
         return $response->withHeader('Content-Type', 'application/json');
     }
 }

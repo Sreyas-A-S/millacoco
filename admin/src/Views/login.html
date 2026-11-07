@@ -6,13 +6,15 @@
     <title>Millacoco Admin - Sign In</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FAF5EC; }
         .font-serif { font-family: 'Playfair Display', serif; }
+        .captcha-input { text-transform: uppercase; letter-spacing: 0.25em; }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4 text-[#3a0e07]">
-    <div class="w-full max-w-md bg-white rounded-3xl p-8 border border-[#D4A853]/40 shadow-xl">
+    <div class="w-full max-w-md bg-white rounded-3xl p-7 sm:p-8 border border-[#D4A853]/40 shadow-xl">
         <!-- Brand Header -->
         <div class="text-center mb-6">
             <div class="w-14 h-14 mx-auto rounded-2xl bg-[#1C3822] border border-[#D4A853]/40 flex items-center justify-center p-2 mb-3 shadow">
@@ -23,68 +25,198 @@
         </div>
 
         <!-- Alert Notification -->
-        <div id="login-alert" class="hidden mb-4 p-3 rounded-xl text-xs font-semibold bg-rose-50 border border-rose-200 text-rose-800"></div>
+        <div id="login-alert" class="hidden mb-4 p-3.5 rounded-xl text-xs font-semibold bg-rose-50 border border-rose-200 text-rose-800 flex items-start space-x-2">
+            <i class="fa-solid fa-circle-exclamation mt-0.5 shrink-0 text-rose-600"></i>
+            <span id="login-alert-text"></span>
+        </div>
 
         <!-- Login Form -->
         <form id="admin-login-form" onsubmit="handleLogin(event)" class="space-y-4">
             <div>
                 <label class="block text-xs font-bold text-[#611B10] mb-1.5 uppercase tracking-wider">Email Address</label>
-                <input type="email" id="email" required placeholder="admin@millacoco.com" class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#D4A853] text-xs">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400 text-xs">
+                        <i class="fa-solid fa-envelope"></i>
+                    </span>
+                    <input type="email" id="email" required placeholder="admin@millacoco.com" class="w-full pl-9 pr-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#D4A853] text-xs">
+                </div>
             </div>
 
             <div>
                 <label class="block text-xs font-bold text-[#611B10] mb-1.5 uppercase tracking-wider">Password</label>
-                <input type="password" id="password" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#D4A853] text-xs">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400 text-xs">
+                        <i class="fa-solid fa-lock"></i>
+                    </span>
+                    <input type="password" id="password" required placeholder="••••••••" class="w-full pl-9 pr-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#D4A853] text-xs">
+                </div>
             </div>
 
-            <button type="submit" id="submit-btn" class="w-full py-3.5 px-4 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] font-bold text-xs uppercase tracking-wider transition shadow-md active:scale-95">
+            <!-- Visual Security CAPTCHA Challenge -->
+            <div class="pt-1">
+                <label class="block text-xs font-bold text-[#611B10] mb-1.5 uppercase tracking-wider flex items-center justify-between">
+                    <span>Security Verification</span>
+                    <span class="text-[10px] text-stone-500 font-normal">Case-insensitive</span>
+                </label>
+                
+                <input type="hidden" id="captcha-token" value="">
+
+                <div class="flex items-center space-x-2.5 mb-2">
+                    <div id="captcha-svg-container" class="flex-1 h-12 bg-[#FAF5EC] rounded-xl border border-[#D4A853]/40 flex items-center justify-center overflow-hidden">
+                        <span class="text-[11px] text-stone-400 animate-pulse">Loading security challenge...</span>
+                    </div>
+                    <button type="button" id="captcha-refresh-btn" onclick="loadCaptcha()" title="Generate new security code" class="w-12 h-12 rounded-xl bg-stone-100 hover:bg-[#D4A853]/20 text-[#611B10] flex items-center justify-center text-sm transition border border-stone-200 shrink-0 active:scale-95">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </button>
+                </div>
+
+                <input type="text" id="captcha-answer" required maxlength="6" placeholder="Enter the 5 characters above" class="captcha-input w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#D4A853] text-xs font-bold text-center text-[#611B10]">
+            </div>
+
+            <button type="submit" id="submit-btn" class="w-full py-3.5 px-4 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] font-bold text-xs uppercase tracking-wider transition shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
                 Sign In to Admin
             </button>
         </form>
 
-        <p class="text-[10px] text-center text-stone-400 mt-6 tracking-wide">
-            Protected by Slim 4 & JWT • Millacoco Pure Kerala Oil
-        </p>
+        <div class="flex items-center justify-between text-[10px] text-stone-500 mt-6 pt-4 border-t border-stone-100">
+            <span class="flex items-center gap-1.5">
+                <i class="fa-solid fa-shield-halved text-emerald-700"></i> Rate-limited & Protected
+            </span>
+            <span>Slim 4 • JWT</span>
+        </div>
     </div>
 
     <script>
+        let isRateLimited = false;
+        let rateLimitTimer = null;
+
+        async function loadCaptcha() {
+            const container = document.getElementById('captcha-svg-container');
+            const tokenInput = document.getElementById('captcha-token');
+            const answerInput = document.getElementById('captcha-answer');
+            const refreshBtn = document.getElementById('captcha-refresh-btn');
+
+            if (refreshBtn) refreshBtn.querySelector('i').classList.add('fa-spin');
+            answerInput.value = '';
+
+            try {
+                const res = await fetch('/mc-desk/api/captcha');
+                if (!res.ok) throw new Error('Captcha request failed');
+                const data = await res.json();
+                
+                if (data.status === 'success' && data.captcha_svg) {
+                    container.innerHTML = data.captcha_svg;
+                    tokenInput.value = data.captcha_token || '';
+                } else {
+                    container.innerHTML = '<span class="text-xs text-rose-500">Failed to load code</span>';
+                }
+            } catch (err) {
+                container.innerHTML = '<span class="text-xs text-rose-500">Click refresh to load</span>';
+            } finally {
+                if (refreshBtn) refreshBtn.querySelector('i').classList.remove('fa-spin');
+            }
+        }
+
+        function showAlert(msg) {
+            const alertBox = document.getElementById('login-alert');
+            const alertText = document.getElementById('login-alert-text');
+            alertText.textContent = msg;
+            alertBox.classList.remove('hidden');
+        }
+
+        function hideAlert() {
+            const alertBox = document.getElementById('login-alert');
+            alertBox.classList.add('hidden');
+        }
+
+        function startRateLimitCountdown(seconds) {
+            const btn = document.getElementById('submit-btn');
+            isRateLimited = true;
+            btn.disabled = true;
+
+            let remaining = seconds;
+            if (rateLimitTimer) clearInterval(rateLimitTimer);
+
+            rateLimitTimer = setInterval(() => {
+                remaining--;
+                if (remaining <= 0) {
+                    clearInterval(rateLimitTimer);
+                    isRateLimited = false;
+                    btn.disabled = false;
+                    btn.innerText = 'Sign In to Admin';
+                    hideAlert();
+                    loadCaptcha();
+                } else {
+                    btn.innerText = `Access Restricted (${remaining}s)`;
+                }
+            }, 1000);
+
+            btn.innerText = `Access Restricted (${remaining}s)`;
+        }
+
         async function handleLogin(e) {
             e.preventDefault();
+            if (isRateLimited) return;
+
             const btn = document.getElementById('submit-btn');
-            const alertBox = document.getElementById('login-alert');
-            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const captchaToken = document.getElementById('captcha-token').value;
+            const captchaAnswer = document.getElementById('captcha-answer').value.trim();
+
+            if (!captchaAnswer) {
+                showAlert('Please enter the security verification code.');
+                return;
+            }
+
             btn.disabled = true;
-            btn.innerText = 'Verifying...';
-            alertBox.classList.add('hidden');
+            btn.innerText = 'Verifying Credentials...';
+            hideAlert();
 
             try {
                 const res = await fetch('/mc-desk/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        email: document.getElementById('email').value,
-                        password: document.getElementById('password').value
+                        email: email,
+                        password: password,
+                        captcha_token: captchaToken,
+                        captcha_answer: captchaAnswer
                     })
                 });
 
                 const data = await res.json();
+
+                if (res.status === 429) {
+                    // Rate limit triggered
+                    const retrySeconds = data.retry_after_seconds || 60;
+                    showAlert(data.message || 'Too many attempts. Access temporarily restricted.');
+                    startRateLimitCountdown(retrySeconds);
+                    return;
+                }
 
                 if (res.ok && data.status === 'success') {
                     // Save token to sessionStorage for API requests
                     sessionStorage.setItem('admin_jwt', data.token);
                     window.location.href = '/mc-desk';
                 } else {
-                    alertBox.textContent = data.message || 'Authentication failed.';
-                    alertBox.classList.remove('hidden');
+                    showAlert(data.message || 'Authentication failed. Please check credentials.');
+                    // Refresh CAPTCHA challenge after each failed attempt
+                    loadCaptcha();
                 }
             } catch (err) {
-                alertBox.textContent = 'Network or server connection error.';
-                alertBox.classList.remove('hidden');
+                showAlert('Network or server connection error. Please try again.');
+                loadCaptcha();
             } finally {
-                btn.disabled = false;
-                btn.innerText = 'Sign In to Admin';
+                if (!isRateLimited) {
+                    btn.disabled = false;
+                    btn.innerText = 'Sign In to Admin';
+                }
             }
         }
+
+        // Initialize CAPTCHA challenge on load
+        document.addEventListener('DOMContentLoaded', loadCaptcha);
     </script>
 </body>
 </html>

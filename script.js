@@ -570,6 +570,7 @@ async function syncProductsFromDatabase() {
                     id: p.id,
                     name: p.name,
                     price: parseFloat(p.price),
+                    discounted_from: p.discounted_from ? parseFloat(p.discounted_from) : null,
                     image: p.image,
                     tag: p.tag || 'Bestseller',
                     desc: p.description || p.name,
@@ -577,6 +578,12 @@ async function syncProductsFromDatabase() {
                     platform: p.platform_name || 'Amazon',
                     category: p.category || 'daily'
                 }));
+                if (typeof catalogBatchState !== 'undefined') {
+                    catalogBatchState.allProducts = [...productCatalog];
+                    if (document.getElementById('catalog-grid')) {
+                        resetAndRenderCatalog();
+                    }
+                }
                 renderDynamicProductGrid();
             }
         }
@@ -606,7 +613,10 @@ function renderDynamicProductGrid() {
                     <div>
                         <h3 class="font-serif font-semibold text-xs sm:text-base text-sage-900 leading-snug">${item.name}</h3>
                         <p class="text-[10px] sm:text-xs text-sage-600 my-0.5 sm:my-1 line-clamp-1">${item.desc}</p>
-                        <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5">₹${item.price.toFixed(2)}</p>
+                        <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5 flex items-center justify-center gap-1.5">
+                            <span>₹${item.price.toFixed(2)}</span>
+                            ${item.discounted_from ? `<span class="line-through text-stone-400 font-normal text-[11px]">₹${item.discounted_from.toFixed(2)}</span>` : ''}
+                        </p>
                     </div>
                     <button onclick="redirectToPlatform('${item.externalUrl}')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
                         <span>Buy</span>
@@ -2009,7 +2019,10 @@ function renderCatalogProductCard(item) {
                 </div>
                 <h3 class="font-serif font-bold text-xs sm:text-base text-sage-900 leading-snug">${item.name}</h3>
                 <p class="text-[10px] sm:text-xs text-sage-600 my-1 line-clamp-2">${item.desc || ''}</p>
-                <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3">₹${item.price}.00</p>
+                <p class="price-tag text-xs sm:text-sm font-bold text-[#611B10] mb-2.5 sm:mb-3 flex items-center gap-1.5">
+                    <span>₹${Number(item.price).toFixed(2)}</span>
+                    ${item.discounted_from ? `<span class="line-through text-stone-400 font-normal text-[11px]">₹${Number(item.discounted_from).toFixed(2)}</span>` : ''}
+                </p>
             </div>
         </div>
         <button onclick="redirectToPlatform('${item.externalUrl || ('https://wa.me/918089757815?text=' + encodeURIComponent('Hello Millacoco, I would like to order ' + item.name))}')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">

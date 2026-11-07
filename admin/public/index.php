@@ -79,9 +79,12 @@ $app->get('/api/combos', [$contentController, 'getPublicCombos']);
 $app->get('/api/testimonials', [$contentController, 'getPublicTestimonials']);
 $app->get('/api/flagship', [$contentController, 'getPublicFlagship']);
 
-// Rate limit login endpoint: max 5 login attempts per 60 seconds per IP
+// Public CAPTCHA Challenge Generator
+$app->get('/api/captcha', [$authController, 'getCaptcha']);
+
+// Hardened Rate Limited Login: max 5 login attempts per 300 seconds (5 mins) per IP
 $app->post('/api/login', [$authController, 'login'])
-    ->add(new RateLimitMiddleware(maxAttempts: 5, decaySeconds: 60));
+    ->add(new RateLimitMiddleware(maxAttempts: 5, decaySeconds: 300));
 
 $app->get('/login', function (Request $request, Response $response) {
     $loginHtml = file_get_contents(__DIR__ . '/../src/Views/login.html');
