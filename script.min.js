@@ -578,12 +578,6 @@ async function syncProductsFromDatabase() {
                     platform: p.platform_name || 'Amazon',
                     category: p.category || 'daily'
                 }));
-                if (typeof catalogBatchState !== 'undefined') {
-                    catalogBatchState.allProducts = [...productCatalog];
-                    if (document.getElementById('catalog-grid')) {
-                        resetAndRenderCatalog();
-                    }
-                }
                 renderDynamicProductGrid();
             }
         }
@@ -602,9 +596,9 @@ function renderDynamicProductGrid() {
     productCatalog.forEach(item => {
         html += `
             <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="${item.category}">
-                <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-white flex items-center justify-center p-2">
-                    <span class="absolute top-2 left-2 z-10 bg-[#611B10] text-[#D4A853] text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs uppercase">${item.tag}</span>
-                    <button onclick="toggleFavorite(event, '${item.name}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-2 right-2 z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="${item.name}">
+                <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-white flex items-center justify-center p-2.5 sm:p-3">
+                    <span class="absolute top-3.5 left-3.5 z-10 bg-[#611B10] text-[#D4A853] text-[8px] sm:text-[9px] font-bold px-2.5 py-1 rounded-full shadow-xs uppercase tracking-wider">${item.tag}</span>
+                    <button onclick="toggleFavorite(event, '${item.name}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-3.5 right-3.5 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="${item.name}">
                         <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
                     </button>
                     <img src="${item.image}" alt="${item.name}" class="product-card-img img-skeleton-pending w-full h-full object-contain" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
@@ -615,7 +609,7 @@ function renderDynamicProductGrid() {
                         <p class="text-[10px] sm:text-xs text-sage-600 my-0.5 sm:my-1 line-clamp-1">${item.desc}</p>
                         <p class="price-tag text-xs sm:text-sm font-bold text-sage-900 mb-2 sm:mb-2.5 flex items-center justify-center gap-1.5">
                             <span>₹${item.price.toFixed(2)}</span>
-                            ${item.discounted_from ? `<span class="line-through text-stone-400 font-normal text-[11px]">₹${item.discounted_from.toFixed(2)}</span>` : ''}
+                            ${item.discounted_from ? `<span class="line-through text-stone-400 font-normal text-[11px]">₹${Number(item.discounted_from).toFixed(2)}</span>` : ''}
                         </p>
                     </div>
                     <button onclick="redirectToPlatform('${item.externalUrl}')" class="w-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-[10px] sm:text-xs py-2 sm:py-2.5 rounded-full font-bold transition shadow-sm active:scale-95 flex items-center justify-center gap-1.5">
@@ -1999,7 +1993,7 @@ function renderCatalogProductCard(item) {
     card.setAttribute('data-desc', item.desc || '');
 
     const tagBadge = item.tag ? `
-        <span class="absolute top-2.5 left-2.5 bg-[#611B10] text-[#D4A853] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full z-10 shadow-xs">
+        <span class="absolute top-3.5 left-3.5 bg-[#611B10] text-[#D4A853] text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full z-10 shadow-xs">
             ${item.tag}
         </span>` : '';
 
@@ -2007,7 +2001,7 @@ function renderCatalogProductCard(item) {
         <div>
             <div class="relative w-full aspect-square bg-white rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
                 ${tagBadge}
-                <button onclick="toggleFavorite(event, '${item.name.replace(/'/g, "\'")}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="${item.name}" title="Save Favorite">
+                <button onclick="toggleFavorite(event, '${item.name.replace(/'/g, "\'")}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/95 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="${item.name}" title="Save Favorite">
                     <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
                 </button>
                 <img src="${item.image}" alt="${item.name}" class="product-card-img img-skeleton-pending w-full h-full object-contain" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
