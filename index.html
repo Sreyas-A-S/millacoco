@@ -84,37 +84,6 @@
             pointer-events: none !important;
         }
 
-        /* Showcase Stage Positioning & Motion */
-        .sticky-showcase-stage {
-            top: 5.25rem !important;
-            will-change: top !important;
-            transition: top 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        }
-        @media (min-width: 640px) {
-            .sticky-showcase-stage {
-                top: 6.25rem !important;
-            }
-        }
-        @media (min-width: 1024px) {
-            .sticky-showcase-stage {
-                top: 7rem !important;
-            }
-        }
-
-        /* When header collapses as you scroll to bottom: move up to top / center */
-        body.header-collapsed .sticky-showcase-stage {
-            top: 1.25rem !important;
-        }
-        @media (min-width: 640px) {
-            body.header-collapsed .sticky-showcase-stage {
-                top: 1.75rem !important;
-            }
-        }
-        @media (min-width: 1024px) {
-            body.header-collapsed .sticky-showcase-stage {
-                top: max(1.75rem, calc(50vh - 280px)) !important;
-            }
-        }
     </style>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -645,11 +614,11 @@
             </div>
         </section>
 
-<!-- FLAGSHIP BOTTLE SHOWCASE WITH SCROLL SCRUB SEQUENCE -->
-        <section id="flagship-bottle" class="relative my-8 sm:my-14 h-[260vh]">
+<!-- FLAGSHIP BOTTLE SHOWCASE (NATURAL SCROLLING WITH SMOOTH SLIDER) -->
+        <section id="flagship-bottle" class="relative my-8 sm:my-14">
             
-            <!-- Sticky Showcase Stage -->
-            <div class="sticky-showcase-stage sticky z-20">
+            <!-- Showcase Stage Container -->
+            <div class="relative z-20">
                 
                 <!-- Parallax Floating Blurred Bokeh Leaves (Outer floating leaves in foreground & background) -->
                 <div class="parallax-leaves-stage absolute -inset-6 sm:-inset-12 overflow-visible pointer-events-none z-30">
@@ -716,7 +685,7 @@
                                     03 Classic
                                 </button>
                                 <span class="text-[10px] text-sage-600 font-medium ml-1.5 hidden md:inline-flex items-center gap-1">
-                                    <i class="fa-solid fa-arrows-up-down text-[8px] text-[#2E6F40] animate-bounce"></i> Scroll
+                                    <i class="fa-solid fa-star text-[9px] text-[#D4A853]"></i> Flagship Range
                                 </span>
                             </div>
 
@@ -791,8 +760,6 @@
                 </div>
 
             </div>
-        </section>
-
         </section>
 
     </div>

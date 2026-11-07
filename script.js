@@ -1722,57 +1722,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Scroll Scrub Listener (Runs on DOMContentLoaded)
-document.addEventListener('DOMContentLoaded', function initFlagshipScrollScrub() {
+// Flagship Product Auto-rotation with Tab Navigation (Zero Scroll Hijacking)
+document.addEventListener('DOMContentLoaded', function initFlagshipShowcase() {
     const section = document.getElementById('flagship-bottle');
     if (!section) return;
 
-    let scrubTicking = false;
+    let autoTimer = null;
 
-    function evaluateScrollScrub() {
-        const rect = section.getBoundingClientRect();
-        const stage = section.querySelector('.sticky-showcase-stage');
-        const stageHeight = stage ? stage.offsetHeight : 540;
-        const stickyTop = Math.max(30, (window.innerHeight - stageHeight) / 2);
-        const totalDist = section.offsetHeight - window.innerHeight;
+    function startAutoCycle() {
+        if (autoTimer) clearInterval(autoTimer);
+        autoTimer = setInterval(() => {
+            const nextIdx = (currentScrubIndex + 1) % scrubSlides.length;
+            setScrubSlide(nextIdx);
+        }, 5500);
+    }
 
-        if (totalDist <= 0) return;
-
-        // How much of the track has scrolled past the sticky anchor
-        const scrolledInside = stickyTop - rect.top;
-        const progress = Math.max(0, Math.min(1, scrolledInside / totalDist));
-
-        // 3 steps with comfortable scroll dwell windows:
-        // 0% - 33%: Heritage Bottle (Slide 0)
-        // 33% - 66%: Kitchen Spout Pouch (Slide 1)
-        // 66% - 100%: Classic Pure Bottle (Slide 2)
-        let targetIndex = 0;
-        if (progress >= 0.65) {
-            targetIndex = 2;
-        } else if (progress >= 0.32) {
-            targetIndex = 1;
-        } else {
-            targetIndex = 0;
-        }
-
-        if (targetIndex !== currentScrubIndex) {
-            setScrubSlide(targetIndex);
+    function stopAutoCycle() {
+        if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
         }
     }
 
-    window.addEventListener('scroll', () => {
-        if (!scrubTicking) {
-            window.requestAnimationFrame(() => {
-                evaluateScrollScrub();
-                scrubTicking = false;
-            });
-            scrubTicking = true;
-        }
-    }, { passive: true });
+    section.addEventListener('mouseenter', stopAutoCycle);
+    section.addEventListener('mouseleave', startAutoCycle);
+    section.addEventListener('touchstart', stopAutoCycle, { passive: true });
 
-    document.addEventListener('scroll', evaluateScrollScrub, { passive: true });
-    window.addEventListener('resize', evaluateScrollScrub);
-    setTimeout(evaluateScrollScrub, 100);
+    startAutoCycle();
 });
 
 // ==========================================
