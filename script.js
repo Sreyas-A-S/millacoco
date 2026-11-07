@@ -1075,40 +1075,20 @@ function initApp() {
     // Special Combo Pack Interactive Carousel
     initComboCarousel();
 
-    // Initialize Ultra-Smooth Inertia Scroll (Lenis)
-    if (typeof Lenis !== 'undefined') {
-        window.lenis = new Lenis({
-            duration: 1.15,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            orientation: 'vertical',
-            gestureOrientation: 'vertical',
-            smoothWheel: true,
-            wheelMultiplier: 0.9,
-            touchMultiplier: 1.5,
-            infinite: false
-        });
-
-        function raf(time) {
-            window.lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('href');
-                if (targetId && targetId !== '#') {
-                    const targetEl = document.querySelector(targetId);
-                    if (targetEl) {
-                        e.preventDefault();
-                        window.lenis.scrollTo(targetEl, { offset: -70 });
-                    }
+    // Native Smooth Scroll for anchor links (No scroll-hijacking libraries)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId && targetId !== '#') {
+                const targetEl = document.querySelector(targetId);
+                if (targetEl) {
+                    e.preventDefault();
+                    const top = targetEl.getBoundingClientRect().top + window.pageYOffset - 70;
+                    window.scrollTo({ top, behavior: 'smooth' });
                 }
-            });
+            }
         });
-    }
-
+    });
 }
 
 // Modern Testimonials Slider Logic
@@ -1722,33 +1702,56 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Flagship Product Auto-rotation with Tab Navigation (Zero Scroll Hijacking)
-document.addEventListener('DOMContentLoaded', function initFlagshipShowcase() {
+// Scroll Scrub Listener (Runs on DOMContentLoaded)
+document.addEventListener('DOMContentLoaded', function initFlagshipScrollScrub() {
     const section = document.getElementById('flagship-bottle');
     if (!section) return;
 
-    let autoTimer = null;
+    let scrubTicking = false;
 
-    function startAutoCycle() {
-        if (autoTimer) clearInterval(autoTimer);
-        autoTimer = setInterval(() => {
-            const nextIdx = (currentScrubIndex + 1) % scrubSlides.length;
-            setScrubSlide(nextIdx);
-        }, 5500);
-    }
+    function evaluateScrollScrub() {
+        const rect = section.getBoundingClientRect();
+        const stage = section.querySelector('.sticky-showcase-stage');
+        const stageHeight = stage ? stage.offsetHeight : 540;
+        const stickyTop = Math.max(30, (window.innerHeight - stageHeight) / 2);
+        const totalDist = section.offsetHeight - window.innerHeight;
 
-    function stopAutoCycle() {
-        if (autoTimer) {
-            clearInterval(autoTimer);
-            autoTimer = null;
+        if (totalDist <= 0) return;
+
+        // How much of the track has scrolled past the sticky anchor
+        const scrolledInside = stickyTop - rect.top;
+        const progress = Math.max(0, Math.min(1, scrolledInside / totalDist));
+
+        // 3 steps with comfortable scroll dwell windows:
+        // 0% - 33%: Heritage Bottle (Slide 0)
+        // 33% - 66%: Kitchen Spout Pouch (Slide 1)
+        // 66% - 100%: Classic Pure Bottle (Slide 2)
+        let targetIndex = 0;
+        if (progress >= 0.65) {
+            targetIndex = 2;
+        } else if (progress >= 0.32) {
+            targetIndex = 1;
+        } else {
+            targetIndex = 0;
+        }
+
+        if (targetIndex !== currentScrubIndex) {
+            setScrubSlide(targetIndex);
         }
     }
 
-    section.addEventListener('mouseenter', stopAutoCycle);
-    section.addEventListener('mouseleave', startAutoCycle);
-    section.addEventListener('touchstart', stopAutoCycle, { passive: true });
+    window.addEventListener('scroll', () => {
+        if (!scrubTicking) {
+            window.requestAnimationFrame(() => {
+                evaluateScrollScrub();
+                scrubTicking = false;
+            });
+            scrubTicking = true;
+        }
+    }, { passive: true });
 
-    startAutoCycle();
+    window.addEventListener('resize', evaluateScrollScrub);
+    setTimeout(evaluateScrollScrub, 100);
 });
 
 // ==========================================

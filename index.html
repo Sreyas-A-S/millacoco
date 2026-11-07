@@ -68,7 +68,6 @@
     <!-- Tailwind CSS -->
     <script>(function(){const w=console.warn;console.warn=function(...a){if(typeof a[0]==="string"&&a[0].includes("cdn.tailwindcss.com"))return;w.apply(console,a);};})();</script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="script.min.js?v=7.0" defer></script>
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="style.min.css?v=3.5">
@@ -84,6 +83,37 @@
             pointer-events: none !important;
         }
 
+        /* Showcase Stage Positioning & Motion */
+        .sticky-showcase-stage {
+            top: 5.25rem !important;
+            will-change: top !important;
+            transition: top 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        @media (min-width: 640px) {
+            .sticky-showcase-stage {
+                top: 6.25rem !important;
+            }
+        }
+        @media (min-width: 1024px) {
+            .sticky-showcase-stage {
+                top: 7rem !important;
+            }
+        }
+
+        /* When header collapses as you scroll to bottom: move up to top / center */
+        body.header-collapsed .sticky-showcase-stage {
+            top: 1.25rem !important;
+        }
+        @media (min-width: 640px) {
+            body.header-collapsed .sticky-showcase-stage {
+                top: 1.75rem !important;
+            }
+        }
+        @media (min-width: 1024px) {
+            body.header-collapsed .sticky-showcase-stage {
+                top: max(1.75rem, calc(50vh - 280px)) !important;
+            }
+        }
     </style>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -614,11 +644,11 @@
             </div>
         </section>
 
-<!-- FLAGSHIP BOTTLE SHOWCASE (NATURAL SCROLLING WITH SMOOTH SLIDER) -->
-        <section id="flagship-bottle" class="relative my-8 sm:my-14">
+<!-- FLAGSHIP BOTTLE SHOWCASE WITH SCROLL SCRUB SEQUENCE -->
+        <section id="flagship-bottle" class="relative my-8 sm:my-14 h-[160vh]">
             
-            <!-- Showcase Stage Container -->
-            <div class="relative z-20">
+            <!-- Sticky Showcase Stage -->
+            <div class="sticky-showcase-stage sticky z-20">
                 
                 <!-- Parallax Floating Blurred Bokeh Leaves (Outer floating leaves in foreground & background) -->
                 <div class="parallax-leaves-stage absolute -inset-6 sm:-inset-12 overflow-visible pointer-events-none z-30">
@@ -685,7 +715,7 @@
                                     03 Classic
                                 </button>
                                 <span class="text-[10px] text-sage-600 font-medium ml-1.5 hidden md:inline-flex items-center gap-1">
-                                    <i class="fa-solid fa-star text-[9px] text-[#D4A853]"></i> Flagship Range
+                                    <i class="fa-solid fa-arrows-up-down text-[8px] text-[#2E6F40] animate-bounce"></i> Scroll
                                 </span>
                             </div>
 
@@ -760,6 +790,8 @@
                 </div>
 
             </div>
+        </section>
+
         </section>
 
     </div>

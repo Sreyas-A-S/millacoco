@@ -282,6 +282,41 @@ body.header-collapsed #main-header {
 /* ==========================================================================
    FLAGSHIP BOTTLE SHOWCASE & PARALLAX FLOATING BOKEH LEAVES
    ========================================================================== */
+.sticky-showcase-stage {
+    top: 5.25rem;
+    will-change: top;
+    transition: top 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 640px) {
+    .sticky-showcase-stage {
+        top: 6.25rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .sticky-showcase-stage {
+        top: 7rem;
+    }
+}
+
+/* When header collapses as you scroll to bottom: move up to top / center */
+body.header-collapsed .sticky-showcase-stage {
+    top: 1.25rem;
+}
+
+@media (min-width: 640px) {
+    body.header-collapsed .sticky-showcase-stage {
+        top: 1.75rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    body.header-collapsed .sticky-showcase-stage {
+        top: max(1.75rem, calc(50vh - 280px));
+    }
+}
+
 .parallax-leaves-stage {
     perspective: 1000px;
 }
@@ -387,7 +422,21 @@ html, body {
 }
 
 #flagship-bottle {
-    position: relative;
+    height: 260vh !important;
+    position: relative !important;
+}
+
+.sticky-showcase-stage {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 4.5rem !important;
+    z-index: 20;
+}
+
+@media (max-width: 640px) {
+    .sticky-showcase-stage {
+        top: 3.5rem !important;
+    }
 }
 
 /* Hide scrollbar for Chrome, Safari, Opera, Edge, and iOS */
