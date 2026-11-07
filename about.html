@@ -819,39 +819,18 @@
             </div>
         </section>
 
-        <!-- BOTANICAL TYPOGRAPHY PARALLAX SECTION (MILLACOCO in One Line) -->
-        <section id="parallax-millacoco" class="relative rounded-[2.5rem] p-6 sm:p-12 lg:p-16 mb-20 sm:mb-24 bg-[#FAF5EC] border border-[#D4A853]/30 shadow-xl overflow-hidden text-center reveal-on-scroll">
-            
-            <!-- Ambient Floating Parallax Leaves -->
-            <div class="parallax-leaves-stage absolute inset-0 pointer-events-none overflow-hidden z-20">
-                <img src="images/parallax_leaf_tropical.svg" alt="" class="parallax-leaf absolute w-24 sm:w-36 -top-4 -left-4 opacity-40" data-speed="0.10" data-rot="15">
-                <img src="images/parallax_leaf_broad.svg" alt="" class="parallax-leaf absolute w-28 sm:w-44 -bottom-6 -right-6 opacity-45" data-speed="-0.12" data-rot="-20">
-                <img src="images/parallax_leaf_1.svg" alt="" class="parallax-leaf absolute w-16 sm:w-24 top-1/3 right-8 opacity-30" data-speed="0.06" data-rot="40">
-                <img src="images/parallax_leaf_2.svg" alt="" class="parallax-leaf absolute w-20 sm:w-28 bottom-1/4 left-8 opacity-35" data-speed="-0.08" data-rot="-25">
-            </div>
+        <!-- BOTANICAL TYPOGRAPHY FULL-WIDTH PARALLAX VIEWPORT -->
+        <section id="parallax-millacoco" class="relative left-1/2 -translate-x-1/2 w-screen max-w-none my-12 sm:my-20 bg-white overflow-hidden border-y border-stone-200/60 shadow-xs">
+            <div class="relative w-full h-[220px] xs:h-[260px] sm:h-[320px] md:h-[380px] lg:h-[440px] flex items-center justify-center overflow-hidden">
+                <!-- Ambient Subtle Gradient Backdrop -->
+                <div class="parallax-layer-bg absolute inset-0 bg-gradient-to-b from-[#FAF5EC]/40 via-white to-[#FAF5EC]/40 pointer-events-none will-change-transform"></div>
 
-            <!-- Top Pill Eyebrow -->
-            <div class="relative z-10 max-w-xl mx-auto mb-4 sm:mb-6">
-                <span class="inline-block text-[11px] font-bold uppercase tracking-widest text-[#4B6638] bg-[#4B6638]/10 px-4 py-1.5 rounded-full border border-[#4B6638]/20">
-                    Living Botanical Identity
-                </span>
-            </div>
-
-            <!-- Parallax Floating Graphic Wrapper -->
-            <div class="relative z-10 max-w-6xl mx-auto py-2 sm:py-6">
-                <div class="parallax-centerpiece transform transition-transform duration-300 ease-out will-change-transform rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 sm:border-4 border-white/90 bg-white">
-                    <img src="images/millacoco_botanical_banner.jpg" alt="MILLACOCO Botanical Living Typography" class="w-full h-auto object-cover transform hover:scale-[1.015] transition-transform duration-700 ease-out">
+                <!-- Main Typographic Graphic Layer with Parallax Shift -->
+                <div class="parallax-layer-image absolute inset-x-0 w-full flex items-center justify-center will-change-transform pointer-events-none select-none">
+                    <img src="images/millacoco_botanical_banner.jpg" 
+                         alt="MILLACOCO Botanical Living Typography" 
+                         class="w-full max-w-[1500px] px-4 sm:px-8 md:px-12 h-auto object-contain">
                 </div>
-            </div>
-
-            <!-- Bottom Subtext / Signature -->
-            <div class="relative z-10 max-w-xl mx-auto mt-4 sm:mt-6 space-y-2">
-                <p class="font-serif text-xl sm:text-3xl font-bold text-[#611B10]">
-                    Where Purity Meets Living Kerala Heritage
-                </p>
-                <p class="text-xs sm:text-sm text-stone-600 font-medium max-w-md mx-auto leading-relaxed">
-                    Every drop extracted purely from sun-cured copra and cold-milled under open Kerala skies.
-                </p>
             </div>
         </section>
 

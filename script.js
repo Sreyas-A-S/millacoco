@@ -1565,13 +1565,13 @@ if (document.readyState === 'loading') {
     requestAnimationFrame(updateParallax);
 })();
 
-// Parallax Controller for About Page Botanical Typography Centerpiece (#parallax-millacoco)
+// Parallax Controller for About Page Botanical Typography Full-Width Viewport (#parallax-millacoco)
 (function initMillacocoTypographyParallax() {
     const section = document.getElementById('parallax-millacoco');
     if (!section) return;
 
-    const centerpiece = section.querySelector('.parallax-centerpiece');
-    const leaves = section.querySelectorAll('.parallax-leaf');
+    const layerImg = section.querySelector('.parallax-layer-image');
+    const layerBg = section.querySelector('.parallax-layer-bg');
     let ticking = false;
     let mouseX = 0, mouseY = 0;
     let currentX = 0, currentY = 0;
@@ -1602,21 +1602,18 @@ if (document.readyState === 'loading') {
 
         // Scroll progress through viewport (-1 to 1)
         const scrollProgress = ((window.innerHeight / 2) - (rect.top + rect.height / 2)) / (window.innerHeight);
-        const scrollOffsetY = scrollProgress * 28; // subtle smooth scroll parallax
-
-        if (centerpiece) {
-            const tiltX = -currentY * 3.5;
-            const tiltY = currentX * 4;
-            centerpiece.style.transform = `perspective(1000px) translateY(${scrollOffsetY.toFixed(1)}px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
+        
+        if (layerImg) {
+            const scrollOffsetY = scrollProgress * 32;
+            const tiltX = -currentY * 2.5;
+            const tiltY = currentX * 3;
+            layerImg.style.transform = `perspective(1000px) translateY(${scrollOffsetY.toFixed(1)}px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
         }
 
-        leaves.forEach((leaf) => {
-            const speed = parseFloat(leaf.dataset.speed || 0.08);
-            const rot = parseFloat(leaf.dataset.rot || 0);
-            const moveX = currentX * 40 * speed;
-            const moveY = (currentY * 40 * speed) + (scrollProgress * 50 * speed);
-            leaf.style.transform = `translate3d(${moveX.toFixed(1)}px, ${moveY.toFixed(1)}px, 0px) rotate(${rot}deg)`;
-        });
+        if (layerBg) {
+            const bgOffsetY = -scrollProgress * 15;
+            layerBg.style.transform = `translateY(${bgOffsetY.toFixed(1)}px)`;
+        }
 
         if (Math.abs(mouseX - currentX) > 0.002 || Math.abs(mouseY - currentY) > 0.002) {
             requestAnimationFrame(update);
