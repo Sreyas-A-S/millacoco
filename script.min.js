@@ -596,10 +596,10 @@ function renderDynamicProductGrid() {
     productCatalog.forEach(item => {
         html += `
             <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="${item.category}">
-                <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-white flex items-center justify-center p-2.5 sm:p-3">
-                    <span class="absolute top-3.5 left-3.5 z-10 bg-[#611B10] text-[#D4A853] text-[8px] sm:text-[9px] font-bold px-2.5 py-1 rounded-full shadow-xs uppercase tracking-wider">${item.tag}</span>
-                    <button onclick="toggleFavorite(event, '${item.name}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-3.5 right-3.5 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="${item.name}">
-                        <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
+                <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-white flex items-center justify-center p-3 sm:p-4">
+                    <span class="absolute top-5 left-5 sm:top-6 sm:left-6 z-10 bg-[#611B10] text-[#D4A853] text-[8px] sm:text-[10px] font-bold px-3 py-1.5 rounded-full shadow-md uppercase tracking-wider">${item.tag}</span>
+                    <button onclick="toggleFavorite(event, '${item.name}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-5 right-5 sm:top-6 sm:right-6 z-10 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-md flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="${item.name}">
+                        <i class="fa-regular fa-heart text-[11px] sm:text-xs"></i>
                     </button>
                     <img src="${item.image}" alt="${item.name}" class="product-card-img img-skeleton-pending w-full h-full object-contain" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
                 </div>
@@ -1993,15 +1993,15 @@ function renderCatalogProductCard(item) {
     card.setAttribute('data-desc', item.desc || '');
 
     const tagBadge = item.tag ? `
-        <span class="absolute top-3.5 left-3.5 bg-[#611B10] text-[#D4A853] text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full z-10 shadow-xs">
+        <span class="absolute top-5 left-5 sm:top-6 sm:left-6 bg-[#611B10] text-[#D4A853] text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full z-10 shadow-md">
             ${item.tag}
         </span>` : '';
 
     card.innerHTML = `
         <div>
-            <div class="relative w-full aspect-square bg-white rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3">
+            <div class="relative w-full aspect-square bg-white rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3.5 sm:p-4">
                 ${tagBadge}
-                <button onclick="toggleFavorite(event, '${item.name.replace(/'/g, "\'")}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/95 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition z-10" data-title="${item.name}" title="Save Favorite">
+                <button onclick="toggleFavorite(event, '${item.name.replace(/'/g, "\'")}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-5 right-5 sm:top-6 sm:right-6 w-9 h-9 rounded-full bg-white/95 hover:bg-white text-sage-700 shadow-md flex items-center justify-center transition z-10" data-title="${item.name}" title="Save Favorite">
                     <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
                 </button>
                 <img src="${item.image}" alt="${item.name}" class="product-card-img img-skeleton-pending w-full h-full object-contain" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">

@@ -685,6 +685,15 @@ html, body {
 .delay-400 { transition-delay: 400ms; }
 .delay-500 { transition-delay: 500ms; }
 
+@keyframes gentleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+    animation: gentleFloat 4.5s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .reveal-on-scroll,
     .reveal-scale,
