@@ -1,0 +1,26 @@
+{
+  "name": "Millacoco Pure Kerala Coconut Oil",
+  "short_name": "Millacoco",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF5EC",
+  "theme_color": "#611B10",
+  "description": "100% Pure Kerala Coconut Oil extracted from GI-tagged Kuttiyadi copra.",
+  "icons": [
+    {
+      "src": "/images/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
