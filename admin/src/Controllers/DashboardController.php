@@ -32,7 +32,7 @@ class DashboardController
         $amazonCount = (int)$this->db->query("SELECT COUNT(*) FROM products WHERE platform_name LIKE '%Amazon%'")->fetchColumn();
 
         // Fetch products for redirect link overview
-        $stmt = $this->db->query("SELECT id, name, tag, price, platform_name, external_url FROM products ORDER BY sort_order ASC, id ASC");
+        $stmt = $this->db->query("SELECT id, name, tag, price, external_url FROM products ORDER BY sort_order ASC, id ASC");
         $products = $stmt->fetchAll();
 
         $rowsHtml = '';
@@ -40,7 +40,6 @@ class DashboardController
             $id = (int)$p['id'];
             $name = htmlspecialchars($p['name'], ENT_QUOTES, 'UTF-8');
             $tag = htmlspecialchars($p['tag'], ENT_QUOTES, 'UTF-8');
-            $platform = htmlspecialchars($p['platform_name'], ENT_QUOTES, 'UTF-8');
             $url = htmlspecialchars($p['external_url'], ENT_QUOTES, 'UTF-8');
             $price = number_format((float)$p['price'], 2);
 
@@ -52,9 +51,6 @@ class DashboardController
                     <span class="block text-[10px] text-stone-500 font-normal">{$tag}</span>
                 </td>
                 <td class="py-3 px-3 sm:px-4 font-bold">₹{$price}</td>
-                <td class="py-3 px-3 sm:px-4">
-                    <span class="px-2.5 py-0.5 rounded-full bg-[#D4A853]/20 text-[#611B10] text-[10px] font-bold">{$platform}</span>
-                </td>
                 <td class="py-3 px-3 sm:px-4 max-w-xs truncate text-[11px] font-mono">
                     <a href="{$url}" target="_blank" class="text-sky-700 hover:underline truncate block">{$url}</a>
                 </td>
@@ -214,7 +210,6 @@ HTML;
                             <th class="py-3 px-3 sm:px-4">ID</th>
                             <th class="py-3 px-3 sm:px-4">Product</th>
                             <th class="py-3 px-3 sm:px-4">Listed Price</th>
-                            <th class="py-3 px-3 sm:px-4">Destination</th>
                             <th class="py-3 px-3 sm:px-4">Marketplace URL</th>
                             <th class="py-3 px-3 sm:px-4 text-right">Action</th>
                         </tr>

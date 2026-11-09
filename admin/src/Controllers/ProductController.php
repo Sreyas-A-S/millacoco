@@ -101,7 +101,6 @@ class ProductController
             $img = htmlspecialchars($p['image'], ENT_QUOTES, 'UTF-8');
             $tag = htmlspecialchars($p['tag'] ?? 'Bestseller', ENT_QUOTES, 'UTF-8');
             $url = htmlspecialchars($p['external_url'], ENT_QUOTES, 'UTF-8');
-            $platform = htmlspecialchars($p['platform_name'], ENT_QUOTES, 'UTF-8');
             $price = number_format((float)$p['price'], 2);
 
             $productRowsHtml .= <<<HTML
@@ -117,14 +116,11 @@ class ProductController
                     </div>
                 </td>
                 <td class="py-3 px-4 font-bold text-[#611B10]">₹{$price}</td>
-                <td class="py-3 px-4">
-                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#D4A853]/20 text-[#611B10]">{$platform}</span>
-                </td>
                 <td class="py-3 px-4 max-w-xs truncate text-stone-500 font-mono text-[11px]">
                     <a href="{$url}" target="_blank" class="hover:underline text-sky-700 truncate block">{$url}</a>
                 </td>
                 <td class="py-3 px-4 text-right">
-                    <button onclick='openEditModal({$id}, "{$name}", {$p['price']}, "{$tag}", "{$p['category']}", "{$platform}", "{$img}", "{$url}", "{$p['description']}")' class="px-3.5 py-1.5 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white rounded-xl text-xs font-semibold transition shadow-xs flex items-center gap-1.5 ml-auto">
+                    <button onclick='openEditModal({$id}, "{$name}", {$p['price']}, "{$tag}", "{$p['category']}", "{$img}", "{$url}", "{$p['description']}")' class="px-3.5 py-1.5 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white rounded-xl text-xs font-semibold transition shadow-xs flex items-center gap-1.5 ml-auto">
                         <i class="fa-solid fa-pen-to-square text-[10px]"></i>
                         <span>Edit Product</span>
                     </button>
@@ -452,7 +448,6 @@ HTML;
                                 <th class="py-3 px-4">ID</th>
                                 <th class="py-3 px-4">Product Name</th>
                                 <th class="py-3 px-4">Price</th>
-                                <th class="py-3 px-4">Destination</th>
                                 <th class="py-3 px-4">Marketplace URL</th>
                                 <th class="py-3 px-4 text-right">Action</th>
                             </tr>
@@ -627,15 +622,9 @@ HTML;
                         <input type="text" id="add-p-tag" list="product-tags-list" placeholder="Choose or type custom tag..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-bold text-stone-700 mb-1">Category (Type or Search)</label>
-                        <input type="text" id="add-p-cat" list="product-categories-list" required placeholder="Choose or type custom category..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-stone-700 mb-1">Platform Name</label>
-                        <input type="text" id="add-p-platform" value="Amazon" placeholder="Amazon, WhatsApp, etc." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
-                    </div>
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Category (Type or Search)</label>
+                    <input type="text" id="add-p-cat" list="product-categories-list" required placeholder="Choose or type custom category..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
                 </div>
                 <div>
                     <label class="block font-bold text-stone-700 mb-1">Description</label>
@@ -699,15 +688,9 @@ HTML;
                         <input type="text" id="edit-tag" list="product-tags-list" placeholder="Choose or type custom tag..." class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-bold text-stone-700 mb-1">Category (Type or Search)</label>
-                        <input type="text" id="edit-cat" list="product-categories-list" required placeholder="Choose or type custom category..." class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-stone-700 mb-1">Platform Name</label>
-                        <input type="text" id="edit-platform" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
-                    </div>
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Category (Type or Search)</label>
+                    <input type="text" id="edit-cat" list="product-categories-list" required placeholder="Choose or type custom category..." class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
                 </div>
                 <div>
                     <label class="block font-bold text-stone-700 mb-1">Description</label>
@@ -959,7 +942,6 @@ HTML;
             const price = parseFloat(document.getElementById('add-p-price').value);
             const tag = document.getElementById('add-p-tag').value || 'Bestseller';
             const category = document.getElementById('add-p-cat').value;
-            const platform_name = document.getElementById('add-p-platform').value || 'Amazon';
             const image = document.getElementById('add-p-image').value || 'images/product_bottle.webp';
             const external_url = document.getElementById('add-p-url').value;
             const description = document.getElementById('add-p-desc').value;
@@ -968,7 +950,7 @@ HTML;
                 const res = await fetch('/mc-desk/api/admin/products', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, price, tag, category, platform_name, image, external_url, description })
+                    body: JSON.stringify({ name, price, tag, category, image, external_url, description })
                 });
                 const data = await res.json();
                 if (res.ok && data.status === 'success') {
@@ -1063,7 +1045,7 @@ HTML;
         }
 
         // Edit Product (Full Product Info & Image)
-        function openEditModal(id, name, price, tag, category, platform, image, url, desc) {
+        function openEditModal(id, name, price, tag, category, image, url, desc) {
             const previewImg = document.getElementById('edit-p-preview-img');
             const sourceBadge = document.getElementById('edit-p-source-badge');
             if (previewImg) previewImg.src = image.startsWith('http') ? image : '/' + image;
@@ -1078,7 +1060,6 @@ HTML;
             document.getElementById('edit-price').value = price;
             document.getElementById('edit-tag').value = tag || 'Bestseller';
             document.getElementById('edit-cat').value = category || 'daily';
-            document.getElementById('edit-platform').value = platform || 'Amazon';
             document.getElementById('edit-image').value = image || 'images/product_bottle.webp';
             document.getElementById('edit-url').value = url || '';
             document.getElementById('edit-desc').value = desc || '';
@@ -1097,7 +1078,6 @@ HTML;
             const price = parseFloat(document.getElementById('edit-price').value);
             const tag = document.getElementById('edit-tag').value;
             const category = document.getElementById('edit-cat').value;
-            const platform_name = document.getElementById('edit-platform').value;
             const image = document.getElementById('edit-image').value;
             const external_url = document.getElementById('edit-url').value;
             const description = document.getElementById('edit-desc').value;
@@ -1106,7 +1086,7 @@ HTML;
                 const res = await fetch('/mc-desk/api/admin/products/' + id, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, price, tag, category, platform_name, image, external_url, description })
+                    body: JSON.stringify({ name, price, tag, category, image, external_url, description })
                 });
                 const data = await res.json();
                 if (res.ok && data.status === 'success') {
