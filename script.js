@@ -596,7 +596,7 @@ function renderDynamicProductGrid() {
     productCatalog.forEach(item => {
         html += `
             <div class="product-card group bg-cardbg rounded-2xl sm:rounded-3xl p-2.5 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="${item.category}">
-                <div class="relative overflow-hidden rounded-xl sm:rounded-2xl mb-2 sm:mb-3.5 aspect-square bg-white flex items-center justify-center p-2 sm:p-3.5">
+                <div class="relative overflow-hidden rounded-xl sm:rounded-2xl mb-2 sm:mb-3 aspect-square bg-white flex items-center justify-center p-0.5 sm:p-1.5">
                     <span class="absolute top-2.5 left-2.5 sm:top-3.5 sm:left-3.5 z-10 bg-[#611B10] text-[#D4A853] text-[8px] sm:text-[9.5px] font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-sm uppercase tracking-wider max-w-[calc(100%-38px)] truncate leading-tight">${item.tag}</span>
                     <button onclick="toggleFavorite(event, '${item.name}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-105 active:scale-95" title="Add to Favorites" data-title="${item.name}">
                         <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
@@ -2117,7 +2117,7 @@ function renderCatalogProductCard(item) {
 
     card.innerHTML = `
         <div>
-            <div class="relative w-full aspect-square bg-white rounded-xl sm:rounded-2xl overflow-hidden mb-2.5 sm:mb-4 flex items-center justify-center p-2 sm:p-3.5">
+            <div class="relative w-full aspect-square bg-white rounded-xl sm:rounded-2xl overflow-hidden mb-2 sm:mb-3 flex items-center justify-center p-0.5 sm:p-1.5">
                 ${tagBadge}
                 <button onclick="toggleFavorite(event, '${item.name.replace(/'/g, "\'")}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/95 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition hover:scale-105 active:scale-90 z-10" data-title="${item.name}" title="Save Favorite">
                     <i class="fa-regular fa-heart text-[10px] sm:text-xs text-sage-400 group-hover:text-rose-500"></i>
