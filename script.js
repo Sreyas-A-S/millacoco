@@ -2017,13 +2017,10 @@ function goToComboSlide(idx) {
 }
 
 function handleComboCardClick(idx) {
-    if (idx === currentComboIndex) {
-        // If clicking the active card, redirect directly to buy/order
-        const item = comboPacks[idx];
-        if (item) redirectToPlatform(item.externalUrl || 'https://www.amazon.in');
-    } else {
-        // If clicking side cards, bring into focus
-        goToComboSlide(idx);
+    // Each card body click redirects directly to buy/order URL for that combo pack
+    const item = comboPacks[idx];
+    if (item) {
+        redirectToPlatform(item.externalUrl || 'https://www.amazon.in');
     }
 }
 
