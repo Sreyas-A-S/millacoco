@@ -22,7 +22,7 @@ class ContentController
      */
     public function getPublicCombos(Request $request, Response $response): Response
     {
-        $stmt = $this->db->query("SELECT combo_id as id, name, badge, subtitle, title, description as desc, price, old_price as oldPrice, image, btn_label as btnLabel FROM combo_packs WHERE is_active = 1 ORDER BY sort_order ASC, id ASC");
+        $stmt = $this->db->query("SELECT combo_id as id, name, badge, subtitle, title, description as desc, price, old_price as oldPrice, image, btn_label as btnLabel, external_url as externalUrl FROM combo_packs WHERE is_active = 1 ORDER BY sort_order ASC, id ASC");
         $combos = $stmt->fetchAll();
 
         // Convert numeric prices to float
@@ -43,7 +43,7 @@ class ContentController
      */
     public function getPublicTestimonials(Request $request, Response $response): Response
     {
-        $stmt = $this->db->query("SELECT id, author_name, author_location, rating, quote, verified_buyer, tag FROM testimonials WHERE is_active = 1 ORDER BY sort_order ASC, id ASC");
+        $stmt = $this->db->query("SELECT id, author_name, author_location, avatar_url, rating, quote, verified_buyer, tag FROM testimonials WHERE is_active = 1 ORDER BY sort_order ASC, id ASC");
         $testimonials = $stmt->fetchAll();
 
         $response->getBody()->write(json_encode([
