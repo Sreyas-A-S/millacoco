@@ -48,7 +48,10 @@
                     <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400 text-xs">
                         <i class="fa-solid fa-lock"></i>
                     </span>
-                    <input type="password" id="password" required placeholder="••••••••" class="w-full pl-9 pr-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#D4A853] text-xs">
+                    <input type="password" id="password" required placeholder="••••••••" class="w-full pl-9 pr-10 py-3 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#D4A853] text-xs">
+                    <button type="button" onclick="togglePasswordVisibility()" id="password-toggle-btn" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-400 hover:text-[#611B10] transition focus:outline-none" title="Toggle password visibility">
+                        <i id="password-toggle-icon" class="fa-solid fa-eye text-xs"></i>
+                    </button>
                 </div>
             </div>
 
@@ -87,6 +90,21 @@
     </div>
 
     <script>
+        function togglePasswordVisibility() {
+            const pwd = document.getElementById('password');
+            const icon = document.getElementById('password-toggle-icon');
+            if (!pwd || !icon) return;
+            if (pwd.type === 'password') {
+                pwd.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                pwd.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
         let isRateLimited = false;
         let rateLimitTimer = null;
 
