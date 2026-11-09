@@ -115,7 +115,7 @@ class ProductController
 
             // Desktop Table Row
             $productRowsHtml .= <<<HTML
-            <tr class="hover:bg-amber-50/40 transition">
+            <tr class="hover:bg-amber-50/40 transition searchable-product-row" data-search="{$name} {$tag} {$id} {$p['category']}">
                 <td class="py-3 px-4 font-mono font-bold text-stone-600">#{$id}</td>
                 <td class="py-3 px-4">
                     <div class="flex items-center space-x-3">
@@ -144,7 +144,7 @@ HTML;
 
             // Mobile Card View
             $productCardsHtml .= <<<HTML
-            <div class="bg-white rounded-2xl border border-stone-200/80 p-3.5 shadow-2xs space-y-3">
+            <div class="bg-white rounded-2xl border border-stone-200/80 p-3.5 shadow-2xs space-y-3 searchable-product-card" data-search="{$name} {$tag} {$id} {$p['category']}">
                 <div class="flex items-start gap-3">
                     <img src="/{$img}" alt="{$name}" class="w-14 h-14 object-contain rounded-xl bg-stone-50 border border-stone-200 p-1 shrink-0">
                     <div class="flex-1 min-w-0">
@@ -194,7 +194,7 @@ HTML;
             $fsUrlJs = htmlspecialchars(json_encode($fs['external_url'] ?? ''), ENT_QUOTES, 'UTF-8');
 
             $flagshipHtml .= <<<HTML
-            <div class="bg-white rounded-2xl p-5 border border-[#D4A853]/30 shadow-2xs hover:shadow-md transition flex flex-col justify-between">
+            <div class="bg-white rounded-2xl p-5 border border-[#D4A853]/30 shadow-2xs hover:shadow-md transition flex flex-col justify-between searchable-flagship-card" data-search="{$fsTitle} {$fsTab} {$fsScript} {$fsSubtitle} {$fsId}">
                 <div>
                     <div class="flex items-center justify-between mb-3">
                         <span class="text-[10px] font-extrabold uppercase tracking-wider bg-[#611B10] text-[#D4A853] px-2.5 py-1 rounded-full">Slide #{$fsIndex} &bull; {$fsTab}</span>
@@ -247,7 +247,7 @@ HTML;
             $btnLabel = htmlspecialchars($c['btn_label'], ENT_QUOTES, 'UTF-8');
 
             $combosHtml .= <<<HTML
-            <div class="bg-white rounded-2xl p-5 border border-[#D4A853]/30 shadow-2xs hover:shadow-md transition flex flex-col justify-between">
+            <div class="bg-white rounded-2xl p-5 border border-[#D4A853]/30 shadow-2xs hover:shadow-md transition flex flex-col justify-between searchable-combo-card" data-search="{$name} {$badge} {$subtitle} {$cid}">
                 <div>
                     <div class="flex items-center justify-between mb-3">
                         <span class="text-[10px] font-extrabold uppercase tracking-wider bg-[#611B10] text-[#D4A853] px-2.5 py-1 rounded-full">{$badge}</span>
@@ -307,7 +307,7 @@ HTML;
 
             // Desktop Table Row
             $testimonialsHtml .= <<<HTML
-            <tr class="hover:bg-amber-50/40 transition">
+            <tr class="hover:bg-amber-50/40 transition searchable-review-row" data-search="{$name} {$location} {$tag} {$quote} {$id}">
                 <td class="py-3 px-4 font-mono font-bold text-stone-500">#{$id}</td>
                 <td class="py-3 px-4">
                     <div class="flex items-center gap-2.5">
@@ -338,7 +338,7 @@ HTML;
 
             // Mobile Card View
             $testimonialsCardsHtml .= <<<HTML
-            <div class="bg-white rounded-2xl border border-stone-200/80 p-3.5 shadow-2xs space-y-2.5">
+            <div class="bg-white rounded-2xl border border-stone-200/80 p-3.5 shadow-2xs space-y-2.5 searchable-review-card" data-search="{$name} {$location} {$tag} {$quote} {$id}">
                 <div class="flex items-start justify-between gap-2">
                     <div class="flex items-center gap-2.5">
                         {$avatarImg}
@@ -536,12 +536,21 @@ HTML;
         <!-- Section 1: Products Catalog Table -->
         <div id="hub-section-products" class="hub-pane space-y-4">
             <div class="bg-white rounded-2xl sm:rounded-3xl border border-[#D4A853]/30 p-4 sm:p-6 shadow-2xs overflow-hidden">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="font-serif font-bold text-base text-[#611B10]">Active Products &amp; Purchase Redirection</h3>
-                    <button onclick="openAddProductModal()" class="text-xs font-bold text-[#611B10] hover:underline flex items-center gap-1">
-                        <i class="fa-solid fa-plus text-[10px]"></i>
-                        <span>Add Product</span>
-                    </button>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                    <div>
+                        <h3 class="font-serif font-bold text-base text-[#611B10]">Active Products &amp; Purchase Redirection</h3>
+                        <p class="text-[11px] text-stone-500">Manage products, pricing, and destination storefront links.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="relative w-full sm:w-64">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-xs"></i>
+                            <input type="text" oninput="filterSectionItems('products', this.value)" placeholder="Search products..." class="w-full bg-stone-50 border border-stone-200 rounded-full pl-8 pr-3 py-1.5 text-xs text-stone-800 focus:outline-none focus:border-[#611B10] focus:bg-white transition">
+                        </div>
+                        <button onclick="openAddProductModal()" class="px-4 py-2 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold text-xs shadow-xs transition active:scale-95 flex items-center gap-1.5 shrink-0">
+                            <i class="fa-solid fa-plus text-[10px]"></i>
+                            <span class="hidden xs:inline">Add Product</span>
+                        </button>
+                    </div>
                 </div>
                 <!-- Desktop Table View (Hidden on mobile) -->
                 <div class="hidden sm:block overflow-x-auto -mx-4 sm:mx-0">
@@ -555,14 +564,14 @@ HTML;
                                 <th class="py-3 px-4 text-right">Action</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-stone-100">
+                        <tbody class="divide-y divide-stone-100" id="products-table-body">
                             {$productRowsHtml}
                         </tbody>
                     </table>
                 </div>
 
                 <!-- Mobile Responsive Cards View (Shown only on mobile) -->
-                <div class="sm:hidden grid grid-cols-1 gap-3">
+                <div class="sm:hidden grid grid-cols-1 gap-3" id="products-cards-body">
                     {$productCardsHtml}
                 </div>
             </div>
@@ -571,22 +580,23 @@ HTML;
         <!-- Section 1b: Flagship Bottle Showcase -->
         <div id="hub-section-flagship" class="hub-pane hidden space-y-4">
             <div class="bg-white rounded-2xl sm:rounded-3xl border border-[#D4A853]/30 p-4 sm:p-6 shadow-2xs">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                     <div>
                         <h3 class="font-serif font-bold text-base text-[#611B10]">Interactive Flagship Bottle Showcase</h3>
                         <p class="text-xs text-stone-500">Manage the interactive products featured in the homepage scroll-scrub showcase.</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button type="button" onclick="openAddFlagshipModal()" class="px-4 py-2 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5">
+                        <div class="relative w-full sm:w-60">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-xs"></i>
+                            <input type="text" oninput="filterSectionItems('flagship', this.value)" placeholder="Search flagship slides..." class="w-full bg-stone-50 border border-stone-200 rounded-full pl-8 pr-3 py-1.5 text-xs text-stone-800 focus:outline-none focus:border-[#611B10] focus:bg-white transition">
+                        </div>
+                        <button type="button" onclick="openAddFlagshipModal()" class="px-4 py-2 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5 shrink-0">
                             <i class="fa-solid fa-plus text-[10px]"></i>
-                            <span>Add Flagship Slide</span>
+                            <span>Add Slide</span>
                         </button>
-                        <span class="text-xs font-semibold px-3 py-1 bg-[#FAF5EC] text-[#611B10] border border-[#D4A853]/30 rounded-full w-fit">
-                            <i class="fa-solid fa-arrows-spin mr-1 text-[#2E6F40]"></i> Live Storefront Synced
-                        </span>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="flagship-cards-grid">
                     {$flagshipHtml}
                 </div>
             </div>
@@ -595,75 +605,49 @@ HTML;
         <!-- Section 2: Combo Offers -->
         <div id="hub-section-combos" class="hub-pane hidden space-y-4">
             <div class="bg-white rounded-2xl sm:rounded-3xl border border-[#D4A853]/30 p-4 sm:p-6 shadow-2xs">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                     <div>
                         <h3 class="font-serif font-bold text-base text-[#611B10]">Special Combo Packs</h3>
                         <p class="text-xs text-stone-500">Manage the 3D coverflow combo bundles featured on the homepage.</p>
                     </div>
-                    <button type="button" onclick="openAddComboModal()" class="px-4 py-2 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5 w-fit">
-                        <i class="fa-solid fa-plus text-[10px]"></i>
-                        <span>Add New Combo Deal</span>
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <div class="relative w-full sm:w-60">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-xs"></i>
+                            <input type="text" oninput="filterSectionItems('combos', this.value)" placeholder="Search combo deals..." class="w-full bg-stone-50 border border-stone-200 rounded-full pl-8 pr-3 py-1.5 text-xs text-stone-800 focus:outline-none focus:border-[#611B10] focus:bg-white transition">
+                        </div>
+                        <button type="button" onclick="openAddComboModal()" class="px-4 py-2 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5 shrink-0">
+                            <i class="fa-solid fa-plus text-[10px]"></i>
+                            <span>Add Combo</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="combos-cards-grid">
                     {$combosHtml}
                 </div>
             </div>
         </div>
 
         <!-- Section 3: Customer Reviews -->
-        <div id="hub-section-reviews" class="hub-pane hidden space-y-6">
-            <!-- Add Testimonial -->
-            <div class="bg-white rounded-2xl sm:rounded-3xl p-5 border border-[#D4A853]/30 shadow-2xs">
-                <h4 class="font-serif font-bold text-sm text-[#611B10] mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-plus-circle text-[#D4A853]"></i>
-                    <span>Add Verified Customer Review</span>
-                </h4>
-                <form onsubmit="handleCreateTestimonial(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-3 text-xs">
-                    <div class="sm:col-span-12 flex items-center gap-3 p-3 bg-stone-50 rounded-2xl border border-stone-200">
-                        <div class="w-12 h-12 rounded-full bg-white border border-stone-300 flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
-                            <img id="add-t-avatar-preview" src="/images/favicon.png" alt="Avatar" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex-1 space-y-1">
-                            <div class="flex items-center gap-2">
-                                <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 hover:border-[#611B10] text-stone-700 font-semibold text-[11px] transition shadow-2xs">
-                                    <i class="fa-solid fa-cloud-arrow-up text-[#611B10]"></i>
-                                    <span>Upload User Avatar</span>
-                                    <input type="file" accept="image/*" class="hidden" onchange="handleInitiateCrop('add-t-avatar', this, 1)">
-                                </label>
-                                <span id="add-t-avatar-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-stone-200 text-stone-600 font-medium">Optional</span>
-                            </div>
-                            <input type="hidden" id="t-avatar-url" value="">
-                        </div>
-                    </div>
-                    <div class="sm:col-span-4">
-                        <label class="block font-bold text-stone-700 mb-1">Customer Name</label>
-                        <input type="text" id="t-author" required placeholder="e.g. Maya Suresh" class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
-                    </div>
-                    <div class="sm:col-span-4">
-                        <label class="block font-bold text-stone-700 mb-1">City / Location</label>
-                        <input type="text" id="t-location" required placeholder="e.g. Kozhikode, Kerala" class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
-                    </div>
-                    <div class="sm:col-span-4">
-                        <label class="block font-bold text-stone-700 mb-1">Category / Tag</label>
-                        <input type="text" id="t-tag" placeholder="e.g. Traditional Cooking" class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
-                    </div>
-                    <div class="sm:col-span-12">
-                        <label class="block font-bold text-stone-700 mb-1">Review Quote</label>
-                        <textarea id="t-quote" required rows="2" placeholder="Experience feedback..." class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]"></textarea>
-                    </div>
-                    <div class="sm:col-span-12 flex justify-end">
-                        <button type="submit" class="px-5 py-2 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition shadow-sm active:scale-95 flex items-center gap-1.5">
-                            <i class="fa-solid fa-plus"></i>
-                            <span>Publish Testimonial</span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-
+        <div id="hub-section-reviews" class="hub-pane hidden space-y-4">
             <!-- Published Reviews Table -->
             <div class="bg-white rounded-2xl sm:rounded-3xl border border-[#D4A853]/30 p-4 sm:p-6 shadow-2xs">
-                <h4 class="font-serif font-bold text-sm text-[#611B10] mb-4">Published Reviews</h4>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                    <div>
+                        <h4 class="font-serif font-bold text-base text-[#611B10]">Verified Customer Reviews</h4>
+                        <p class="text-xs text-stone-500">Manage testimonial quotes, customer locations, avatars, and ratings.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="relative w-full sm:w-64">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-xs"></i>
+                            <input type="text" oninput="filterSectionItems('reviews', this.value)" placeholder="Search customer reviews..." class="w-full bg-stone-50 border border-stone-200 rounded-full pl-8 pr-3 py-1.5 text-xs text-stone-800 focus:outline-none focus:border-[#611B10] focus:bg-white transition">
+                        </div>
+                        <button type="button" onclick="openAddTestimonialModal()" class="px-4 py-2 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5 shrink-0">
+                            <i class="fa-solid fa-plus text-[10px]"></i>
+                            <span>Add Review</span>
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Desktop Table View (Hidden on mobile) -->
                 <div class="hidden sm:block overflow-x-auto -mx-4 sm:mx-0">
                     <table class="w-full text-left text-xs min-w-[600px] sm:min-w-full">
@@ -676,14 +660,14 @@ HTML;
                                 <th class="py-3 px-4 text-right">Action</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-stone-100">
+                        <tbody class="divide-y divide-stone-100" id="reviews-table-body">
                             {$testimonialsHtml}
                         </tbody>
                     </table>
                 </div>
 
                 <!-- Mobile Responsive Cards View (Shown only on mobile) -->
-                <div class="sm:hidden grid grid-cols-1 gap-3">
+                <div class="sm:hidden grid grid-cols-1 gap-3" id="reviews-cards-body">
                     {$testimonialsCardsHtml}
                 </div>
             </div>
@@ -1142,6 +1126,70 @@ HTML;
     </div>
 
     
+    <!-- ADD TESTIMONIAL MODAL -->
+    <div id="add-testimonial-modal" class="fixed inset-0 z-50 invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div onclick="closeAddTestimonialModal()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <div class="relative bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-[#D4A853]/40 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                <div>
+                    <h4 class="font-serif font-bold text-base text-[#611B10]">Add Verified Customer Review</h4>
+                    <p class="text-[11px] text-stone-500">Publish genuine feedback to the public storefront testimonials reel.</p>
+                </div>
+                <button type="button" onclick="closeAddTestimonialModal()" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="handleCreateTestimonial(event)" class="space-y-3 pt-3 text-xs">
+                <div class="flex items-center gap-3 p-3 bg-stone-50 rounded-2xl border border-stone-200">
+                    <div class="w-12 h-12 rounded-full bg-white border border-stone-300 flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
+                        <img id="add-t-avatar-preview" src="/images/favicon.png" alt="Avatar" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 space-y-1">
+                        <div class="flex items-center gap-2">
+                            <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 hover:border-[#611B10] text-stone-700 font-semibold text-[11px] transition shadow-2xs">
+                                <i class="fa-solid fa-cloud-arrow-up text-[#611B10]"></i>
+                                <span>Upload User Avatar</span>
+                                <input type="file" accept="image/*" class="hidden" onchange="handleInitiateCrop('add-t-avatar', this, 1)">
+                            </label>
+                            <span id="add-t-avatar-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-stone-200 text-stone-600 font-medium">Optional</span>
+                        </div>
+                        <input type="hidden" id="t-avatar-url" value="">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Customer Name</label>
+                        <input type="text" id="t-author" required placeholder="e.g. Maya Suresh" class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">City / Location</label>
+                        <input type="text" id="t-location" required placeholder="e.g. Kozhikode, Kerala" class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Category / Tag</label>
+                        <input type="text" id="t-tag" placeholder="e.g. Traditional Cooking" class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Star Rating (1 - 5)</label>
+                        <select id="t-rating" class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                            <option value="5">⭐⭐⭐⭐⭐ (5 Stars)</option>
+                            <option value="4">⭐⭐⭐⭐ (4 Stars)</option>
+                            <option value="3">⭐⭐⭐ (3 Stars)</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Review Quote</label>
+                    <textarea id="t-quote" required rows="3" placeholder="Customer experience feedback..." class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t border-stone-100">
+                    <button type="button" onclick="closeAddTestimonialModal()" class="px-4 py-2 rounded-xl border border-stone-200 text-stone-600 hover:bg-stone-50">Cancel</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition">Publish Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- EDIT TESTIMONIAL MODAL -->
     <div id="edit-testimonial-modal" class="fixed inset-0 z-50 invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
         <div onclick="closeEditTestimonialModal()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
@@ -1884,6 +1932,54 @@ HTML;
             }
         }
 
+        // Add / Edit Testimonials Modal handlers
+        function openAddTestimonialModal() {
+            document.getElementById('add-testimonial-modal').classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        }
+        function closeAddTestimonialModal() {
+            document.getElementById('add-testimonial-modal').classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        }
+
+        // Real-time Search Filter for Hub Tabs
+        function filterSectionItems(section, query) {
+            const q = (query || '').toLowerCase().trim();
+            if (section === 'products') {
+                const rows = document.querySelectorAll('.searchable-product-row');
+                const cards = document.querySelectorAll('.searchable-product-card');
+                rows.forEach(r => {
+                    const txt = (r.getAttribute('data-search') || '').toLowerCase();
+                    r.style.display = (!q || txt.includes(q)) ? '' : 'none';
+                });
+                cards.forEach(c => {
+                    const txt = (c.getAttribute('data-search') || '').toLowerCase();
+                    c.style.display = (!q || txt.includes(q)) ? '' : 'none';
+                });
+            } else if (section === 'flagship') {
+                const cards = document.querySelectorAll('.searchable-flagship-card');
+                cards.forEach(c => {
+                    const txt = (c.getAttribute('data-search') || '').toLowerCase();
+                    c.style.display = (!q || txt.includes(q)) ? '' : 'none';
+                });
+            } else if (section === 'combos') {
+                const cards = document.querySelectorAll('.searchable-combo-card');
+                cards.forEach(c => {
+                    const txt = (c.getAttribute('data-search') || '').toLowerCase();
+                    c.style.display = (!q || txt.includes(q)) ? '' : 'none';
+                });
+            } else if (section === 'reviews') {
+                const rows = document.querySelectorAll('.searchable-review-row');
+                const cards = document.querySelectorAll('.searchable-review-card');
+                rows.forEach(r => {
+                    const txt = (r.getAttribute('data-search') || '').toLowerCase();
+                    r.style.display = (!q || txt.includes(q)) ? '' : 'none';
+                });
+                cards.forEach(c => {
+                    const txt = (c.getAttribute('data-search') || '').toLowerCase();
+                    c.style.display = (!q || txt.includes(q)) ? '' : 'none';
+                });
+            }
+        }
+
         // Testimonials
         async function handleCreateTestimonial(e) {
             e.preventDefault();
@@ -1892,16 +1988,19 @@ HTML;
             const tag = document.getElementById('t-tag').value || 'Verified Buyer';
             const quote = document.getElementById('t-quote').value;
             const avatar_url = document.getElementById('t-avatar-url').value;
+            const rating = parseInt(document.getElementById('t-rating').value) || 5;
 
             try {
                 const res = await fetch('/mc-desk/api/admin/testimonials', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ author_name, author_location, tag, quote, avatar_url, rating: 5 })
+                    body: JSON.stringify({ author_name, author_location, tag, quote, avatar_url, rating })
                 });
                 const data = await res.json();
                 if (res.ok && data.status === 'success') {
-                    window.location.reload();
+                    showHubToast('Review added successfully!');
+                    closeAddTestimonialModal();
+                    setTimeout(() => window.location.reload(), 500);
                 } else {
                     alert(data.message || 'Error adding review');
                 }
