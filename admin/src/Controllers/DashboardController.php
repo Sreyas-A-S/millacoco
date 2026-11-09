@@ -30,28 +30,46 @@ class DashboardController
         $totalProducts = (int)$this->db->query("SELECT COUNT(*) FROM products")->fetchColumn();
         $activeProducts = (int)$this->db->query("SELECT COUNT(*) FROM products WHERE is_active = 1")->fetchColumn();
 
-        // Fetch products for redirect link overview
-        $stmt = $this->db->query("SELECT id, name, tag, price, external_url FROM products ORDER BY sort_order ASC, id ASC");
+        // Fetch products ordered by click count (Most Clicked / Popular Items)
+        $stmt = $this->db->query("SELECT id, name, tag, price, external_url, COALESCE(click_count, 0) AS click_count FROM products ORDER BY click_count DESC, id ASC");
         $products = $stmt->fetchAll();
+
+        // Calculate total clicks
+        $totalClicks = (int)$this->db->query("SELECT SUM(COALESCE(click_count, 0)) FROM products")->fetchColumn();
 
         $rowsHtml = '';
         $cardsHtml = '';
+        $rank = 1;
         foreach ($products as $p) {
             $id = (int)$p['id'];
             $name = htmlspecialchars($p['name'], ENT_QUOTES, 'UTF-8');
             $tag = htmlspecialchars($p['tag'], ENT_QUOTES, 'UTF-8');
             $url = htmlspecialchars($p['external_url'], ENT_QUOTES, 'UTF-8');
             $price = number_format((float)$p['price'], 2);
+            $clicks = (int)$p['click_count'];
+
+            $rankBadge = match ($rank) {
+                1 => '<span class="w-6 h-6 rounded-full bg-amber-400 text-[#611B10] font-extrabold flex items-center justify-center text-[11px] shadow-xs" title="1st Most Clicked">🥇</span>',
+                2 => '<span class="w-6 h-6 rounded-full bg-stone-300 text-stone-800 font-extrabold flex items-center justify-center text-[11px] shadow-xs" title="2nd Most Clicked">🥈</span>',
+                3 => '<span class="w-6 h-6 rounded-full bg-amber-700/60 text-white font-extrabold flex items-center justify-center text-[11px] shadow-xs" title="3rd Most Clicked">🥉</span>',
+                default => "<span class='font-mono font-bold text-stone-400 text-xs pl-1.5'>#{$rank}</span>"
+            };
 
             // Table Row
             $rowsHtml .= <<<HTML
             <tr class="hover:bg-amber-50/40 transition">
-                <td class="py-3 px-3 sm:px-4 font-mono font-bold text-stone-600">#{$id}</td>
+                <td class="py-3 px-3 sm:px-4">{$rankBadge}</td>
                 <td class="py-3 px-3 sm:px-4 font-bold text-[#611B10]">
                     {$name}
                     <span class="block text-[10px] text-stone-500 font-normal">{$tag}</span>
                 </td>
                 <td class="py-3 px-3 sm:px-4 font-bold">₹{$price}</td>
+                <td class="py-3 px-3 sm:px-4">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FAF5EC] text-[#611B10] border border-[#D4A853]/40 shadow-2xs">
+                        <i class="fa-solid fa-arrow-pointer text-[#D4A853] text-[10px]"></i>
+                        <span>{$clicks} clicks</span>
+                    </span>
+                </td>
                 <td class="py-3 px-3 sm:px-4 max-w-xs truncate text-[11px] font-mono">
                     <a href="{$url}" target="_blank" class="text-sky-700 hover:underline truncate block">{$url}</a>
                 </td>
@@ -67,13 +85,18 @@ HTML;
             $cardsHtml .= <<<HTML
             <div class="bg-white rounded-2xl border border-stone-200/80 p-3.5 shadow-2xs space-y-2.5">
                 <div class="flex items-start justify-between gap-2">
-                    <div>
-                        <span class="text-[10px] font-mono font-bold text-stone-400">#{$id}</span>
-                        <h4 class="font-bold text-[#611B10] text-xs">{$name}</h4>
-                        <span class="text-[9px] font-semibold bg-[#FAF5EC] text-[#611B10] px-2 py-0.5 rounded-full inline-block mt-0.5 border border-[#D4A853]/30">{$tag}</span>
+                    <div class="flex items-start gap-2.5">
+                        <div class="pt-0.5">{$rankBadge}</div>
+                        <div>
+                            <h4 class="font-bold text-[#611B10] text-xs">{$name}</h4>
+                            <span class="text-[9px] font-semibold bg-[#FAF5EC] text-[#611B10] px-2 py-0.5 rounded-full inline-block mt-0.5 border border-[#D4A853]/30">{$tag}</span>
+                        </div>
                     </div>
                     <div class="text-right">
                         <span class="font-bold text-sm text-stone-900 block">₹{$price}</span>
+                        <span class="text-[10px] font-bold text-[#611B10] bg-[#FAF5EC] px-2 py-0.5 rounded-full border border-[#D4A853]/30 inline-block mt-1">
+                            {$clicks} clicks
+                        </span>
                     </div>
                 </div>
                 <div class="text-[11px] font-mono bg-stone-50 px-2.5 py-1.5 rounded-lg border border-stone-100 truncate text-stone-500">
@@ -85,6 +108,7 @@ HTML;
                 </a>
             </div>
 HTML;
+            $rank++;
         }
 
         $html = <<<HTML
@@ -189,7 +213,7 @@ HTML;
         </header>
 
         <!-- Redirection & Catalog Metric Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-6 sm:mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mb-6 sm:mb-8">
             <div class="bg-white p-4 sm:p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-semibold text-[#611B10]/70">Listed Products</span>
@@ -197,6 +221,15 @@ HTML;
                 </div>
                 <div class="text-2xl font-bold text-[#611B10] mt-2">{$totalProducts} Sizes</div>
                 <div class="text-[10px] text-emerald-600 font-semibold mt-1">{$activeProducts} currently active</div>
+            </div>
+
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold text-[#611B10]/70">Total Store Clicks</span>
+                    <i class="fa-solid fa-chart-line text-[#D4A853]"></i>
+                </div>
+                <div class="text-2xl font-bold text-[#611B10] mt-2">{$totalClicks} Clicks</div>
+                <div class="text-[10px] text-stone-500 font-semibold mt-1">Across all storefront products</div>
             </div>
 
             <div class="bg-white p-4 sm:p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
@@ -209,12 +242,18 @@ HTML;
             </div>
         </div>
 
-        <!-- Active Marketplace Redirects Table -->
+        <!-- Most Clicked Items Showcase Table -->
         <div class="bg-white rounded-2xl sm:rounded-3xl border border-[#D4A853]/30 p-4 sm:p-6 shadow-xs">
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="font-serif font-bold text-sm sm:text-base text-[#611B10]">Active Marketplace Redirect Links</h3>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                <div>
+                    <h3 class="font-serif font-bold text-sm sm:text-base text-[#611B10] flex items-center gap-2">
+                        <i class="fa-solid fa-fire text-amber-500"></i>
+                        <span>Most Clicked Products</span>
+                    </h3>
+                    <p class="text-[11px] text-stone-500">Ranked by real customer click-through interactions on purchase buttons.</p>
+                </div>
                 <a href="/mc-desk/content" class="text-xs font-bold text-[#611B10] hover:text-[#782315] flex items-center gap-1">
-                    <span>Edit Destination URLs</span>
+                    <span>Manage Products</span>
                     <i class="fa-solid fa-arrow-right text-[10px]"></i>
                 </a>
             </div>
@@ -223,11 +262,12 @@ HTML;
                 <table class="w-full text-left text-xs min-w-[600px] sm:min-w-full">
                     <thead>
                         <tr class="border-b border-[#D4A853]/20 text-[#611B10]/60 font-bold uppercase tracking-wider text-[10px]">
-                            <th class="py-3 px-3 sm:px-4">ID</th>
+                            <th class="py-3 px-3 sm:px-4">Rank</th>
                             <th class="py-3 px-3 sm:px-4">Product</th>
                             <th class="py-3 px-3 sm:px-4">Listed Price</th>
+                            <th class="py-3 px-3 sm:px-4">Popularity</th>
                             <th class="py-3 px-3 sm:px-4">Marketplace URL</th>
-                            <th class="py-3 px-3 sm:px-4 text-right">Action</th>
+                            <th class="py-3 px-4 text-right">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-stone-100">

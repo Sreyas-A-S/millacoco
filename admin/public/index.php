@@ -74,6 +74,7 @@ $contentController = new ContentController($db);
 
 // --- Public Routes ---
 $app->get('/api/products', [$productController, 'getPublicProducts']);
+$app->post('/api/products/{id}/click', [$productController, 'trackClick']);
 $app->get('/api/settings', [$settingsController, 'getPublicSettings']);
 $app->get('/api/combos', [$contentController, 'getPublicCombos']);
 $app->get('/api/testimonials', [$contentController, 'getPublicTestimonials']);

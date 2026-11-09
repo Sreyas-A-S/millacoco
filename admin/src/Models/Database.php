@@ -55,12 +55,15 @@ class Database
      */
     public static function runMigrations(PDO $pdo): void
     {
-        // 1. Ensure discounted_from column exists in products table
+        // 1. Ensure discounted_from and click_count columns exist in products table
         try {
             $cols = $pdo->query("PRAGMA table_info(products)")->fetchAll(PDO::FETCH_ASSOC);
             $colNames = array_column($cols, 'name');
             if (!in_array('discounted_from', $colNames, true)) {
                 $pdo->exec("ALTER TABLE products ADD COLUMN discounted_from REAL DEFAULT NULL");
+            }
+            if (!in_array('click_count', $colNames, true)) {
+                $pdo->exec("ALTER TABLE products ADD COLUMN click_count INTEGER DEFAULT 0");
             }
         } catch (\Throwable $e) {
             error_log('Migration Error (products): ' . $e->getMessage());

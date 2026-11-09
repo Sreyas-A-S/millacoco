@@ -18,12 +18,27 @@ class ProductController
     }
 
     /**
+     * Public API: Track product link clicks and increment click_count
+     */
+    public function trackClick(Request $request, Response $response, array $args): Response
+    {
+        $id = (int)($args['id'] ?? 0);
+        if ($id > 0) {
+            $stmt = $this->db->prepare("UPDATE products SET click_count = COALESCE(click_count, 0) + 1 WHERE id = :id");
+            $stmt->execute([':id' => $id]);
+        }
+
+        $response->getBody()->write(json_encode(['status' => 'success']));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
      * Public API: Returns active products with their external marketplace URLs
      */
     public function getPublicProducts(Request $request, Response $response): Response
     {
         $stmt = $this->db->query(
-            "SELECT id, name, slug, tag, category, price, discounted_from, image, external_url, platform_name, is_active 
+            "SELECT id, name, slug, tag, category, price, discounted_from, image, external_url, platform_name, is_active, COALESCE(click_count, 0) AS click_count 
              FROM products 
              WHERE is_active = 1 
              ORDER BY sort_order ASC, id ASC"
@@ -2324,6 +2339,21 @@ HTML;
                 'message' => 'Please provide a valid URL to inspect.'
             ]));
             return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        // SSRF Guard: Disallow non-http/https schemes and private/internal IP ranges
+        $parsed = parse_url($targetUrl);
+        $scheme = strtolower($parsed['scheme'] ?? '');
+        $host = $parsed['host'] ?? '';
+        if (!in_array($scheme, ['http', 'https'], true) || empty($host)) {
+            $response->getBody()->write(json_encode(['status' => 'error', 'message' => 'Invalid URL scheme.']));
+            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+        }
+
+        $ip = gethostbyname($host);
+        if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+            $response->getBody()->write(json_encode(['status' => 'error', 'message' => 'Internal or private network targets are restricted.']));
+            return $response->withStatus(403)->withHeader('Content-Type', 'application/json');
         }
 
         // Multi-tier scraper mimicking genuine browser and social-link preview crawlers (WhatsApp/Facebook)

@@ -723,11 +723,28 @@ async function syncSiteSettingsFromDatabase() {
 document.addEventListener('DOMContentLoaded', syncSiteSettingsFromDatabase);
 
 
-// Global helper to redirect to external e-commerce platform
-function redirectToPlatform(url) {
+// Global helper to redirect to external e-commerce platform & track clicks
+function redirectToPlatform(url, productId) {
     if (!url) {
         url = 'https://wa.me/918089757815?text=Hello%20Millacoco,%20I%20would%20like%20to%20order%20pure%20coconut%20oil';
     }
+
+    // If productId wasn't passed directly, attempt to resolve from productCatalog by url
+    if (!productId && typeof productCatalog !== 'undefined') {
+        const matched = productCatalog.find(p => p.externalUrl === url);
+        if (matched) productId = matched.id;
+    }
+
+    if (productId) {
+        try {
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon(`/mc-desk/api/products/${productId}/click`);
+            } else {
+                fetch(`/mc-desk/api/products/${productId}/click`, { method: 'POST', keepalive: true }).catch(() => {});
+            }
+        } catch (e) {}
+    }
+
     window.open(url, '_blank', 'noopener,noreferrer');
 }
 
