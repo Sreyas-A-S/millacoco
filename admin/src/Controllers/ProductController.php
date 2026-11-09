@@ -311,6 +311,8 @@ HTML;
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FAF5EC; }
         .font-serif { font-family: 'Playfair Display', serif; }
@@ -600,7 +602,7 @@ HTML;
                             <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 hover:border-[#611B10] text-stone-700 font-semibold text-[11px] transition shadow-2xs">
                                 <i class="fa-solid fa-cloud-arrow-up text-[#611B10]"></i>
                                 <span>Upload New Photo</span>
-                                <input type="file" accept="image/*" class="hidden" onchange="handleUploadPhoto('add', this)">
+                                <input type="file" accept="image/*" class="hidden" onchange="handleInitiateCrop('add', this, 1)">
                             </label>
                             <span id="add-p-source-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-stone-100 text-stone-600 font-medium">Ready</span>
                         </div>
@@ -666,7 +668,7 @@ HTML;
                             <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 hover:border-[#611B10] text-stone-700 font-semibold text-[11px] transition shadow-2xs">
                                 <i class="fa-solid fa-cloud-arrow-up text-[#611B10]"></i>
                                 <span>Upload New Photo</span>
-                                <input type="file" accept="image/*" class="hidden" onchange="handleUploadPhoto('edit', this)">
+                                <input type="file" accept="image/*" class="hidden" onchange="handleInitiateCrop('edit', this, 1)">
                             </label>
                             <span id="edit-p-source-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-stone-100 text-stone-600 font-medium">Current photo</span>
                         </div>
@@ -744,14 +746,33 @@ HTML;
                     <textarea id="edit-flagship-desc" rows="3" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none"></textarea>
                 </div>
 
+                <!-- Live Flagship Image Preview & Choice Box -->
+                <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200 flex items-center gap-4">
+                    <div class="relative w-16 h-16 rounded-xl bg-white border border-stone-300 p-1 flex items-center justify-center shrink-0 overflow-hidden shadow-xs">
+                        <img id="edit-flagship-preview-img" src="/images/flagship_bottle_cutout.webp" alt="Preview" class="w-full h-full object-contain">
+                    </div>
+                    <div class="flex-1 space-y-1.5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-stone-500 block">Cutout / Slide Graphic</span>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 hover:border-[#611B10] text-stone-700 font-semibold text-[11px] transition shadow-2xs">
+                                <i class="fa-solid fa-cloud-arrow-up text-[#611B10]"></i>
+                                <span>Upload Cutout Photo</span>
+                                <input type="file" accept="image/*" class="hidden" onchange="handleInitiateCrop('flagship', this, 0.75)">
+                            </label>
+                            <span id="edit-flagship-source-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-stone-100 text-stone-600 font-medium">Ready</span>
+                        </div>
+                        <input type="hidden" id="edit-flagship-image" required>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold text-stone-700 mb-1">Price (₹)</label>
                         <input type="number" step="0.01" id="edit-flagship-price" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
                     </div>
                     <div>
-                        <label class="block font-bold text-stone-700 mb-1">Cutout Asset Path</label>
-                        <input type="text" id="edit-flagship-image" required placeholder="images/flagship_bottle_cutout.webp" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                        <label class="block font-bold text-stone-700 mb-1">Asset Path</label>
+                        <input type="text" id="edit-flagship-image-display" readonly placeholder="images/flagship_bottle_cutout.webp" class="w-full px-3 py-2 rounded-xl border border-stone-200 bg-stone-50 text-stone-500 font-mono text-[11px] outline-none">
                     </div>
                 </div>
 
@@ -843,6 +864,36 @@ HTML;
                     <button type="submit" class="px-5 py-2 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition">Update Review</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- CROPPER MODAL -->
+    <div id="cropper-modal" class="fixed inset-0 z-[60] invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div onclick="closeCropperModal()" class="absolute inset-0 bg-black/75 backdrop-blur-xs"></div>
+        <div class="relative bg-white rounded-3xl max-w-xl w-full p-5 sm:p-6 shadow-2xl border border-[#D4A853]/40 flex flex-col max-h-[92vh]">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-crop-simple text-[#611B10]"></i>
+                    <h4 class="font-serif font-bold text-base text-[#611B10]">Crop & Optimize Image</h4>
+                </div>
+                <button type="button" onclick="closeCropperModal()" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="my-3 flex-1 overflow-hidden bg-stone-900 rounded-2xl flex items-center justify-center min-h-[300px] max-h-[55vh]">
+                <img id="cropper-target-img" src="" alt="To Crop" class="max-w-full max-h-full block">
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-stone-100 text-xs">
+                <div class="flex items-center gap-2 text-stone-500">
+                    <span id="cropper-aspect-label" class="px-2.5 py-1 rounded-lg bg-stone-100 font-semibold text-stone-700">1:1 Aspect Ratio</span>
+                    <span class="text-[11px] text-stone-400">Auto-compressed to WebP</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="closeCropperModal()" class="px-4 py-2 rounded-xl border border-stone-200 text-stone-600 hover:bg-stone-50 font-medium">Cancel</button>
+                    <button type="button" id="cropper-confirm-btn" onclick="applyCropAndUpload()" class="px-5 py-2 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition shadow-sm active:scale-95 flex items-center gap-1.5">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Crop & Save</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1010,38 +1061,143 @@ HTML;
             }
         }
 
-        // Handle Custom Local Photo Upload
-        async function handleUploadPhoto(mode, inputEl) {
+        // Cropper JS Global State & Handlers
+        let activeCropper = null;
+        let cropperTargetMode = null; // 'add', 'edit', 'flagship'
+        let currentFileInput = null;
+
+        function handleInitiateCrop(mode, inputEl, aspectRatio = 1) {
             if (!inputEl.files || !inputEl.files[0]) return;
             const file = inputEl.files[0];
-            const formData = new FormData();
-            formData.append('photo', file);
+            cropperTargetMode = mode;
+            currentFileInput = inputEl;
 
-            const previewImg = document.getElementById(mode + '-p-preview-img');
-            const imageInput = document.getElementById(mode + '-p-image') || document.getElementById(mode + '-image');
-            const sourceBadge = document.getElementById(mode + '-p-source-badge');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const cropperModal = document.getElementById('cropper-modal');
+                const cropperTargetImg = document.getElementById('cropper-target-img');
+                const aspectLabel = document.getElementById('cropper-aspect-label');
 
-            sourceBadge.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading...';
+                if (aspectRatio === 1) {
+                    aspectLabel.innerText = '1:1 Square (Product Photo)';
+                } else {
+                    aspectLabel.innerText = aspectRatio + ':1 Custom Cutout Ratio';
+                }
+
+                cropperTargetImg.src = e.target.result;
+                cropperModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+
+                if (activeCropper) {
+                    activeCropper.destroy();
+                    activeCropper = null;
+                }
+
+                activeCropper = new Cropper(cropperTargetImg, {
+                    aspectRatio: aspectRatio,
+                    viewMode: 2,
+                    autoCropArea: 0.95,
+                    responsive: true,
+                    restore: false,
+                    guides: true,
+                    center: true,
+                    highlight: false,
+                    cropBoxMovable: true,
+                    cropBoxResizable: true,
+                    toggleDragModeOnDblclick: false
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function closeCropperModal() {
+            const cropperModal = document.getElementById('cropper-modal');
+            cropperModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+            if (activeCropper) {
+                activeCropper.destroy();
+                activeCropper = null;
+            }
+            if (currentFileInput) {
+                currentFileInput.value = '';
+                currentFileInput = null;
+            }
+        }
+
+        async function applyCropAndUpload() {
+            if (!activeCropper) return;
+            const confirmBtn = document.getElementById('cropper-confirm-btn');
+            const originalBtnHtml = confirmBtn.innerHTML;
+            confirmBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing & Compressing...';
+            confirmBtn.disabled = true;
 
             try {
-                const res = await fetch('/mc-desk/api/admin/upload-photo', {
-                    method: 'POST',
-                    body: formData
+                // Generate high quality canvas up to max 1200px
+                const canvas = activeCropper.getCroppedCanvas({
+                    maxWidth: 1200,
+                    maxHeight: 1200,
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high'
                 });
-                const json = await res.json();
-                if (res.ok && json.status === 'success') {
-                    previewImg.src = '/' + json.image_path;
-                    imageInput.value = json.image_path;
-                    sourceBadge.innerText = 'Custom uploaded photo';
-                    sourceBadge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-semibold';
-                } else {
-                    alert(json.message || 'Failed to upload photo');
-                    sourceBadge.innerText = 'Upload failed';
-                }
-            } catch (e) {
-                alert('Network error while uploading');
-                sourceBadge.innerText = 'Upload failed';
+
+                // Client-side WebP compression with quality 0.85
+                canvas.toBlob(async function(blob) {
+                    if (!blob) {
+                        alert('Could not process cropped canvas');
+                        confirmBtn.innerHTML = originalBtnHtml;
+                        confirmBtn.disabled = false;
+                        return;
+                    }
+
+                    const mode = cropperTargetMode;
+                    const previewImg = document.getElementById(mode + '-p-preview-img') || document.getElementById('edit-flagship-preview-img');
+                    const imageInput = document.getElementById(mode + '-p-image') || document.getElementById(mode + '-image') || document.getElementById('edit-flagship-image');
+                    const sourceBadge = document.getElementById(mode + '-p-source-badge') || document.getElementById('edit-flagship-source-badge');
+                    const pathDisplay = document.getElementById('edit-flagship-image-display');
+
+                    if (sourceBadge) {
+                        sourceBadge.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading WebP...';
+                    }
+
+                    const formData = new FormData();
+                    formData.append('photo', blob, 'crop_' + Date.now() + '.webp');
+
+                    try {
+                        const res = await fetch('/mc-desk/api/admin/upload-photo', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        const json = await res.json();
+                        if (res.ok && json.status === 'success') {
+                            if (previewImg) previewImg.src = '/' + json.image_path;
+                            if (imageInput) imageInput.value = json.image_path;
+                            if (pathDisplay) pathDisplay.value = json.image_path;
+                            if (sourceBadge) {
+                                sourceBadge.innerText = 'Optimized WebP Photo';
+                                sourceBadge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold';
+                            }
+                            closeCropperModal();
+                        } else {
+                            alert(json.message || 'Failed to upload photo');
+                            if (sourceBadge) sourceBadge.innerText = 'Upload failed';
+                        }
+                    } catch (err) {
+                        alert('Network error during upload');
+                        if (sourceBadge) sourceBadge.innerText = 'Upload failed';
+                    } finally {
+                        confirmBtn.innerHTML = originalBtnHtml;
+                        confirmBtn.disabled = false;
+                    }
+                }, 'image/webp', 0.85);
+
+            } catch (err) {
+                alert('Crop processing error: ' + err.message);
+                confirmBtn.innerHTML = originalBtnHtml;
+                confirmBtn.disabled = false;
             }
+        }
+
+        // Handle Custom Local Photo Upload (Fallback direct)
+        async function handleUploadPhoto(mode, inputEl) {
+            handleInitiateCrop(mode, inputEl, 1);
         }
 
         // Edit Product (Full Product Info & Image)
@@ -1110,6 +1266,10 @@ HTML;
             document.getElementById('edit-flagship-desc').value = desc || '';
             document.getElementById('edit-flagship-price').value = price || 0;
             document.getElementById('edit-flagship-image').value = imageCutout || '';
+            const pathDisplay = document.getElementById('edit-flagship-image-display');
+            if (pathDisplay) pathDisplay.value = imageCutout || '';
+            const previewImg = document.getElementById('edit-flagship-preview-img');
+            if (previewImg && imageCutout) previewImg.src = imageCutout.startsWith('http') ? imageCutout : '/' + imageCutout;
             document.getElementById('edit-flagship-url').value = externalUrl || '';
             document.getElementById('flagship-modal').classList.remove('invisible', 'opacity-0', 'pointer-events-none');
         }
@@ -1715,20 +1875,82 @@ HTML;
             @mkdir($imagesDir, 0755, true);
         }
 
-        $safeName = 'product_upload_' . time() . '_' . bin2hex(random_bytes(3)) . '.' . $ext;
-        $targetPath = $imagesDir . '/' . $safeName;
+        $baseName = 'upload_' . time() . '_' . bin2hex(random_bytes(3));
+        $targetWebpName = $baseName . '.webp';
+        $targetPath = $imagesDir . '/' . $targetWebpName;
 
         try {
-            $photo->moveTo($targetPath);
+            $stream = $photo->getStream();
+            $tempFile = tempnam(sys_get_temp_dir(), 'upl_');
+            $stream->rewind();
+            file_put_contents($tempFile, $stream->getContents());
+
+            // Check if GD can create image and convert/compress to WebP
+            $imageResource = null;
+            switch ($ext) {
+                case 'jpg':
+                case 'jpeg':
+                    if (function_exists('imagecreatefromjpeg')) $imageResource = @imagecreatefromjpeg($tempFile);
+                    break;
+                case 'png':
+                    if (function_exists('imagecreatefrompng')) {
+                        $imageResource = @imagecreatefrompng($tempFile);
+                        if ($imageResource) {
+                            imagepalettetotruecolor($imageResource);
+                            imagealphablending($imageResource, true);
+                            imagesavealpha($imageResource, true);
+                        }
+                    }
+                    break;
+                case 'webp':
+                    if (function_exists('imagecreatefromwebp')) $imageResource = @imagecreatefromwebp($tempFile);
+                    break;
+                case 'gif':
+                    if (function_exists('imagecreatefromgif')) $imageResource = @imagecreatefromgif($tempFile);
+                    break;
+            }
+
+            if ($imageResource && function_exists('imagewebp')) {
+                // Resize if oversized (keep max dimension 1400px)
+                $origW = imagesx($imageResource);
+                $origH = imagesy($imageResource);
+                $maxDim = 1400;
+
+                if ($origW > $maxDim || $origH > $maxDim) {
+                    $ratio = min($maxDim / $origW, $maxDim / $origH);
+                    $newW = (int)round($origW * $ratio);
+                    $newH = (int)round($origH * $ratio);
+                    $resized = imagecreatetruecolor($newW, $newH);
+                    imagealphablending($resized, false);
+                    imagesavealpha($resized, true);
+                    imagecopyresampled($resized, $imageResource, 0, 0, 0, 0, $newW, $newH, $origW, $origH);
+                    imagedestroy($imageResource);
+                    $imageResource = $resized;
+                }
+
+                // Compress to WebP at 85 quality
+                imagewebp($imageResource, $targetPath, 85);
+                imagedestroy($imageResource);
+                @unlink($tempFile);
+            } else {
+                // Fallback direct move if GD cannot decode
+                if ($imageResource) imagedestroy($imageResource);
+                if (file_exists($tempFile)) {
+                    @copy($tempFile, $targetPath);
+                    @unlink($tempFile);
+                } else {
+                    $photo->moveTo($targetPath);
+                }
+            }
         } catch (\Throwable $e) {
             $response->getBody()->write(json_encode([
                 'status' => 'error',
-                'message' => 'Failed to save uploaded file: ' . $e->getMessage()
+                'message' => 'Failed to process and compress image: ' . $e->getMessage()
             ]));
             return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
         }
 
-        $relativePath = 'images/' . $safeName;
+        $relativePath = 'images/' . $targetWebpName;
         $response->getBody()->write(json_encode([
             'status' => 'success',
             'image_path' => $relativePath,
