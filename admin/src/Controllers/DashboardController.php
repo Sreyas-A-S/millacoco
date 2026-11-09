@@ -35,6 +35,7 @@ class DashboardController
         $products = $stmt->fetchAll();
 
         $rowsHtml = '';
+        $cardsHtml = '';
         foreach ($products as $p) {
             $id = (int)$p['id'];
             $name = htmlspecialchars($p['name'], ENT_QUOTES, 'UTF-8');
@@ -42,6 +43,7 @@ class DashboardController
             $url = htmlspecialchars($p['external_url'], ENT_QUOTES, 'UTF-8');
             $price = number_format((float)$p['price'], 2);
 
+            // Table Row
             $rowsHtml .= <<<HTML
             <tr class="hover:bg-amber-50/40 transition">
                 <td class="py-3 px-3 sm:px-4 font-mono font-bold text-stone-600">#{$id}</td>
@@ -59,6 +61,29 @@ class DashboardController
                     </a>
                 </td>
             </tr>
+HTML;
+
+            // Mobile Card
+            $cardsHtml .= <<<HTML
+            <div class="bg-white rounded-2xl border border-stone-200/80 p-3.5 shadow-2xs space-y-2.5">
+                <div class="flex items-start justify-between gap-2">
+                    <div>
+                        <span class="text-[10px] font-mono font-bold text-stone-400">#{$id}</span>
+                        <h4 class="font-bold text-[#611B10] text-xs">{$name}</h4>
+                        <span class="text-[9px] font-semibold bg-[#FAF5EC] text-[#611B10] px-2 py-0.5 rounded-full inline-block mt-0.5 border border-[#D4A853]/30">{$tag}</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-bold text-sm text-stone-900 block">₹{$price}</span>
+                    </div>
+                </div>
+                <div class="text-[11px] font-mono bg-stone-50 px-2.5 py-1.5 rounded-lg border border-stone-100 truncate text-stone-500">
+                    <i class="fa-solid fa-link text-[#D4A853] mr-1"></i> <a href="{$url}" target="_blank" class="text-sky-700 hover:underline">{$url}</a>
+                </div>
+                <a href="/mc-desk/content" class="w-full py-2 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-xs">
+                    <span>Manage in Content Hub</span>
+                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </a>
+            </div>
 HTML;
         }
 
@@ -193,7 +218,8 @@ HTML;
                     <i class="fa-solid fa-arrow-right text-[10px]"></i>
                 </a>
             </div>
-            <div class="overflow-x-auto -mx-4 sm:mx-0">
+            <!-- Desktop Table View -->
+            <div class="hidden sm:block overflow-x-auto -mx-4 sm:mx-0">
                 <table class="w-full text-left text-xs min-w-[600px] sm:min-w-full">
                     <thead>
                         <tr class="border-b border-[#D4A853]/20 text-[#611B10]/60 font-bold uppercase tracking-wider text-[10px]">
@@ -208,6 +234,11 @@ HTML;
                         {$rowsHtml}
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Mobile Responsive Card View -->
+            <div class="sm:hidden grid grid-cols-1 gap-3">
+                {$cardsHtml}
             </div>
         </div>
     </main>

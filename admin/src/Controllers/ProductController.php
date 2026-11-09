@@ -93,8 +93,9 @@ class ProductController
             $catsDatalistOptions .= "<option value='{$safeVal}'>";
         }
 
-        // Build Products Rows
+        // Build Products Rows & Mobile Cards
         $productRowsHtml = '';
+        $productCardsHtml = '';
         foreach ($products as $p) {
             $id = (int)$p['id'];
             $name = htmlspecialchars($p['name'], ENT_QUOTES, 'UTF-8');
@@ -105,6 +106,14 @@ class ProductController
             $beforePrice = !empty($p['discounted_from']) ? (float)$p['discounted_from'] : 0;
             $beforePriceFmt = $beforePrice > 0 ? "₹" . number_format($beforePrice, 2) : "-";
 
+            $nameJs = htmlspecialchars(json_encode($p['name']), ENT_QUOTES, 'UTF-8');
+            $tagJs = htmlspecialchars(json_encode($p['tag'] ?? 'Bestseller'), ENT_QUOTES, 'UTF-8');
+            $catJs = htmlspecialchars(json_encode($p['category'] ?? ''), ENT_QUOTES, 'UTF-8');
+            $imgJs = htmlspecialchars(json_encode($p['image'] ?? ''), ENT_QUOTES, 'UTF-8');
+            $urlJs = htmlspecialchars(json_encode($p['external_url'] ?? ''), ENT_QUOTES, 'UTF-8');
+            $descJs = htmlspecialchars(json_encode($p['description'] ?? ''), ENT_QUOTES, 'UTF-8');
+
+            // Desktop Table Row
             $productRowsHtml .= <<<HTML
             <tr class="hover:bg-amber-50/40 transition">
                 <td class="py-3 px-4 font-mono font-bold text-stone-600">#{$id}</td>
@@ -125,12 +134,39 @@ class ProductController
                     <a href="{$url}" target="_blank" class="hover:underline text-sky-700 truncate block">{$url}</a>
                 </td>
                 <td class="py-3 px-4 text-right">
-                    <button onclick='openEditModal({$id}, "{$name}", {$p['price']}, {$beforePrice}, "{$tag}", "{$p['category']}", "{$img}", "{$url}", "{$p['description']}")' class="px-3.5 py-1.5 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white rounded-xl text-xs font-semibold transition shadow-xs flex items-center gap-1.5 ml-auto">
+                    <button onclick='openEditModal({$id}, {$nameJs}, {$p['price']}, {$beforePrice}, {$tagJs}, {$catJs}, {$imgJs}, {$urlJs}, {$descJs})' class="px-3.5 py-1.5 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white rounded-xl text-xs font-semibold transition shadow-xs flex items-center gap-1.5 ml-auto">
                         <i class="fa-solid fa-pen-to-square text-[10px]"></i>
                         <span>Edit Product</span>
                     </button>
                 </td>
             </tr>
+HTML;
+
+            // Mobile Card View
+            $productCardsHtml .= <<<HTML
+            <div class="bg-white rounded-2xl border border-stone-200/80 p-3.5 shadow-2xs space-y-3">
+                <div class="flex items-start gap-3">
+                    <img src="/{$img}" alt="{$name}" class="w-14 h-14 object-contain rounded-xl bg-stone-50 border border-stone-200 p-1 shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="text-[10px] font-mono text-stone-400 font-bold">#{$id}</span>
+                            <span class="text-[9px] font-semibold bg-[#FAF5EC] text-[#611B10] border border-[#D4A853]/40 px-2 py-0.5 rounded-full truncate">{$tag}</span>
+                        </div>
+                        <h4 class="font-bold text-[#611B10] text-xs leading-snug truncate mt-0.5">{$name}</h4>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <span class="font-bold text-sm text-stone-900">₹{$price}</span>
+                            <span class="text-[10px] text-stone-400 line-through">{$beforePriceFmt}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-[11px] font-mono bg-stone-50 px-2.5 py-1.5 rounded-lg border border-stone-100 truncate text-stone-500">
+                    <i class="fa-solid fa-link text-[#D4A853] mr-1"></i> <a href="{$url}" target="_blank" class="hover:underline text-sky-700">{$url}</a>
+                </div>
+                <button onclick='openEditModal({$id}, {$nameJs}, {$p['price']}, {$beforePrice}, {$tagJs}, {$catJs}, {$imgJs}, {$urlJs}, {$descJs})' class="w-full py-2 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center justify-center gap-1.5 active:scale-98">
+                    <i class="fa-solid fa-pen-to-square text-[11px]"></i>
+                    <span>Edit Product</span>
+                </button>
+            </div>
 HTML;
         }
 
@@ -246,8 +282,9 @@ HTML;
 HTML;
         }
 
-        // Build Testimonials Rows
+        // Build Testimonials Rows & Mobile Cards
         $testimonialsHtml = '';
+        $testimonialsCardsHtml = '';
         foreach ($testimonials as $t) {
             $id = (int)$t['id'];
             $name = htmlspecialchars($t['author_name'], ENT_QUOTES, 'UTF-8');
@@ -258,10 +295,17 @@ HTML;
             $rating = (int)$t['rating'];
             $stars = str_repeat('<i class="fa-solid fa-star text-amber-500 text-[10px]"></i>', $rating);
 
+            $nameJs = htmlspecialchars(json_encode($t['author_name']), ENT_QUOTES, 'UTF-8');
+            $locJs = htmlspecialchars(json_encode($t['author_location']), ENT_QUOTES, 'UTF-8');
+            $tagJs = htmlspecialchars(json_encode($t['tag'] ?? 'Verified Buyer'), ENT_QUOTES, 'UTF-8');
+            $quoteJs = htmlspecialchars(json_encode($t['quote']), ENT_QUOTES, 'UTF-8');
+            $avatarJs = htmlspecialchars(json_encode($t['avatar_url'] ?? ''), ENT_QUOTES, 'UTF-8');
+
             $avatarImg = $avatar 
                 ? "<img src='/{$avatar}' alt='{$name}' class='w-8 h-8 rounded-full object-cover border border-[#D4A853]/40 shadow-xs'>" 
                 : "<div class='w-8 h-8 rounded-full bg-[#FAF5EC] border border-[#D4A853]/30 flex items-center justify-center text-[#611B10] text-xs font-serif font-bold'>" . mb_substr($t['author_name'], 0, 1) . "</div>";
 
+            // Desktop Table Row
             $testimonialsHtml .= <<<HTML
             <tr class="hover:bg-amber-50/40 transition">
                 <td class="py-3 px-4 font-mono font-bold text-stone-500">#{$id}</td>
@@ -282,7 +326,7 @@ HTML;
                     "{$quote}"
                 </td>
                 <td class="py-3 px-4 text-right whitespace-nowrap">
-                    <button type="button" onclick='openEditTestimonialModal({$id}, "{$name}", "{$location}", "{$tag}", {$rating}, "{$quote}", "{$avatar}")' class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold mr-1.5 transition" title="Edit Review">
+                    <button type="button" onclick='openEditTestimonialModal({$id}, {$nameJs}, {$locJs}, {$tagJs}, {$rating}, {$quoteJs}, {$avatarJs})' class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold mr-1.5 transition" title="Edit Review">
                         <i class="fa-solid fa-pen-to-square text-[10px]"></i>
                     </button>
                     <button type="button" onclick="deleteTestimonial({$id})" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 transition" title="Delete Review">
@@ -290,6 +334,36 @@ HTML;
                     </button>
                 </td>
             </tr>
+HTML;
+
+            // Mobile Card View
+            $testimonialsCardsHtml .= <<<HTML
+            <div class="bg-white rounded-2xl border border-stone-200/80 p-3.5 shadow-2xs space-y-2.5">
+                <div class="flex items-start justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                        {$avatarImg}
+                        <div>
+                            <div class="font-bold text-[#611B10] text-xs">{$name}</div>
+                            <span class="text-[10px] text-stone-500">{$location}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <button type="button" onclick='openEditTestimonialModal({$id}, {$nameJs}, {$locJs}, {$tagJs}, {$rating}, {$quoteJs}, {$avatarJs})' class="p-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold transition" title="Edit Review">
+                            <i class="fa-solid fa-pen-to-square text-[11px]"></i>
+                        </button>
+                        <button type="button" onclick="deleteTestimonial({$id})" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 transition" title="Delete Review">
+                            <i class="fa-solid fa-trash-can text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between text-[11px] pt-1">
+                    <div class="flex items-center gap-0.5">{$stars}</div>
+                    <span class="text-[9px] font-semibold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full">{$tag}</span>
+                </div>
+                <p class="text-xs text-stone-600 italic bg-stone-50 p-2.5 rounded-xl border border-stone-100">
+                    "{$quote}"
+                </p>
+            </div>
 HTML;
         }
 
@@ -469,7 +543,8 @@ HTML;
                         <span>Add Product</span>
                     </button>
                 </div>
-                <div class="overflow-x-auto -mx-4 sm:mx-0">
+                <!-- Desktop Table View (Hidden on mobile) -->
+                <div class="hidden sm:block overflow-x-auto -mx-4 sm:mx-0">
                     <table class="w-full text-left text-xs min-w-[650px] sm:min-w-full">
                         <thead>
                             <tr class="border-b border-[#D4A853]/20 text-[#611B10]/60 font-bold uppercase tracking-wider text-[10px]">
@@ -484,6 +559,11 @@ HTML;
                             {$productRowsHtml}
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Mobile Responsive Cards View (Shown only on mobile) -->
+                <div class="sm:hidden grid grid-cols-1 gap-3">
+                    {$productCardsHtml}
                 </div>
             </div>
         </div>
@@ -584,7 +664,8 @@ HTML;
             <!-- Published Reviews Table -->
             <div class="bg-white rounded-2xl sm:rounded-3xl border border-[#D4A853]/30 p-4 sm:p-6 shadow-2xs">
                 <h4 class="font-serif font-bold text-sm text-[#611B10] mb-4">Published Reviews</h4>
-                <div class="overflow-x-auto -mx-4 sm:mx-0">
+                <!-- Desktop Table View (Hidden on mobile) -->
+                <div class="hidden sm:block overflow-x-auto -mx-4 sm:mx-0">
                     <table class="w-full text-left text-xs min-w-[600px] sm:min-w-full">
                         <thead>
                             <tr class="border-b border-[#D4A853]/20 text-[#611B10]/60 font-bold uppercase tracking-wider text-[10px]">
@@ -599,6 +680,11 @@ HTML;
                             {$testimonialsHtml}
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Mobile Responsive Cards View (Shown only on mobile) -->
+                <div class="sm:hidden grid grid-cols-1 gap-3">
+                    {$testimonialsCardsHtml}
                 </div>
             </div>
         </div>
