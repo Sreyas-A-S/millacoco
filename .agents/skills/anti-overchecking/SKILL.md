@@ -9,7 +9,7 @@ description: >-
 ## Purpose
 This skill ensures the agent executes tasks decisively without falling into loops of over-analysis, repetitive inspecting, excessive diagnostic script runs, or multi-step re-verification when the user has given a direct instruction.
 
----
+----
 
 ## Core Principles
 
