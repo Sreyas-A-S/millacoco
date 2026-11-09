@@ -574,13 +574,13 @@
         </div>
 
         <!-- Empty search results placeholder -->
-        <div id="catalog-empty-msg" class="hidden text-center py-16 bg-white/60 rounded-3xl border border-white my-8">
-            <div class="w-16 h-16 rounded-full bg-sage-100 flex items-center justify-center text-sage-500 mx-auto mb-3">
-                <i class="fa-solid fa-box-open text-2xl"></i>
+        <div id="catalog-empty-msg" class="hidden text-center py-16 px-6 bg-white/80 rounded-3xl border border-white/90 shadow-xs my-4 min-h-[45vh] flex flex-col items-center justify-center">
+            <div class="w-16 h-16 rounded-full bg-sage-100/90 flex items-center justify-center text-sage-500 mb-3 shadow-2xs">
+                <i class="fa-solid fa-box-open text-2xl text-[#611B10]"></i>
             </div>
-            <h4 class="font-serif font-bold text-base text-sage-900">No matching products found</h4>
+            <h4 class="font-serif font-bold text-lg text-sage-900">No matching products found</h4>
             <p class="text-xs text-sage-600 mt-1 max-w-sm mx-auto">Try clearing your search query or selecting a different category above.</p>
-            <button onclick="filterCatalog('all', document.querySelector('.catalog-filter-btn'))" class="mt-4 px-4 py-2 rounded-full text-xs font-semibold bg-[#611B10] text-[#D4A853]">
+            <button onclick="clearCatalogSearch(); filterCatalog('all', document.querySelector('.catalog-filter-btn'));" class="mt-4 px-5 py-2.5 rounded-full text-xs font-semibold bg-[#611B10] text-[#D4A853] hover:bg-[#782315] hover:text-white transition shadow-sm active:scale-95">
                 Show All Products
             </button>
         </div>
