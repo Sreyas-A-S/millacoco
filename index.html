@@ -515,13 +515,13 @@
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
                     
                     <!-- Left: Dynamic details synced with active combo -->
-                    <div class="lg:col-span-5 space-y-3.5 sm:space-y-4">
+                    <div class="lg:col-span-5 space-y-3.5 sm:space-y-4 cursor-pointer" onclick="orderCurrentCombo(event)" title="Click anywhere to Order Active Combo">
                         <div class="flex items-center space-x-2.5">
                             <span class="bg-[#D4A853] text-[#3D140C] text-[10px] font-extrabold tracking-widest uppercase px-3 py-1 rounded-full shadow-sm">SPECIAL COMBO PACK</span>
                             <span id="combo-carousel-counter" class="text-xs font-mono text-[#D4A853] bg-white/10 px-2.5 py-0.5 rounded-full border border-white/15">01 / 03</span>
                         </div>
 
-                        <h2 id="combo-title" class="text-3xl sm:text-4xl lg:text-5xl font-serif leading-tight h-[6.5rem] sm:h-[7.5rem] lg:h-[8.5rem] flex flex-col justify-center transition-opacity duration-300 text-white">
+                        <h2 id="combo-title" class="text-3xl sm:text-4xl lg:text-5xl font-serif leading-tight h-[6.5rem] sm:h-[7.5rem] lg:h-[8.5rem] flex flex-col justify-center transition-opacity duration-300 text-white hover:text-[#D4A853] transition-colors">
                             Healthy Kitchen.<br>
                             <span class="font-handwriting font-normal text-[#D4A853] text-4xl sm:text-5xl">Happy Family.</span>
                         </h2>
@@ -532,7 +532,7 @@
 
                         <div class="pt-2">
                             <!-- Golden Action Pill -->
-                            <button id="combo-order-btn" onclick="orderCurrentCombo(event)" class="relative group overflow-hidden bg-[#D4A853] hover:bg-[#e0b764] text-[#3D140C] font-bold px-6 sm:px-7 py-3 sm:py-3.5 rounded-full text-xs transition-all duration-300 shadow-lg flex items-center space-x-2 active:scale-95">
+                            <button id="combo-order-btn" type="button" class="relative group overflow-hidden bg-[#D4A853] hover:bg-[#e0b764] text-[#3D140C] font-bold px-6 sm:px-7 py-3 sm:py-3.5 rounded-full text-xs transition-all duration-300 shadow-lg flex items-center space-x-2 active:scale-95 pointer-events-none">
                                 <span class="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 animate-shimmer pointer-events-none"></span>
                                 <span class="relative z-10 inline-flex items-center gap-1.5 font-sans tracking-wide">
                                     <span id="combo-btn-label">ORDER DUO PACK</span>

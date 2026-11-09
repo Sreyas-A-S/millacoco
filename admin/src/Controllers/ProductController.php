@@ -238,15 +238,25 @@ HTML;
             $location = htmlspecialchars($t['author_location'], ENT_QUOTES, 'UTF-8');
             $tag = htmlspecialchars($t['tag'] ?? 'Verified Buyer', ENT_QUOTES, 'UTF-8');
             $quote = htmlspecialchars($t['quote'], ENT_QUOTES, 'UTF-8');
+            $avatar = htmlspecialchars($t['avatar_url'] ?? '', ENT_QUOTES, 'UTF-8');
             $rating = (int)$t['rating'];
             $stars = str_repeat('<i class="fa-solid fa-star text-amber-500 text-[10px]"></i>', $rating);
+
+            $avatarImg = $avatar 
+                ? "<img src='/{$avatar}' alt='{$name}' class='w-8 h-8 rounded-full object-cover border border-[#D4A853]/40 shadow-xs'>" 
+                : "<div class='w-8 h-8 rounded-full bg-[#FAF5EC] border border-[#D4A853]/30 flex items-center justify-center text-[#611B10] text-xs font-serif font-bold'>" . mb_substr($t['author_name'], 0, 1) . "</div>";
 
             $testimonialsHtml .= <<<HTML
             <tr class="hover:bg-amber-50/40 transition">
                 <td class="py-3 px-4 font-mono font-bold text-stone-500">#{$id}</td>
                 <td class="py-3 px-4">
-                    <div class="font-bold text-[#611B10] text-xs">{$name}</div>
-                    <span class="text-[10px] text-stone-500">{$location}</span>
+                    <div class="flex items-center gap-2.5">
+                        {$avatarImg}
+                        <div>
+                            <div class="font-bold text-[#611B10] text-xs">{$name}</div>
+                            <span class="text-[10px] text-stone-500">{$location}</span>
+                        </div>
+                    </div>
                 </td>
                 <td class="py-3 px-4">
                     <div class="flex items-center gap-0.5">{$stars}</div>
@@ -256,7 +266,7 @@ HTML;
                     "{$quote}"
                 </td>
                 <td class="py-3 px-4 text-right whitespace-nowrap">
-                    <button type="button" onclick='openEditTestimonialModal({$id}, "{$name}", "{$location}", "{$tag}", {$rating}, "{$quote}")' class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold mr-1.5 transition" title="Edit Review">
+                    <button type="button" onclick='openEditTestimonialModal({$id}, "{$name}", "{$location}", "{$tag}", {$rating}, "{$quote}", "{$avatar}")' class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold mr-1.5 transition" title="Edit Review">
                         <i class="fa-solid fa-pen-to-square text-[10px]"></i>
                     </button>
                     <button type="button" onclick="deleteTestimonial({$id})" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 transition" title="Delete Review">
@@ -496,6 +506,22 @@ HTML;
                     <span>Add Verified Customer Review</span>
                 </h4>
                 <form onsubmit="handleCreateTestimonial(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-3 text-xs">
+                    <div class="sm:col-span-12 flex items-center gap-3 p-3 bg-stone-50 rounded-2xl border border-stone-200">
+                        <div class="w-12 h-12 rounded-full bg-white border border-stone-300 flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
+                            <img id="add-t-avatar-preview" src="/images/favicon.png" alt="Avatar" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 space-y-1">
+                            <div class="flex items-center gap-2">
+                                <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 hover:border-[#611B10] text-stone-700 font-semibold text-[11px] transition shadow-2xs">
+                                    <i class="fa-solid fa-cloud-arrow-up text-[#611B10]"></i>
+                                    <span>Upload User Avatar</span>
+                                    <input type="file" accept="image/*" class="hidden" onchange="handleInitiateCrop('add-t-avatar', this, 1)">
+                                </label>
+                                <span id="add-t-avatar-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-stone-200 text-stone-600 font-medium">Optional</span>
+                            </div>
+                            <input type="hidden" id="t-avatar-url" value="">
+                        </div>
+                    </div>
                     <div class="sm:col-span-4">
                         <label class="block font-bold text-stone-700 mb-1">Customer Name</label>
                         <input type="text" id="t-author" required placeholder="e.g. Maya Suresh" class="w-full px-3 py-2 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
@@ -833,6 +859,22 @@ HTML;
             </div>
             <form onsubmit="handleUpdateTestimonial(event)" class="space-y-3 pt-3 text-xs">
                 <input type="hidden" id="edit-t-id">
+                <div class="flex items-center gap-3 p-3 bg-stone-50 rounded-2xl border border-stone-200">
+                    <div class="w-12 h-12 rounded-full bg-white border border-stone-300 flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
+                        <img id="edit-t-avatar-preview" src="/images/favicon.png" alt="Avatar" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 space-y-1">
+                        <div class="flex items-center gap-2">
+                            <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 hover:border-[#611B10] text-stone-700 font-semibold text-[11px] transition shadow-2xs">
+                                <i class="fa-solid fa-cloud-arrow-up text-[#611B10]"></i>
+                                <span>Change User Avatar</span>
+                                <input type="file" accept="image/*" class="hidden" onchange="handleInitiateCrop('edit-t-avatar', this, 1)">
+                            </label>
+                            <span id="edit-t-avatar-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-stone-100 text-stone-600 font-medium">Avatar</span>
+                        </div>
+                        <input type="hidden" id="edit-t-avatar-url" value="">
+                    </div>
+                </div>
                 <div>
                     <label class="block font-bold text-stone-700 mb-1">Customer Name</label>
                     <input type="text" id="edit-t-author" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
@@ -884,7 +926,11 @@ HTML;
             <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-stone-100 text-xs">
                 <div class="flex items-center gap-2 text-stone-500">
                     <span id="cropper-aspect-label" class="px-2.5 py-1 rounded-lg bg-stone-100 font-semibold text-stone-700">1:1 Aspect Ratio</span>
-                    <span class="text-[11px] text-stone-400">Auto-compressed to WebP</span>
+                    <button type="button" id="btn-toggle-remove-bg" onclick="toggleBackgroundRemoval()" class="px-2.5 py-1 rounded-lg border border-stone-300 text-stone-600 hover:text-[#611B10] hover:border-[#611B10] transition flex items-center gap-1.5" title="Removes solid or white/light background">
+                        <i class="fa-solid fa-wand-magic-sparkles text-[#D4A853]"></i>
+                        <span id="bg-remove-label">Erase Background: OFF</span>
+                    </button>
+                    <span class="text-[11px] text-stone-400">WebP 85%</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <button type="button" onclick="closeCropperModal()" class="px-4 py-2 rounded-xl border border-stone-200 text-stone-600 hover:bg-stone-50 font-medium">Cancel</button>
@@ -1063,8 +1109,74 @@ HTML;
 
         // Cropper JS Global State & Handlers
         let activeCropper = null;
-        let cropperTargetMode = null; // 'add', 'edit', 'flagship'
+        let cropperTargetMode = null; // 'add', 'edit', 'flagship', 'add-t-avatar', 'edit-t-avatar'
         let currentFileInput = null;
+        let removeBackgroundActive = false;
+
+        function toggleBackgroundRemoval() {
+            removeBackgroundActive = !removeBackgroundActive;
+            const label = document.getElementById('bg-remove-label');
+            const btn = document.getElementById('btn-toggle-remove-bg');
+            if (removeBackgroundActive) {
+                label.innerText = 'Erase Background: ON';
+                btn.className = 'px-2.5 py-1 rounded-lg border border-emerald-500 bg-emerald-50 text-emerald-800 font-bold transition flex items-center gap-1.5';
+            } else {
+                label.innerText = 'Erase Background: OFF';
+                btn.className = 'px-2.5 py-1 rounded-lg border border-stone-300 text-stone-600 hover:text-[#611B10] hover:border-[#611B10] transition flex items-center gap-1.5';
+            }
+        }
+
+        // Smart canvas background eraser (removes background by sampling border pixels and flood/alpha matting)
+        function eraseCanvasBackground(canvas) {
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const imgData = ctx.getImageData(0, 0, width, height);
+            const data = imgData.data;
+
+            // Sample 4 corners to establish key background color
+            const corners = [
+                [0, 0],
+                [width - 1, 0],
+                [0, height - 1],
+                [width - 1, height - 1]
+            ];
+            let bgR = 0, bgG = 0, bgB = 0;
+            corners.forEach(([x, y]) => {
+                const idx = (y * width + x) * 4;
+                bgR += data[idx];
+                bgG += data[idx + 1];
+                bgB += data[idx + 2];
+            });
+            bgR /= 4; bgG /= 4; bgB /= 4;
+
+            const isWhiteOrLight = (bgR > 220 && bgG > 220 && bgB > 220);
+            const threshold = isWhiteOrLight ? 32 : 28;
+
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+
+                // Euclidean color distance from background
+                const dist = Math.sqrt(
+                    (r - bgR) * (r - bgR) +
+                    (g - bgG) * (g - bgG) +
+                    (b - bgB) * (b - bgB)
+                );
+
+                if (dist < threshold) {
+                    // Transparent
+                    data[i + 3] = 0;
+                } else if (dist < threshold + 18) {
+                    // Soft alpha blend feather for smooth outline
+                    const alphaRatio = (dist - threshold) / 18;
+                    data[i + 3] = Math.round(data[i + 3] * alphaRatio);
+                }
+            }
+
+            ctx.putImageData(imgData, 0, 0);
+        }
 
         function handleInitiateCrop(mode, inputEl, aspectRatio = 1) {
             if (!inputEl.files || !inputEl.files[0]) return;
@@ -1138,6 +1250,10 @@ HTML;
                     imageSmoothingQuality: 'high'
                 });
 
+                if (removeBackgroundActive) {
+                    eraseCanvasBackground(canvas);
+                }
+
                 // Client-side WebP compression with quality 0.85
                 canvas.toBlob(async function(blob) {
                     if (!blob) {
@@ -1147,11 +1263,25 @@ HTML;
                         return;
                     }
 
-                    const mode = cropperTargetMode;
-                    const previewImg = document.getElementById(mode + '-p-preview-img') || document.getElementById('edit-flagship-preview-img');
-                    const imageInput = document.getElementById(mode + '-p-image') || document.getElementById(mode + '-image') || document.getElementById('edit-flagship-image');
-                    const sourceBadge = document.getElementById(mode + '-p-source-badge') || document.getElementById('edit-flagship-source-badge');
-                    const pathDisplay = document.getElementById('edit-flagship-image-display');
+                    let previewImg = null;
+                    let imageInput = null;
+                    let sourceBadge = null;
+                    let pathDisplay = null;
+
+                    if (mode === 'add-t-avatar') {
+                        previewImg = document.getElementById('add-t-avatar-preview');
+                        imageInput = document.getElementById('t-avatar-url');
+                        sourceBadge = document.getElementById('add-t-avatar-badge');
+                    } else if (mode === 'edit-t-avatar') {
+                        previewImg = document.getElementById('edit-t-avatar-preview');
+                        imageInput = document.getElementById('edit-t-avatar-url');
+                        sourceBadge = document.getElementById('edit-t-avatar-badge');
+                    } else {
+                        previewImg = document.getElementById(mode + '-p-preview-img') || document.getElementById('edit-flagship-preview-img');
+                        imageInput = document.getElementById(mode + '-p-image') || document.getElementById(mode + '-image') || document.getElementById('edit-flagship-image');
+                        sourceBadge = document.getElementById(mode + '-p-source-badge') || document.getElementById('edit-flagship-source-badge');
+                        pathDisplay = document.getElementById('edit-flagship-image-display');
+                    }
 
                     if (sourceBadge) {
                         sourceBadge.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading WebP...';
@@ -1361,12 +1491,13 @@ HTML;
             const author_location = document.getElementById('t-location').value;
             const tag = document.getElementById('t-tag').value || 'Verified Buyer';
             const quote = document.getElementById('t-quote').value;
+            const avatar_url = document.getElementById('t-avatar-url').value;
 
             try {
                 const res = await fetch('/mc-desk/api/admin/testimonials', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ author_name, author_location, tag, quote, rating: 5 })
+                    body: JSON.stringify({ author_name, author_location, tag, quote, avatar_url, rating: 5 })
                 });
                 const data = await res.json();
                 if (res.ok && data.status === 'success') {
@@ -1422,13 +1553,19 @@ HTML;
 
         // Password Modal
         
-        function openEditTestimonialModal(id, author, location, tag, rating, quote) {
+        function openEditTestimonialModal(id, author, location, tag, rating, quote, avatar) {
             document.getElementById('edit-t-id').value = id;
             document.getElementById('edit-t-author').value = author;
             document.getElementById('edit-t-location').value = location;
             document.getElementById('edit-t-tag').value = tag || 'Verified Buyer';
             document.getElementById('edit-t-rating').value = rating || 5;
             document.getElementById('edit-t-quote').value = quote;
+            document.getElementById('edit-t-avatar-url').value = avatar || '';
+
+            const avatarPreview = document.getElementById('edit-t-avatar-preview');
+            if (avatarPreview) {
+                avatarPreview.src = avatar ? (avatar.startsWith('http') ? avatar : '/' + avatar) : '/images/favicon.png';
+            }
 
             document.getElementById('edit-testimonial-modal').classList.remove('invisible', 'opacity-0', 'pointer-events-none');
         }
@@ -1444,12 +1581,13 @@ HTML;
             const tag = document.getElementById('edit-t-tag').value;
             const rating = parseInt(document.getElementById('edit-t-rating').value, 10);
             const quote = document.getElementById('edit-t-quote').value;
+            const avatar_url = document.getElementById('edit-t-avatar-url').value;
 
             try {
                 const res = await fetch('/mc-desk/api/admin/testimonials/' + id, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ author_name, author_location, tag, rating, quote })
+                    body: JSON.stringify({ author_name, author_location, tag, rating, quote, avatar_url })
                 });
                 const data = await res.json();
                 if (res.ok && data.status === 'success') {

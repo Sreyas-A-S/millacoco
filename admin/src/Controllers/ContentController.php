@@ -629,6 +629,7 @@ HTML;
         $tag = trim((string)($body['tag'] ?? 'Verified Buyer'));
         $quote = trim((string)($body['quote'] ?? ''));
         $rating = (int)($body['rating'] ?? 5);
+        $avatarUrl = !empty($body['avatar_url']) ? trim((string)$body['avatar_url']) : null;
 
         if (empty($authorName) || empty($quote)) {
             $response->getBody()->write(json_encode([
@@ -638,13 +639,14 @@ HTML;
             return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
         }
 
-        $stmt = $this->db->prepare("INSERT INTO testimonials (author_name, author_location, tag, quote, rating, verified_buyer) VALUES (:author, :loc, :tag, :quote, :rating, 1)");
+        $stmt = $this->db->prepare("INSERT INTO testimonials (author_name, author_location, tag, quote, rating, avatar_url, verified_buyer) VALUES (:author, :loc, :tag, :quote, :rating, :avatar, 1)");
         $stmt->execute([
             ':author' => $authorName,
             ':loc' => $authorLocation,
             ':tag' => $tag,
             ':quote' => $quote,
-            ':rating' => $rating
+            ':rating' => $rating,
+            ':avatar' => $avatarUrl
         ]);
 
         $response->getBody()->write(json_encode([
@@ -683,6 +685,7 @@ HTML;
         $tag = trim((string)($body['tag'] ?? 'Verified Buyer'));
         $quote = trim((string)($body['quote'] ?? ''));
         $rating = (int)($body['rating'] ?? 5);
+        $avatarUrl = !empty($body['avatar_url']) ? trim((string)$body['avatar_url']) : null;
 
         if (empty($authorName) || empty($quote)) {
             $response->getBody()->write(json_encode([
@@ -694,7 +697,7 @@ HTML;
 
         $stmt = $this->db->prepare(
             "UPDATE testimonials 
-             SET author_name = :author, author_location = :loc, tag = :tag, quote = :quote, rating = :rating 
+             SET author_name = :author, author_location = :loc, tag = :tag, quote = :quote, rating = :rating, avatar_url = :avatar 
              WHERE id = :id"
         );
         $stmt->execute([
@@ -703,6 +706,7 @@ HTML;
             ':tag' => $tag,
             ':quote' => $quote,
             ':rating' => $rating,
+            ':avatar' => $avatarUrl,
             ':id' => $id
         ]);
 
