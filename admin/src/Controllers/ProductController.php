@@ -23,7 +23,7 @@ class ProductController
     public function getPublicProducts(Request $request, Response $response): Response
     {
         $stmt = $this->db->query(
-            "SELECT id, name, slug, tag, category, price, image, external_url, platform_name, is_active 
+            "SELECT id, name, slug, tag, category, price, discounted_from, image, external_url, platform_name, is_active 
              FROM products 
              WHERE is_active = 1 
              ORDER BY sort_order ASC, id ASC"
@@ -102,6 +102,8 @@ class ProductController
             $tag = htmlspecialchars($p['tag'] ?? 'Bestseller', ENT_QUOTES, 'UTF-8');
             $url = htmlspecialchars($p['external_url'], ENT_QUOTES, 'UTF-8');
             $price = number_format((float)$p['price'], 2);
+            $beforePrice = !empty($p['discounted_from']) ? (float)$p['discounted_from'] : 0;
+            $beforePriceFmt = $beforePrice > 0 ? "₹" . number_format($beforePrice, 2) : "-";
 
             $productRowsHtml .= <<<HTML
             <tr class="hover:bg-amber-50/40 transition">
@@ -115,12 +117,15 @@ class ProductController
                         </div>
                     </div>
                 </td>
-                <td class="py-3 px-4 font-bold text-[#611B10]">₹{$price}</td>
+                <td class="py-3 px-4 font-bold text-[#611B10]">
+                    ₹{$price}
+                    <span class="block text-[10px] text-stone-400 line-through font-normal">{$beforePriceFmt}</span>
+                </td>
                 <td class="py-3 px-4 max-w-xs truncate text-stone-500 font-mono text-[11px]">
                     <a href="{$url}" target="_blank" class="hover:underline text-sky-700 truncate block">{$url}</a>
                 </td>
                 <td class="py-3 px-4 text-right">
-                    <button onclick='openEditModal({$id}, "{$name}", {$p['price']}, "{$tag}", "{$p['category']}", "{$img}", "{$url}", "{$p['description']}")' class="px-3.5 py-1.5 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white rounded-xl text-xs font-semibold transition shadow-xs flex items-center gap-1.5 ml-auto">
+                    <button onclick='openEditModal({$id}, "{$name}", {$p['price']}, {$beforePrice}, "{$tag}", "{$p['category']}", "{$img}", "{$url}", "{$p['description']}")' class="px-3.5 py-1.5 bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white rounded-xl text-xs font-semibold transition shadow-xs flex items-center gap-1.5 ml-auto">
                         <i class="fa-solid fa-pen-to-square text-[10px]"></i>
                         <span>Edit Product</span>
                     </button>
@@ -671,17 +676,23 @@ HTML;
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-bold text-stone-700 mb-1">Price (₹)</label>
+                        <label class="block font-bold text-stone-700 mb-1">Selling Price (₹)</label>
                         <input type="number" step="0.01" id="add-p-price" required placeholder="290.00" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Before Price / MRP (₹)</label>
+                        <input type="number" step="0.01" id="add-p-discounted-from" placeholder="340.00 (Optional)" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Category (Type or Search)</label>
+                        <input type="text" id="add-p-cat" list="product-categories-list" required placeholder="Choose or type custom category..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
                     </div>
                     <div>
                         <label class="block font-bold text-stone-700 mb-1">Badge Tag (Type or Search)</label>
                         <input type="text" id="add-p-tag" list="product-tags-list" placeholder="Choose or type custom tag..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
                     </div>
-                </div>
-                <div>
-                    <label class="block font-bold text-stone-700 mb-1">Category (Type or Search)</label>
-                    <input type="text" id="add-p-cat" list="product-categories-list" required placeholder="Choose or type custom category..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-[#611B10]">
                 </div>
                 <div>
                     <label class="block font-bold text-stone-700 mb-1">Description</label>
@@ -737,17 +748,23 @@ HTML;
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-bold text-stone-700 mb-1">Price (₹)</label>
+                        <label class="block font-bold text-stone-700 mb-1">Selling Price (₹)</label>
                         <input type="number" step="0.01" id="edit-price" required class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Before Price / MRP (₹)</label>
+                        <input type="number" step="0.01" id="edit-discounted-from" placeholder="e.g. 340.00" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Category (Type or Search)</label>
+                        <input type="text" id="edit-cat" list="product-categories-list" required placeholder="Choose or type custom category..." class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
                     </div>
                     <div>
                         <label class="block font-bold text-stone-700 mb-1">Badge Tag (Type or Search)</label>
                         <input type="text" id="edit-tag" list="product-tags-list" placeholder="Choose or type custom tag..." class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
                     </div>
-                </div>
-                <div>
-                    <label class="block font-bold text-stone-700 mb-1">Category (Type or Search)</label>
-                    <input type="text" id="edit-cat" list="product-categories-list" required placeholder="Choose or type custom category..." class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
                 </div>
                 <div>
                     <label class="block font-bold text-stone-700 mb-1">Description</label>
@@ -1227,6 +1244,7 @@ HTML;
             e.preventDefault();
             const name = document.getElementById('add-p-name').value;
             const price = parseFloat(document.getElementById('add-p-price').value);
+            const discounted_from = parseFloat(document.getElementById('add-p-discounted-from').value) || null;
             const tag = document.getElementById('add-p-tag').value || 'Bestseller';
             const category = document.getElementById('add-p-cat').value;
             const image = document.getElementById('add-p-image').value || 'images/product_bottle.webp';
@@ -1237,7 +1255,7 @@ HTML;
                 const res = await fetch('/mc-desk/api/admin/products', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, price, tag, category, image, external_url, description })
+                    body: JSON.stringify({ name, price, discounted_from, tag, category, image, external_url, description })
                 });
                 const data = await res.json();
                 if (res.ok && data.status === 'success') {
@@ -1529,7 +1547,7 @@ HTML;
         }
 
         // Edit Product (Full Product Info & Image)
-        function openEditModal(id, name, price, tag, category, image, url, desc) {
+        function openEditModal(id, name, price, discountedFrom, tag, category, image, url, desc) {
             const previewImg = document.getElementById('edit-p-preview-img');
             const sourceBadge = document.getElementById('edit-p-source-badge');
             if (previewImg) previewImg.src = image.startsWith('http') ? image : '/' + image;
@@ -1542,6 +1560,7 @@ HTML;
             document.getElementById('modal-product-name').innerText = 'Edit ' + name;
             document.getElementById('edit-name').value = name;
             document.getElementById('edit-price').value = price;
+            document.getElementById('edit-discounted-from').value = (discountedFrom && discountedFrom > 0) ? discountedFrom : '';
             document.getElementById('edit-tag').value = tag || 'Bestseller';
             document.getElementById('edit-cat').value = category || 'daily';
             document.getElementById('edit-image').value = image || 'images/product_bottle.webp';
@@ -1560,6 +1579,7 @@ HTML;
             const id = document.getElementById('edit-id').value;
             const name = document.getElementById('edit-name').value;
             const price = parseFloat(document.getElementById('edit-price').value);
+            const discounted_from = parseFloat(document.getElementById('edit-discounted-from').value) || null;
             const tag = document.getElementById('edit-tag').value;
             const category = document.getElementById('edit-cat').value;
             const image = document.getElementById('edit-image').value;
@@ -1570,7 +1590,7 @@ HTML;
                 const res = await fetch('/mc-desk/api/admin/products/' + id, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, price, tag, category, image, external_url, description })
+                    body: JSON.stringify({ name, price, discounted_from, tag, category, image, external_url, description })
                 });
                 const data = await res.json();
                 if (res.ok && data.status === 'success') {
@@ -2006,6 +2026,7 @@ HTML;
 
         $name = trim((string)($data['name'] ?? ''));
         $price = filter_var($data['price'] ?? 0, FILTER_VALIDATE_FLOAT);
+        $discountedFrom = !empty($data['discounted_from']) ? filter_var($data['discounted_from'], FILTER_VALIDATE_FLOAT) : null;
         $tag = trim((string)($data['tag'] ?? 'Bestseller'));
         $category = trim((string)($data['category'] ?? 'daily'));
         $platform = trim((string)($data['platform_name'] ?? 'Amazon'));
@@ -2025,8 +2046,8 @@ HTML;
         $slug = $slug . '-' . time();
 
         $stmt = $this->db->prepare(
-            "INSERT INTO products (name, slug, tag, category, price, image, description, external_url, platform_name, sort_order, is_active)
-             VALUES (:name, :slug, :tag, :category, :price, :image, :description, :external_url, :platform_name, 10, 1)"
+            "INSERT INTO products (name, slug, tag, category, price, discounted_from, image, description, external_url, platform_name, sort_order, is_active)
+             VALUES (:name, :slug, :tag, :category, :price, :discounted_from, :image, :description, :external_url, :platform_name, 10, 1)"
         );
 
         $stmt->execute([
@@ -2035,6 +2056,7 @@ HTML;
             ':tag' => $tag,
             ':category' => $category,
             ':price' => $price,
+            ':discounted_from' => $discountedFrom,
             ':image' => $image,
             ':description' => $desc,
             ':external_url' => $externalUrl,
@@ -2058,6 +2080,7 @@ HTML;
 
         $name = trim((string)($data['name'] ?? ''));
         $price = filter_var($data['price'] ?? 0, FILTER_VALIDATE_FLOAT);
+        $discountedFrom = !empty($data['discounted_from']) ? filter_var($data['discounted_from'], FILTER_VALIDATE_FLOAT) : null;
         $tag = trim((string)($data['tag'] ?? 'Bestseller'));
         $category = trim((string)($data['category'] ?? 'daily'));
         $platformName = htmlspecialchars(trim($data['platform_name'] ?? 'Amazon'), ENT_QUOTES, 'UTF-8');
@@ -2078,6 +2101,7 @@ HTML;
             "UPDATE products 
              SET name = :name,
                  price = :price,
+                 discounted_from = :discounted_from,
                  tag = :tag,
                  category = :category,
                  platform_name = :platform_name,
@@ -2092,6 +2116,7 @@ HTML;
         $stmt->execute([
             ':name' => $name,
             ':price' => $price,
+            ':discounted_from' => $discountedFrom,
             ':tag' => $tag,
             ':category' => $category,
             ':platform_name' => $platformName,
