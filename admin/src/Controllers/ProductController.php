@@ -1133,7 +1133,7 @@ HTML;
             <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-stone-100 text-xs">
                 <div class="flex items-center gap-2 text-stone-500">
                     <span id="cropper-aspect-label" class="px-2.5 py-1 rounded-lg bg-stone-100 font-semibold text-stone-700">1:1 Aspect Ratio</span>
-                    <button type="button" id="btn-toggle-remove-bg" onclick="toggleBackgroundRemoval()" class="px-2.5 py-1 rounded-lg border border-stone-300 text-stone-600 hover:text-[#611B10] hover:border-[#611B10] transition flex items-center gap-1.5" title="Removes solid or white/light background">
+                    <button type="button" id="btn-toggle-remove-bg" onclick="toggleBackgroundRemoval()" class="hidden px-2.5 py-1 rounded-lg border border-stone-300 text-stone-600 hover:text-[#611B10] hover:border-[#611B10] transition items-center gap-1.5" title="Removes solid or white/light background">
                         <i class="fa-solid fa-wand-magic-sparkles text-[#D4A853]"></i>
                         <span id="bg-remove-label">Erase Background: OFF</span>
                     </button>
