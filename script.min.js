@@ -595,11 +595,11 @@ function renderDynamicProductGrid() {
     let html = '';
     productCatalog.forEach(item => {
         html += `
-            <div class="product-card group bg-cardbg rounded-3xl p-3 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="${item.category}">
-                <div class="relative overflow-hidden rounded-2xl mb-2.5 sm:mb-3.5 aspect-square bg-white flex items-center justify-center p-3 sm:p-4">
-                    <span class="absolute top-5 left-5 sm:top-6 sm:left-6 z-10 bg-[#611B10] text-[#D4A853] text-[8px] sm:text-[10px] font-bold px-3 py-1.5 rounded-full shadow-md uppercase tracking-wider">${item.tag}</span>
-                    <button onclick="toggleFavorite(event, '${item.name}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-5 right-5 sm:top-6 sm:right-6 z-10 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-md flex items-center justify-center transition-transform hover:scale-110 active:scale-95" title="Add to Favorites" data-title="${item.name}">
-                        <i class="fa-regular fa-heart text-[11px] sm:text-xs"></i>
+            <div class="product-card group bg-cardbg rounded-2xl sm:rounded-3xl p-2.5 sm:p-3.5 text-center border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between shrink-0 w-[185px] xs:w-[205px] sm:w-auto snap-start" data-category="${item.category}">
+                <div class="relative overflow-hidden rounded-xl sm:rounded-2xl mb-2 sm:mb-3.5 aspect-square bg-white flex items-center justify-center p-2 sm:p-3.5">
+                    <span class="absolute top-2.5 left-2.5 sm:top-3.5 sm:left-3.5 z-10 bg-[#611B10] text-[#D4A853] text-[8px] sm:text-[9.5px] font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-sm uppercase tracking-wider max-w-[calc(100%-38px)] truncate leading-tight">${item.tag}</span>
+                    <button onclick="toggleFavorite(event, '${item.name}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/95 text-sage-400 hover:text-rose-500 shadow-sm flex items-center justify-center transition-transform hover:scale-105 active:scale-95" title="Add to Favorites" data-title="${item.name}">
+                        <i class="fa-regular fa-heart text-[10px] sm:text-xs"></i>
                     </button>
                     <img src="${item.image}" alt="${item.name}" class="product-card-img img-skeleton-pending w-full h-full object-contain" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
                 </div>
@@ -743,7 +743,8 @@ const comboPacks = [
         price: 590,
         oldPrice: 610,
         image: 'images/combo_duo.webp',
-        btnLabel: 'ORDER DUO PACK'
+        btnLabel: 'ORDER DUO PACK',
+        externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX6'
     },
     {
         id: 'combo-2',
@@ -755,7 +756,8 @@ const comboPacks = [
         price: 570,
         oldPrice: 580,
         image: 'images/twin_pack.webp',
-        btnLabel: 'ORDER TWIN PACK'
+        btnLabel: 'ORDER TWIN PACK',
+        externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX3'
     },
     {
         id: 'combo-3',
@@ -767,7 +769,8 @@ const comboPacks = [
         price: 1390,
         oldPrice: 1450,
         image: 'images/can_5ltr.webp',
-        btnLabel: 'ORDER 5L PACK'
+        btnLabel: 'ORDER 5L PACK',
+        externalUrl: 'https://www.amazon.in/dp/B0DXXXXXX4'
     }
 ];
 
@@ -1898,8 +1901,14 @@ function renderComboCarousel() {
 
                 <!-- Pricing Row -->
                 <div class="mt-3 pt-2.5 border-t border-white/15 flex items-center justify-between text-xs">
-                    <span class="price-tag line-through text-stone-400 text-xs">₹${item.oldPrice}.00</span>
-                    <span class="price-tag text-[#D4A853] font-extrabold text-sm sm:text-base tracking-tight">₹${item.price}.00</span>
+                    <div>
+                        <span class="price-tag line-through text-stone-400 text-xs">₹${item.oldPrice}.00</span>
+                        <span class="price-tag text-[#D4A853] font-extrabold text-sm sm:text-base tracking-tight ml-1">₹${item.price}.00</span>
+                    </div>
+                    <button type="button" onclick="event.stopPropagation(); redirectToPlatform('${item.externalUrl}')" class="inline-flex items-center gap-1 bg-[#D4A853] hover:bg-[#e0b764] text-[#3D140C] font-bold text-[10px] px-2.5 py-1 rounded-full shadow transition-all hover:scale-105 active:scale-95" title="Order Now">
+                        <span>Buy</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
+                    </button>
                 </div>
             </div>
         `;
@@ -2011,7 +2020,7 @@ function orderCurrentCombo(event) {
     if (event) event.preventDefault();
     const item = comboPacks[currentComboIndex];
     if (item) {
-        redirectToPlatform('https://www.amazon.in/dp/B0DXXXXXX6');
+        redirectToPlatform(item.externalUrl || 'https://www.amazon.in');
     }
 }
 
@@ -2086,7 +2095,7 @@ let catalogBatchState = {
 
 function renderCatalogProductCard(item) {
     const card = document.createElement('div');
-    card.className = 'catalog-card product-card group bg-white/95 rounded-3xl p-3.5 sm:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between animate-fade-in';
+    card.className = 'catalog-card product-card group bg-white/95 rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 lg:p-5 border border-white/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between animate-fade-in';
     card.setAttribute('data-category', item.category || 'cooking');
     card.setAttribute('data-price', item.price || 0);
     card.setAttribute('data-rating', item.rating || 5.0);
@@ -2094,16 +2103,16 @@ function renderCatalogProductCard(item) {
     card.setAttribute('data-desc', item.desc || '');
 
     const tagBadge = item.tag ? `
-        <span class="absolute top-5 left-5 sm:top-6 sm:left-6 bg-[#611B10] text-[#D4A853] text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full z-10 shadow-md">
+        <span class="absolute top-2.5 left-2.5 sm:top-3.5 sm:left-3.5 bg-[#611B10] text-[#D4A853] text-[8px] sm:text-[9.5px] font-bold uppercase tracking-wider px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full z-10 shadow-sm max-w-[calc(100%-38px)] truncate leading-tight">
             ${item.tag}
         </span>` : '';
 
     card.innerHTML = `
         <div>
-            <div class="relative w-full aspect-square bg-white rounded-2xl overflow-hidden mb-3.5 sm:mb-4 flex items-center justify-center p-3.5 sm:p-4">
+            <div class="relative w-full aspect-square bg-white rounded-xl sm:rounded-2xl overflow-hidden mb-2.5 sm:mb-4 flex items-center justify-center p-2 sm:p-3.5">
                 ${tagBadge}
-                <button onclick="toggleFavorite(event, '${item.name.replace(/'/g, "\'")}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-5 right-5 sm:top-6 sm:right-6 w-9 h-9 rounded-full bg-white/95 hover:bg-white text-sage-700 shadow-md flex items-center justify-center transition z-10" data-title="${item.name}" title="Save Favorite">
-                    <i class="fa-regular fa-heart text-xs text-sage-400 group-hover:text-rose-500"></i>
+                <button onclick="toggleFavorite(event, '${item.name.replace(/'/g, "\'")}', ${item.price}, '${item.image}')" class="fav-btn-toggle absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/95 hover:bg-white text-sage-700 shadow-sm flex items-center justify-center transition hover:scale-105 active:scale-90 z-10" data-title="${item.name}" title="Save Favorite">
+                    <i class="fa-regular fa-heart text-[10px] sm:text-xs text-sage-400 group-hover:text-rose-500"></i>
                 </button>
                 <img src="${item.image}" alt="${item.name}" class="product-card-img img-skeleton-pending w-full h-full object-contain" onload="this.classList.add('img-skeleton-loaded')" loading="lazy">
             </div>
