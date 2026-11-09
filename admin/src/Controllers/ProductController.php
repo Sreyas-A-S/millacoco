@@ -175,11 +175,17 @@ HTML;
                         <i class="fa-solid fa-link text-[#D4A853] mr-1"></i> <span class="font-mono">{$fsUrl}</span>
                     </div>
                 </div>
-                <div class="pt-3 border-t border-stone-100 flex items-center justify-end">
-                    <button type="button" onclick='openEditFlagshipModal({$fsId}, {$fsTitleJs}, {$fsSubtitleJs}, {$fsScriptJs}, {$fsTabJs}, {$fsDescJs}, {$fsRawPrice}, {$fsImgJs}, {$fsUrlJs})' class="px-3.5 py-1.5 rounded-xl bg-stone-100 hover:bg-[#611B10] text-stone-700 hover:text-white font-bold text-xs transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-pen-to-square text-[11px]"></i>
-                        <span>Edit Flagship Slide</span>
-                    </button>
+                <div class="flex items-center justify-end">
+                    <span class="text-[11px] font-mono text-stone-400">ID: {$fsId}</span>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick='openEditFlagshipModal({$fsId}, {$fsTitleJs}, {$fsSubtitleJs}, {$fsScriptJs}, {$fsTabJs}, {$fsDescJs}, {$fsRawPrice}, {$fsImgJs}, {$fsUrlJs})' class="px-3.5 py-1.5 rounded-xl bg-stone-100 hover:bg-[#611B10] text-stone-700 hover:text-white font-bold text-xs transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-pen-to-square text-[11px]"></i>
+                            <span>Edit Slide</span>
+                        </button>
+                        <button type="button" onclick="deleteFlagshipSlide({$fsId})" class="p-1.5 rounded-xl hover:bg-rose-50 text-rose-500 hover:text-rose-700 transition" title="Delete Slide">
+                            <i class="fa-solid fa-trash-can text-xs"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 HTML;
@@ -221,10 +227,15 @@ HTML;
                 </div>
                 <div class="pt-2 border-t border-stone-100 flex items-center justify-between">
                     <span class="text-[11px] font-mono text-stone-400">ID: {$cid}</span>
-                    <button type="button" onclick='openEditComboModal({$id}, {$c['price']}, "{$btnLabel}", "{$desc}")' class="px-4 py-1.5 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold text-xs transition shadow-sm active:scale-95 flex items-center gap-1.5">
-                        <i class="fa-solid fa-pen-to-square text-[10px]"></i>
-                        <span>Edit Combo</span>
-                    </button>
+                    <div class="flex items-center gap-1.5">
+                        <button type="button" onclick='openEditComboModal({$id}, {$c['price']}, "{$btnLabel}", "{$desc}")' class="px-3.5 py-1.5 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold text-xs transition shadow-sm active:scale-95 flex items-center gap-1.5">
+                            <i class="fa-solid fa-pen-to-square text-[10px]"></i>
+                            <span>Edit Combo</span>
+                        </button>
+                        <button type="button" onclick="deleteComboPack({$id})" class="p-1.5 rounded-full hover:bg-rose-50 text-rose-500 hover:text-rose-700 transition" title="Delete Combo">
+                            <i class="fa-solid fa-trash-can text-xs"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 HTML;
@@ -478,11 +489,17 @@ HTML;
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                     <div>
                         <h3 class="font-serif font-bold text-base text-[#611B10]">Interactive Flagship Bottle Showcase</h3>
-                        <p class="text-xs text-stone-500">Manage the 3 interactive products featured in the homepage scroll-scrub showcase.</p>
+                        <p class="text-xs text-stone-500">Manage the interactive products featured in the homepage scroll-scrub showcase.</p>
                     </div>
-                    <span class="text-xs font-semibold px-3 py-1 bg-[#FAF5EC] text-[#611B10] border border-[#D4A853]/30 rounded-full w-fit">
-                        <i class="fa-solid fa-arrows-spin mr-1 text-[#2E6F40]"></i> Live Storefront Synced
-                    </span>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="openAddFlagshipModal()" class="px-4 py-2 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus text-[10px]"></i>
+                            <span>Add Flagship Slide</span>
+                        </button>
+                        <span class="text-xs font-semibold px-3 py-1 bg-[#FAF5EC] text-[#611B10] border border-[#D4A853]/30 rounded-full w-fit">
+                            <i class="fa-solid fa-arrows-spin mr-1 text-[#2E6F40]"></i> Live Storefront Synced
+                        </span>
+                    </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                     {$flagshipHtml}
@@ -492,8 +509,20 @@ HTML;
 
         <!-- Section 2: Combo Offers -->
         <div id="hub-section-combos" class="hub-pane hidden space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {$combosHtml}
+            <div class="bg-white rounded-2xl sm:rounded-3xl border border-[#D4A853]/30 p-4 sm:p-6 shadow-2xs">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                    <div>
+                        <h3 class="font-serif font-bold text-base text-[#611B10]">Special Combo Packs</h3>
+                        <p class="text-xs text-stone-500">Manage the 3D coverflow combo bundles featured on the homepage.</p>
+                    </div>
+                    <button type="button" onclick="openAddComboModal()" class="px-4 py-2 rounded-full bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5 w-fit">
+                        <i class="fa-solid fa-plus text-[10px]"></i>
+                        <span>Add New Combo Deal</span>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    {$combosHtml}
+                </div>
             </div>
         </div>
 
@@ -732,6 +761,85 @@ HTML;
         </div>
     </div>
 
+    <!-- ADD FLAGSHIP SLIDE MODAL -->
+    <div id="add-flagship-modal" class="fixed inset-0 z-50 invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div onclick="closeAddFlagshipModal()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <div class="relative bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-[#D4A853]/40 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                <div>
+                    <h4 class="font-serif font-bold text-base text-[#611B10]">Add New Flagship Product Slide</h4>
+                    <p class="text-[11px] text-stone-500">Add an interactive bottle slide to the homepage showcase.</p>
+                </div>
+                <button type="button" onclick="closeAddFlagshipModal()" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="handleCreateFlagshipSlide(event)" class="space-y-3.5 pt-3 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Navigation Tab Label</label>
+                        <input type="text" id="add-flagship-tab" required placeholder="e.g. 500ml Jar" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Handwriting Script Accent</label>
+                        <input type="text" id="add-flagship-script" placeholder="e.g. The Signature Heritage" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Product Title</label>
+                    <input type="text" id="add-flagship-title" required placeholder="e.g. 100% Virgin Kerala Coconut Oil" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none font-bold">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Subtitle / Tagline</label>
+                    <input type="text" id="add-flagship-subtitle" placeholder="e.g. Cold-pressed from Kuttiyadi copra" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Detailed Description</label>
+                    <textarea id="add-flagship-desc" rows="3" required placeholder="Describe the aroma, extraction process, and uses..." class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none"></textarea>
+                </div>
+
+                <!-- Flagship Cutout Image Upload -->
+                <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200 flex items-center gap-4">
+                    <div class="relative w-16 h-16 rounded-xl bg-white border border-stone-300 p-1 flex items-center justify-center shrink-0 overflow-hidden shadow-xs">
+                        <img id="add-flagship-preview-img" src="/images/flagship_bottle_cutout.webp" alt="Preview" class="w-full h-full object-contain">
+                    </div>
+                    <div class="flex-1 space-y-1.5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-stone-500 block">Cutout / Slide Graphic</span>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 hover:border-[#611B10] text-stone-700 font-semibold text-[11px] transition shadow-2xs">
+                                <i class="fa-solid fa-cloud-arrow-up text-[#611B10]"></i>
+                                <span>Upload Cutout (Cropper)</span>
+                                <input type="file" accept="image/*" class="hidden" onchange="handleInitiateCrop('add-flagship', this, 0.75)">
+                            </label>
+                            <span id="add-flagship-source-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-stone-100 text-stone-600 font-medium">Ready</span>
+                        </div>
+                        <input type="hidden" id="add-flagship-image" value="images/flagship_bottle_cutout.webp">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Price (₹)</label>
+                        <input type="number" step="0.01" id="add-flagship-price" required placeholder="320.00" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Direct Order URL</label>
+                        <input type="text" id="add-flagship-url" placeholder="https://wa.me/918089757815?text=..." class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-3 border-t border-stone-100">
+                    <button type="button" onclick="closeAddFlagshipModal()" class="px-4 py-2 rounded-xl border border-stone-200 text-stone-600 hover:bg-stone-50">Cancel</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Create Slide</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- EDIT FLAGSHIP SLIDE MODAL -->
     <div id="flagship-modal" class="fixed inset-0 z-50 invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
         <div onclick="closeFlagshipModal()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
@@ -813,6 +921,88 @@ HTML;
                         <i class="fa-solid fa-check"></i>
                         <span>Save Flagship Slide</span>
                     </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADD COMBO MODAL -->
+    <div id="add-combo-modal" class="fixed inset-0 z-50 invisible opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div onclick="closeAddComboModal()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <div class="relative bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-[#D4A853]/40 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+                <div>
+                    <h4 class="font-serif font-bold text-base text-[#611B10]">Add New Combo Offer</h4>
+                    <p class="text-[11px] text-stone-500">Create a 3D coverflow card bundle for the homepage.</p>
+                </div>
+                <button type="button" onclick="closeAddComboModal()" class="text-stone-400 hover:text-stone-600"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="handleCreateCombo(event)" class="space-y-3 pt-3 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Combo Bundle Name</label>
+                        <input type="text" id="add-combo-name" required placeholder="e.g. Master Chef Culinary Duo" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Badge Tag</label>
+                        <input type="text" id="add-combo-badge" required placeholder="e.g. SPECIAL VALUE" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Short Subtitle / Items list</label>
+                        <input type="text" id="add-combo-subtitle" placeholder="e.g. 1L Oil + 500ml Virgin" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Button Action Text</label>
+                        <input type="text" id="add-combo-btn" required value="ORDER PACK" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                </div>
+
+                <!-- Combo Photo Upload with Cropper -->
+                <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200 flex items-center gap-4">
+                    <div class="relative w-16 h-16 rounded-xl bg-white border border-stone-300 p-1 flex items-center justify-center shrink-0 overflow-hidden shadow-xs">
+                        <img id="add-combo-preview-img" src="/images/product_pouch.png" alt="Preview" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 space-y-1.5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-stone-500 block">Combo Bundle Visual</span>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 hover:border-[#611B10] text-stone-700 font-semibold text-[11px] transition shadow-2xs">
+                                <i class="fa-solid fa-cloud-arrow-up text-[#611B10]"></i>
+                                <span>Upload Combo Photo (1:1)</span>
+                                <input type="file" accept="image/*" class="hidden" onchange="handleInitiateCrop('add-combo', this, 1)">
+                            </label>
+                            <span id="add-combo-source-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-stone-100 text-stone-600 font-medium">Ready</span>
+                        </div>
+                        <input type="hidden" id="add-combo-image" value="images/product_pouch.png">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Discounted Combo Price (₹)</label>
+                        <input type="number" step="0.01" id="add-combo-price" required placeholder="590.00" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-stone-700 mb-1">Original Price (₹)</label>
+                        <input type="number" step="0.01" id="add-combo-old-price" placeholder="680.00" class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Direct Order Destination URL</label>
+                    <input type="url" id="add-combo-url" placeholder="https://wa.me/918089757815?text=..." class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-stone-700 mb-1">Description</label>
+                    <textarea id="add-combo-desc" rows="2" required placeholder="Describe savings and ingredients included..." class="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-[#611B10] outline-none"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2 border-t border-stone-100">
+                    <button type="button" onclick="closeAddComboModal()" class="px-4 py-2 rounded-xl border border-stone-200 text-stone-600 hover:bg-stone-50">Cancel</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-[#611B10] hover:bg-[#782315] text-[#D4A853] hover:text-white font-bold transition">Create Combo</button>
                 </div>
             </form>
         </div>
@@ -1276,6 +1466,14 @@ HTML;
                         previewImg = document.getElementById('edit-t-avatar-preview');
                         imageInput = document.getElementById('edit-t-avatar-url');
                         sourceBadge = document.getElementById('edit-t-avatar-badge');
+                    } else if (mode === 'add-flagship') {
+                        previewImg = document.getElementById('add-flagship-preview-img');
+                        imageInput = document.getElementById('add-flagship-image');
+                        sourceBadge = document.getElementById('add-flagship-source-badge');
+                    } else if (mode === 'add-combo') {
+                        previewImg = document.getElementById('add-combo-preview-img');
+                        imageInput = document.getElementById('add-combo-image');
+                        sourceBadge = document.getElementById('add-combo-source-badge');
                     } else {
                         previewImg = document.getElementById(mode + '-p-preview-img') || document.getElementById('edit-flagship-preview-img');
                         imageInput = document.getElementById(mode + '-p-image') || document.getElementById(mode + '-image') || document.getElementById('edit-flagship-image');
@@ -1387,6 +1585,58 @@ HTML;
 
         // Combos
         // Flagship Showcase Functions
+        function openAddFlagshipModal() {
+            document.getElementById('add-flagship-modal').classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        }
+        function closeAddFlagshipModal() {
+            document.getElementById('add-flagship-modal').classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        }
+
+        async function handleCreateFlagshipSlide(e) {
+            e.preventDefault();
+            const payload = {
+                tab_label: document.getElementById('add-flagship-tab').value,
+                script_accent: document.getElementById('add-flagship-script').value,
+                title: document.getElementById('add-flagship-title').value,
+                subtitle: document.getElementById('add-flagship-subtitle').value,
+                description: document.getElementById('add-flagship-desc').value,
+                image_cutout: document.getElementById('add-flagship-image').value,
+                price: parseFloat(document.getElementById('add-flagship-price').value),
+                external_url: document.getElementById('add-flagship-url').value
+            };
+
+            try {
+                const res = await fetch('/mc-desk/api/admin/flagship', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Error creating flagship slide');
+                }
+            } catch (err) {
+                alert('Network error creating flagship slide');
+            }
+        }
+
+        async function deleteFlagshipSlide(id) {
+            if (!confirm('Are you sure you want to remove this flagship slide?')) return;
+            try {
+                const res = await fetch('/mc-desk/api/admin/flagship/' + id, { method: 'DELETE' });
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Error deleting slide');
+                }
+            } catch (err) {
+                alert('Network error deleting slide');
+            }
+        }
+
         function openEditFlagshipModal(id, title, subtitle, scriptAccent, tabLabel, desc, price, imageCutout, externalUrl) {
             document.getElementById('edit-flagship-id').value = id;
             document.getElementById('edit-flagship-title').value = title || '';
@@ -1446,6 +1696,60 @@ HTML;
             } finally {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
+            }
+        }
+
+        // Combos
+        function openAddComboModal() {
+            document.getElementById('add-combo-modal').classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        }
+        function closeAddComboModal() {
+            document.getElementById('add-combo-modal').classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        }
+
+        async function handleCreateCombo(e) {
+            e.preventDefault();
+            const payload = {
+                name: document.getElementById('add-combo-name').value,
+                badge: document.getElementById('add-combo-badge').value,
+                subtitle: document.getElementById('add-combo-subtitle').value,
+                btn_label: document.getElementById('add-combo-btn').value,
+                price: parseFloat(document.getElementById('add-combo-price').value),
+                old_price: parseFloat(document.getElementById('add-combo-old-price').value) || null,
+                image: document.getElementById('add-combo-image').value,
+                external_url: document.getElementById('add-combo-url').value,
+                description: document.getElementById('add-combo-desc').value
+            };
+
+            try {
+                const res = await fetch('/mc-desk/api/admin/combos', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Error creating combo deal');
+                }
+            } catch (err) {
+                alert('Network error creating combo');
+            }
+        }
+
+        async function deleteComboPack(id) {
+            if (!confirm('Are you sure you want to delete this combo deal?')) return;
+            try {
+                const res = await fetch('/mc-desk/api/admin/combos/' + id, { method: 'DELETE' });
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Error deleting combo');
+                }
+            } catch (err) {
+                alert('Network error deleting combo');
             }
         }
 

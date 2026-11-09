@@ -592,6 +592,78 @@ HTML;
     }
 
     /**
+     * Admin API: Creates a Combo Pack
+     */
+    public function createCombo(Request $request, Response $response): Response
+    {
+        $body = (array)$request->getParsedBody();
+        $name = trim((string)($body['name'] ?? ''));
+        $badge = trim((string)($body['badge'] ?? 'Special Value'));
+        $subtitle = trim((string)($body['subtitle'] ?? ''));
+        $title = trim((string)($body['title'] ?? ''));
+        $desc = trim((string)($body['description'] ?? ''));
+        $price = (float)($body['price'] ?? 0);
+        $oldPrice = !empty($body['old_price']) ? (float)$body['old_price'] : ($price * 1.25);
+        $image = trim((string)($body['image'] ?? 'images/product_bottle.webp'));
+        $btnLabel = trim((string)($body['btn_label'] ?? 'ORDER PACK'));
+        $externalUrl = trim((string)($body['external_url'] ?? ''));
+
+        if (empty($name) || $price <= 0) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Combo name and valid price are required'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        $comboId = 'combo-' . time();
+        if (empty($title)) $title = $name;
+
+        $maxSort = (int)$this->db->query("SELECT COALESCE(MAX(sort_order), 0) FROM combo_packs")->fetchColumn();
+
+        $stmt = $this->db->prepare(
+            "INSERT INTO combo_packs (combo_id, name, badge, subtitle, title, description, price, old_price, image, btn_label, sort_order, is_active, external_url)
+             VALUES (:cid, :name, :badge, :subtitle, :title, :desc, :price, :old_price, :image, :btn, :sort, 1, :url)"
+        );
+        $stmt->execute([
+            ':cid' => $comboId,
+            ':name' => $name,
+            ':badge' => $badge,
+            ':subtitle' => $subtitle,
+            ':title' => $title,
+            ':desc' => $desc,
+            ':price' => $price,
+            ':old_price' => $oldPrice,
+            ':image' => $image,
+            ':btn' => $btnLabel,
+            ':sort' => $maxSort + 1,
+            ':url' => $externalUrl
+        ]);
+
+        $response->getBody()->write(json_encode([
+            'status' => 'success',
+            'message' => 'Combo deal created successfully!'
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
+     * Admin API: Deletes a Combo Pack
+     */
+    public function deleteCombo(Request $request, Response $response, array $args): Response
+    {
+        $id = (int)($args['id'] ?? 0);
+        $stmt = $this->db->prepare("DELETE FROM combo_packs WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+
+        $response->getBody()->write(json_encode([
+            'status' => 'success',
+            'message' => 'Combo deal removed successfully'
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
      * Admin API: Updates a Combo Pack
      */
     public function updateCombo(Request $request, Response $response, array $args): Response
@@ -733,6 +805,70 @@ HTML;
         $response->getBody()->write(json_encode([
             'status' => 'success',
             'data' => $slides
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
+     * Admin API: Creates a Flagship Slide
+     */
+    public function createFlagshipSlide(Request $request, Response $response): Response
+    {
+        $body = (array)$request->getParsedBody();
+        $title = trim((string)($body['title'] ?? ''));
+        $subtitle = trim((string)($body['subtitle'] ?? ''));
+        $scriptAccent = trim((string)($body['script_accent'] ?? ''));
+        $tabLabel = trim((string)($body['tab_label'] ?? $title));
+        $desc = trim((string)($body['description'] ?? ''));
+        $price = (float)($body['price'] ?? 0);
+        $imageCutout = trim((string)($body['image_cutout'] ?? 'images/flagship_bottle_cutout.webp'));
+        $externalUrl = trim((string)($body['external_url'] ?? ''));
+
+        if (empty($title)) {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => 'Slide product title is required.'
+            ]));
+            return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+        }
+
+        $maxIdx = (int)$this->db->query("SELECT COALESCE(MAX(slide_index), -1) FROM flagship_slides")->fetchColumn();
+
+        $stmt = $this->db->prepare(
+            "INSERT INTO flagship_slides (slide_index, tab_label, script_accent, title, subtitle, description, price, image_cutout, external_url, is_active)
+             VALUES (:idx, :tab, :script, :title, :subtitle, :desc, :price, :img, :url, 1)"
+        );
+        $stmt->execute([
+            ':idx' => $maxIdx + 1,
+            ':tab' => $tabLabel,
+            ':script' => $scriptAccent,
+            ':title' => $title,
+            ':subtitle' => $subtitle,
+            ':desc' => $desc,
+            ':price' => $price,
+            ':img' => $imageCutout,
+            ':url' => $externalUrl
+        ]);
+
+        $response->getBody()->write(json_encode([
+            'status' => 'success',
+            'message' => 'Flagship product slide created successfully!'
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
+     * Admin API: Deletes a Flagship Slide
+     */
+    public function deleteFlagshipSlide(Request $request, Response $response, array $args): Response
+    {
+        $id = (int)($args['id'] ?? 0);
+        $stmt = $this->db->prepare("DELETE FROM flagship_slides WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+
+        $response->getBody()->write(json_encode([
+            'status' => 'success',
+            'message' => 'Flagship slide deleted successfully'
         ]));
         return $response->withHeader('Content-Type', 'application/json');
     }

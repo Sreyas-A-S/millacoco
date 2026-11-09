@@ -111,11 +111,15 @@ $app->group('', function ($group) use ($dashboardController, $productController,
 
     // Combos & Reviews Hub
     $group->get('/combos-reviews', [$contentController, 'renderContentManagerPage']);
+    $group->post('/api/admin/combos', [$contentController, 'createCombo']);
     $group->put('/api/admin/combos/{id}', [$contentController, 'updateCombo']);
+    $group->delete('/api/admin/combos/{id}', [$contentController, 'deleteCombo']);
     $group->post('/api/admin/testimonials', [$contentController, 'createTestimonial']);
     $group->put('/api/admin/testimonials/{id}', [$contentController, 'updateTestimonial']);
     $group->delete('/api/admin/testimonials/{id}', [$contentController, 'deleteTestimonial']);
+    $group->post('/api/admin/flagship', [$contentController, 'createFlagshipSlide']);
     $group->put('/api/admin/flagship/{id}', [$contentController, 'updateFlagshipSlide']);
+    $group->delete('/api/admin/flagship/{id}', [$contentController, 'deleteFlagshipSlide']);
     
     // Admin Password Update
     $group->post('/api/admin/change-password', [$authController, 'updatePassword']);
