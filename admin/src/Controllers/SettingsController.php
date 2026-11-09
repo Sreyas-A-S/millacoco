@@ -84,7 +84,7 @@ class SettingsController
             ],
             'social' => [
                 'title' => 'Marketplaces & Social Profiles',
-                'desc' => 'Update Instagram, Facebook, and official Amazon store links.',
+                'desc' => 'Update Instagram, Facebook, and primary marketplace store links.',
                 'icon' => 'fa-share-nodes'
             ]
         ];
