@@ -29,7 +29,6 @@ class DashboardController
         // Fetch actual showcase metrics from SQLite
         $totalProducts = (int)$this->db->query("SELECT COUNT(*) FROM products")->fetchColumn();
         $activeProducts = (int)$this->db->query("SELECT COUNT(*) FROM products WHERE is_active = 1")->fetchColumn();
-        $amazonCount = (int)$this->db->query("SELECT COUNT(*) FROM products WHERE platform_name LIKE '%Amazon%'")->fetchColumn();
 
         // Fetch products for redirect link overview
         $stmt = $this->db->query("SELECT id, name, tag, price, external_url FROM products ORDER BY sort_order ASC, id ASC");
@@ -165,7 +164,7 @@ HTML;
         </header>
 
         <!-- Redirection & Catalog Metric Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mb-6 sm:mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-6 sm:mb-8">
             <div class="bg-white p-4 sm:p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-semibold text-[#611B10]/70">Listed Products</span>
@@ -173,15 +172,6 @@ HTML;
                 </div>
                 <div class="text-2xl font-bold text-[#611B10] mt-2">{$totalProducts} Sizes</div>
                 <div class="text-[10px] text-emerald-600 font-semibold mt-1">{$activeProducts} currently active</div>
-            </div>
-
-            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
-                <div class="flex items-center justify-between">
-                    <span class="text-xs font-semibold text-[#611B10]/70">Primary Channel</span>
-                    <i class="fa-brands fa-amazon text-[#D4A853]"></i>
-                </div>
-                <div class="text-2xl font-bold text-[#611B10] mt-2">Amazon India</div>
-                <div class="text-[10px] text-stone-500 font-semibold mt-1">{$amazonCount} direct links configured</div>
             </div>
 
             <div class="bg-white p-4 sm:p-5 rounded-2xl border border-[#D4A853]/30 shadow-xs">
