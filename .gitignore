@@ -1,0 +1,24 @@
+# Environment and sensitive files
+.env
+*.env
+
+# SQLite databases, journals, and lock files
+admin/database/*.sqlite
+admin/database/*.sqlite-journal
+admin/database/*.sqlite-shm
+admin/database/*.sqlite-wal
+*.sqlite
+*.sqlite3
+*.db
+
+# Keep .htaccess in database folder
+!admin/database/.htaccess
+
+# Composer dependencies
+/vendor/
+/admin/vendor/
+
+# Temporary or system files
+.DS_Store
+Thumbs.db
+*.log
