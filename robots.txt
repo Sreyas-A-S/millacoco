@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /mc-desk/
 Disallow: /admin/
 
 Sitemap: https://millacoco.com/sitemap.xml
